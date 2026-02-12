@@ -1,5 +1,5 @@
 CREATE TABLE CONTRACT (
-	idContract		INTEGER,
+	idContract		VARCHAR(10),
 	startDate		DATE,
 	endDate			DATE,
 	document		VARCHAR(50),
