@@ -1,5 +1,5 @@
 CREATE TABLE INSTRUCTOR(
-	idIns		INTEGER,
+	idIns		VARCHAR(10),
 	name		VARCHAR(20),
 	surname		VARCHAR(20),
 	email		VARCHAR(30),
