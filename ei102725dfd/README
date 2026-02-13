@@ -1,3 +1,12 @@
 Fijarse bien que tipos de datos tienen las claves alternativas para poner los mismos
 
 pd: No se hasta que punto la cantidad de caracteres de los VARCHAR que he puesto en mis commits es buena (·_·")
+
+[10:28, 13/2/2026] Jeremy: Reglas para las tablas de sql:
+
+- Nombre de las tablas primera en mayuscula y lo demas en minuscula
+- dni y codigos varchar 10 caracteres
+- todo not null excepto claves primarias y alternativas y lo que sea null por el diseño logico
+- nombres compuestos de tablas con _ y en atributos separados con primera letra en mayuscula
+- numeros de telefono varchar de 9 con check de que sean digitos y sean exactamente 9
+- hacer checks necesarios 
