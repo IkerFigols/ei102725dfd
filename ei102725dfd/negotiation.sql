@@ -1,12 +1,23 @@
 CREATE TABLE Negotiation (
-	idNegotiation		VARCHAR(10),
-	date			DATE NOT NULL,
-	state			VARCHAR(40) NOT NULL,
-	idCommunication		VARCHAR(10) NOT NULL,
-	idPap			VARCHAR(10) NOT NULL,
-	IdAsReq			VARCAHR(10) NOT NULL,
+	idNegotiation		VARCHAR(9),
+	date				DATE NOT NULL,
+	state				VARCHAR(40) NOT NULL,
+	idCommunication		VARCHAR(9) NOT NULL,
+	idPap				VARCHAR(9) NOT NULL,
+	IdAsReq				VARCHAR(9) NOT NULL,
 
+	--Clave Primaria
+	
 	CONSTRAINT cp_negotiation PRIMARY KEY (idNegotiation),
+	
+	-- Restricciones
+	
+	CONSTRAINT ck_len_idNeg CHECK (LENGTH(idNegotiation) = 9),
+    CONSTRAINT ck_len_idCom CHECK (LENGTH(idCommunication) = 9),
+    CONSTRAINT ck_len_idPap CHECK (LENGTH(idPap) = 9),
+    CONSTRAINT ck_len_idAsR CHECK (LENGTH(idAsReq) = 9),
+	
+	-- Claves foráneas
 	CONSTRAINT ca_communication FOREIGN KEY (idCommunication)
 		REFERENCES Communication (idCommunication)
 		ON DELETE RESTRICT
