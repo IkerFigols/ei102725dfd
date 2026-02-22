@@ -10,6 +10,7 @@ address		VARCHAR(50) NOT NULL,
 legalGuardian 	VARCHAR(50),
 gender		VARCHAR(10) NOT NULL,
 
+CONSTRAINT  cp_oviUser PRIMARY KEY (dni),
 CONSTRAINT  cl_oviUser UNIQUE (email),
 CONSTRAINT  chk_phone CHECK ( LENGTH(phoneNumber) = 9 AND phoneNumber ~ '^[0-9]{9}$')
 CONSRAINT   chk_legalGuardian CHECK (
