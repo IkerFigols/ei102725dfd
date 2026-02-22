@@ -1,0 +1,20 @@
+INSERT INTO Ovi_User VALUES('12345678X', 'Pepe', 'Diaz', '2000-10-17', 'password', 'pepe@gmail.com', '624723415', 'Calle alfredo numero 7 piso 1', NULL, 'masculi' )
+INSERT INTO Ovi_User VALUES('23456789A', 'Maria', 'García', '1995-03-12', 'pass123', 'maria.g@gmail.com', '612345678', 'Av. Constitución 12', NULL, 'femení');
+INSERT INTO Ovi_User VALUES('34567890B', 'Lucas', 'Pérez', '2010-05-20', 'lucas05', 'lucas@outlook.com', '623456789', 'Calle Mayor 45', 'Juan Pérez', 'masculí');
+INSERT INTO Ovi_User VALUES('45678901C', 'Ana', 'Martínez', '1988-11-30', 'ana.m88', 'anamartinez@yahoo.es', '634567890', 'Plaza España 1', NULL, 'femení');
+INSERT INTO Ovi_User VALUES('56789012D', 'David', 'López', '2012-01-15', 'david12', 'davidl@gmail.com', '645678901', 'Calle Luna 8', 'Elena López', 'masculí');
+INSERT INTO Ovi_User VALUES('67890123E', 'Laura', 'Sánchez', '1992-07-22', 'ls_2024', 'laurasan@gmail.com', '656789012', 'Calle Sol 23', NULL, 'femení');
+INSERT INTO Ovi_User VALUES('78901234F', 'Javier', 'Ruiz', '2009-09-09', 'javierR', 'javir@hotmail.com', '667890123', 'Calle Rio 2', 'Carlos Ruiz', 'masculí');
+INSERT INTO Ovi_User VALUES('89012345G', 'Elena', 'Gómez', '2002-04-05', 'elena90', 'egomez@gmail.com', '678901234', 'Calle Flor 14', NULL, 'femení');
+INSERT INTO Ovi_User VALUES('90123456H', 'Marc', 'Torres', '2015-12-12', 'marcT', 'mtorres@gmail.com', '689012345', 'Av. Diagonal 100', 'Sonia Torres', 'masculí');
+INSERT INTO Ovi_User VALUES('01234567I', 'Sofía', 'Castro', '1985-02-28', 'sofia_pw', 'scastro@gmail.com', '690123456', 'Calle Norte 5', NULL, 'femení');
+INSERT INTO Ovi_User VALUES('11223344J', 'Hugo', 'Morales', '2011-06-18', 'hugoM', 'hugomor@gmail.com', '601234567', 'Calle Sur 9', 'Roberto Morales', 'masculí');
+INSERT INTO Ovi_User VALUES('22334455K', 'Paula', 'Ortega', '1999-10-10', 'paula99', 'portega@gmail.com', '611223344', 'Calle Estrecha 3', NULL, 'femení');
+INSERT INTO Ovi_User VALUES('33445566L', 'Diego', 'Navarro', '2013-08-25', 'diego_n', 'dnavarro@gmail.com', '622334455', 'Paseo Marítimo 11', 'Ana Navarro', 'masculí');
+INSERT INTO Ovi_User VALUES('44556677M', 'Sara', 'Vázquez', '1990-12-01', 'saravz', 'svazquez@gmail.com', '633445566', 'Calle Nueva 40', NULL, 'femení');
+INSERT INTO Ovi_User VALUES('55667788N', 'Mateo', 'Ramos', '2008-01-10', 'mateoR', 'mramos@gmail.com', '644556677', 'Calle Vieja 2', NULL, 'masculí');
+INSERT INTO Ovi_User VALUES('66778899O', 'Carla', 'Gil', '2018-03-30', 'carlaG', 'cgil@gmail.com', '655667788', 'Calle Pino 15', 'Pedro Gil', 'femení');
+INSERT INTO Ovi_User VALUES('77889900P', 'Adrián', 'Blanco', '1997-05-14', 'adrianB', 'ablanco@gmail.com', '666778899', 'Calle Roble 6', NULL, 'masculí');
+INSERT INTO Ovi_User VALUES('88990011Q', 'Julia', 'Méndez', '2005-11-20', 'juliaM', 'jmendez@gmail.com', '677889900', 'Calle Olmo 22', NULL, 'femení');
+INSERT INTO Ovi_User VALUES('99001122R', 'Leo', 'Herrera', '2019-07-04', 'leo_h', 'lherrera@gmail.com', '688990011', 'Calle Alerce 8', 'Marta Herrera', 'masculí');
+INSERT INTO Ovi_User VALUES('00112233S', 'Irene', 'Rubio', '1982-09-17', 'ireneR', 'irubio@gmail.com', '699001122', 'Calle Castaño 1', NULL, 'femení');
