@@ -1,10 +1,10 @@
-CREATE TABLE Negotiation (
+CREATE TABLE Selection (
 	idSelection			VARCHAR(9),
 	date				DATE NOT NULL,
 	state				VARCHAR(40) NOT NULL,
 	idCommunication		VARCHAR(9) NOT NULL,
 	idPap				VARCHAR(9) NOT NULL,
-	IdAsReq				VARCHAR(9) NOT NULL,
+	idAsReq				VARCHAR(9) NOT NULL,
 
 	--Clave Primaria
 	
