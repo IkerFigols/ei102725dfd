@@ -1,0 +1,21 @@
+-- Inserts para Assistance_Request (Orden: idAsReq, data, tipo, userPreferences, idOviUser)
+INSERT INTO Assistance_Request VALUES ('ASR123456', '2026-01-10', 'Médica', 'Preferencia mañana', '23456789B');
+INSERT INTO Assistance_Request VALUES ('ASR000001', '2026-01-15', 'Técnica', 'Contacto por email', '34567890C');
+INSERT INTO Assistance_Request VALUES ('ASR000002', '2026-01-20', 'Administrativa', 'Urgente', '45678901D');
+INSERT INTO Assistance_Request VALUES ('ASR000003', '2026-01-25', 'Médica', 'Especialista requerido', '56789012E');
+INSERT INTO Assistance_Request VALUES ('ASR000004', '2026-02-01', 'Social', 'Preferencia tarde', '67890123F');
+INSERT INTO Assistance_Request VALUES ('ASR000005', '2026-02-05', 'Técnica', 'Sin preferencia horaria', '78901234G');
+INSERT INTO Assistance_Request VALUES ('ASR000006', '2026-02-08', 'Administrativa', 'Cita presencial', '89012345H');
+INSERT INTO Assistance_Request VALUES ('ASR000007', '2026-02-12', 'Médica', 'Preferencia mañana', '90123456I');
+INSERT INTO Assistance_Request VALUES ('ASR000008', '2026-02-15', 'Social', 'Seguimiento telefónico', '01234567J');
+INSERT INTO Assistance_Request VALUES ('ASR000009', '2026-02-20', 'Técnica', 'Reparación en domicilio', '11223344K');
+INSERT INTO Assistance_Request VALUES ('ASR000010', '2026-02-25', 'Administrativa', 'Documentación lista', '22334455L');
+INSERT INTO Assistance_Request VALUES ('ASR000011', '2026-03-01', 'Médica', 'Preferencia tarde', '33445566M');
+INSERT INTO Assistance_Request VALUES ('ASR000012', '2026-03-02', 'Social', 'Asistencia semanal', '44556677N');
+INSERT INTO Assistance_Request VALUES ('ASR000013', '2026-03-05', 'Técnica', 'Instalación nueva', '55667788P');
+INSERT INTO Assistance_Request VALUES ('ASR000014', '2026-03-08', 'Administrativa', 'Revisión de contrato', '66778899Q');
+INSERT INTO Assistance_Request VALUES ('ASR000015', '2026-03-10', 'Médica', 'Urgencia leve', '77889900R');
+INSERT INTO Assistance_Request VALUES ('ASR000016', '2026-03-12', 'Social', 'Acompañamiento', '88990011S');
+INSERT INTO Assistance_Request VALUES ('ASR000017', '2026-03-15', 'Técnica', 'Soporte remoto', '99001122T');
+INSERT INTO Assistance_Request VALUES ('ASR000018', '2026-03-18', 'Administrativa', 'Preferencia mañana', '10203040U');
+INSERT INTO Assistance_Request VALUES ('ASR000019', '2026-03-20', 'Médica', 'Consulta general', '50607080V');

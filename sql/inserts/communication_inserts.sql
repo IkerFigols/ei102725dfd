@@ -1,0 +1,21 @@
+-- Inserts para Communication (Orden: idCommunication, data, information)
+INSERT INTO Communication VALUES ('COM123456', '2026-01-31', 'Notificación enviada: Selección aprobada');
+INSERT INTO Communication VALUES ('COM000001', '2026-02-02', 'Comunicación de estado: En curso');
+INSERT INTO Communication VALUES ('COM000002', '2026-02-06', 'Notificación enviada: Selección rechazada');
+INSERT INTO Communication VALUES ('COM000003', '2026-02-11', 'Notificación enviada: Selección aprobada');
+INSERT INTO Communication VALUES ('COM000004', '2026-02-13', 'Comunicación de estado: En curso');
+INSERT INTO Communication VALUES ('COM000005', '2026-02-16', 'Notificación enviada: Selección aprobada');
+INSERT INTO Communication VALUES ('COM000006', '2026-02-19', 'Notificación enviada: Selección rechazada');
+INSERT INTO Communication VALUES ('COM000007', '2026-02-21', 'Comunicación de estado: En curso');
+INSERT INTO Communication VALUES ('COM000008', '2026-03-02', 'Notificación enviada: Selección aprobada');
+INSERT INTO Communication VALUES ('COM000009', '2026-03-04', 'Comunicación de estado: En curso');
+INSERT INTO Communication VALUES ('COM000010', '2026-03-06', 'Notificación enviada: Selección rechazada');
+INSERT INTO Communication VALUES ('COM000011', '2026-03-08', 'Notificación enviada: Selección aprobada');
+INSERT INTO Communication VALUES ('COM000012', '2026-03-11', 'Comunicación de estado: En curso');
+INSERT INTO Communication VALUES ('COM000013', '2026-03-13', 'Notificación enviada: Selección aprobada');
+INSERT INTO Communication VALUES ('COM000014', '2026-03-15', 'Notificación enviada: Selección rechazada');
+INSERT INTO Communication VALUES ('COM000015', '2026-03-17', 'Comunicación de estado: En curso');
+INSERT INTO Communication VALUES ('COM000016', '2026-03-19', 'Notificación enviada: Selección aprobada');
+INSERT INTO Communication VALUES ('COM000017', '2026-03-21', 'Comunicación de estado: En curso');
+INSERT INTO Communication VALUES ('COM000018', '2026-03-23', 'Notificación enviada: Selección rechazada');
+INSERT INTO Communication VALUES ('COM000019', '2026-03-26', 'Notificación enviada: Selección aprobada');
