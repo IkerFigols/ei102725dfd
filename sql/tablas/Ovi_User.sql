@@ -1,5 +1,5 @@
 CREATE TABLE Ovi_User(
-    dni             VARCHAR(19),
+    dni             VARCHAR(9),
     birthdayDate    DATE        NOT NULL,
     password        VARCHAR(20) NOT NULL,
     address         VARCHAR(50) NOT NULL,
