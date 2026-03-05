@@ -1,5 +1,5 @@
 CREATE TABLE Ovi_User(
-    dni             VARCHAR(10),
+    dni             VARCHAR(19),
     birthdayDate    DATE        NOT NULL,
     password        VARCHAR(20) NOT NULL,
     address         VARCHAR(50) NOT NULL,
@@ -12,4 +12,5 @@ CREATE TABLE Ovi_User(
         (EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM birthdayDate) >= 18 AND legalGuardian IS NULL) OR
         (EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM birthdayDate) < 18 AND legalGuardian IS NOT NULL)
     )
+    CONSTRAINT chk_dni CHECK(LENGTH(dni) = 9)
 );
