@@ -1,0 +1,21 @@
+-- Inserts para la tabla Pap_Pati
+INSERT INTO Pap_Pati VALUES ('12345671A', 'Pass_Adri24', 'Calle Colón 12, Valencia', 'PAP', true, 'Curso de atención a personas dependientes y primeros auxilios.', 'Certificado Profesionalidad Sociosanitaria');
+INSERT INTO Pap_Pati VALUES ('23456782B', 'Bea_Serrano99', 'Avenida del Puerto 45, Valencia', 'PATI', true, 'Formación en acompañamiento en transporte público adaptado.', 'Certificado de Delitos Sexuales');
+INSERT INTO Pap_Pati VALUES ('34567893C', 'Cris_Del77', 'Calle Mayor 5, Castellón de la Plana', 'PAP', false, 'Técnico en Cuidados Auxiliares de Enfermería (TCAE).', 'Título Oficial TCAE');
+INSERT INTO Pap_Pati VALUES ('45678904D', 'DaniRom_2024', 'Plaza de la Montañeta 3, Alicante', 'PATI', true, 'Taller de sensibilización en diversidad funcional.', 'Certificado de Delitos Sexuales');
+INSERT INTO Pap_Pati VALUES ('56789015E', 'EnriqueRub_#1', 'Calle San Vicente 102, Valencia', 'PAP', true, 'Especialista en movilización de pacientes críticos.', 'Diploma Movilidad Reducida');
+INSERT INTO Pap_Pati VALUES ('67890126F', 'Fatima_T2023', 'Calle de la Paz 8, Valencia', 'PATI', false, 'Curso de acompañamiento inclusivo y protocolos de seguridad.', 'Certificado de Delitos Sexuales');
+INSERT INTO Pap_Pati VALUES ('78901237G', 'Gonzo_Medina!', 'Calle Elche 14, Alicante', 'PAP', true, 'Grado medio en atención a personas en situación de dependencia.', 'Título Técnico Dependencia');
+INSERT INTO Pap_Pati VALUES ('89012348H', 'Helen_Cast88', 'Calle Herrero 22, Castellón de la Plana', 'PATI', true, 'Capacitación en rutas accesibles y logística urbana.', 'Certificado de Delitos Sexuales');
+INSERT INTO Pap_Pati VALUES ('90123459I', 'Ivan_Cortes_X', 'Avenida Aguilera 19, Alicante', 'PAP', true, 'Formación en psicología aplicada a la discapacidad.', 'Certificado Asistencia Psicológica');
+INSERT INTO Pap_Pati VALUES ('01234560J', 'Julia_Blan00', 'Calle En Medio 33, Castellón de la Plana', 'PATI', true, 'Protocolos de ayuda en estaciones de tren y autobús.', 'Certificado de Delitos Sexuales');
+INSERT INTO Pap_Pati VALUES ('11223341K', 'Kev_Suarez_01', 'Calle Alicante 7, San Vicente del Raspeig', 'PAP', false, 'Experto en manejo de grúas y transferencias de cama a silla.', 'Diploma Manejo de Equipos Médicos');
+INSERT INTO Pap_Pati VALUES ('22334452L', 'LoreBravo_22', 'Gran Vía Marqués del Turia 60, Valencia', 'PATI', true, 'Curso de comunicación asertiva y resolución de conflictos.', 'Certificado de Delitos Sexuales');
+INSERT INTO Pap_Pati VALUES ('33445563M', 'Mario_Gal_85', 'Calle Pintor Sorolla 2, Valencia', 'PAP', true, 'Formación técnica en autonomía personal y vida independiente.', 'Certificado Profesionalidad');
+INSERT INTO Pap_Pati VALUES ('44556674N', 'Nati_Pas_94', 'Calle Mayor 88, Villarreal', 'PATI', true, 'Curso de voluntariado en movilidad inclusiva.', 'Certificado de Delitos Sexuales');
+INSERT INTO Pap_Pati VALUES ('55667785P', 'Oscar_Ari_Safe', 'Avenida de Francia 15, Valencia', 'PAP', false, 'Técnico superior en integración social.', 'Título Integrador Social');
+INSERT INTO Pap_Pati VALUES ('66778896Q', 'Patri_Pena_7', 'Calle Gerona 12, Alicante', 'PATI', true, 'Formación específica en el uso de rampas y plataformas.', 'Certificado de Delitos Sexuales');
+INSERT INTO Pap_Pati VALUES ('77889907R', 'Quico_Vid_91', 'Calle Ruzafa 4, Valencia', 'PAP', true, 'Auxiliar de geriatría con mención en movilidad reducida.', 'Diploma Auxiliar Geriatría');
+INSERT INTO Pap_Pati VALUES ('88990018S', 'Rosa_Cab_2024', 'Calle San Pascual 3, Gandía', 'PATI', true, 'Taller de acompañamiento y guiado de personas con discapacidad visual.', 'Certificado de Delitos Sexuales');
+INSERT INTO Pap_Pati VALUES ('99001129T', 'Samu_Flores_!', 'Calle Lucentum 45, Alicante', 'PAP', true, 'Curso avanzado de primeros auxilios y soporte vital básico.', 'Carné de Socorrista');
+INSERT INTO Pap_Pati VALUES ('10203041U', 'Tere_Fuentes_9', 'Avenida de la Constitución 11, Elche', 'PATI', false, 'Curso de logística y acompañamiento en eventos públicos.', 'Certificado de Delitos Sexuales');
