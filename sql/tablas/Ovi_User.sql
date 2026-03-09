@@ -15,7 +15,7 @@ CREATE TABLE Ovi_User(
     CONSTRAINT chk_legalGuardian CHECK (
         (EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM birthdayDate) >= 18 AND legalGuardian IS NULL) OR
         (EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM birthdayDate) < 18 AND legalGuardian IS NOT NULL)
-    )
+    ),
     CONSTRAINT chk_dni CHECK(LENGTH(dni) = 9),
     CONSTRAINT chk_reason CHECK( (reason IS NULL AND accepted IS TRUE)  OR
     (reason IS NOT NULL AND accepted IS FALSE))

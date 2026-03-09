@@ -1,0 +1,21 @@
+DROP TABLE Contract;
+DROP TABLE Selection;
+DROP TABLE Communication;
+DROP TABLE Assistance_Request;
+DROP TABLE Attendance;
+DROP TABLE Ovi_User;
+DROP TABLE Pap_Pati;
+DROP TABLE Activity;
+DROP TABLE Instructor;
+DROP TABLE Person;
+\i person.sql;
+\i instructor.sql;
+\i activity.sql;
+\i pap_pati.sql;
+\i Ovi_User.sql;
+\i attendance.sql;
+\i assistance_request.sql;
+\i communication.sql;
+\i selection.sql;
+\i contract.sql;
+

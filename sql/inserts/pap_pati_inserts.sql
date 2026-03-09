@@ -1,4 +1,4 @@
-to: dni, password, address, type, available, training, document, reason, accepted, papPatiPreferences
+--to: dni, password, address, type, available, training, document, reason, accepted, papPatiPreferences
 
 INSERT INTO Pap_Pati VALUES ('12345671A', 'Pass_Adri24', 'Calle Colón 12, Valencia', 'PAP', true, 'Curso de atención a personas dependientes y primeros auxilios.', 'Certificado Profesionalidad Sociosanitaria', NULL, true, 'Preferencia por horarios de mañana y zona centro.');
 INSERT INTO Pap_Pati VALUES ('23456782B', 'Bea_Serrano99', 'Avenida del Puerto 45, Valencia', 'PATI', true, 'Formación en acompañamiento en transporte público adaptado.', 'Certificado de Delitos Sexuales', NULL, true, 'Disponibilidad fines de semana.');

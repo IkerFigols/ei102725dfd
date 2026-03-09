@@ -7,7 +7,7 @@ CREATE TABLE Activity (
 	address			VARCHAR(50)	NOT NULL,
 	capacity		NUMERIC,
 	sponsor			VARCHAR(20),
-	idInstructor		VARCHAR(9)	NOT NULL
+	idInstructor		VARCHAR(9)	NOT NULL,
 
 	CONSTRAINT cp_activity PRIMARY KEY (idActivity),
 	CONSTRAINT ca_instructor FOREIGN KEY (idInstructor) REFERENCES Instructor (dni)
