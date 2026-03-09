@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca"> ①
+<head>
+    <title>Gestionar Nadadors</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1>Llista de Nadadors</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Num. Federat</th>
+        <th>Nom</th>
+        <th>Pais</th>
+        <th>Edat</th>
+        <th>Gènere</th>
+        <td></td> <!-- no usar <th> quan no hi ha capçalera -->
+        <td></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="nadador: ${nadadors}"> ②
+        <td th:text="${nadador.numFederat}"></td> ③
+        <td th:text="${nadador.nom}"></td>
+        <td th:text="${nadador.pais}"></td>
+        <td th:text="${nadador.edat}"></td>
+        <td th:text="${nadador.genere}"></td>
+        <td><a th:href="@{/nadador/update/{nom}(nom=${nadador.nom})}">Edita</a> ④
+        </td>
+        <td><a th:href="@{/nadador/delete/{nom}(nom=${nadador.nom})}">Esborra</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add">Afegeix nadador</a> ⑤
+<br><br>
+<a href="/">Tornar</a>
+</body>
+</html>
+
