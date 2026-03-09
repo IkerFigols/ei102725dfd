@@ -1,4 +1,4 @@
-REATE TABLE Pap_Pati (
+CREATE TABLE Pap_Pati (
 		dni				VARCHAR(9)	NOT NULL,
 		password			VARCHAR(20) 	NOT NULL,
 		address				VARCHAR(40) 	NOT NULL,
