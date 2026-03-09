@@ -1,9 +1,10 @@
 CREATE TABLE Assistance_Request(
 
 idAsReq		VARCHAR(9),
-data		DATE 	NOT NULL,
-idOviUser	VARCHAR(9) NOT NULL,
-state		VARCHAR(15)NOT NULL,
+data		DATE 			NOT NULL,
+description VARCHAR(250)	NOT NULL
+idOviUser	VARCHAR(9) 		NOT NULL,
+state		VARCHAR(15)		NOT NULL,
 reason 		VARCHAR(250),
 
 CONSTRAINT cp_assistance_request PRIMARY KEY (idAsReq),
