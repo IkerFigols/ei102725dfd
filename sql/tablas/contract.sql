@@ -8,6 +8,7 @@ CREATE TABLE Contract (
 	idSelection		VARCHAR(9),
 
 	CONSTRAINT cp_contract PRIMARY KEY (idContract),
+	CONSTRIANT calt_contract UNIQUE (idSelection),
 	CONSTRAINT ca_contract FOREIGN KEY (idSelection) 
 		REFERENCES Selection(idSelection)
 		ON DELETE SET NULL
