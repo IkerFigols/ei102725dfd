@@ -24,14 +24,19 @@ public class OviUserDao {
 
 
     public void addOviUser( Ovi_User oviUser) {
+        String legalGuardian = oviUser.getLegalGuardian();
+        if (legalGuardian.equals(""))
+            legalGuardian = null;
+
+
         jdbcTemplate.update("INSERT INTO Ovi_User VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
                 oviUser.getDni(),
                 oviUser.getBirthdayDate(),
                 oviUser.getPassword(),
                 oviUser.getAddress(),
-                oviUser.getLegalGuardian(),
-                oviUser.getAccepted(),
-                oviUser.getReason(),
+                legalGuardian,
+                false,
+                "pendiente",
                 oviUser.getUserPreferences()
         );
     }
