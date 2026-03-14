@@ -1,5 +1,6 @@
 package es.uji.ei1027.sgOvi.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Activity {
@@ -7,7 +8,7 @@ public class Activity {
     private String activityType;
     private String title;
     private String description;
-    private Date   date;
+    private LocalDate date;
     private String address;
     private Integer Capacity;   //Integer para que pueda admitir nulos
     private String sponsor;
@@ -45,11 +46,11 @@ public class Activity {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
