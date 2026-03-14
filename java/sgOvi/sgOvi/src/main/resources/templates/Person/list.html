@@ -10,35 +10,31 @@
     <thead>
     <tr>
         <th>Dni</th>
-        <th>BirthdayDate</th>
-        <th>Password</th>
-        <th>Address</th>
-        <th>LegalGuardian</th>
-        <th>Accepted</th>
-        <th>Reason</th>
-        <th>UserPreferences</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>PhoneNumber</th>
+        <th>Email</th>
+        <th>Gender</th>
         <td></td>
         <td></td>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="oviUser: ${oviUsers}">
-        <td th:text="${oviUser.dni}"></td>
-        <td th:text="${oviUser.birthdayDate}"></td>
-        <td th:text="${oviUser.password}"></td>
-        <td th:text="${oviUser.address}"></td>
-        <td th:text="${oviUser.LegalGuardian}"></td>
-        <td th:text="${oviUser.accepted}"></td>
-        <td th:text="${oviUser.reason}"></td>
-        <td th:text="${oviUser.userPreferences}"></td>
-        <td><a th:href="@{/Ovi_User/update/{dni}(dni=${oviUser.dni})}">Editar</a>
+    <tr th:each="person: ${persons}">
+        <td th:text="${person.dni}"></td>
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.surname}"></td>
+        <td th:text="${person.phoneNumber}"></td>
+        <td th:text="${person.email}"></td>
+        <td th:text="${person.gender}"></td>
+        <td><a th:href="@{/Person/update/{dni}(dni=${person.dni})}">Editar</a>
         </td>
-        <td><a th:href="@{/Ovi_User/delete/{dni}(dni=${oviUser.dni})}">Borrar</a>
+        <td><a th:href="@{/Person/delete/{dni}(dni=${person.dni})}">Borrar</a>
         </td>
     </tr>
     </tbody>
 </table>
-<a href="add">Añadir Ovi User</a>
+<a href="add">Añadir Person</a>
 <br><br>
 <a href="/" >Volver</a>
 </body>
