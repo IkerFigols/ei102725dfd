@@ -1,7 +1,9 @@
 package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.OviUserDao;
+import es.uji.ei1027.sgOvi.dao.PersonDao;
 import es.uji.ei1027.sgOvi.model.Ovi_User;
+import es.uji.ei1027.sgOvi.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,52 +15,52 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping("/Ovi_User")
+@RequestMapping("/Person")
 public class PersonController {
 
-    private OviUserDao oviUserDao;
+    private PersonDao personDao;
 
 
     @Autowired
-    public void setOviUserDao(OviUserDao oviUserDao) {
-        this.oviUserDao=oviUserDao;
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao=personDao;
     }
 
     // Operacions: Crear, llistar, actualitzar, esborrar
     // ...
     @RequestMapping("/list")
-    public String listOviUsers(Model model) {
-        model.addAttribute("oviUsers", oviUserDao.getOviUsers());
-        return "Ovi_User/list";
+    public String listPersons(Model model) {
+        model.addAttribute("persons", personDao.getPersons());
+        return "Person/list";
     }
     @RequestMapping(value="/add")
-    public String addOviUser(Model model) {
-        model.addAttribute("oviUser", new Ovi_User());
-        return "Ovi_User/add";
+    public String addPerson(Model model) {
+        model.addAttribute("person", new Person());
+        return "Person/add";
     }
     @RequestMapping(value="/add", method=RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("oviUser") Ovi_User oviUser,
+    public String processAddSubmit(@ModelAttribute("person") Person person,
                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "Ovi_User/add";
-        oviUserDao.addOviUser(oviUser);
+            return "Person/add";
+        personDao.addPerson(person);
         return "redirect:list";
     }
     @RequestMapping(value="/update/{dni}", method = RequestMethod.GET)
     public String editOviUser(Model model, @PathVariable String dni) {
-        model.addAttribute("oviUser", oviUserDao.getOviUser(dni));
-        return "Ovi_User/update";
+        model.addAttribute("person", personDao.getPerson(dni));
+        return "Person/update";
     }
     @RequestMapping(value="/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("oviUser") Ovi_User oviUser, BindingResult bindingResult) {
+    public String processUpdateSubmit(@ModelAttribute("person") Person person, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "Ovi_User/update";
-        oviUserDao.updateOviUser(oviUser);
+            return "Person/update";
+        personDao.updatePerson(person);
         return "redirect:list";
     }
     @RequestMapping(value="/delete/{dni}")
     public String processDelete(@PathVariable String dni) {
-        oviUserDao.deleteOviUser(dni);
+        personDao.deletePerson(dni);
         return "redirect:../list";
     }
 

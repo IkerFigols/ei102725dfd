@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <title>Crear nuevo Ovi User</title>
+</head>
+
+
+<body>
+<main>
+  <h1>Nuevo ovi_user</h1>
+  <form th:action="@{/Ovi_User/add}" th:object="${oviUser}" method="post">
+    <div>
+      <label for="dni">Dni: </label>
+      <input id="dni" type="text" th:field="*{dni}">
+    </div>
+
+    <div>
+      <label for="birthdayDate">Fecha de nacimiento: </label>
+      <input id="birthdayDate" type="date" th:field="*{birthdayDate}">
+    </div>
+
+    <div>
+      <label for="password">Contraseña: </label>
+      <input id="password" type="password" th:field="*{password}">
+    </div>
+
+    <div>
+      <label for="address">Dirección: </label>
+      <input id="address" type="text" th:field="*{address}">
+    </div>
+
+    <div>
+      <label for="legalGuardian">Tutor legal: </label>
+      <input id="legalGuardian" type="text" th:field="*{legalGuardian}">
+    </div>
+
+    <div>
+      <label for="userPreferences">Preferencias del usuario: </label>
+      <input id="userPreferences" type="text" th:field="*{userPreferences}">
+    </div>
+
+    <button type="submit">Añadir ovi user</button>
+
+
+  </form>
+</main>
+</body>
+</html>
