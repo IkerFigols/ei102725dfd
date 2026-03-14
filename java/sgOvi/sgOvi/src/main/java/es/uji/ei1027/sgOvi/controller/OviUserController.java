@@ -32,7 +32,7 @@ public class OviUserController {
         return "oviUser/list";
     }
     @RequestMapping(value="/add")
-    public String addOvisUser(Model model) {
+    public String addOviUser(Model model) {
         model.addAttribute("oviUser", new Ovi_User());
         return "oviUser/add";
     }
