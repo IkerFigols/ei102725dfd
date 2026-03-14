@@ -2,52 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
     <meta charset="UTF-8" />
-    <title>Actualiza un usuario OVI</title>
+    <title>Actualiza los datos de una persona</title>
 </head>
 
 <body>
 <main>
     <h1>Actualiza los datos del usuario OVI</h1>
-    <form th:action="@{/Ovi_User/add}" th:object="${oviUser}" method="post">
+    <form th:action="@{/Person/add}" th:object="${person}" method="post">
         <div>
-            <label for="birthdayDate">Fecha Nacim.: </label>
-            <input id="birthdayDate" type="date" th:field="*{birthdayDate}">
-        </div>
-
-
-        <div>
-            <label for="password" >Contraseña</label>
-            <input id="password" type="text" th:field="*{password}" >
+            <label for="name">Nombre: </label>
+            <input id="name" type="text" th:field="*{name}">
         </div>
 
 
         <div>
-            <label for="address">Dirección</label>
-            <input id="address" type="text" th:field="*{address}">
+            <label for="surname" >Apellidos</label>
+            <input id="surname" type="text" th:field="*{surname}" >
+        </div>
+
+
+        <div>
+            <label for="phoneNumber">Tfno.</label>
+            <input id="phoneNumber" type="text" th:field="*{phoneNumber}">
         </div>
 
         <div>
 
-            <label for="legalGuardian">Tutor legal</label>
-            <input id="legalGuardian" th:field="*{legalGuardian}" >
+            <label for="email">Email</label>
+            <input id="email" th:field="*{email}" >
         </div>
 
         <div>
-            <label for="accepted">Aceptado</label>
-            <input id="accepted" type="checkbox" th:field="*{accepted}">
+            <label for="gender">Género</label>
+            <select id="gender" th:field="*{gender}">
+                <option th:value="'Hombre'" th:text="Hombre">Hombre</option>
+                <option th:value="'Mujer'" th:text="Mujer">Mujer</option>
+                <option th:value="'Otro'" th:text="Otro">Otro</option>
+            </select>
         </div>
 
-        <div >
-            <label for="reason">Razón</label>
-            <input id="reason" type="text" th:field="*{reason}">
-        </div>
-
-        <div >
-            <label for="userPreferences">Preferencias de usuario</label>
-            <input id="userPreferences" type="text" th:field="*{userPreferences}">
-        </div>
-
-        <button type="submit">Actualiza usuario OVI</button>
+        <button type="submit">Actualizar persona</button>
     </form>
 </main>
 </body>
