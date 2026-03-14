@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping("/oviUser")
+@RequestMapping("/Ovi_User")
 public class OviUserController {
 
     private OviUserDao oviUserDao;
@@ -29,30 +29,30 @@ public class OviUserController {
     @RequestMapping("/list")
     public String listOviUsers(Model model) {
         model.addAttribute("oviUsers", oviUserDao.getOviUsers());
-        return "oviUser/list";
+        return "Ovi_User/list";
     }
     @RequestMapping(value="/add")
     public String addOviUser(Model model) {
         model.addAttribute("oviUser", new Ovi_User());
-        return "oviUser/add";
+        return "Ovi_User/add";
     }
     @RequestMapping(value="/add", method=RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("oviUser") Ovi_User oviUser,
                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "oviUser/add";
+            return "Ovi_User/add";
         oviUserDao.addOviUser(oviUser);
         return "redirect:list";
     }
     @RequestMapping(value="/update/{dni}", method = RequestMethod.GET)
     public String editOviUser(Model model, @PathVariable String dni) {
         model.addAttribute("oviUser", oviUserDao.getOviUser(dni));
-        return "oviUser/update";
+        return "Ovi_User/update";
     }
     @RequestMapping(value="/update", method = RequestMethod.POST)
     public String processUpdateSubmit(@ModelAttribute("oviUser") Ovi_User oviUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "oviUser/update";
+            return "Ovi_User/update";
         oviUserDao.updateOviUser(oviUser);
         return "redirect:list";
     }
