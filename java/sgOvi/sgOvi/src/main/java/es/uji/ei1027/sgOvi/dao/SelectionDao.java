@@ -21,7 +21,7 @@ public class SelectionDao {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    /* Afegeix la selección a la base de dades */
+    /* añade la seleccion */
     public void addSelection(Selection selection) {
         jdbcTemplate.update("INSERT INTO Selection VALUES(?, ?, ?, ?, ?, ?)",
                 selection.getIdSelection(),
@@ -33,12 +33,12 @@ public class SelectionDao {
         );
     }
 
-    /* Esborra la selección de la base de dades */
+    /* Borra la selección */
     public void deleteSelection(String idSelection) {
         jdbcTemplate.update("DELETE FROM Selection WHERE idSelection = '" + idSelection + "'");
     }
 
-    /* Actualitza els atributs de la selección (excepte la clau primària) */
+    /* Actualzia la seleccion */
     public void updateSelection(Selection selection) {
         jdbcTemplate.update("UPDATE Selection SET date = '" + selection.getDate()
                 + "', state = '" + selection.getState()
@@ -48,7 +48,7 @@ public class SelectionDao {
                 + "' WHERE idSelection = '" + selection.getIdSelection() + "'");
     }
 
-    /* Obté la selección amb el id donat. Torna null si no existeix. */
+    /*Obtiene la seleccion especificada */
     public Selection getSelection(String idSelection) {
         try {
             Selection s = jdbcTemplate.queryForObject(
@@ -61,7 +61,7 @@ public class SelectionDao {
         }
     }
 
-    /* Obté totes les seleccions. Torna una llista buida si no n'hi ha cap. */
+    /* Obtiene todas las selecciones */
     public List<Selection> getSelections() {
         try {
             return jdbcTemplate.query("SELECT * FROM Selection", new SelectionRowMapper());
