@@ -2,42 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
   <meta charset="UTF-8" />
-  <title>Crear nuevo Ovi User</title>
+  <title>Crear nueva persona</title>
 </head>
 
 
 <body>
 <main>
-  <h1>Nuevo ovi_user</h1>
-  <form th:action="@{/Ovi_User/add}" th:object="${oviUser}" method="post">
+  <h1>Nueva persona</h1>
+  <form th:action="@{/Person/add}" th:object="${person}" method="post">
     <div>
       <label for="dni">Dni: </label>
       <input id="dni" type="text" th:field="*{dni}">
     </div>
 
     <div>
-      <label for="birthdayDate">Fecha de nacimiento: </label>
-      <input id="birthdayDate" type="date" th:field="*{birthdayDate}">
+      <label for="name">Nombre: </label>
+      <input id="name" type="text" th:field="*{name}">
     </div>
 
     <div>
-      <label for="password">Contraseña: </label>
-      <input id="password" type="password" th:field="*{password}">
+      <label for="surname">Apellidos: </label>
+      <input id="surname" type="text" th:field="*{surname}">
     </div>
 
     <div>
-      <label for="address">Dirección: </label>
-      <input id="address" type="text" th:field="*{address}">
+      <label for="phoneNumber">Número de teléfono: </label>
+      <input id="phoneNumber" type="text" th:field="*{phoneNumber}">
     </div>
 
     <div>
-      <label for="legalGuardian">Tutor legal: </label>
-      <input id="legalGuardian" type="text" th:field="*{legalGuardian}">
+      <label for="email">email: </label>
+      <input id="email" type="text" th:field="*{email}">
     </div>
 
     <div>
-      <label for="userPreferences">Preferencias del usuario: </label>
-      <input id="userPreferences" type="text" th:field="*{userPreferences}">
+      <label>Género:</label>
+  
+      <input type="radio" id="masculino" value="Masculino" th:field="*{gender}">
+      <label for="masculino">Masculino</label>
+
+      <input type="radio" id="femenino" value="Femenino" th:field="*{gender}">
+      <label for="femenino">Femenino</label>
+
+      <input type="radio" id="otros" value="Otros" th:field="*{gender}">
+      <label for="otros">Otros</label>
     </div>
 
     <button type="submit">Añadir ovi user</button>
