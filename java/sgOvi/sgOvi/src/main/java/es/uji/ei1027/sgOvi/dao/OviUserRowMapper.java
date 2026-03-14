@@ -11,7 +11,7 @@ public final class OviUserRowMapper implements RowMapper<Ovi_User> {
         Ovi_User oviUser = new Ovi_User();
         oviUser.setDni(rs.getString("dni"));
         oviUser.setAccepted(rs.getBoolean("accepted"));
-        oviUser.setBirthdayDate((LocalDate) rs.getObject("birthdayDate"));
+        oviUser.setBirthdayDate(rs.getObject("birthdayDate", LocalDate.class));
         oviUser.setUserPreferences(rs.getString("userPreferences"));
         oviUser.setPassword(rs.getString("password"));
         oviUser.setAddress(rs.getString("address"));

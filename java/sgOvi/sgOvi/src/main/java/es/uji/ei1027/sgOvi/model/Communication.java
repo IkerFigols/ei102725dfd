@@ -10,7 +10,7 @@ public class Communication {
         return idCommunication;
     }
 
-    public LocalDate getData() {
+    public LocalDate getDate() {
         return data;
     }
 
@@ -34,7 +34,7 @@ public class Communication {
     public String toString() {
         return "Communication{" +
                 "idCommunication='" + idCommunication + '\'' +
-                ", date=" + data +
+                ", data=" + data +
                 ", information='" + information + '\'' +
                 '}';
     }

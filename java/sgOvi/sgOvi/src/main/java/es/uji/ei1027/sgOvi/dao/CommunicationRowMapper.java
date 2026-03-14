@@ -10,7 +10,7 @@ public final class CommunicationRowMapper implements RowMapper<Communication> {
     public Communication mapRow(ResultSet rs, int rowNum) throws SQLException {
         Communication communication = new Communication();
         communication.setIdCommunication(rs.getString("idCommunication"));
-        communication.setData((LocalDate) rs.getObject("data"));
+        communication.setData(rs.getObject("data", LocalDate.class));
         communication.setInformation(rs.getString("information"));
         return communication;
     }
