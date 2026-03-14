@@ -10,7 +10,7 @@ public class Communication {
         return idCommunication;
     }
 
-    public LocalDate getDate() {
+    public LocalDate getData() {
         return data;
     }
 
