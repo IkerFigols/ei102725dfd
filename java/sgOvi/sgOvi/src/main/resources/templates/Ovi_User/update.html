@@ -8,7 +8,7 @@
 <body>
 <main>
     <h1>Actualiza los datos del usuario OVI</h1>
-    <form th:action="@{/Ovi_User/add}" th:object="${oviUser}" method="post">
+    <form th:action="@{/Ovi_User/update}" th:object="${oviUser}" method="post">
         <div>
             <label for="birthdayDate">Fecha Nacim.: </label>
             <input id="birthdayDate" type="date" th:field="*{birthdayDate}">

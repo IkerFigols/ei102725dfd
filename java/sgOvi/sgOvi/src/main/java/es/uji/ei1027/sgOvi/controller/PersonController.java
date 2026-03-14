@@ -56,7 +56,7 @@ public class PersonController {
         if (bindingResult.hasErrors())
             return "Person/update";
         personDao.updatePerson(person);
-        return "redirect:list";
+        return "redirect:/Person/list";
     }
     @RequestMapping(value="/delete/{dni}")
     public String processDelete(@PathVariable String dni) {

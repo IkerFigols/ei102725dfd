@@ -8,7 +8,8 @@
 <body>
 <main>
     <h1>Actualiza los datos de la persona</h1>
-    <form th:action="@{/Person/add}" th:object="${person}" method="post">
+    <form th:action="@{/Person/update}" th:object="${person}" method="post">
+        <input type="hidden" th:field="*{dni}" />
         <div>
             <label for="name">Nombre: </label>
             <input id="name" type="text" th:field="*{name}">

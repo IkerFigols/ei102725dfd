@@ -40,14 +40,17 @@ public class PersonDao {
 
     /* Actualiza los atributos de una persona */
     public void updatePerson(Person person) {
-        jdbcTemplate.update("UPDATE Person SET name = '" + person.getName()
-                + "', surname = '" + person.getSurname()
-                + "', phoneNumber = '" + person.getPhoneNumber()
-                + "', email = '" + person.getEmail()
-                + "', gender = '" + person.getGender()
-                + "' WHERE dni = '" + person.getDni() + "'");
-    }
+        String sql = "UPDATE Person SET name = ?, surname = ?, phoneNumber = ?, email = ?, gender = ? WHERE dni = ?";
 
+        jdbcTemplate.update(sql,
+                person.getName(),
+                person.getSurname(),
+                person.getPhoneNumber(),
+                person.getEmail(),
+                person.getGender(),
+                person.getDni()
+        );
+    }
     /* Obtiene una persona concreta */
     public Person getPerson(String dni) {
         try {
