@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+    <title>Gestionar Ovi Users</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<h1>Lista de Ovi Users</h1>
+<table>
+    <thead>
+    <tr>
+        <th>idAsReq</th>
+        <th>Fecha</th>
+        <th>Descripcion</th>
+        <th>idOviUser</th>
+        <th>Estado</th>
+        <th>Razón</th>
+        <td></td>
+        <td></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="assistanceRequest: ${assistanceRequests}">
+        <td th:text="${assistanceRequest.idAsReq}"></td>
+        <td th:text="${assistanceRequest.data}"></td>
+        <td th:text="${assistanceRequest.description}"></td>
+        <td th:text="${assistanceRequest.idOviUser}"></td>
+        <td th:text="${assistanceRequest.state}"></td>
+        <td th:text="${assistanceRequest.reason}"></td>
+        </td>
+        <td><a th:href="@{/Assistance_Request/delete/{idAsReq}(idAsReq=${assistanceRequest.idAsReq})}">Borrar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add">Solicitar Asistencia</a>
+<br><br>
+<a href="/" >Volver</a>
+</body>
+</html>

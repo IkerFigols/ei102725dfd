@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="success-container">
+    <h2 class="title">Solicitud Registrada</h2>
+
+    <p class="success-message">
+        La solicitud se ha registrado correctamente, la resolución<br>
+        de la solicitud se le enviará a su correo electrónico
+    </p>
+
+    <a th:href="@{/Assistance_Request/list}" class="btn btn-primary">Aceptar</a>
+</div>
+</body>
+</html>
