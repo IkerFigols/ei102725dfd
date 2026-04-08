@@ -12,7 +12,9 @@ public class PapPati {
     private boolean accepted;
     private String papPatiPreferences;
 
-    public PapPati() {}
+    public PapPati() {
+        accepted = true;
+    }
 
     public String getDni() {
         return dni;

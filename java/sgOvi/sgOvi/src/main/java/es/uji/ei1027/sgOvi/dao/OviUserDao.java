@@ -43,7 +43,7 @@ public class OviUserDao {
 
 
     public void deleteOviUser(String dni) {
-        jdbcTemplate.update("DELETE FROM Ovi_User WHERE dni LIKE " + dni + "'");
+        jdbcTemplate.update("DELETE FROM Ovi_User WHERE dni LIKE '" + dni + "'");
     }
 
     public void updateOviUser(Ovi_User oviUser) {

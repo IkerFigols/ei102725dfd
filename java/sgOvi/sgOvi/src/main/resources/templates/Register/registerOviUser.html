@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+    <link rel="stylesheet" href="../../style.css">
+    <meta charset="UTF-8">
+    <title>Registro Usuario Ovi</title>
+</head>
+<body>
+<main>
+<h1>Nuevo Usuario Ovi</h1>
+    <form th:action="@{/Register/registerOviUser}" th:object="${oviuser}" method="post">
+        <input type="hidden" th:field="*{dni}" />
+
+        <div>
+            <label for="birthdaydate">BirthdayDate: </label>
+            <input id="birthdaydate" type="date" th:field="*{birthdayDate}">
+        </div>
+
+
+        <div>
+            <label for="password">Contraseña: </label>
+            <input id="password" type="password" th:field="*{password}">
+        </div>
+
+        <div>
+            <label for="address">Dirección: </label>
+            <input id="address" type="text" th:field="*{address}">
+        </div>
+
+        <div>
+            <label for="legalGuardian">Nombre del tutor: </label>
+            <input id="legalGuardian" type="text" th:field="*{legalGuardian}">
+        </div>
+
+        <div>
+            <label for="userPreferences">Preferencias de usuario: </label>
+            <input id="userPreferences" type="text" th:field="*{userPreferences}">
+        </div>
+        
+        <button type="submit">Añadir </button>
+    </form>
+</main>
+</body>
+</html>

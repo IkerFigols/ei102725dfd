@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+    <link rel="stylesheet" href="../../style.css">
+    <meta charset="UTF-8">
+    <title>Registro Asistente personal</title>
+</head>
+<body>
+<main>
+    <h1>Nuevo Asistente personal </h1>
+    <form th:action="@{/Register/registerPapPati}" th:object="${pappati}" method="post">
+        <input type="hidden" th:field="*{dni}" />
+
+        <div>
+            <label>Tipo de asistente personal :</label>
+
+            <input type="radio" id="PAP" value="PAP" th:field="*{type}">
+            <label for="PAP">Pap</label>
+
+            <input type="radio" id="PATI" value="PATI" th:field="*{type}">
+            <label for="PATI">Pati</label>
+        </div>
+
+        <div>
+            <label for="password">Contraseña: </label>
+            <input id="password" type="password" th:field="*{password}">
+        </div>
+
+        <div>
+            <label for="address">Dirección: </label>
+            <input id="address" type="text" th:field="*{address}">
+        </div>
+
+        <div>
+            <label for="available">Disponibilidad: </label>
+            <input id="available" type="checkbox" th:field="*{available}">
+        </div>
+
+        <div>
+            <label for="training">Especialidades: </label>
+            <input id="training" type="text" th:field="*{training}">
+        </div>
+
+        <div>
+            <label for="document">Enlace a documento: </label>
+            <input id="document" type="text" th:field="*{document}">
+        </div>
+        <div>
+            <label for="papPatiPreferences">Preferencias del asistente: </label>
+            <input id="papPatiPreferences" type="text" th:field="*{papPatiPreferences}">
+        </div>
+
+        <button type="submit">Añadir </button>
+    </form>
+</main>
+</body>
+</html>

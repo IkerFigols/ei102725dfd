@@ -11,6 +11,10 @@ public class Ovi_User {
     private String reason;
     private String userPreferences;
 
+    public Ovi_User(){
+        accepted = true;
+    }
+
     public String getDni() {
         return dni;
     }
