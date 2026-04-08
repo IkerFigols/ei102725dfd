@@ -36,9 +36,12 @@ public class RegisterController {
                                    BindingResult bindingResult,
                                    @RequestParam("preferencia") String preferencia,
                                    Model model){
+        RegisterValidator registerValidator = new RegisterValidator();
+        registerValidator.validate(person,bindingResult);
         if (bindingResult.hasErrors()) {
             return "Register/register";
         }
+        if(personDao.getPersons().contains(person))
         personDao.addPerson(person);
         if ("OviUser".equals(preferencia)) {
             Ovi_User oviUser = new Ovi_User();
@@ -56,6 +59,8 @@ public class RegisterController {
     @RequestMapping(value="/registerOviUser", method = RequestMethod.POST)
     public String processOviSubmit(@ModelAttribute("oviuser") Ovi_User oviUser,
                                    BindingResult bindingResult) {
+        RegisterOviValidator registerOviValidator = new RegisterOviValidator();
+        registerOviValidator.validate(oviUser,bindingResult);
         if (bindingResult.hasErrors()) {
             return "Register/registerOviUser";
         }
@@ -65,6 +70,8 @@ public class RegisterController {
     @RequestMapping(value="/registerPapPati", method = RequestMethod.POST)
     public String processOviSubmit(@ModelAttribute("pappati") PapPati papPati,
                                    BindingResult bindingResult) {
+        RegisterPapPatiValidator registerPapPatiValidator = new RegisterPapPatiValidator();
+        registerPapPatiValidator.validate(papPati,bindingResult);
         if (bindingResult.hasErrors()) {
             return "Register/registerPapPati";
         }
