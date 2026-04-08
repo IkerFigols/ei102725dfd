@@ -1,0 +1,153 @@
+/* Variables de color basadas en las imágenes */
+:root {
+    --primary-blue: #1c3d61; /* Azul marino oscuro para botones y títulos */
+    --text-muted: #728197; /* Gris azulado para el texto secundario */
+    --border-gray: #cbd5e1; /* Gris claro para el borde del área de texto */
+    --placeholder-gray: #94a3b8; /* Gris para el texto de relleno */
+    --bg-white: #ffffff;
+}
+
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f8fafc; /* Fondo suave opcional para contrastar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 40px;
+}
+
+/* --- ESTILOS COMPARTIDOS --- */
+.title {
+    color: var(--primary-blue);
+    margin-top: 0;
+}
+
+.btn {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+    color: var(--bg-white);
+    border: 1px solid var(--primary-blue);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background-color: var(--bg-white);
+    color: var(--primary-blue);
+    border: 1px solid var(--primary-blue);
+}
+
+.btn-secondary:hover {
+    background-color: #f1f5f9;
+}
+
+
+/* --- VISTA 1: FORMULARIO DE ASISTENCIA --- */
+.form-container {
+    background: var(--bg-white);
+    width: 100%;
+    max-width: 800px;
+    padding: 30px;
+    box-sizing: border-box;
+    /* Sombra opcional para resaltar el contenedor */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+
+.form-container .title {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.textarea-container {
+    margin-bottom: 20px;
+}
+
+.textarea-field {
+    width: 100%;
+    min-height: 180px;
+    padding: 15px;
+    border: 1px solid var(--border-gray);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #334155;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.textarea-field-small {
+    width: 100%;
+    min-height: 20px;
+    padding: 15px;
+    border: 1px solid var(--border-gray);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #334155;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+
+.textarea-field::placeholder {
+    color: var(--placeholder-gray);
+}
+
+.textarea-field:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* --- VISTA 2: MENSAJE DE CONFIRMACIÓN --- */
+.success-container {
+    background: var(--bg-white);
+    width: 100%;
+    max-width: 500px;
+    padding: 40px 30px;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Sombra opcional para resaltar el contenedor */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.success-container .title {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.5;
+    margin-top: 0;
+    margin-bottom: 30px;
+    max-width: 420px;
+}
+
+.success-container .btn {
+    padding: 12px 35px; /* Botón un poco más ancho como en la imagen */
+}

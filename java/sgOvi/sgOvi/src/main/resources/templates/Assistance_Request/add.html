@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="form-container">
+    <h3 class="title">DNI</h3>
+
+    <form th:action="@{/Assistance_Request/add}" th:object="${assistanceRequest}" method="post">
+
+        <div class="textarea-container">
+            <label for="idOviUser">
+                <input id="idOviUser" class="textarea-field-small" th:field="*{idOviUser}" placeholder="DNI">
+            </label>
+            <div th:if="${#fields.hasErrors('idOviUser')}" th:errors="*{idOviUser}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+        </div>
+
+        <h3 class="title">Motivo de la solicitud de asistencia</h3>
+
+        <div class="textarea-container">
+            <label for="description">
+                <input id="description" class="textarea-field" th:field="*{description}" placeholder="Describa el motivo de su solicitud...">
+            </label>
+            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-primary" type="submit">Solicitar asistencia</button>
+            <button class="btn btn-secondary" type="button" onclick="window.history.back();">Volver</button>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

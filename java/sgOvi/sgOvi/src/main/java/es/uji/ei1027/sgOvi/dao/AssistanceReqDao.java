@@ -37,7 +37,7 @@ public class AssistanceReqDao {
 
 
     public void deleteAssistanceRequest(String idAsReq) {
-        jdbcTemplate.update("DELETE FROM Assistance_Request WHERE idAsReq LIKE " + idAsReq + "'");
+        jdbcTemplate.update("DELETE FROM Assistance_Request WHERE idAsReq LIKE '" + idAsReq + "'");
     }
 
     public void updateAssistanceRequest(Assistance_Request assistanceRequest) {
