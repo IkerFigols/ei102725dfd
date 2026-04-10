@@ -28,14 +28,17 @@ public class RegisterPapPatiValidator implements Validator {
             errors.rejectValue("address", "required",
                     "Es necesario introducir la dirección en menos de 100 caracteres");
         if(papPati.getPapPatiPreferences() == null || papPati.getPapPatiPreferences().isEmpty() || papPati.getPapPatiPreferences().length() > 250)
-            errors.rejectValue("userPreferences", "required",
+            errors.rejectValue("papPatiPreferences", "required",
                     "Es necesario introducir las preferencias del asistente y no debe ser mayor a 250 caracteres");
         if(papPati.getTraining() == null || papPati.getTraining().isEmpty() || papPati.getTraining().length() > 200)
-            errors.rejectValue("userPreferences", "required",
+            errors.rejectValue("training", "required",
                     "Es necesario introducir las especialidades del asistente y no debe ser mayor a 200 caracteres");
         if(papPati.getDocument() == null || papPati.getDocument().isEmpty() || papPati.getDocument().length() > 150)
-            errors.rejectValue("userPreferences", "required",
+            errors.rejectValue("document", "required",
                     "Es necesario introducir el enlace de los documentos del asistente");
+        if(papPati.getType() == null || papPati.getType().isEmpty())
+            errors.rejectValue("type", "required",
+                    "Es necesario introducir el tipo de asistente");
 
     }
 }

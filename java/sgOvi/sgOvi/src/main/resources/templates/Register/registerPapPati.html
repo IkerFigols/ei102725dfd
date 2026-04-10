@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
-    <link rel="stylesheet"  th:href="@{/css/style.css}>
+    <link rel="stylesheet"  th:href="@{/css/style.css}">
     <meta charset="UTF-8">
     <title>Registro Asistente personal</title>
 </head>
@@ -19,6 +19,8 @@
 
             <input type="radio" id="PATI" value="PATI" th:field="*{type}">
             <label for="PATI">Pati</label>
+            <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+
         </div>
 
         <div>

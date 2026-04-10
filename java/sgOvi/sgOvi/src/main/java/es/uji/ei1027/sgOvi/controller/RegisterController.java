@@ -41,7 +41,6 @@ public class RegisterController {
         if (bindingResult.hasErrors()) {
             return "Register/register";
         }
-        if(personDao.getPersons().contains(person))
         personDao.addPerson(person);
         if ("OviUser".equals(preferencia)) {
             Ovi_User oviUser = new Ovi_User();
@@ -65,7 +64,7 @@ public class RegisterController {
             return "Register/registerOviUser";
         }
         oviUserDao.addOviUser(oviUser);
-        return "redirect:../menuOviUser";
+        return "redirect:/";
     }
     @RequestMapping(value="/registerPapPati", method = RequestMethod.POST)
     public String processOviSubmit(@ModelAttribute("pappati") PapPati papPati,
@@ -76,6 +75,6 @@ public class RegisterController {
             return "Register/registerPapPati";
         }
         papPatiDao.addPapPati(papPati);
-        return "redirect:../menuPapPati";
+        return "redirect:/";
     }
 }

@@ -29,7 +29,7 @@ public class RegisterOviValidator implements Validator {
         if(user.getBirthdayDate() == null)
             errors.rejectValue("birthdayDate", "required",
                     "Es necesario introducir la fecha");
-        long edad = ChronoUnit.YEARS.between(LocalDate.now(),user.getBirthdayDate());
+        long edad = ChronoUnit.YEARS.between(user.getBirthdayDate(),LocalDate.now());
         if( edad < 18 && (user.getLegalGuardian() == null || user.getLegalGuardian().isEmpty()))
             errors.rejectValue("legalGuardian", "required",
                     "Es necesario introducir el nombre del tutor legal del menor");
