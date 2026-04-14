@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/Register")
@@ -38,9 +41,17 @@ public class RegisterController {
                                    Model model){
         RegisterValidator registerValidator = new RegisterValidator();
         registerValidator.validate(person,bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "Register/register";
+        List<Person> persons = personDao.getPersons();
+        for( Person persona: persons){
+            if(persona.getDni().equals(person.getDni())) {
+                //bindingResult.addError(new ObjectError("dni","Este dni ya existe"));
+                bindingResult.rejectValue("dni","required","Este dni ya existe");
+                return "Register/register";
+            }
         }
+            if (bindingResult.hasErrors()) {
+                return "Register/register";
+            }
         personDao.addPerson(person);
         if ("OviUser".equals(preferencia)) {
             Ovi_User oviUser = new Ovi_User();

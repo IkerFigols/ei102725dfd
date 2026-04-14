@@ -22,7 +22,7 @@ public class RegisterPapPatiValidator implements Validator {
             errors.rejectValue("dni", "required",
                     "Es necesario introducir el dni");
         if (!papPati.getDni().matches("^\\d{8}[A-Z]$"))
-            errors.rejectValue("idOviUser", "format",
+            errors.rejectValue("dni", "format",
                     "El DNI debe tener exactamente 8 números y 1 letra mayúscula");
         if(papPati.getPassword() == null || papPati.getPassword().isEmpty() || papPati.getPassword().length() <= 6 )
             errors.rejectValue("password", "required",

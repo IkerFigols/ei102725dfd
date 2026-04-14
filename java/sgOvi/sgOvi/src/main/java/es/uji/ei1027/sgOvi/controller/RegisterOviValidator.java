@@ -25,8 +25,8 @@ public class RegisterOviValidator implements Validator {
         if(user.getDni() == null || user.getDni().length() != 9)
             errors.rejectValue("dni", "required",
                     "Es necesario introducir el dni");
-        if (!user.getDni().matches("^\\d{8}[A-Z]$"))
-            errors.rejectValue("idOviUser", "format",
+        if (!user.getDni().matches("^\\d{8}[A-Z]$")) //incluir NIE
+            errors.rejectValue("dni", "format",
                     "El DNI debe tener exactamente 8 números y 1 letra mayúscula");
 
         if(user.getBirthdayDate() == null)
