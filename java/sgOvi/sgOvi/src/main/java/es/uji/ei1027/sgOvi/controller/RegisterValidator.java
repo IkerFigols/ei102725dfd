@@ -19,6 +19,9 @@ public class RegisterValidator implements Validator {
         if(person.getDni() == null || person.getDni().length() != 9)
             errors.rejectValue("dni", "required",
                     "Es necesario introducir el dni");
+        if (!person.getDni().matches("^\\d{8}[A-Z]$"))
+            errors.rejectValue("idOviUser", "format",
+                    "El DNI debe tener exactamente 8 números y 1 letra mayúscula");
         if(person.getPhoneNumber() == null || person.getPhoneNumber().length() != 9)
             errors.rejectValue("phoneNumber", "required",
                     "Es necesario introducir el número de telefono ");
