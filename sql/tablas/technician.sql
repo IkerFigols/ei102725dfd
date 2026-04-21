@@ -1,10 +1,9 @@
-CREATE TABLE Instructor (
+CREATE TABLE Technician (
 	dni			VARCHAR(9),
-	expertise	VARCHAR(50),
 
 	--Clave Primaria
 	
-	CONSTRAINT cp_instructor PRIMARY KEY (dni),
+	CONSTRAINT cp_technician PRIMARY KEY (dni),
 	
 	-- Restricciones
 	
