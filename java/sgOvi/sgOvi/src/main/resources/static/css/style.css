@@ -19,6 +19,17 @@ body {
 }
 
 /* --- ESTILOS COMPARTIDOS --- */
+.menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+.description {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
 .title {
     color: var(--primary-blue);
     margin-top: 0;

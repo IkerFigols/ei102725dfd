@@ -18,7 +18,7 @@ public class AssistanceRequestValidator implements Validator {
             errors.rejectValue("description", "required",
                     "Es necesario introducir el motivo de la asistencia");
         if(req.getDescription().length() >= 250)
-            errors.rejectValue("description", "length",
+            errors.rejectValue("description", "length0",
                     "El motivo es demasiado largo");
         if (req.getIdOviUser().length() < 9)
             errors.rejectValue("idOviUser", "required", "El DNI introducido no es correcto");
