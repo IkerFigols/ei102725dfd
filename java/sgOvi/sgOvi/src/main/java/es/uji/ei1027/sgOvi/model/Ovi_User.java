@@ -4,15 +4,14 @@ import java.time.LocalDate;
 public class Ovi_User {
     private String dni;
     private LocalDate birthdayDate;
-    private String password;
     private String address;
     private String legalGuardian;
-    private boolean accepted;
+    private String state;
     private String reason;
     private String userPreferences;
 
     public Ovi_User(){
-        accepted = true;
+        state = "PENDING";
     }
 
     public String getDni() {
@@ -23,9 +22,6 @@ public class Ovi_User {
         return birthdayDate;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
     public String getAddress() {
         return address;
@@ -35,8 +31,8 @@ public class Ovi_User {
         return legalGuardian;
     }
 
-    public Boolean getAccepted() {
-        return accepted;
+    public String getState() {
+        return state;
     }
 
     public String getReason() {
@@ -55,9 +51,6 @@ public class Ovi_User {
         this.birthdayDate = birthdayDate;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public void setAddress(String address) {
         this.address = address;
@@ -67,8 +60,8 @@ public class Ovi_User {
         this.legalGuardian = legalGuardian;
     }
 
-    public void setAccepted(Boolean accepted) {
-        this.accepted = accepted;
+    public void setState(String state) {
+        this.state = state;
     }
 
     public void setReason(String reason) {
@@ -84,10 +77,9 @@ public class Ovi_User {
         return "Ovi_User{" +
                 "dni='" + dni + '\'' +
                 ", birthdayDate=" + birthdayDate +
-                ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
                 ", legalGuardian='" + legalGuardian + '\'' +
-                ", accepted=" + accepted +
+                ", accepted=" + state +
                 ", reason='" + reason + '\'' +
                 ", userPreferences='" + userPreferences + '\'' +
                 '}';

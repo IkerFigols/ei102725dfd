@@ -29,14 +29,13 @@ public class OviUserDao {
             legalGuardian = null;
 
 
-        jdbcTemplate.update("INSERT INTO Ovi_User VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Ovi_User VALUES(?, ?, ?, ?, ?, ?, ?)",
                 oviUser.getDni(),
                 oviUser.getBirthdayDate(),
-                oviUser.getPassword(),
                 oviUser.getAddress(),
                 legalGuardian,
-                false,
-                "pendiente",
+                oviUser.getState(),
+                oviUser.getReason(),
                 oviUser.getUserPreferences()
         );
     }
@@ -47,7 +46,7 @@ public class OviUserDao {
     }
 
     public void updateOviUser(Ovi_User oviUser) {
-        jdbcTemplate.update("UPDATE Ovi_User SET birthdayDate ="+ oviUser.getBirthdayDate() +", password ="+oviUser.getPassword()+", address="+oviUser.getAddress()+", legalGuardian ="+ oviUser.getLegalGuardian() +", accepted"+ oviUser.getAccepted()+ ", reason ="+oviUser.getReason()+", userPreferences ="+oviUser.getUserPreferences()+ "WHERE dni LIKE " + oviUser.getDni() + "'");
+        jdbcTemplate.update("UPDATE Ovi_User SET birthdayDate ="+ oviUser.getBirthdayDate() +", address="+oviUser.getAddress()+", legalGuardian ="+ oviUser.getLegalGuardian() +", state ="+ oviUser.getState()+ ", reason ="+oviUser.getReason()+", userPreferences ="+oviUser.getUserPreferences()+ "WHERE dni LIKE " + oviUser.getDni() + "'");
     }
 
     public Ovi_User getOviUser(String dni) {

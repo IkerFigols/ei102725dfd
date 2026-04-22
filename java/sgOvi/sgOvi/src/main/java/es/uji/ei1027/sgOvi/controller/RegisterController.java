@@ -37,7 +37,6 @@ public class RegisterController {
     @RequestMapping(value="/register", method = RequestMethod.POST)
     public String proccesAndSubmit(@ModelAttribute("person") Person person,
                                    BindingResult bindingResult,
-                                   @RequestParam("preferencia") String preferencia,
                                    Model model){
         RegisterValidator registerValidator = new RegisterValidator();
         registerValidator.validate(person,bindingResult);
@@ -53,7 +52,7 @@ public class RegisterController {
                 return "Register/register";
             }
         personDao.addPerson(person);
-        if ("OviUser".equals(preferencia)) {
+        if ("OviUser".equals(person.getPreference())) {
             Ovi_User oviUser = new Ovi_User();
             oviUser.setDni(person.getDni());
             model.addAttribute("oviuser", oviUser);

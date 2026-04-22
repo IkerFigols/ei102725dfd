@@ -23,13 +23,15 @@ public class PersonDao {
 
     /* Añade la persona */
     public void addPerson(Person person) {
-        jdbcTemplate.update("INSERT INTO Person VALUES(?, ?, ?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Person VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
                 person.getDni(),
                 person.getName(),
                 person.getSurname(),
                 person.getPhoneNumber(),
                 person.getEmail(),
-                person.getGender()
+                person.getGender(),
+                person.getPassword(),
+                person.getLocation()
         );
     }
 
@@ -40,7 +42,7 @@ public class PersonDao {
 
     /* Actualiza los atributos de una persona */
     public void updatePerson(Person person) {
-        String sql = "UPDATE Person SET name = ?, surname = ?, phoneNumber = ?, email = ?, gender = ? WHERE dni = ?";
+        String sql = "UPDATE Person SET name = ?, surname = ?, phoneNumber = ?, email = ?, gender = ?, password = ?, location = ? WHERE dni = ?";
 
         jdbcTemplate.update(sql,
                 person.getName(),
@@ -48,6 +50,8 @@ public class PersonDao {
                 person.getPhoneNumber(),
                 person.getEmail(),
                 person.getGender(),
+                person.getPassword(),
+                person.getLocation(),
                 person.getDni()
         );
     }

@@ -24,9 +24,6 @@ public class RegisterPapPatiValidator implements Validator {
         if (!papPati.getDni().matches("^\\d{8}[A-Z]$"))
             errors.rejectValue("dni", "format",
                     "El DNI debe tener exactamente 8 números y 1 letra mayúscula");
-        if(papPati.getPassword() == null || papPati.getPassword().isEmpty() || papPati.getPassword().length() <= 6 )
-            errors.rejectValue("password", "required",
-                    "Es necesario introducir una contraseña de mas de 6 caracteres");
         if(papPati.getAddress() == null || papPati.getAddress().isEmpty() || papPati.getAddress().length() > 100)
             errors.rejectValue("address", "required",
                     "Es necesario introducir la dirección en menos de 100 caracteres");
@@ -42,6 +39,17 @@ public class RegisterPapPatiValidator implements Validator {
         if(papPati.getType() == null || papPati.getType().isEmpty())
             errors.rejectValue("type", "required",
                     "Es necesario introducir el tipo de asistente");
+        if(papPati.getDni() != null && papPati.getDni().length() > 9 )
+            errors.rejectValue("dni","required","El dni debe tener como máximo 9 caracteres");
+
+        if(papPati.getAddress() != null && papPati.getAddress().length() > 50 )
+            errors.rejectValue("address","required","La dirección debe tener como máximo 50 caracteres");
+        if(papPati.getTraining() != null && papPati.getTraining().length() > 200 )
+            errors.rejectValue("training","required","Las especialidades deben tener como máximo 200 caracteres");
+        if(papPati.getDocument() != null && papPati.getDocument().length() > 100 )
+            errors.rejectValue("document","required","El enlace al documento debe tener como máximo 100 caracteres");
+
+
 
     }
 }

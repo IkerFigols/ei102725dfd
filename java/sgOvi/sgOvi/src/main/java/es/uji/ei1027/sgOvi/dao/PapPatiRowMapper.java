@@ -11,16 +11,14 @@ public class PapPatiRowMapper implements RowMapper<PapPati> {
     public PapPati mapRow(ResultSet rs, int rowNum) throws SQLException {
         PapPati papPati = new PapPati();
         papPati.setDni(rs.getString("dni"));
-        papPati.setPassword(rs.getString("password"));
         papPati.setAddress(rs.getString("address"));
         papPati.setType(rs.getString("type"));
         papPati.setAvailable(rs.getBoolean("available"));
         papPati.setTraining(rs.getString("training"));
         papPati.setDocument(rs.getString("document"));
         papPati.setReason(rs.getString("reason"));
-        papPati.setAccepted(rs.getBoolean("accepted"));
+        papPati.setState(rs.getString("state"));
         papPati.setPapPatiPreferences(rs.getString("papPatiPreferences"));
-
         return papPati;
     }
 }

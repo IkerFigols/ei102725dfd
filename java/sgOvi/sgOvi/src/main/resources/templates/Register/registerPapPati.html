@@ -15,10 +15,11 @@
             <label>Tipo de asistente personal :</label>
 
             <input type="radio" id="PAP" value="PAP" th:field="*{type}">
-            <label for="PAP">Pap</label>
+            <label for="PAP">Pap (Asistente personal para personas desde 18 años hasta los 64 años) </label>
 
             <input type="radio" id="PATI" value="PATI" th:field="*{type}">
-            <label for="PATI">Pati</label>
+            <label for="PATI">Pati (Persona asistente terapeutica infantil) </label>
+
             <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
 
         </div>

@@ -32,19 +32,27 @@ public class RegisterOviValidator implements Validator {
         if(user.getBirthdayDate() == null)
             errors.rejectValue("birthdayDate", "required",
                     "Es necesario introducir la fecha");
-        long edad = ChronoUnit.YEARS.between(user.getBirthdayDate(),LocalDate.now());
-        if( edad < 18 && (user.getLegalGuardian() == null || user.getLegalGuardian().isEmpty()))
-            errors.rejectValue("legalGuardian", "required",
-                    "Es necesario introducir el nombre del tutor legal del menor");
-        if(user.getPassword() == null || user.getPassword().isEmpty() || user.getPassword().length() <= 6 )
-            errors.rejectValue("password", "required",
-                    "Es necesario introducir una contraseña de mas de 6 caracteres");
+        if(user.getBirthdayDate() != null) {
+            long edad = ChronoUnit.YEARS.between(user.getBirthdayDate(), LocalDate.now());
+            if (edad < 18 && (user.getLegalGuardian() == null || user.getLegalGuardian().isEmpty()))
+                errors.rejectValue("legalGuardian", "required",
+                        "Es necesario introducir el nombre del tutor legal del menor");
+        }
         if(user.getAddress() == null || user.getAddress().isEmpty() || user.getAddress().length() > 50)
             errors.rejectValue("address", "required",
                     "Es necesario introducir la dirección en menos de 50 caracteres");
         if(user.getUserPreferences() == null || user.getUserPreferences().isEmpty() || user.getUserPreferences().length() > 250)
             errors.rejectValue("userPreferences", "required",
                     "Es necesario introducir las preferencias del usuario y no debe ser mayor a 250 caracteres");
+        if(user.getDni() != null && user.getDni().length() > 9 )
+            errors.rejectValue("dni","required","El dni debe tener como máximo 9 caracteres");
+
+        if(user.getAddress() != null && user.getAddress().length() > 50 )
+            errors.rejectValue("address","required","La dirección debe tener como máximo 50 caracteres");
+        if(user.getLegalGuardian() != null && user.getLegalGuardian().length() > 50 )
+            errors.rejectValue("legalGuardian","required","El nombre del tutor legal debe tener como máximo 50 caracteres");
+        if(user.getUserPreferences() != null && user.getUserPreferences().length() > 250 )
+            errors.rejectValue("userPreferences","required","Las preferencias del usuario deben tener como máximo 250 caracteres");
     }
 }
 

@@ -7,6 +7,10 @@ public class Person {
     private String phoneNumber;
     private String email;
     private String gender;
+    private String preference;
+    private boolean dataProtection;
+    private String password;
+    private String location;
 
     public String getDni() {
         return dni;
@@ -32,6 +36,14 @@ public class Person {
         return gender;
     }
 
+    public String getPreference(){return preference;}
+
+    public boolean getDataProtection(){return dataProtection;}
+
+    public String getPassword(){return password;}
+
+    public String getLocation(){return location;}
+
     public void setDni(String dni) {
         this.dni = dni;
     }
@@ -56,6 +68,12 @@ public class Person {
         this.gender = gender;
     }
 
+    public void setPreference(String preference){this.preference = preference;}
+
+    public void setDataProtection(boolean dataProtection){this.dataProtection = dataProtection;}
+
+    public void setPassword(String password){this.password = password;}
+    public void setLocation(String location) { this.location = location; }
     @Override
     public String toString() {
         return "Person{" +
@@ -65,6 +83,10 @@ public class Person {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +
+                ", preference ='"+preference+'\''+
+                ", dataProtection = '"+dataProtection+ '\''+
+                ", password = '"+password+'\''+
+                ", location = '"+location+'\''+
                 '}';
     }
 }

@@ -10,10 +10,9 @@ public final class OviUserRowMapper implements RowMapper<Ovi_User> {
     public Ovi_User mapRow(ResultSet rs, int rowNum) throws SQLException {
         Ovi_User oviUser = new Ovi_User();
         oviUser.setDni(rs.getString("dni"));
-        oviUser.setAccepted(rs.getBoolean("accepted"));
+        oviUser.setState(rs.getString("state"));
         oviUser.setBirthdayDate(rs.getObject("birthdayDate", LocalDate.class));
         oviUser.setUserPreferences(rs.getString("userPreferences"));
-        oviUser.setPassword(rs.getString("password"));
         oviUser.setAddress(rs.getString("address"));
         oviUser.setReason(rs.getString("reason"));
         oviUser.setLegalGuardian(rs.getString("legalGuardian"));

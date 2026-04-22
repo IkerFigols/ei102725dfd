@@ -20,30 +20,28 @@ public class PapPatiDao {
     }
 
     public void addPapPati(PapPati papPati){
-        jdbcTemplate.update("INSERT INTO Pap_Pati (dni, password, address, type, available, training, document, reason, accepted, papPatiPreferences) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Pap_Pati (dni, password, address, type, available, training, document, reason, state, papPatiPreferences) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 papPati.getDni(),
-                papPati.getPassword(),
                 papPati.getAddress(),
                 papPati.getType(),
                 papPati.isAvailable(),
                 papPati.getTraining(),
                 papPati.getDocument(),
                 papPati.getReason(),
-                papPati.isAccepted(),
+                papPati.getState(),
                 papPati.getPapPatiPreferences()
         );
     }
 
     public void updatePapPati(PapPati papPati) {
-        jdbcTemplate.update("UPDATE Pap_Pati SET password=?, address=?, type=?, available=?, training=?, document=?, reason=?, accepted=?, papPatiPreferences=? WHERE dni=?",
-                papPati.getPassword(),
+        jdbcTemplate.update("UPDATE Pap_Pati SET address=?, type=?, available=?, training=?, document=?, reason=?, state=?, papPatiPreferences=? WHERE dni=?",
                 papPati.getAddress(),
                 papPati.getType(),
                 papPati.isAvailable(),
                 papPati.getTraining(),
                 papPati.getDocument(),
                 papPati.getReason(),
-                papPati.isAccepted(),
+                papPati.getState(),
                 papPati.getPapPatiPreferences(),
                 papPati.getDni() // El dni va al final porque es el '?' del WHERE
         );

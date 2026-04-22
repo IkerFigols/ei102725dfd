@@ -36,6 +36,38 @@ public class RegisterValidator implements Validator {
         if(person.getSurname() == null || person.getSurname().isEmpty())
             errors.rejectValue("surname", "required",
                     "Es necesario introducir los apellido");
+
+        if(person.getGender() == null || person.getGender().isEmpty())
+            errors.rejectValue("gender", "required", "Es necesario seleccionar un genero");
+        if(person.getPreference() == null || person.getPreference().isEmpty())
+            errors.rejectValue("preference", "required", "Es necesario seleccionar una preferencia");
+
+        if (!person.getDataProtection()) {
+            errors.rejectValue("dataProtection", "required", "Debes aceptar la protección de datos para continuar");
+        }
+
+        if(person.getPassword() == null || person.getPassword().isEmpty() || person.getPassword().length() <= 6 )
+            errors.rejectValue("password", "required",
+                    "Es necesario introducir una contraseña de mas de 6 caracteres");
+        if(person.getDni() != null && person.getDni().length() > 9 )
+            errors.rejectValue("dni","required","El dni debe tener como máximo 9 caracteres");
+
+        if(person.getName() != null && person.getName().length() > 50 )
+            errors.rejectValue("name","required","El nombre debe tener como máximo 50 caracteres");
+        if(person.getSurname() != null && person.getSurname().length() > 50 )
+            errors.rejectValue("surname","required","Los apellidos debe tener como máximo 50 caracteres");
+        if(person.getPhoneNumber() != null && person.getPhoneNumber().length() > 9 )
+            errors.rejectValue("phoneNumber","required","El telefono debe tener como máximo 9 caracteres");
+        if(person.getEmail() != null && person.getEmail().length() > 50 )
+            errors.rejectValue("email","required","El email debe tener como máximo 50 caracteres");
+        if(person.getGender() != null && person.getGender().length() > 10 )
+            errors.rejectValue("dni","required","El genero debe tener como máximo 10 caracteres");
+
+        if(person.getPassword() != null && person.getPassword().length() > 9 )
+            errors.rejectValue("password","required","La contraseña debe tener como máximo 100 caracteres");
+        if(person.getLocation() != null && person.getLocation().length() > 9 )
+            errors.rejectValue("location","required","La localidad debe tener como máximo 50 caracteres");
+
     }
 }
 

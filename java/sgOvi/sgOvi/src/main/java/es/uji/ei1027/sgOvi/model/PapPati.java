@@ -2,18 +2,17 @@ package es.uji.ei1027.sgOvi.model;
 
 public class PapPati {
     private String dni;
-    private String password;
     private String address;
     private String type;
     private boolean available;
     private String training;
     private String document;
     private String reason;
-    private boolean accepted;
+    private String state;
     private String papPatiPreferences;
 
     public PapPati() {
-        accepted = true;
+        state = "PENDING";
     }
 
     public String getDni() {
@@ -24,13 +23,6 @@ public class PapPati {
         this.dni = dni;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getAddress() {
         return address;
@@ -80,12 +72,12 @@ public class PapPati {
         this.reason = reason;
     }
 
-    public boolean isAccepted() {
-        return accepted;
+    public String getState() {
+        return state;
     }
 
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getPapPatiPreferences() {
@@ -100,14 +92,13 @@ public class PapPati {
     public String toString() {
         return "PapPati{" +
                 "dni='" + dni + '\'' +
-                ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
                 ", type='" + type + '\'' +
                 ", available=" + available +
                 ", training='" + training + '\'' +
                 ", document='" + document + '\'' +
                 ", reason='" + reason + '\'' +
-                ", accepted=" + accepted +
+                ", accepted=" + state +
                 ", papPatiPreferences='" + papPatiPreferences + '\'' +
                 '}';
     }
