@@ -12,7 +12,7 @@ CREATE TABLE Ovi_User(
         ON DELETE CASCADE 
         ON UPDATE CASCADE,
     CONSTRAINT chk_dni CHECK(LENGTH(dni) = 9),
-    CONSTRAINT chk_state CHECK( state IN ('PENDING','ACCEPTED','REJECTED'))
-    CONSTRAINT chk_reason CHECK( (reason IS NULL AND state IN ('ACCEPTED', 'PENDING')) OR
+    CONSTRAINT chk_state CHECK( state IN ('PENDING','APPROVED','REJECTED')),
+    CONSTRAINT chk_reason CHECK( (reason IS NULL AND state IN ('APPROVED', 'PENDING')) OR
 (reason IS NOT NULL AND state = 'REJECTED'))
 );

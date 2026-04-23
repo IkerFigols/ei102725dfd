@@ -13,10 +13,9 @@ CREATE TABLE Pap_Pati (
 		CONSTRAINT ca_pap_pati FOREIGN KEY (dni) REFERENCES PERSON(dni)
 			ON DELETE CASCADE
 			ON UPDATE CASCADE,
-		CONSTRAINT chk_pass CHECK(length(password) > 6),
 		CONSTRAINT chk_dni CHECK(length(dni) = 9),
-		CONSTRAINT chk_state CHECK( state IN ('PENDING','ACCEPTED','REJECTED'))
-		CONSTRAINT chk_reason CHECK( (reason IS NULL AND state IN ('ACCEPTED', 'PENDING')) OR
-(reason IS NOT NULL AND state = 'REJECTED'))
+		CONSTRAINT chk_state CHECK( state IN ('PENDING','APPROVED','REJECTED')),
+		CONSTRAINT chk_reason CHECK( (reason IS NULL AND state IN ('APPROVED', 'PENDING')) OR
+(reason IS NOT NULL AND state = 'REJECTED')),
 		CONSTRAINT chk_type CHECK( type IN ('PAP', 'PATI', 'PAP/PATI'))	
 );	

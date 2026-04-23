@@ -13,7 +13,7 @@ DROP TABLE Person;
 \i instructor.sql;
 \i activity.sql;
 \i pap_pati.sql;
-\i Ovi_User.sql;
+\i ovi_user.sql;
 \i attendance.sql;
 \i assistance_request.sql;
 \i communication.sql;

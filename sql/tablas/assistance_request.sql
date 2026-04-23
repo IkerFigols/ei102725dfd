@@ -14,7 +14,7 @@ CONSTRAINT ca_idOviUser FOREIGN KEY (idOviUser)
 	ON UPDATE CASCADE,
 CONSTRAINT chk_id CHECK(LENGTH(idAsReq) = 9),
 CONSTRAINT chk_ovi CHECK(LENGTH(idOviUser) = 9),
-CONSTRAINT chk_reason CHECK( (reason IS NULL AND state IN ('ACCEPTED', 'PENDING')) OR
+CONSTRAINT chk_reason CHECK( (reason IS NULL AND state IN ('APPROVED', 'PENDING')) OR
 (reason IS NOT NULL AND state = 'REJECTED'))
 );
 

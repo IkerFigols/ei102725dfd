@@ -26,7 +26,7 @@ INSERT INTO Person VALUES ('56789015E', 'Enrique', 'Rubio', '605678905', 'e.rubi
 INSERT INTO Person VALUES ('67890126F', 'Fátima', 'Torres', '606789006', 'fatima.torres@icloud.com', 'Femenino', 'FtTor_60t', 'Ontinyent', 'Valencia');
 INSERT INTO Person VALUES ('78901237G', 'Gonzalo', 'Medina', '607890107', 'g.medina@protonmail.com', 'Masculino', 'GzMed_60r', 'Santa Pola', 'Alicante');
 INSERT INTO Person VALUES ('89012348H', 'Helena', 'Castillo', '608901208', 'h.castillo@gmail.com', 'Femenino', 'HlCas_60e', 'Oropesa del Mar', 'Castellón');
-INSERT INTO Person VALUES ('90123459I', 'Iván', 'Cortes', '609012309', 'ivan.cortes@live.com', 'Masculino', 'IvCor_60w', 'Xàtiva', 'Valencia');
+INSERT INTO Person VALUES ('90123459T', 'Iván', 'Cortes', '609012309', 'ivan.cortes@live.com', 'Masculino', 'IvCor_60w', 'Xàtiva', 'Valencia');
 INSERT INTO Person VALUES ('01234560J', 'Julia', 'Blanco', '610123410', 'j.blanco@gmail.com', 'Femenino', 'JlBla_61q', 'Villena', 'Alicante');
 INSERT INTO Person VALUES ('11223341K', 'Kevin', 'Suárez', '611223311', 'kevin.suarez@outlook.es', 'Masculino', 'KvSua_61l', 'Segorbe', 'Castellón');
 INSERT INTO Person VALUES ('22334452L', 'Lorena', 'Bravo', '612334412', 'lore.bravo@yahoo.com', 'Femenino', 'LrBra_61k', 'Cullera', 'Valencia');

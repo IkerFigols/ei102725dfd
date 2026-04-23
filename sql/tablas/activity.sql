@@ -1,7 +1,7 @@
 CREATE TABLE Activity (
 	idActivity 		VARCHAR(9)	NOT NULL,
 	activityType		VARCHAR(20)	NOT NULL,
-	title			VARCHAR(50)	NOT NULL,
+	tittle			VARCHAR(50)	NOT NULL,
 	description		VARCHAR(300)	NOT NULL,
 	date 			DATE		NOT NULL,
 	address			VARCHAR(50)	NOT NULL,

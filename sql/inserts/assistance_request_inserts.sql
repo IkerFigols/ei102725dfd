@@ -5,7 +5,7 @@ INSERT INTO Assistance_Request VALUES ('ASR000003', '2026-01-25', 'Consulta con 
 INSERT INTO Assistance_Request VALUES ('ASR000004', '2026-02-01', 'Ayuda social para transporte', '67890123F', 'APPROVED', NULL);
 INSERT INTO Assistance_Request VALUES ('ASR000005', '2026-02-05', 'Revisión técnica de equipo', '78901234G', 'PENDING', NULL);
 INSERT INTO Assistance_Request VALUES ('ASR000006', '2026-02-08', 'Gestión de cita presencial', '89012345H', 'REJECTED', 'Fuera de plazo');
-INSERT INTO Assistance_Request VALUES ('ASR000007', '2026-02-12', 'Atención médica domiciliaria', '90123456I', 'PENDING', NULL);
+INSERT INTO Assistance_Request VALUES ('ASR000007', '2026-02-12', 'Atención médica domiciliaria', '90123459I', 'PENDING', NULL);
 INSERT INTO Assistance_Request VALUES ('ASR000008', '2026-02-15', 'Seguimiento de servicio social', '01234567J', 'APPROVED', NULL);
 INSERT INTO Assistance_Request VALUES ('ASR000009', '2026-02-20', 'Reparación técnica en domicilio', '11223344K', 'PENDING', NULL);
 INSERT INTO Assistance_Request VALUES ('ASR000010', '2026-02-25', 'Validación de documentos listos', '22334455L', 'REJECTED', 'Error en el DNI');
