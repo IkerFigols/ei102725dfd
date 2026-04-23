@@ -7,10 +7,15 @@ public class Person {
     private String phoneNumber;
     private String email;
     private String gender;
-    private String preference;
-    private boolean dataProtection;
     private String password;
-    private String location;
+    private String city;
+    private String province;
+
+    private String preference; // CAMBIAR NOMBRE
+    private boolean dataProtection;
+    private String userType; // OVI, PAP, TECH, INS
+
+
 
     public String getDni() {
         return dni;
@@ -42,7 +47,11 @@ public class Person {
 
     public String getPassword(){return password;}
 
-    public String getLocation(){return location;}
+    public String getCity(){return city;}
+
+    public String getProvince(){return province;}
+
+    public String getUserType(){return userType;}
 
     public void setDni(String dni) {
         this.dni = dni;
@@ -72,8 +81,11 @@ public class Person {
 
     public void setDataProtection(boolean dataProtection){this.dataProtection = dataProtection;}
 
+    public void setUserType(String userType) {this.userType = userType;}
+
     public void setPassword(String password){this.password = password;}
-    public void setLocation(String location) { this.location = location; }
+    public void setCity(String city) { this.city = city; }
+    public void setProvince(String province) { this.province = province;}
     @Override
     public String toString() {
         return "Person{" +
@@ -86,7 +98,9 @@ public class Person {
                 ", preference ='"+preference+'\''+
                 ", dataProtection = '"+dataProtection+ '\''+
                 ", password = '"+password+'\''+
-                ", location = '"+location+'\''+
+                ", city = '"+ city +'\''+
+                ", province = '"+province+'\''+
+                ", userType = '"+userType+'\''+
                 '}';
     }
 }

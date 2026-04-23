@@ -1,6 +1,5 @@
 package es.uji.ei1027.sgOvi.controller;
 
-import es.uji.ei1027.sgOvi.model.Assistance_Request;
 import es.uji.ei1027.sgOvi.model.Person;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -42,6 +41,13 @@ public class RegisterValidator implements Validator {
         if(person.getPreference() == null || person.getPreference().isEmpty())
             errors.rejectValue("preference", "required", "Es necesario seleccionar una preferencia");
 
+        if(person.getCity() == null || person.getCity().isEmpty())
+            errors.rejectValue("city", "required","Es necesario introducir la ciudad en que resided");
+
+        if(person.getProvince() == null || person.getProvince().isEmpty())
+            errors.rejectValue("province","required","Es necesario introducir la provincia en que resides");
+
+
         if (!person.getDataProtection()) {
             errors.rejectValue("dataProtection", "required", "Debes aceptar la protección de datos para continuar");
         }
@@ -65,8 +71,10 @@ public class RegisterValidator implements Validator {
 
         if(person.getPassword() != null && person.getPassword().length() > 9 )
             errors.rejectValue("password","required","La contraseña debe tener como máximo 100 caracteres");
-        if(person.getLocation() != null && person.getLocation().length() > 9 )
-            errors.rejectValue("location","required","La localidad debe tener como máximo 50 caracteres");
+        if(person.getCity() != null && person.getCity().length() > 9 )
+            errors.rejectValue("city","required","La ciudad debe tener como máximo 50 caracteres");
+        if(person.getProvince() != null && person.getProvince().length() > 9 )
+            errors.rejectValue("province","required","La provincia debe tener como máximo 50 caracteres");
 
     }
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 public class Activity {
     private String idActivity;
     private String activityType;
-    private String title;
+    private String tittle;
     private String description;
     private LocalDate date;
     private String address;
@@ -30,12 +30,12 @@ public class Activity {
         this.activityType = activityType;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTittle() {
+        return tittle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
     }
 
     public String getDescription() {
@@ -91,7 +91,7 @@ public class Activity {
         return "Activity{" +
                 "idActivity='" + idActivity + '\'' +
                 ", activityType='" + activityType + '\'' +
-                ", title='" + title + '\'' +
+                ", tittle='" + tittle + '\'' +
                 ", description='" + description + '\'' +
                 ", date=" + date +
                 ", address='" + address + '\'' +

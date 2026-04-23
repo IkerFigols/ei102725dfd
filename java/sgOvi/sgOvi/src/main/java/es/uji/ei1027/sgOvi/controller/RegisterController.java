@@ -6,6 +6,7 @@ import es.uji.ei1027.sgOvi.dao.PersonDao;
 import es.uji.ei1027.sgOvi.model.Ovi_User;
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,9 +49,12 @@ public class RegisterController {
                 return "Register/register";
             }
         }
-            if (bindingResult.hasErrors()) {
-                return "Register/register";
-            }
+        if (bindingResult.hasErrors()) {
+            return "Register/register";
+        }
+        BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();
+        String passwordEncrypted = encryptor.encryptPassword(person.getPassword());
+        person.setPassword(passwordEncrypted);
         personDao.addPerson(person);
         if ("OviUser".equals(person.getPreference())) {
             Ovi_User oviUser = new Ovi_User();

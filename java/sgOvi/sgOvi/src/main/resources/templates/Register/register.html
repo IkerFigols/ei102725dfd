@@ -46,9 +46,15 @@
         </div>
 
         <div>
-            <label for="location">Provincia: </label>
-            <input id="location" type="text" th:field="*{location}">
-            <div th:if="${#fields.hasErrors('location')}" th:errors="*{location}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <label for="city">Ciudad: </label>
+            <input id="city" type="text" th:field="*{city}">
+            <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+        </div>
+
+        <div>
+            <label for="province">Provincia: </label>
+            <input id="province" type="text" th:field="*{province}">
+            <div th:if="${#fields.hasErrors('province')}" th:errors="*{province}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
         </div>
 
         <div>

@@ -25,7 +25,7 @@ public class ActivityDao {
                 "INSERT INTO Activity (idActivity, activityType, tittle, description, date, address, capacity, sponsor, idInstructor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 activity.getIdActivity(),
                 activity.getActivityType(),
-                activity.getTitle(),
+                activity.getTittle(),
                 activity.getDescription(),
                 activity.getDate(),
                 activity.getAddress(),
@@ -40,7 +40,7 @@ public class ActivityDao {
         jdbcTemplate.update(
                 "UPDATE Activity SET activityType=?, tittle=?, description=?, date=?, address=?, capacity=?, sponsor=?, idInstructor=? WHERE idActivity=?",
                 activity.getActivityType(),
-                activity.getTitle(),
+                activity.getTittle(),
                 activity.getDescription(),
                 activity.getDate(),
                 activity.getAddress(),

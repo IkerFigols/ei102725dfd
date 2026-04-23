@@ -16,7 +16,8 @@ public final class PersonRowMapper implements RowMapper<Person> {
         person.setEmail(rs.getString("email"));
         person.setGender(rs.getString("gender"));
         person.setPassword(rs.getString("password"));
-        person.setLocation(rs.getString("location"));
+        person.setCity(rs.getString("city"));
+        person.setProvince(rs.getString("province"));
         return person;
     }
 }
