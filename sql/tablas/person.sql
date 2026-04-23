@@ -3,10 +3,11 @@ CREATE TABLE Person (
 	name				VARCHAR (50) NOT NULL,
 	surname				VARCHAR(50) NOT NULL,
 	phoneNumber			VARCHAR(9) NOT NULL,
-	email				VARCHAR(15) NOT NULL,
+	email				VARCHAR(50) NOT NULL,
 	gender				VARCHAR(10) NOT NULL,
 	password			VARCHAR(100) NOT NULL,
-	location			VARCHAR (50) NOT NULL, 
+	city				VARCHAR (50) NOT NULL,
+	province 			VARCHAR(50) NOT NULL 
 
 	--Clave Primaria
 	
