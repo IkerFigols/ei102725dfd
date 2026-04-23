@@ -7,6 +7,7 @@ DROP TABLE Ovi_User;
 DROP TABLE Pap_Pati;
 DROP TABLE Activity;
 DROP TABLE Instructor;
+DROP TABLE Technician;
 DROP TABLE Person;
 \i person.sql;
 \i instructor.sql;
@@ -18,4 +19,4 @@ DROP TABLE Person;
 \i communication.sql;
 \i selection.sql;
 \i contract.sql;
-
+\i technician.sql;
