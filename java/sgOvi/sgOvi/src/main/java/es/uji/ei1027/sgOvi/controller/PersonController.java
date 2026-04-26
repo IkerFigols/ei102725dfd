@@ -1,8 +1,6 @@
 package es.uji.ei1027.sgOvi.controller;
 
-import es.uji.ei1027.sgOvi.dao.OviUserDao;
 import es.uji.ei1027.sgOvi.dao.PersonDao;
-import es.uji.ei1027.sgOvi.model.Ovi_User;
 import es.uji.ei1027.sgOvi.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

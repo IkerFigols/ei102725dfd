@@ -1,7 +1,7 @@
 package es.uji.ei1027.sgOvi.model;
 import java.time.LocalDate;
 
-public class Ovi_User {
+public class OviUser {
     private String dni;
     private LocalDate birthdayDate;
     private String address;
@@ -10,7 +10,7 @@ public class Ovi_User {
     private String reason;
     private String userPreferences;
 
-    public Ovi_User(){
+    public OviUser(){
         state = "PENDING";
     }
 

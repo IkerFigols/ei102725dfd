@@ -49,7 +49,7 @@ public class InstructorDao {
             return i;
 
         } catch (DataAccessException e) {
-            return new Instructor();
+            return null;
         }
     }
 

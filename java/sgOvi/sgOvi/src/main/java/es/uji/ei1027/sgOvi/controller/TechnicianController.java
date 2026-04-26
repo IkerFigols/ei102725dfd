@@ -2,7 +2,7 @@ package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.OviUserDao;
 import es.uji.ei1027.sgOvi.dao.TechnicianDao;
-import es.uji.ei1027.sgOvi.model.Ovi_User;
+import es.uji.ei1027.sgOvi.model.OviUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,11 +39,11 @@ public class TechnicianController {
     }
     @RequestMapping(value="/add")
     public String addOviUser(Model model) {
-        model.addAttribute("oviUser", new Ovi_User());
+        model.addAttribute("oviUser", new OviUser());
         return "Ovi_User/add";
     }
     @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("oviUser") Ovi_User oviUser,
+    public String processAddSubmit(@ModelAttribute("oviUser") OviUser oviUser,
                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "Ovi_User/add";
@@ -56,7 +56,7 @@ public class TechnicianController {
         return "Ovi_User/update";
     }
     @RequestMapping(value="/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("oviUser") Ovi_User oviUser, BindingResult bindingResult) {
+    public String processUpdateSubmit(@ModelAttribute("oviUser") OviUser oviUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "Ovi_User/update";
         oviUserDao.updateOviUser(oviUser);

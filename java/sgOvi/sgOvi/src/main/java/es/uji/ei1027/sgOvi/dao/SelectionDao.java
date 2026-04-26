@@ -57,7 +57,7 @@ public class SelectionDao {
             return s;
 
         } catch (DataAccessException e) {
-            return new Selection();
+            return null;
         }
     }
 
