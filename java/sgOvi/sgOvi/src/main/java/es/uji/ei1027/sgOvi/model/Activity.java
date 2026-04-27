@@ -10,7 +10,7 @@ public class Activity {
     private String description;
     private LocalDate date;
     private String address;
-    private int Capacity;   //Integer para que pueda admitir nulos
+    private Integer Capacity;   //Integer para que pueda admitir nulos
     private String sponsor;
     private String idInstructor;
 

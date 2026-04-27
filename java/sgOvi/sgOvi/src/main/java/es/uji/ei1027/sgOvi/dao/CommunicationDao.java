@@ -48,7 +48,7 @@ public class CommunicationDao {
             return n;
 
         } catch (DataAccessException e) {
-            return null;
+            return new Communication();
         }
     }
 

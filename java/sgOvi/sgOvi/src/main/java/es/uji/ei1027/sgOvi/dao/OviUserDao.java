@@ -1,5 +1,5 @@
 package es.uji.ei1027.sgOvi.dao;
-import es.uji.ei1027.sgOvi.model.OviUser;
+import es.uji.ei1027.sgOvi.model.Ovi_User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,7 +23,7 @@ public class OviUserDao {
     }
 
 
-    public void addOviUser( OviUser oviUser) {
+    public void addOviUser( Ovi_User oviUser) {
         String legalGuardian = oviUser.getLegalGuardian();
         if (legalGuardian.equals(""))
             legalGuardian = null;
@@ -45,28 +45,28 @@ public class OviUserDao {
         jdbcTemplate.update("DELETE FROM Ovi_User WHERE dni LIKE '" + dni + "'");
     }
 
-    public void updateOviUser(OviUser oviUser) {
+    public void updateOviUser(Ovi_User oviUser) {
         jdbcTemplate.update("UPDATE Ovi_User SET birthdayDate ="+ oviUser.getBirthdayDate() +", address="+oviUser.getAddress()+", legalGuardian ="+ oviUser.getLegalGuardian() +", state ="+ oviUser.getState()+ ", reason ="+oviUser.getReason()+", userPreferences ="+oviUser.getUserPreferences()+ "WHERE dni LIKE " + oviUser.getDni() + "'");
     }
 
-    public OviUser getOviUser(String dni) {
+    public Ovi_User getOviUser(String dni) {
         try {
-            OviUser n = jdbcTemplate.queryForObject(
+            Ovi_User n = jdbcTemplate.queryForObject(
                     "SELECT * FROM Ovi_User WHERE dni = '" + dni + "'",
                     new OviUserRowMapper());
             return n;
 
         } catch (DataAccessException e) {
-            return null;
+            return new Ovi_User();
         }
     }
 
-    public List<OviUser> getOviUsers() {
+    public List<Ovi_User> getOviUsers() {
         try {
             return jdbcTemplate.query("SELECT * FROM Ovi_User", new OviUserRowMapper());
         }
         catch(EmptyResultDataAccessException e) {
-            return new ArrayList<OviUser>();
+            return new ArrayList<Ovi_User>();
         }
     }
 }

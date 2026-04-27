@@ -52,7 +52,7 @@ public class AssistanceReqDao {
             return n;
 
         } catch (DataAccessException e) {
-            return null;
+            return new Assistance_Request();
         }
     }
 

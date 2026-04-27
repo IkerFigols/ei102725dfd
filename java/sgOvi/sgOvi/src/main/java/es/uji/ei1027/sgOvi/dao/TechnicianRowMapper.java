@@ -11,7 +11,9 @@ import java.time.LocalDate;
 public class TechnicianRowMapper implements RowMapper<Technician> {
         public Technician mapRow(ResultSet rs, int rowNum) throws SQLException {
             Technician technician = new Technician();
-            technician.setDni(rs.getString("dni"));
+
+            technician.setDni(rs.getString("idActivity"));
+
             return technician;
         }
 }

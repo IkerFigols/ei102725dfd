@@ -28,20 +28,42 @@ public class LoginServiceImp implements LoginService {
     @Override
     public String userValidator(String dni, String password) {
 
+        if (dni == null || dni.isEmpty())
+            return null;
+        if (password == null || password.isEmpty())
+            return null;
+
         BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();
-        Person persona = personDao.getPerson(dni);
-        if (persona.getDni().equals(dni) && encryptor.checkPassword(password, persona.getPassword())) {
-            if(oviUserDao.getOviUser(dni) != null) {
-                return "Ovi_User";
-            }
-            if(papPatiDao.getPapPati(dni) != null) {
-                return "Pap_Pati";
-            }
-            if(instructorDao.getInstructor(dni) != null) {
-                return "Intructor";
-            }
-            if(technicianDao.getTechnician(dni) != null) {
-                return "Technician";
+
+        for (Person persona : personDao.getPersons()) {
+            if (persona.getDni().equals(dni) && encryptor.checkPassword(password, persona.getPassword())) {
+                if (persona.getUserType() != null)
+                    return persona.getUserType();
+
+                for (Ovi_User oviUser : oviUserDao.getOviUsers()) {
+                    if (oviUser.getDni().equals(persona.getDni())) {
+                        persona.setUserType("OVI");
+                        return persona.getUserType();
+                    }
+                }
+                for (PapPati papPati : papPatiDao.getPapPatis()) {
+                    if (papPati.getDni().equals(persona.getDni())) {
+                        persona.setUserType("PAP");
+                        return persona.getUserType();
+                    }
+                }
+                for (Technician technician : technicianDao.getTechnicians()) {
+                    if (technician.getDni().equals(persona.getDni())) {
+                        persona.setUserType("TECH");
+                        return persona.getUserType();
+                    }
+                }
+                for (Instructor instructor : instructorDao.getInstructors()) {
+                    if (instructor.getDni().equals(persona.getDni())) {
+                        persona.setUserType("INS");
+                        return persona.getUserType();
+                    }
+                }
             }
         }
         return null;

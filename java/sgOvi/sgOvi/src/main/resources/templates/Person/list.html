@@ -15,8 +15,6 @@
         <th>PhoneNumber</th>
         <th>Email</th>
         <th>Gender</th>
-        <th>Password</th>
-        <th>UserType</th>
         <td></td>
         <td></td>
     </tr>
@@ -29,8 +27,6 @@
         <td th:text="${person.phoneNumber}"></td>
         <td th:text="${person.email}"></td>
         <td th:text="${person.gender}"></td>
-        <td th:text="${person.password}"></td>
-        <td th:text="${person.userType}"></td>
         <td><a th:href="@{/Person/update/{dni}(dni=${person.dni})}">Editar</a>
         </td>
         <td><a th:href="@{/Person/delete/{dni}(dni=${person.dni})}">Borrar</a>

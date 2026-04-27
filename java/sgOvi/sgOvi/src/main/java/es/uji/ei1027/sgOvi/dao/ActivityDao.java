@@ -69,16 +69,6 @@ public class ActivityDao {
         }
     }
 
-    //Obtiene una lista de las proximas actividades
-    public List<Activity> getRecentActivities(){
-        try{
-            return jdbcTemplate.query("SELECT * FROM Activity ORDER BY date DESC FETCH NEXT 10 ROWS ONLY", new ActivityRowMapper());
-        }
-        catch (EmptyResultDataAccessException e){
-            return new ArrayList<>();
-        }
-    }
-
     /* Obté totes les activitats. Torna una llista buida si no n'hi ha cap. */
     public List<Activity> getActivities() {
         try {

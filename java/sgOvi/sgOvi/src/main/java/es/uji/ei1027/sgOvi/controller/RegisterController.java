@@ -3,7 +3,7 @@ package es.uji.ei1027.sgOvi.controller;
 import es.uji.ei1027.sgOvi.dao.OviUserDao;
 import es.uji.ei1027.sgOvi.dao.PapPatiDao;
 import es.uji.ei1027.sgOvi.dao.PersonDao;
-import es.uji.ei1027.sgOvi.model.OviUser;
+import es.uji.ei1027.sgOvi.model.Ovi_User;
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
 import org.jasypt.util.password.BasicPasswordEncryptor;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class RegisterController {
         person.setPassword(passwordEncrypted);
         personDao.addPerson(person);
         if ("OviUser".equals(person.getPreference())) {
-            OviUser oviUser = new OviUser();
+            Ovi_User oviUser = new Ovi_User();
             oviUser.setDni(person.getDni());
             model.addAttribute("oviuser", oviUser);
             return "Register/registerOviUser";
@@ -69,7 +70,7 @@ public class RegisterController {
     }
 
     @RequestMapping(value="/registerOviUser", method = RequestMethod.POST)
-    public String processOviSubmit(@ModelAttribute("oviuser") OviUser oviUser,
+    public String processOviSubmit(@ModelAttribute("oviuser") Ovi_User oviUser,
                                    BindingResult bindingResult) {
         RegisterOviValidator registerOviValidator = new RegisterOviValidator();
         registerOviValidator.validate(oviUser,bindingResult);

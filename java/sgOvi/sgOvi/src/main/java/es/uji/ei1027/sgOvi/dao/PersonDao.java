@@ -1,7 +1,6 @@
 package es.uji.ei1027.sgOvi.dao;
 
 import es.uji.ei1027.sgOvi.model.Person;
-import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -67,7 +66,7 @@ public class PersonDao {
             return p;
 
         } catch (DataAccessException e) {
-            return null;
+            return new Person();
         }
     }
 
@@ -78,14 +77,6 @@ public class PersonDao {
         }
         catch(EmptyResultDataAccessException e) {
             return new ArrayList<Person>();
-        }
-    }
-
-    public void encryptPersons(){
-        BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();
-        for(Person persona: getPersons() ){
-            persona.setPassword(encryptor.encryptPassword(persona.getPassword()));
-            updatePerson(persona);
         }
     }
 }

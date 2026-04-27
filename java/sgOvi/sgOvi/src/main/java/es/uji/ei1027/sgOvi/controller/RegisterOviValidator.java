@@ -1,6 +1,8 @@
 package es.uji.ei1027.sgOvi.controller;
 
-import es.uji.ei1027.sgOvi.model.OviUser;
+import es.uji.ei1027.sgOvi.model.Assistance_Request;
+import es.uji.ei1027.sgOvi.model.Ovi_User;
+import es.uji.ei1027.sgOvi.model.Person;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -10,7 +12,7 @@ import java.time.temporal.ChronoUnit;
 public class RegisterOviValidator implements Validator {
     @Override
     public boolean supports(Class<?> cls) {
-        return OviUser.class.equals(cls);
+        return Ovi_User.class.equals(cls);
 
     }
 
@@ -18,7 +20,7 @@ public class RegisterOviValidator implements Validator {
     public void validate(Object obj, Errors errors) {
 
 
-        OviUser user = (OviUser) obj;
+        Ovi_User user = (Ovi_User) obj;
 
         if(user.getDni() == null || user.getDni().length() != 9)
             errors.rejectValue("dni", "required",
