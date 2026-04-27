@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Gestionar Ovi Users</title>
+    <meta charset="UTF-8" />
 </head>
 <body>
-$END$
+<h1>Lista de Actividades</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Id Actividad</th>
+        <th>Tipo</th>
+        <th>Titulo</th>
+        <th>Fecha</th>
+        <th>Dirección</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="activity: ${activities}">
+        <td th:text="${activity.idActivity}"></td>
+        <td th:text="${activity.activityType}"></td>
+        <td th:text="${activity.tittle}"></td>
+        <td th:text="${activity.date}"></td>
+        <td th:text="${activity.address}"></td>
+
+        </td>
+        <td><a th:href="@{/Technician/activityManagement/{idActivity}(idActivity=${activity.getIdActivity})}">Editar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+<a href="/" >Volver</a>
 </body>
 </html>

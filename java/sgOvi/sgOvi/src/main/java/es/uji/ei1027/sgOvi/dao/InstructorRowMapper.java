@@ -10,7 +10,7 @@ public final class InstructorRowMapper implements RowMapper<Instructor> {
     public Instructor mapRow(ResultSet rs, int rowNum) throws SQLException {
         Instructor instructor = new Instructor();
         instructor.setDni(rs.getString("dni"));
-        instructor.setExpertise(rs.getBoolean("expertise"));
+        instructor.setExpertise(rs.getString("expertise"));
         return instructor;
     }
 }

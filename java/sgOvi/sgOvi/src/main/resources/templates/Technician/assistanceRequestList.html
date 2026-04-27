@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+    <title>Lista de solicitudes de asistencia</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<h1>Lista solicitudes de asistencia</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <td></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="request: ${requests}">
+        <td th:text="${request.idAsReq}"></td>
+        <td th:text="${request.data}"></td>
+        <td th:text="${request.description}"></td>
+        <td th:text="${request.state}"></td>
+        <td><a th:href="@{/Technician/userManagement/{idAsReq}(idAsReq=${request.idAsReq})}">Editar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+<a href="/" >Volver</a>
+</body>
+</html>

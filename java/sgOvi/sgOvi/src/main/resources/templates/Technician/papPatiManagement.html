@@ -1,10 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Editar Pap/Pati</title>
+    <meta charset="UTF-8" />
 </head>
 <body>
-$END$
+<h1>Editar Ovi User</h1>
+
+<form th:action="@{/Technician/papPatiManagement/update}" method="post">
+
+    <p>
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" th:value="${dni}" readonly />
+    </p>
+
+    <p>
+        <label for="available">Disponibilidad:</label>
+        <input type="checkbox" id="available" name="available" value="true" th:checked="${available}" />
+    </p>
+
+    <p>
+        <label for="address">Dirección:</label>
+        <input type="text" id="address" name="address" th:value="${address}" required />
+    </p>
+
+    <p>
+        <label for="type">Tipo:</label>
+        <select id="type" name="type">
+            <option value="PAP" th:selected="${type == 'PAP'}">PAP</option>
+            <option value="PATI" th:selected="${type == 'PATI'}">PATI</option>
+        </select>
+    </p>
+
+    <p>
+        <label for="papPatiPreferences">Preferencias</label>
+        <input type="text" id="papPatiPreferences" name="papPatiPreferences" th:value="${papPatiPreferences}" required />
+    </p>
+
+    <p>
+        <label for="training">Entrenamiento:</label>
+        <input type="text" id="training" name="training" th:value="${training}" required />
+    </p>
+
+    <p>
+        <label for="document">Documento</label>
+        <input type="text" id="document" name="document" th:value="${document}" required />
+    </p>
+
+    <p>
+        <label for="state">Estado:</label>
+        <select id="state" name="state">
+            <option value="PENDING" th:selected="${state == 'PENDING'}">PENDING</option>
+            <option value="APPROVED" th:selected="${state == 'APPROVED'}">APPROVED</option>
+            <option value="REJECTED" th:selected="${state == 'REJECTED'}">REJECTED</option>
+        </select>
+    </p>
+
+    <p>
+        <label for="reason">Razón:</label>
+        <input type="text" id="reason" name="reason" th:value="${reason}" />
+    </p>
+
+    <button type="submit">Guardar cambios</button>
+
+</form>
+
+<br><br>
+<a th:href="@{/Technician/userList}">Volver a la lista</a>
+
 </body>
 </html>

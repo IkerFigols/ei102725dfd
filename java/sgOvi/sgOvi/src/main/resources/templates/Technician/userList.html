@@ -9,28 +9,20 @@
 <table>
     <thead>
     <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
         <th>DNI</th>
-        <th>Fecha de Nacimiento</th>
-        <th>Dirección</th>
-        <th>Tutor Legal</th>
         <th>Estado</th>
-        <th>Razón</th>
-        <td>Preferencias del Usuario</td>
         <td></td>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user: ${users}">
-        <td th:text="${user.dni}"></td>
-        <td th:text="${user.birthdayDate}"></td>
-        <td th:text="${user.address}"></td>
-        <td th:text="${user.legalGuardian}"></td>
-        <td th:text="${user.state}"></td>
-        <td th:text="${user.reason}"></td>
-        <td th:text="${user.userPreferences}"></td>
-
-        </td>
-        <td><a th:href="@{/Technician/userManagement/{dni}(dni=${user.dni})}">Borrar</a>
+        <td th:text="${user.value[0]}"></td>
+        <td th:text="${user.value[1]}"></td>
+        <td th:text="${user.key}"></td>
+        <td th:text="${user.value[2]}"></td>
+        <td><a th:href="@{/Technician/userManagement/{dni}(dni=${user.key})}">Editar</a>
         </td>
     </tr>
     </tbody>

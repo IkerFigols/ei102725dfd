@@ -2,7 +2,6 @@ package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import es.uji.ei1027.sgOvi.model.Assistance_Request;
-import es.uji.ei1027.sgOvi.model.Ovi_User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 @Controller
 @RequestMapping("/Assistance_Request")
@@ -48,7 +46,7 @@ public class AssistanceRequestController {
         //request.setIdOviUser(request.getIdOviUser().toUpperCase());
         request.setData(LocalDate.now());
         request.setIdAsReq(generateARCode());
-        request.setState("PENDIENTE");
+        request.setState("PENDING");
         request.setReason(null);
 
         assistanceReqDao.addAssistanceRequest(request);

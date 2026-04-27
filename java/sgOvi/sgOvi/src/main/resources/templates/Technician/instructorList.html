@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+    <title>Gestionar Ovi Users</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<h1>Lista de Instructores</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>DNI</th>
+        <th>Especialidad</th>
+        <td></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="instructor: ${instructors}">
+        <td th:text="${instructor.value[0]}"></td>
+        <td th:text="${instructor.value[1]}"></td>
+        <td th:text="${instructor.key}"></td>
+        <td th:text="${instructor.value[2]}"></td>
+        <td><a th:href="@{/Technician/userManagement/{dni}(dni=${instructor.key})}">Editar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+<a href="/" >Volver</a>
+</body>
+</html>

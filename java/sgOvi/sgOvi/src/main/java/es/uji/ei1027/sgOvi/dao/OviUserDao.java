@@ -1,5 +1,5 @@
 package es.uji.ei1027.sgOvi.dao;
-import es.uji.ei1027.sgOvi.model.Ovi_User;
+import es.uji.ei1027.sgOvi.model.OviUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,7 +23,7 @@ public class OviUserDao {
     }
 
 
-    public void addOviUser( Ovi_User oviUser) {
+    public void addOviUser( OviUser oviUser) {
         String legalGuardian = oviUser.getLegalGuardian();
         if (legalGuardian.equals(""))
             legalGuardian = null;
@@ -45,28 +45,38 @@ public class OviUserDao {
         jdbcTemplate.update("DELETE FROM Ovi_User WHERE dni LIKE '" + dni + "'");
     }
 
-    public void updateOviUser(Ovi_User oviUser) {
-        jdbcTemplate.update("UPDATE Ovi_User SET birthdayDate ="+ oviUser.getBirthdayDate() +", address="+oviUser.getAddress()+", legalGuardian ="+ oviUser.getLegalGuardian() +", state ="+ oviUser.getState()+ ", reason ="+oviUser.getReason()+", userPreferences ="+oviUser.getUserPreferences()+ "WHERE dni LIKE " + oviUser.getDni() + "'");
+    public void updateOviUser(OviUser user) {
+        String sql = "UPDATE Ovi_User SET birthdayDate=?, address=?, legalGuardian=?, state=?, reason=?, userPreferences=? WHERE dni=?";
+
+        jdbcTemplate.update(sql,
+                user.getBirthdayDate(),
+                user.getAddress(),
+                user.getLegalGuardian(),
+                user.getState(),
+                user.getReason(),
+                user.getUserPreferences(),
+                user.getDni()
+        );
     }
 
-    public Ovi_User getOviUser(String dni) {
+    public OviUser getOviUser(String dni) {
         try {
-            Ovi_User n = jdbcTemplate.queryForObject(
+            OviUser n = jdbcTemplate.queryForObject(
                     "SELECT * FROM Ovi_User WHERE dni = '" + dni + "'",
                     new OviUserRowMapper());
             return n;
 
         } catch (DataAccessException e) {
-            return new Ovi_User();
+            return new OviUser();
         }
     }
 
-    public List<Ovi_User> getOviUsers() {
+    public List<OviUser> getOviUsers() {
         try {
             return jdbcTemplate.query("SELECT * FROM Ovi_User", new OviUserRowMapper());
         }
         catch(EmptyResultDataAccessException e) {
-            return new ArrayList<Ovi_User>();
+            return new ArrayList<OviUser>();
         }
     }
 }

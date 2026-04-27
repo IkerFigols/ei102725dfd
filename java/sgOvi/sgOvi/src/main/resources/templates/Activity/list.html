@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>SgOvi - Actividades Recientes</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <style>
+    /* Estilos específicos para la tabla de actividades */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: white;
+    }
+    th {
+        background-color: var(--primary-blue);
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+    td {
+        padding: 12px;
+        border-bottom: 1px solid var(--border-gray);
+        color: #334155;
+        font-size: 14px;
+    }
+    tr:hover {
+        background-color: #f1f5f9;
+    }
+    .container-wide {
+        max-width: 900px; /* Un poco más ancho para la tabla */
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container container-wide">
+  <h1 class="title">Próximas Actividades</h1>
+  <p class="description">Consulta las 10 actividades más recientes programadas en la OVI.</p>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Título</th>
+      <th>Tipo</th>
+      <th>Descripción</th>
+      <th>Fecha</th>
+      <th>Capacidad</th>
+      <th>Sponsor</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="activity: ${activities}">
+      <td th:text="${activity.tittle}" style="font-weight: bold;"></td>
+      <td th:text="${activity.activityType}"></td>
+      <td th:text="${activity.description}"></td>
+      <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
+      <td th:text="${activity.capacity}"></td>
+      <td th:text="${activity.sponsor}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 30px; text-align: center;">
+    <a th:href="@{/}" class="btn btn-secondary">Volver al inicio</a>
+  </div>
+</div>
+
+<footer style="margin-top: 40px; text-align: center;">
+  <p class="description">SgOvi - Sistema de Gestión de Vida Independiente</p>
+</footer>
+
+</body>
+</html>

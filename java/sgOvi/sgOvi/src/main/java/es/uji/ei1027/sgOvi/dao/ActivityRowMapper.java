@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 public final class ActivityRowMapper implements RowMapper<Activity> {
 
@@ -19,9 +20,17 @@ public final class ActivityRowMapper implements RowMapper<Activity> {
         activity.setDescription(rs.getString("description"));
         activity.setDate(rs.getObject("date", LocalDate.class));
         activity.setAddress(rs.getString("address"));
-        activity.setCapacity(rs.getObject("capacity", Integer.class));
+   //     activity.setCapacity(rs.getObject("capacity", Integer.class));
         activity.setSponsor(rs.getString("sponsor"));
         activity.setIdInstructor(rs.getString("idInstructor"));
+
+        //arreglo para que sql no se enfade con Integer
+        Object capacidad = rs.getObject("capacity");
+        if (capacidad != null){
+            activity.setCapacity((((Number) capacidad).intValue()));
+        } else {
+            activity.setCapacity(null);
+        }
 
         return activity;
     }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+    <title>Gestionar Ovi Users</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<h1>Lista de Actividades</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>DNI</th>
+        <th>Tipo</th>
+        <th>Disponibilidad</th>
+        <th>Estado</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="papPati: ${papPatis}">
+        <td th:text="${papPati.value[0]}"></td>
+        <td th:text="${papPati.value[1]}"></td>
+        <td th:text="${papPati.key}"></td>
+        <td th:text="${papPati.value[2]}"></td>
+        <td th:text="${papPati.value[3]}"></td>
+        <td th:text="${papPati.value[4]}"></td>
+
+        </td>
+        <td><a th:href="@{/Technician/papPatiManagement/{dni}(dni=${papPati.key})}">Editar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+<a href="/" >Volver</a>
+</body>
+</html>

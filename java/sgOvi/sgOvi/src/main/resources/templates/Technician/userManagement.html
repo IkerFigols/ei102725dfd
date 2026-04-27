@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Editar Ovi User</title>
+  <meta charset="UTF-8" />
 </head>
 <body>
-$END$
+<h1>Editar Ovi User</h1>
+
+<form th:action="@{/Technician/userManagement/update}" method="post">
+
+  <p>
+    <label for="dni">DNI:</label>
+    <input type="text" id="dni" name="dni" th:value="${dni}" readonly />
+  </p>
+
+  <p>
+    <label for="birthdayDate">Fecha de nacimiento:</label>
+    <input type="text" id="birthdayDate" name="birthdayDate" th:value="${birthdayDate}" required />
+  </p>
+
+  <p>
+    <label for="address">Dirección:</label>
+    <input type="text" id="address" name="address" th:value="${address}" required />
+  </p>
+
+  <p>
+    <label for="userPreferences">Preferencias</label>
+    <input type="text" id="userPreferences" name="userPreferences" th:value="${userPreferences}" required />
+  </p>
+
+
+  <p>
+    <label for="legalGuardian">Tutor Legal:</label>
+    <input type="text" id="legalGuardian" name="legalGuardian" th:value="${legalGuardian}" required />
+  </p>
+
+  <p>
+    <label for="state">Estado:</label>
+    <select id="state" name="state">
+      <option value="APPROVED" th:selected="${state == 'APPROVED'}">APPROVED</option>
+      <option value="REJECTED" th:selected="${state == 'REJECTED'}">REJECTED</option>
+      <option value="PENDING" th:selected="${state == 'PENDING'}">PENDING</option>
+    </select>
+  </p>
+
+  <p>
+    <label for="reason">Razón:</label>
+    <input type="text" id="reason" name="reason" th:value="${reason}" />
+  </p>
+
+  <button type="submit">Guardar cambios</button>
+
+</form>
+
+<br><br>
+<a th:href="@{/Technician/userList}">Volver a la lista</a>
+
 </body>
 </html>

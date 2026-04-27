@@ -40,7 +40,7 @@ public class LoginServiceImp implements LoginService {
                 if (persona.getUserType() != null)
                     return persona.getUserType();
 
-                for (Ovi_User oviUser : oviUserDao.getOviUsers()) {
+                for (OviUser oviUser : oviUserDao.getOviUsers()) {
                     if (oviUser.getDni().equals(persona.getDni())) {
                         persona.setUserType("OVI");
                         return persona.getUserType();
