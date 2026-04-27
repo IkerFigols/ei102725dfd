@@ -69,11 +69,11 @@ public class RegisterValidator implements Validator {
         if(person.getGender() != null && person.getGender().length() > 10 )
             errors.rejectValue("dni","required","El genero debe tener como máximo 10 caracteres");
 
-        if(person.getPassword() != null && person.getPassword().length() > 9 )
+        if(person.getPassword() != null && person.getPassword().length() > 100 )
             errors.rejectValue("password","required","La contraseña debe tener como máximo 100 caracteres");
-        if(person.getCity() != null && person.getCity().length() > 9 )
+        if(person.getCity() != null && person.getCity().length() > 50 )
             errors.rejectValue("city","required","La ciudad debe tener como máximo 50 caracteres");
-        if(person.getProvince() != null && person.getProvince().length() > 9 )
+        if(person.getProvince() != null && person.getProvince().length() > 50 )
             errors.rejectValue("province","required","La provincia debe tener como máximo 50 caracteres");
 
     }

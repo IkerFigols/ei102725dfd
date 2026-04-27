@@ -1,20 +1,134 @@
+
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="es">
 <head>
-    <link rel="stylesheet" href="/css/style.css">
-    <meta charset="UTF-8" />
-    <title>SgOvi</title>
+    <meta charset="UTF-8">
+    <title>SgOvi - Sistema de Gestión OVI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .app-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .app-header h1 {
+            color: var(--primary-blue);
+            font-size: 3rem;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+        .section-margin { margin-bottom: 50px; }
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 20px;
+            margin-bottom: 30px;
+            color: #334155;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .info-card {
+            border: 1px solid var(--border-gray);
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        .login-section {
+            background-color: #edf2f7;
+            border: 2px solid var(--primary-blue);
+        }
+        .register-footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border-gray);
+        }
+        .activities-actions {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+        }
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-<h1>Bienvenido a SgOvi</h1>
-<ul>
-    <li><a href="Ovi_User/list">Gestión de Ovi Users</a></li>
-    <li><a href="Person/list">Gestión de Person</a></li>
-    <li><a href="Assistance_Request/list">Solicitar asistencia</a></li>
-    <li><a href="Register/register">Registrarse</a></li>
-    <li><a href="Technician/menuTechnician">Menu technician</a></li>
-</ul>
+
+<header class="app-header">
+    <h1>SgOvi</h1>
+    <p class="description">Sistema de Gestión de la Oficina de Vida Independiente</p>
+</header>
+
+<section class="form-container section-margin">
+    <div class="quote">
+        <p>"Los que nos desplazamos de manera diferente... no tenemos por qué estar enfermos, podemos ser felices, podemos amar y ser amados, podemos aportar cosas..."</p>
+        <small>— Manuel Lobato Galindo, Activista en Vida Independiente</small>
+    </div>
+
+    <h2 class="title">¿CUÁL ES LA FILOSOFÍA DE VIDA INDEPENDIENTE?</h2>
+    <p class="description">
+        La Filosofía de Vida Independiente se basa en la <strong>«diversidad funcional»</strong>. Reclamamos el derecho a vivir de manera activa e independiente en la comunidad con los apoyos necesarios.
+    </p>
+</section>
+
+<section class="form-container section-margin">
+    <h2 class="title">ACTIVIDADES DE FORMACIÓN Y DIVULGACIÓN</h2>
+    <p class="description">
+        Promovemos la autonomía a través del conocimiento para todos los perfiles de la OVI. Organizamos eventos abiertos y talleres especializados.
+    </p>
+    <div class="menu-grid">
+        <p>• Formación continua para Asistentes Personales (AP).</p>
+        <p>• Jornadas de autogestión para usuarios OVI.</p>
+        <p>• Divulgación del modelo de Vida Independiente.</p>
+    </div>
+    <div class="activities-actions">
+        <a href="/Activity/list" class="btn btn-secondary" style="width: 280px;">Ver próximas actividades</a>
+    </div>
+</section>
+
+<section class="form-container section-margin">
+    <h2 class="title">ÚNETE A NUESTRA COMUNIDAD</h2>
+    <p class="description">Antes de registrarte, conoce las dos formas principales de formar parte de SgOvi:</p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3 class="title" style="font-size: 1.1rem;">Asistente Personal (AP)</h3>
+            <p class="description">Profesionales que realizan tareas que la persona con diversidad funcional no puede hacer por sí misma, garantizando su autonomía.</p>
+        </div>
+
+        <div class="info-card">
+            <h3 class="title" style="font-size: 1.1rem;">Usuario/a OVI</h3>
+            <p class="description">Personas con diversidad funcional que lideran su propio proyecto de vida y necesitan apoyo para ejercer su derecho a la vida independiente.</p>
+        </div>
+    </div>
+
+    <div class="register-footer">
+        <p class="description">Si tienes claro tu perfil, rellena el formulario indicando tu preferencia:</p>
+        <a href="/login" class="btn btn-primary" style="width: 250px;">Registrarse en la aplicación</a>
+    </div>
+</section>
+
+<section class="form-container login-section">
+    <h2 class="title">ACCESO DE USUARIOS</h2>
+    <p class="description">Si ya tienes una cuenta activa en SgOvi, accede a tu panel de gestión.</p>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/login" class="btn btn-secondary" style="width: 200px;">Entrar a SgOvi</a>
+    </div>
+</section>
+
+<footer style="margin-top: 40px; text-align: center;">
+    <p class="description">Contacto: <strong>ovicastello@gmail.com</strong></p>
+</footer>
+<h1> PARTE DE PRUEBAS (PARA NOSOTROS) </h1>
+<li><a href="Ovi_User/list">Gestión de Ovi Users</a></li>
+<li><a href="Person/list">Gestión de Person</a></li>
+<li><a href="Assistance_Request/list">Solicitar asistencia</a></li>
+<li><a href="Register/register">Registrarse</a></li>
+<li><a href="Technician/menuTechnician">Menu technician</a></li>
+<li><a href="login">Login</a></li>
+
 </body>
 </html>
-
-

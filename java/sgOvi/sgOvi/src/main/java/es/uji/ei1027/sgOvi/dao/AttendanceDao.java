@@ -53,7 +53,7 @@ public class AttendanceDao {
             return a;
 
         } catch (DataAccessException e) {
-            return new Attendance();
+            return null;
         }
     }
 

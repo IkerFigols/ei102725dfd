@@ -67,7 +67,7 @@ public class OviUserDao {
             return n;
 
         } catch (DataAccessException e) {
-            return new OviUser();
+            return null;
         }
     }
 
