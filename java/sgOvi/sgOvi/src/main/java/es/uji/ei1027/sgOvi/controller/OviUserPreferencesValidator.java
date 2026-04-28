@@ -14,12 +14,6 @@ public class OviUserPreferencesValidator implements Validator {
     public void validate(Object target, Errors errors) {
         OviUser oviUser = (OviUser) target;
 
-        if (oviUser.getUserPreferences() == null || oviUser.getUserPreferences().trim().isEmpty()) {
-            errors.rejectValue("userPreferences", "required", "Debes introducir tus preferencias");
-        }
 
-        if (oviUser.getUserPreferences().length() > 250) {
-            errors.rejectValue("userPreferences", "tooLong", "Las preferencias no pueden superar los 250 caracteres");
-        }
     }
 }

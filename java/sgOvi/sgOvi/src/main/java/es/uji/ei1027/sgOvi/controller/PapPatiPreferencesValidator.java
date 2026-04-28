@@ -15,12 +15,5 @@ public class PapPatiPreferencesValidator implements Validator {
         PapPati papPati = (PapPati) target;
 
         // Fíjate que aquí usamos el nombre del campo de tu diseño lógico: papPatiPreferences
-        if (papPati.getPapPatiPreferences() == null || papPati.getPapPatiPreferences().trim().isEmpty()) {
-            errors.rejectValue("papPatiPreferences", "required", "Debes introducir tus preferencias de asistente");
-        }
-
-        if (papPati.getPapPatiPreferences().length() > 250) {
-            errors.rejectValue("papPatiPreferences", "tooLong", "Las preferencias no pueden superar los 250 caracteres");
-        }
     }
 }

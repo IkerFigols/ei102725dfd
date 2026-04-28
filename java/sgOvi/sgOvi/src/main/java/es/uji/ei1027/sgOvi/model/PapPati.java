@@ -13,7 +13,7 @@ public class PapPati {
     private String document;
     private String reason;
     private State state;
-    private int experience;
+    private Integer experience;
     private boolean drivingLicense;
     private ShiftType shift;
 
@@ -29,7 +29,7 @@ public class PapPati {
         this.dni = dni;
     }
 
-    public void setExperience(int experience) {
+    public void setExperience(Integer experience) {
         this.experience = experience;
     }
 
@@ -41,11 +41,11 @@ public class PapPati {
         this.shift = ShiftType.fromString(shift);
     }
 
-    public int getExperience() {
+    public Integer getExperience() {
         return experience;
     }
 
-    public boolean getDrivingLicense() {
+    public boolean hasDrivingLicense() {
         return drivingLicense;
     }
 
@@ -69,7 +69,7 @@ public class PapPati {
         this.type = StaffType.fromString(type);
     }
 
-    public boolean getAvailable() {
+    public boolean isAvailable() {
         return available;
     }
 

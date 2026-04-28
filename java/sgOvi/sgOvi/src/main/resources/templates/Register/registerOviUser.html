@@ -10,13 +10,7 @@
 <h1>Nuevo Usuario Ovi</h1>
     <form th:action="@{/Register/registerOviUser}" th:object="${oviuser}" method="post">
         <input type="hidden" th:field="*{dni}" />
-
-        <div>
-            <label for="birthdaydate">BirthdayDate: </label>
-            <input id="birthdaydate" type="date" th:field="*{birthdayDate}">
-            <div th:if="${#fields.hasErrors('birthdayDate')}" th:errors="*{birthdayDate}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-        </div>
-
+        <input type="hidden" th:field="*{birthdayDate}"/>
 
         <div>
             <label for="address">Dirección: </label>
@@ -28,12 +22,6 @@
             <label for="legalGuardian">Nombre del tutor: </label>
             <input id="legalGuardian" type="text" th:field="*{legalGuardian}">
             <div th:if="${#fields.hasErrors('legalGuardian')}" th:errors="*{legalGuardian}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-        </div>
-
-        <div>
-            <label for="userPreferences">Preferencias de usuario: </label>
-            <input id="userPreferences" type="text" th:field="*{userPreferences}">
-            <div th:if="${#fields.hasErrors('userPreferences')}" th:errors="*{userPreferences}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
         </div>
         
         <button type="submit">Añadir </button>

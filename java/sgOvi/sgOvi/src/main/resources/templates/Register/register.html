@@ -60,17 +60,22 @@
         <div>
             <label>Género:</label>
 
-            <input type="radio" id="masculino" value="Masculino" th:field="*{gender}">
+            <input type="radio" id="masculino" value="MALE" th:field="*{gender}">
             <label for="masculino">Masculino</label>
 
-            <input type="radio" id="femenino" value="Femenino" th:field="*{gender}">
+            <input type="radio" id="femenino" value="FEMALE" th:field="*{gender}">
             <label for="femenino">Femenino</label>
 
-            <input type="radio" id="otros" value="Otros" th:field="*{gender}">
+            <input type="radio" id="otros" value="UNDEFINED" th:field="*{gender}">
             <label for="otros">Otros</label>
 
             <div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
 
+        </div>
+        <div>
+            <label for="birthdaydate">BirthdayDate: </label>
+            <input id="birthdaydate" type="date" th:field="*{birthdayDate}">
+            <div th:if="${#fields.hasErrors('birthdayDate')}" th:errors="*{birthdayDate}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
         </div>
 
 

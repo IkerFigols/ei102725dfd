@@ -21,22 +21,28 @@ public class RegisterPapPatiValidator implements Validator {
         if(papPati.getAddress() == null || papPati.getAddress().isEmpty() || papPati.getAddress().length() > 100)
             errors.rejectValue("address", "required",
                     "Es necesario introducir la dirección en menos de 100 caracteres");
-        if(papPati.getPapPatiPreferences() == null || papPati.getPapPatiPreferences().isEmpty() || papPati.getPapPatiPreferences().length() > 250)
-            errors.rejectValue("papPatiPreferences", "required",
-                    "Es necesario introducir las preferencias del asistente y no debe ser mayor a 250 caracteres");
-        if(papPati.getTraining() == null || papPati.getTraining().isEmpty() || papPati.getTraining().length() > 200)
+        if(papPati.getTraining() == null || papPati.getTraining().isEmpty())
             errors.rejectValue("training", "required",
                     "Es necesario introducir las especialidades del asistente y no debe ser mayor a 200 caracteres");
-        if(papPati.getDocument() == null || papPati.getDocument().isEmpty() || papPati.getDocument().length() > 150)
+        if(papPati.getDocument() == null || papPati.getDocument().isEmpty())
             errors.rejectValue("document", "required",
                     "Es necesario introducir el enlace de los documentos del asistente");
-        if(papPati.getType() == null || papPati.getType().isEmpty())
+        if(papPati.getType() == null)
             errors.rejectValue("type", "required",
                     "Es necesario introducir el tipo de asistente");
+
+        if(papPati.getExperience() == null)
+            errors.rejectValue("experience","required","Es necesario introducir los años de experiencia");
+
+        if(papPati.getShift() == null){
+            errors.rejectValue("shift","required","Es necesario introducir en que horario puedes trabajar");
+        }
+
         if(papPati.getTraining() != null && papPati.getTraining().length() > 200 )
             errors.rejectValue("training","required","Las especialidades deben tener como máximo 200 caracteres");
         if(papPati.getDocument() != null && papPati.getDocument().length() > 100 )
             errors.rejectValue("document","required","El enlace al documento debe tener como máximo 100 caracteres");
+
 
 
 

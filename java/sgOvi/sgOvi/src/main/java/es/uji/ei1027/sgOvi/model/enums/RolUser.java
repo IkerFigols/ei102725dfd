@@ -1,15 +1,16 @@
 package es.uji.ei1027.sgOvi.model.enums;
 
-public enum Gender {
+public enum RolUser {
 
-    MALE("Masculino"),
-    FEMALE("Femenino"),
-    UNDEFINED("Otro");
+    OVI_USER("Usuario Ovi"),
+    PAP_PATI("Asistente Personal"),
+    TECHNICIAN("Tecnico"),
+    INSTRUCTOR("Instructor");
 
     private final String description;
 
     // 2. Constructor privado
-    private Gender(String description) {
+    private RolUser(String description) {
         this.description = description;
     }
 
@@ -17,9 +18,9 @@ public enum Gender {
     public String getDescription() {
         return description;
     }
-    public static Gender fromString(String text) {
-        for (Gender s : Gender.values()) {
-            if (s.name().equalsIgnoreCase(text) || s.getDescription().equals(text)) {
+    public static RolUser fromString(String text) {
+        for (RolUser s : RolUser.values()) {
+            if (s.name().equalsIgnoreCase(text)) {
                 return s;
             }
         }

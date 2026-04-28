@@ -2,6 +2,7 @@ package es.uji.ei1027.sgOvi.service;
 
 import es.uji.ei1027.sgOvi.dao.*;
 import es.uji.ei1027.sgOvi.model.*;
+import es.uji.ei1027.sgOvi.model.enums.RolUser;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,16 +33,16 @@ public class LoginServiceImp implements LoginService {
         Person persona = personDao.getPerson(dni);
         if (persona.getDni().equals(dni) && encryptor.checkPassword(password, persona.getPassword())) {
             if(oviUserDao.getOviUser(dni) != null) {
-                return "Ovi_User";
+                return RolUser.OVI_USER.name();
             }
             if(papPatiDao.getPapPati(dni) != null) {
-                return "Pap_Pati";
+                return RolUser.PAP_PATI.name();
             }
             if(instructorDao.getInstructor(dni) != null) {
-                return "Intructor";
+                return RolUser.INSTRUCTOR.name();
             }
             if(technicianDao.getTechnician(dni) != null) {
-                return "Technician";
+                return RolUser.TECHNICIAN.name();
             }
         }
         return null;

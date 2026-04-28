@@ -54,7 +54,6 @@ public class LoginController {
 
         session.setAttribute("user", person);
 
-
         if (session.getAttribute("nextURL") != null ) {
             String nextURL = (String) session.getAttribute("nextURL");
             session.removeAttribute("nextURL");
@@ -63,10 +62,10 @@ public class LoginController {
 
 
         return switch (etiqueta) {
-            case "Ovi_User"  -> "redirect:/Ovi_User/menuOviUser";
-            case "Pap_Pati"  -> "redirect:/Pap_Pati/menuPapPati";
-            case "Technician" -> "redirect:/Technician/menuTechnician";
-            case "Instructor"  -> "redirect:/Instructor/menuInstructor";
+            case "OVI_USER"  -> "redirect:/Ovi_User/menuOviUser";
+            case "PAP_PATI"  -> "redirect:/Pap_Pati/menuPapPati";
+            case "TECHNICIAN" -> "redirect:/Technician/menuTechnician";
+            case "INSTRUCTOR"  -> "redirect:/Instructor/menuInstructor";
             default     -> "redirect:/";
         };
     }

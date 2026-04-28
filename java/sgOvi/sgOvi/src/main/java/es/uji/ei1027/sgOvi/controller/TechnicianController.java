@@ -76,7 +76,6 @@ public class TechnicianController {
         model.addAttribute("legalGuardian", user.getLegalGuardian());
         model.addAttribute("reason", user.getReason());
         model.addAttribute("address", user.getAddress());
-        model.addAttribute("userPreferences", user.getUserPreferences());
         model.addAttribute("state", user.getState());
         model.addAttribute("birthdayDate", user.getBirthdayDate());
         return "Technician/userManagement";
@@ -96,7 +95,6 @@ public class TechnicianController {
         user.setDni(dni);
         user.setState(state);
         user.setLegalGuardian(legalGuardian);
-        user.setUserPreferences(userPreferences);
         user.setAddress(address);
         user.setBirthdayDate(birthdayDate);
 
@@ -125,7 +123,6 @@ public class TechnicianController {
         model.addAttribute("state", papPati.getState());
         model.addAttribute("document", papPati.getDocument());
         model.addAttribute("training", papPati.getTraining());
-        model.addAttribute("papPatiPreferences", papPati.getPapPatiPreferences());
         return "Technician/papPatiManagement";
     }
 
@@ -148,7 +145,6 @@ public class TechnicianController {
         papPati.setAddress(address);
         papPati.setAvailable(available);
         papPati.setDocument(document);
-        papPati.setPapPatiPreferences(papPatiPreferences);
         papPati.setState(state);
 
         if(state.equals("PENDING") || state.equals("APPROVED")){
@@ -199,7 +195,7 @@ public class TechnicianController {
        person.setSurname(pidto.getPerson().getSurname());
        person.setPhoneNumber(pidto.getPerson().getPhoneNumber());
        person.setEmail(pidto.getPerson().getEmail());
-       person.setGender(pidto.getPerson().getGender());
+       person.setGender(pidto.getPerson().getGender().name());
        person.setPassword(pidto.getPerson().getPassword());
        person.setCity(pidto.getPerson().getCity());
        person.setProvince(pidto.getPerson().getProvince());

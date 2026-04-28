@@ -47,12 +47,7 @@ public class OviUserController {
         return "Ovi_User/menuOviUser";
     }
 
-    @RequestMapping("/contracts")
-    public String listContracts(HttpSession session) {
-        if (session.getAttribute("user") == null) return "redirect:/login";
-        // Redirigimos a la ruta que gestiona el ContractController
-        return "redirect:/contract/list";
-    }
+
 
     @RequestMapping("/activities")
     public String listActivities(HttpSession session) {
@@ -91,7 +86,6 @@ public class OviUserController {
             return "changePreferences";
         }
 
-        oviUserDao.updatePreferencias(oviUser.getDni(), oviUser.getUserPreferences());
         return "redirect:/Ovi_User/menu";
     }
     @Autowired

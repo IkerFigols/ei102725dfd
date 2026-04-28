@@ -24,13 +24,13 @@ public class PapPatiDao {
                 papPati.getDni(),
                 papPati.getAddress(),
                 papPati.getType().name(),
-                papPati.getAvailable(),
+                papPati.isAvailable(),
                 papPati.getTraining(),
                 papPati.getExperience(),
                 papPati.getDocument(),
                 papPati.getReason(),
                 papPati.getState().name(),
-                papPati.getDrivingLicense(),
+                papPati.hasDrivingLicense(),
                 papPati.getShift().name()
         );
     }
@@ -39,13 +39,13 @@ public class PapPatiDao {
         jdbcTemplate.update("UPDATE Pap_Pati SET address=?, type=?, available=?, training=?, document=?, reason=?, state=?, experience=?, drivingLicense=?, shift=? WHERE dni=?",
                 papPati.getAddress(),
                 papPati.getType().name(),
-                papPati.getAvailable(),
+                papPati.isAvailable(),
                 papPati.getTraining(),
                 papPati.getDocument(),
                 papPati.getReason(),
                 papPati.getState().name(),
                 papPati.getExperience(),
-                papPati.getDrivingLicense(),
+                papPati.hasDrivingLicense(),
                 papPati.getShift().name(),
                 papPati.getDni() // El dni va al final porque es el '?' del WHERE
         );

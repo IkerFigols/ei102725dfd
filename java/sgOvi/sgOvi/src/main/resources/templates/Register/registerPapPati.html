@@ -37,9 +37,20 @@
         </div>
 
         <div>
+            <label for="drivingLicense">Carnet de conducir? </label>
+            <input id="drivingLicense" type="checkbox" th:field="*{drivingLicense}">
+        </div>
+        <div>
             <label for="training">Especialidades: </label>
             <input id="training" type="text" th:field="*{training}">
             <div th:if="${#fields.hasErrors('training')}" th:errors="*{training}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+
+        </div>
+
+        <div>
+            <label for="experience">Años de experiencia: </label>
+            <input id="experience" type="number" th:field="*{experience}">
+            <div th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
 
         </div>
 
@@ -49,12 +60,24 @@
             <div th:if="${#fields.hasErrors('document')}" th:errors="*{document}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
 
         </div>
+
         <div>
-            <label for="papPatiPreferences">Preferencias del asistente: </label>
-            <input id="papPatiPreferences" type="text" th:field="*{papPatiPreferences}">
-            <div th:if="${#fields.hasErrors('papPatiPreferences')}" th:errors="*{papPatiPreferences}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <label>Que horario estas disponible :</label>
+
+            <input type="radio" id="MORNING" value="MORNING" th:field="*{shift}">
+            <label for="MORNING">Mañanas </label>
+
+            <input type="radio" id="AFTERNOON" value="AFTERNOON" th:field="*{shift}">
+            <label for="AFTERNOON">Tardes </label>
+
+            <input type="radio" id="ANY" value="ANY" th:field="*{shift}">
+            <label for="ANY">Tardes </label>
+
+            <div th:if="${#fields.hasErrors('shift')}" th:errors="*{shift}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
 
         </div>
+
+
 
         <button type="submit">Añadir </button>
     </form>

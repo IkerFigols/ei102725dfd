@@ -1,5 +1,8 @@
 package es.uji.ei1027.sgOvi.model;
 import es.uji.ei1027.sgOvi.model.enums.State;
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
 
 public class OviUser {
     private String dni;
@@ -8,9 +11,19 @@ public class OviUser {
     private State state;
     private String reason;
 
+    private LocalDate birthdayDate;
+
 
     public OviUser(){
         state = State.fromString("PENDING");
+    }
+
+    public LocalDate getBirthdayDate() {
+        return birthdayDate;
+    }
+
+    public void setBirthdayDate(LocalDate birthdayDate) {
+        this.birthdayDate = birthdayDate;
     }
 
     public String getDni() {

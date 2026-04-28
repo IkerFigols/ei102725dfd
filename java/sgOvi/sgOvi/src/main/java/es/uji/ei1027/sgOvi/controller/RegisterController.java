@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -58,17 +59,17 @@ public class RegisterController {
         person.setPassword(passwordEncrypted);
         personDao.addPerson(person);
         if ("OviUser".equals(person.getPreference())) {
-            return "redirect:/Register/registerOviUser?dni="+person.getDni();
+            return "redirect:/Register/registerOviUser?dni="+person.getDni()+"&birthdayDate="+person.getBirthdayDate();
         } else {
             return "redirect:/Register/registerPapPati?dni="+person.getDni();
         }
     }
 
     @GetMapping("/registerOviUser")
-    public String showRegisterOviUser(@RequestParam("dni") String dni, Model model) {
+    public String showRegisterOviUser(@RequestParam("dni") String dni, @RequestParam("birthdayDate") LocalDate date, Model model) {
         OviUser oviUser = new OviUser();
         oviUser.setDni(dni);
-
+        oviUser.setBirthdayDate(date);
         model.addAttribute("oviuser", oviUser);
         return "Register/registerOviUser";
     }

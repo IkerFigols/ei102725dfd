@@ -57,7 +57,6 @@ public class PapPatiController {
             return "changePreferences";
         }
 
-        papPatiDao.updatePreferencias(papPati.getDni(), papPati.getPapPatiPreferences());
 
         return "redirect:/PapPati/menu";
     }

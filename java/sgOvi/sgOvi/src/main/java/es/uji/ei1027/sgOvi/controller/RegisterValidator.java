@@ -18,6 +18,9 @@ public class RegisterValidator implements Validator {
         if(person.getDni() == null || person.getDni().length() != 9)
             errors.rejectValue("dni", "required",
                     "Es necesario introducir el dni");
+        if(person.getBirthdayDate() == null)
+            errors.rejectValue("birthdayDate", "required",
+                    "Es necesario introducir la fecha");
         if (!person.getDni().matches("^[XYZ\\d]\\d{7}[A-Z]$"))
             errors.rejectValue("dni", "format",
                     "El DNI debe tener exactamente 8 números y 1 letra mayúscula");
@@ -36,7 +39,7 @@ public class RegisterValidator implements Validator {
             errors.rejectValue("surname", "required",
                     "Es necesario introducir los apellido");
 
-        if(person.getGender() == null || person.getGender().isEmpty())
+        if(person.getGender() == null)
             errors.rejectValue("gender", "required", "Es necesario seleccionar un genero");
         if(person.getPreference() == null || person.getPreference().isEmpty())
             errors.rejectValue("preference", "required", "Es necesario seleccionar una preferencia");
@@ -66,7 +69,7 @@ public class RegisterValidator implements Validator {
             errors.rejectValue("phoneNumber","required","El telefono debe tener como máximo 9 caracteres");
         if(person.getEmail() != null && person.getEmail().length() > 50 )
             errors.rejectValue("email","required","El email debe tener como máximo 50 caracteres");
-        if(person.getGender() != null && person.getGender().length() > 10 )
+        if(person.getGender() != null && person.getGender().name().length() > 10 )
             errors.rejectValue("dni","required","El genero debe tener como máximo 10 caracteres");
 
         if(person.getPassword() != null && person.getPassword().length() > 100 )
@@ -75,6 +78,7 @@ public class RegisterValidator implements Validator {
             errors.rejectValue("city","required","La ciudad debe tener como máximo 50 caracteres");
         if(person.getProvince() != null && person.getProvince().length() > 50 )
             errors.rejectValue("province","required","La provincia debe tener como máximo 50 caracteres");
+
 
     }
 }

@@ -17,29 +17,19 @@ public class RegisterOviValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
 
-
         OviUser user = (OviUser) obj;
-
-        if(user.getBirthdayDate() == null)
-            errors.rejectValue("birthdayDate", "required",
-                    "Es necesario introducir la fecha");
-        if(user.getBirthdayDate() != null) {
+        if (user.getBirthdayDate() != null) {
             long edad = ChronoUnit.YEARS.between(user.getBirthdayDate(), LocalDate.now());
             if (edad < 18 && (user.getLegalGuardian() == null || user.getLegalGuardian().isEmpty()))
                 errors.rejectValue("legalGuardian", "required",
                         "Es necesario introducir el nombre del tutor legal del menor");
         }
-        if(user.getAddress() == null || user.getAddress().isEmpty() || user.getAddress().length() > 50)
+        if (user.getAddress() == null || user.getAddress().isEmpty() || user.getAddress().length() > 50)
             errors.rejectValue("address", "required",
                     "Es necesario introducir la dirección en menos de 50 caracteres");
-        if(user.getUserPreferences() == null || user.getUserPreferences().isEmpty() || user.getUserPreferences().length() > 250)
-            errors.rejectValue("userPreferences", "required",
-                    "Es necesario introducir las preferencias del usuario y no debe ser mayor a 250 caracteres");
 
-        if(user.getLegalGuardian() != null && user.getLegalGuardian().length() > 50 )
-            errors.rejectValue("legalGuardian","required","El nombre del tutor legal debe tener como máximo 50 caracteres");
-        if(user.getUserPreferences() != null && user.getUserPreferences().length() > 250 )
-            errors.rejectValue("userPreferences","required","Las preferencias del usuario deben tener como máximo 250 caracteres");
+        if (user.getLegalGuardian() != null && user.getLegalGuardian().length() > 50)
+            errors.rejectValue("legalGuardian", "required", "El nombre del tutor legal debe tener como máximo 50 caracteres");
     }
 }
 
