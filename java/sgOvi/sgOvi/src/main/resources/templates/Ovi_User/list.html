@@ -14,7 +14,7 @@
         <th>Address</th>
         <th>LegalGuardian</th>
         <th>Reason</th>
-        <th>UserPreferences</th>
+
         <td></td>
         <td></td>
     </tr>
@@ -22,11 +22,9 @@
     <tbody>
     <tr th:each="oviUser: ${oviUsers}">
         <td th:text="${oviUser.dni}"></td>
-        <td th:text="${oviUser.birthdayDate}"></td>
         <td th:text="${oviUser.address}"></td>
         <td th:text="${oviUser.LegalGuardian}"></td>
         <td th:text="${oviUser.reason}"></td>
-        <td th:text="${oviUser.userPreferences}"></td>
         <td><a th:href="@{/Ovi_User/update/{dni}(dni=${oviUser.dni})}">Editar</a>
         </td>
         <td><a th:href="@{/Ovi_User/delete/{dni}(dni=${oviUser.dni})}">Borrar</a>

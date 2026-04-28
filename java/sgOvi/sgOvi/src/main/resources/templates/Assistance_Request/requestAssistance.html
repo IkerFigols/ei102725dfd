@@ -11,13 +11,52 @@
 
         <input type="hidden" th:field="*{idOviUser}" />
         <h3 class="title">Motivo de la solicitud de asistencia</h3>
-
         <div class="textarea-container">
             <label for="description">
                 <input id="description" class="textarea-field" th:field="*{description}" placeholder="Describa el motivo de su solicitud...">
             </label>
             <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
         </div>
+
+        <div>
+            <label for="experience">Años de experiencia como minimo: </label>
+            <input id="experience" type="number" th:field="*{experience}">
+            <div th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+
+        </div>
+
+        <div>
+            <label>Que horario necesitas para que el asistente este disponible :</label>
+
+            <input type="radio" id="MORNING" value="MORNING" th:field="*{shiftPreference}">
+            <label for="MORNING">Mañanas </label>
+
+            <input type="radio" id="AFTERNOON" value="AFTERNOON" th:field="*{shiftPreference}">
+            <label for="AFTERNOON">Tardes </label>
+
+            <input type="radio" id="ANY" value="ANY" th:field="*{shiftPreference}">
+            <label for="ANY">Cualquiera </label>
+
+            <div th:if="${#fields.hasErrors('shift')}" th:errors="*{shiftPreference}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+
+        </div>
+
+        <div>
+            <label for="drivingLicense">Necesita el asistente carnet de conducir? </label>
+            <input id="drivingLicense" type="checkbox" th:field="*{drivingLicense}">
+        </div>
+        <div>
+            <label for="city"> En que ciudad se hara la asistencia: </label>
+            <input id="city" type="text" th:field="*{city}">
+            <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+        </div>
+
+        <div>
+            <label for="province">En que provincia se hara la asistencia: </label>
+            <input id="province" type="text" th:field="*{province}">
+            <div th:if="${#fields.hasErrors('province')}" th:errors="*{province}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+        </div>
+
         <div class="button-group">
             <button class="btn btn-primary" type="submit">Solicitar asistencia</button>
             <button class="btn btn-secondary" type="button" onclick="window.history.back();">Volver</button>
