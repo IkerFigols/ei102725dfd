@@ -69,7 +69,7 @@ public class PapPati {
         this.type = StaffType.fromString(type);
     }
 
-    public boolean getAvailable() {
+    public boolean isAvailable() {
         return available;
     }
 

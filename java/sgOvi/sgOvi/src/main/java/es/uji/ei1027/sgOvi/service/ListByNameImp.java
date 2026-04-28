@@ -36,7 +36,7 @@ public class ListByNameImp implements ListByName{
             List<String> parametros = new ArrayList<>();
             parametros.add(personDao.getPerson(user.getDni()).getName());
             parametros.add(personDao.getPerson(user.getDni()).getSurname());
-            parametros.add(user.getState());
+            parametros.add(user.getState().name());
             mapa.put(user.getDni(), parametros);
         }
         return mapa;
@@ -49,7 +49,7 @@ public class ListByNameImp implements ListByName{
             List<String> parametros = new ArrayList<>();
             parametros.add(personDao.getPerson(papPati.getDni()).getName());
             parametros.add(personDao.getPerson(papPati.getDni()).getSurname());
-            parametros.add(papPati.getType());
+            parametros.add(papPati.getType().name());
             String available = "No disponible";
             if(papPati.isAvailable())
                 available = "Disponible";
