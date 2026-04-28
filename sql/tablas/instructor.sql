@@ -1,6 +1,6 @@
 CREATE TABLE Instructor (
 	dni			VARCHAR(9),
-	expertise	VARCHAR(50),
+	expertise	VARCHAR(100),
 
 	--Clave Primaria
 	
