@@ -32,38 +32,9 @@ public class OviUserController {
         model.addAttribute("oviUsers", oviUserDao.getOviUsers());
         return "Ovi_User/list";
     }
-    @RequestMapping(value="/add")
-    public String addOviUser(Model model) {
-        model.addAttribute("oviUser", new OviUser());
-        return "Ovi_User/add";
-    }
-    @RequestMapping(value="/add", method=RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("oviUser") OviUser oviUser,
-                                   BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            return "Ovi_User/add";
-        oviUserDao.addOviUser(oviUser);
-        return "redirect:list";
-    }
-    @RequestMapping(value="/update/{dni}", method = RequestMethod.GET)
-    public String editOviUser(Model model, @PathVariable String dni) {
-        model.addAttribute("oviUser", oviUserDao.getOviUser(dni));
-        return "Ovi_User/update";
-    }
-    @RequestMapping(value="/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("oviUser") OviUser oviUser, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            return "Ovi_User/update";
-        oviUserDao.updateOviUser(oviUser);
-        return "redirect:list";
-    }
-    @RequestMapping(value="/delete/{dni}")
-    public String processDelete(@PathVariable String dni) {
-        oviUserDao.deleteOviUser(dni);
-        return "redirect:../list";
-    }
 
-    @RequestMapping("/menu")
+
+    @RequestMapping("/menuOviUser")
     public String menu(HttpSession session, Model model) {
         if (session.getAttribute("user") == null) {
             return "redirect:/login";
@@ -87,7 +58,7 @@ public class OviUserController {
     @RequestMapping("/requests")
     public String listRequests(HttpSession session) {
         if (session.getAttribute("user") == null) return "redirect:/login";
-        return "redirect:/assistance_request/list";
+        return "redirect:/Assistance_Request/apRequestList";
     }
 
     @RequestMapping(value="/updatePreference/{dni}", method = RequestMethod.GET)

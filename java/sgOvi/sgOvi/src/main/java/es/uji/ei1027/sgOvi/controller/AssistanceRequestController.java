@@ -44,7 +44,7 @@ public class AssistanceRequestController {
         Assistance_Request ap = new Assistance_Request();
         ap.setIdOviUser(person.getDni());
         model.addAttribute("assistanceRequest", ap);
-        return "Assistance_Request/add";
+        return "Assistance_Request/requestAssistance";
     }
     @RequestMapping(value="/requestAssistance", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("assistanceRequest") Assistance_Request request,
@@ -52,9 +52,8 @@ public class AssistanceRequestController {
         AssistanceRequestValidator requestValidator = new AssistanceRequestValidator();
         requestValidator.validate(request, bindingResult);
         if (bindingResult.hasErrors())
-            return "Assistance_Request/add";
+            return "Assistance_Request/requestAssistance";
 
-        //request.setIdOviUser(request.getIdOviUser().toUpperCase());
         request.setData(LocalDate.now());
         request.setIdAsReq(generateARCode());
         request.setState("PENDING");
@@ -62,12 +61,6 @@ public class AssistanceRequestController {
 
         assistanceReqDao.addAssistanceRequest(request);
         return "redirect:request_confirmation";
-    }
-
-    @RequestMapping(value="/delete/{idAsReq}")
-    public String processDelete(@PathVariable String idAsReq) {
-        assistanceReqDao.deleteAssistanceRequest(idAsReq);
-        return "redirect:../list";
     }
 
     @RequestMapping(value="/request_confirmation")
