@@ -20,7 +20,7 @@ public class PapPatiDao {
     }
 
     public void addPapPati(PapPati papPati){
-        jdbcTemplate.update("INSERT INTO Pap_Pati (dni, password, address, type, available, training, document, reason, state, papPatiPreferences) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Pap_Pati  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 papPati.getDni(),
                 papPati.getAddress(),
                 papPati.getType(),

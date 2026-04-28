@@ -1,5 +1,6 @@
 package es.uji.ei1027.sgOvi.dao;
 
+import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Selection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -60,6 +61,7 @@ public class SelectionDao {
             return null;
         }
     }
+    
 
     /* Obtiene todas las selecciones */
     public List<Selection> getSelections() {

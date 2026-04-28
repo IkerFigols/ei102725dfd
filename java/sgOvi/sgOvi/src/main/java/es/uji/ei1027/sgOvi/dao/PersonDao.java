@@ -70,6 +70,17 @@ public class PersonDao {
             return null;
         }
     }
+    public Person getPersonByEmail(String email) {
+        try {
+            Person p = jdbcTemplate.queryForObject(
+                    "SELECT * FROM Person WHERE email = '" + email + "'",
+                    new PersonRowMapper());
+            return p;
+
+        } catch (DataAccessException e) {
+            return null;
+        }
+    }
 
     /* Obtiene todas las personas */
     public List<Person> getPersons() {
@@ -80,6 +91,7 @@ public class PersonDao {
             return new ArrayList<Person>();
         }
     }
+
 
     public void encryptPersons(){
         BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();

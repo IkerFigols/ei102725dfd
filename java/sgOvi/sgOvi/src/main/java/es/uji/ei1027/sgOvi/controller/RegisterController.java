@@ -41,13 +41,15 @@ public class RegisterController {
         RegisterValidator registerValidator = new RegisterValidator();
         registerValidator.validate(person,bindingResult);
         List<Person> persons = personDao.getPersons();
-        for( Person persona: persons){
-            if(persona.getDni().equals(person.getDni())) {
-                //bindingResult.addError(new ObjectError("dni","Este dni ya existe"));
-                bindingResult.rejectValue("dni","required","Este dni ya existe");
-                return "Register/register";
-            }
+        if (personDao.getPerson(person.getDni()) != null) {
+            bindingResult.rejectValue("dni", "exists", "Este DNI ya está registrado");
+            return "Register/register";
         }
+        if (personDao.getPersonByEmail(person.getEmail()) != null){
+            bindingResult.rejectValue("email", "exists", "Este email ya está registrado");
+            return "Register/register";
+        }
+
         if (bindingResult.hasErrors()) {
             return "Register/register";
         }
@@ -56,18 +58,20 @@ public class RegisterController {
         person.setPassword(passwordEncrypted);
         personDao.addPerson(person);
         if ("OviUser".equals(person.getPreference())) {
-            OviUser oviUser = new OviUser();
-            oviUser.setDni(person.getDni());
-            model.addAttribute("oviuser", oviUser);
-            return "Register/registerOviUser";
+            return "redirect:/Register/registerOviUser?dni="+person.getDni();
         } else {
-            PapPati papPati = new PapPati();
-            papPati.setDni(person.getDni());
-            model.addAttribute("pappati", papPati);
-            return "Register/registerPapPati";
+            return "redirect:/Register/registerPapPati?dni="+person.getDni();
         }
     }
 
+    @GetMapping("/registerOviUser")
+    public String showRegisterOviUser(@RequestParam("dni") String dni, Model model) {
+        OviUser oviUser = new OviUser();
+        oviUser.setDni(dni);
+
+        model.addAttribute("oviuser", oviUser);
+        return "Register/registerOviUser";
+    }
     @RequestMapping(value="/registerOviUser", method = RequestMethod.POST)
     public String processOviSubmit(@ModelAttribute("oviuser") OviUser oviUser,
                                    BindingResult bindingResult) {
@@ -79,9 +83,18 @@ public class RegisterController {
         oviUserDao.addOviUser(oviUser);
         return "redirect:/";
     }
+
+    @GetMapping("/registerPapPati")
+    public String showRegisterPapPati(@RequestParam("dni") String dni, Model model) {
+        PapPati papPati = new PapPati();
+        papPati.setDni(dni);
+
+        model.addAttribute("pappati", papPati);
+        return "Register/registerPapPati";
+    }
     @RequestMapping(value="/registerPapPati", method = RequestMethod.POST)
-    public String processOviSubmit(@ModelAttribute("pappati") PapPati papPati,
-                                   BindingResult bindingResult) {
+    public String processPapPatisubmit(@ModelAttribute("pappati") PapPati papPati,
+                                       BindingResult bindingResult) {
         RegisterPapPatiValidator registerPapPatiValidator = new RegisterPapPatiValidator();
         registerPapPatiValidator.validate(papPati,bindingResult);
         if (bindingResult.hasErrors()) {

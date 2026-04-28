@@ -2,6 +2,8 @@ package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import es.uji.ei1027.sgOvi.model.Assistance_Request;
+import es.uji.ei1027.sgOvi.model.Person;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,18 +26,27 @@ public class AssistanceRequestController {
     public void setAssistanceReqDao(AssistanceReqDao assistanceReqDao) {
         this.assistanceReqDao = assistanceReqDao;
     }
-    @RequestMapping("/list")
-    public String listAssistanceRequests(Model model) {
-        model.addAttribute("assistanceRequests", assistanceReqDao.getAssistanceRequests());
-        return "Assistance_Request/list";
+    @RequestMapping("/apRequestList")
+    public String listAssistanceRequests(Model model, HttpSession session) {
+        if (session == null){;
+            return "redirect:/login";
+        }
+        Person person = (Person) session.getAttribute("user");
+        model.addAttribute("assistanceRequests", assistanceReqDao.getOviAssistanceRequest(person.getDni()));
+        return "Assistance_Request/apRequestList";
     }
-    @RequestMapping(value="/add")
-    public String addAssistanceRequest(Model model) {
-
-        model.addAttribute("assistanceRequest", new Assistance_Request());
+    @RequestMapping(value="/requestAssistance")
+    public String addAssistanceRequest(Model model, HttpSession session) {
+        if (session == null){;
+            return "redirect:/login";
+        }
+        Person person = (Person) session.getAttribute("user");
+        Assistance_Request ap = new Assistance_Request();
+        ap.setIdOviUser(person.getDni());
+        model.addAttribute("assistanceRequest", ap);
         return "Assistance_Request/add";
     }
-    @RequestMapping(value="/add", method= RequestMethod.POST)
+    @RequestMapping(value="/requestAssistance", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("assistanceRequest") Assistance_Request request,
                                    BindingResult bindingResult) {
         AssistanceRequestValidator requestValidator = new AssistanceRequestValidator();

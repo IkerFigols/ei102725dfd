@@ -55,6 +55,18 @@ public class AssistanceReqDao {
             return null;
         }
     }
+    public List<Assistance_Request> getOviAssistanceRequest(String idOviUser) {
+        try {
+             return  jdbcTemplate.query(
+                    "SELECT * FROM Assistance_Request WHERE idOviUser = '" + idOviUser + "'",
+                    new AssistanceReqRowMapper());
+
+
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Assistance_Request>();
+        }
+    }
+
 
     public List<Assistance_Request> getAssistanceRequests() {
         try {
