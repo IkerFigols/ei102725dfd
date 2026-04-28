@@ -1,7 +1,7 @@
 CREATE TABLE Contract (
 	idContract		VARCHAR(9),
 	startDate		DATE		NOT NULL,	--No estoy seguro de si poner constraint
-	endDate			DATE,	                --a las fechas ¿almacenamos contratos antiguos?
+	endDate			DATE        NOT NULL,	--a las fechas ¿almacenamos contratos antiguos?
 	document		VARCHAR(100)	NOT NULL,
 	salary			NUMERIC		NOT NULL,
 	schedule		VARCHAR(100)	NOT NULL, 	--VARCHAR?
