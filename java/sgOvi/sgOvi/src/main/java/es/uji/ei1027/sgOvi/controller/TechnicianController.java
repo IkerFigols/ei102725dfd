@@ -1,10 +1,7 @@
 package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.*;
-import es.uji.ei1027.sgOvi.model.Instructor;
-import es.uji.ei1027.sgOvi.model.OviUser;
-import es.uji.ei1027.sgOvi.model.PapPati;
-import es.uji.ei1027.sgOvi.model.Person;
+import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.service.ListByName;
 import es.uji.ei1027.sgOvi.service.PersonInstructorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -215,5 +212,40 @@ public class TechnicianController {
 
        instructorDao.addInstructor(instructor);
         return "redirect:instructorList";
+    }
+
+    @RequestMapping(value="/apManagement/{idAsReq}", method = RequestMethod.GET)
+    public String editAssistanceRequest(Model model, @PathVariable String idAsReq) {
+        Assistance_Request apReq = assistanceReqDao.getAssistanceRequest(idAsReq);
+
+        model.addAttribute("idAsReq", apReq.getIdAsReq());
+        model.addAttribute("idOviUser", apReq.getIdOviUser());
+        model.addAttribute("date", apReq.getData());
+        model.addAttribute("description", apReq.getDescription());
+        model.addAttribute("state", apReq.getState());
+        model.addAttribute("reason", apReq.getReason());
+        return "Technician/apManagement";
+    }
+
+    @RequestMapping(value="/apManagement/update", method = RequestMethod.POST)
+    public String processUpdateSubmitAssistanceRequest( @RequestParam String idAsReq,
+                                                        @RequestParam String idOviUser,
+                                                        @RequestParam LocalDate date,
+                                                        @RequestParam String description,
+                                                        @RequestParam String state,
+                                                        @RequestParam String reason
+    ) {
+
+        Assistance_Request assistanceRequest = new Assistance_Request();
+        assistanceRequest.setIdOviUser(idOviUser);
+        assistanceRequest.setIdAsReq(idAsReq);
+        assistanceRequest.setReason(reason);
+        assistanceRequest.setData(date);
+        assistanceRequest.setState(state);
+        assistanceRequest.setDescription(description);
+
+        assistanceReqDao.updateAssistanceRequest(assistanceRequest);
+
+        return "redirect:/Technician/assistanceRequestList";
     }
 }

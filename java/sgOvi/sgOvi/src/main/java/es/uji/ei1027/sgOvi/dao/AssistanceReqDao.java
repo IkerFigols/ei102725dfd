@@ -40,8 +40,19 @@ public class AssistanceReqDao {
         jdbcTemplate.update("DELETE FROM Assistance_Request WHERE idAsReq LIKE '" + idAsReq + "'");
     }
 
-    public void updateAssistanceRequest(Assistance_Request assistanceRequest) {
-        jdbcTemplate.update("UPDATE Communication SET data ="+ assistanceRequest.getData() +", description ="+assistanceRequest.getDescription()+", idOviUser ="+assistanceRequest.getIdOviUser()+", state ="+assistanceRequest.getState() +", reason"+ assistanceRequest.getReason()+ "WHERE idAsReq LIKE " + assistanceRequest.getIdAsReq() + "'");
+    public void updateAssistanceRequest(Assistance_Request request) {
+        // 1. Usa "?" para que Spring se encargue de las comillas y formatos
+        String sql = "UPDATE Assistance_Request SET data=?, description=?, idOviUser=?, state=?, reason=? WHERE idAsReq=?";
+
+        // 2. Pasa los valores en un array de objetos
+        jdbcTemplate.update(sql,
+                request.getData(),
+                request.getDescription(),
+                request.getIdOviUser(),
+                request.getState(),
+                request.getReason(),
+                request.getIdAsReq()
+        );
     }
 
     public Assistance_Request getAssistanceRequest(String idAsReq) {
