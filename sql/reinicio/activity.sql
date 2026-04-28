@@ -1,12 +1,12 @@
 CREATE TABLE Activity (
 	idActivity 		VARCHAR(9)	NOT NULL,
 	activityType		VARCHAR(20)	NOT NULL,
-	tittle			VARCHAR(50)	NOT NULL,
+	tittle			VARCHAR(100)	NOT NULL,
 	description		VARCHAR(300)	NOT NULL,
 	date 			DATE		NOT NULL,
-	address			VARCHAR(50)	NOT NULL,
+	address			VARCHAR(100)	NOT NULL,
 	capacity		NUMERIC,
-	sponsor			VARCHAR(20),
+	sponsor			VARCHAR(100),
 	idInstructor		VARCHAR(9)	NOT NULL,
 
 	CONSTRAINT cp_activity PRIMARY KEY (idActivity),

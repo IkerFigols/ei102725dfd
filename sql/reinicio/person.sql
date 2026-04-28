@@ -6,8 +6,9 @@ CREATE TABLE Person (
 	email				VARCHAR(50) NOT NULL,
 	gender				VARCHAR(10) NOT NULL,
 	password			VARCHAR(100) NOT NULL,
-	city				VARCHAR (50) NOT NULL,
-	province 			VARCHAR(50) NOT NULL,
+	city				VARCHAR (100) NOT NULL,
+	province 			VARCHAR(100) NOT NULL,
+	birthDayDate        DATE        NOT NULL,
 
 	--Clave Primaria
 	
@@ -21,5 +22,7 @@ CREATE TABLE Person (
 	
 	CONSTRAINT ck_dni CHECK (LENGTH(dni) = 9),
 	CONSTRAINT ck_pass CHECK (LENGTH (password) >= 8)
+
+
 	
 );

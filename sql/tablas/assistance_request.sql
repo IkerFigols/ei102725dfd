@@ -4,7 +4,7 @@ CREATE TABLE Assistance_Request(
 	data			DATE 			NOT NULL,
 	description 	VARCHAR(250)	NOT NULL,
 	idOviUser		VARCHAR(9) 		NOT NULL,
-	state			VARCHAR(15)		NOT NULL,
+	state			VARCHAR(30)		NOT NULL,
 	reason 			VARCHAR(250),
 	experience      NUMERIC,
 	drivingLicense  BOOLEAN,
@@ -22,6 +22,6 @@ CONSTRAINT chk_id CHECK(LENGTH(idAsReq) = 9),
 CONSTRAINT chk_ovi CHECK(LENGTH(idOviUser) = 9),
 CONSTRAINT chk_reason CHECK( (reason IS NULL AND state IN ('APPROVED', 'PENDING', 'CLOSED_WITH_CONTRACT', 'CLOSED_WITH_CONTRACT_DONE')) OR
 (reason IS NOT NULL AND state = 'REJECTED')),
-CONSTRAINT chk_shiftPreference CHECK ((shiftPreference IN 'MORNING', 'AFTERNOON', 'ANY'))
+CONSTRAINT chk_shiftPreference CHECK (shiftPreference IN ('MORNING', 'AFTERNOON', 'ANY'))
 );
 
