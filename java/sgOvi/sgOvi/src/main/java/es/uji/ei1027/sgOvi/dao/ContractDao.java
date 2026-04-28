@@ -72,4 +72,12 @@ public class ContractDao {
             return new ArrayList<>();
         }
     }
+    public List<Contract> getContractsByUser(String dni) {
+        try {
+            return jdbcTemplate.query("SELECT * FROM Contract WHERE oviUserDni = ? OR papPatiDni = ?",
+                    new ContractRowMapper(), dni, dni);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Contract>();
+        }
+    }
 }

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+    <meta charset="UTF-8" />
+    <title>Crear nueva persona</title>
+</head>
+
+
+<body>
+<main>
+    <h1>Nuevo Instructor/a</h1>
+    <form th:action="@{/Technician/addInstructor}" th:object="${personInstructor}" method="post">
+        <div>
+            <label for="dni">Dni: </label>
+            <input id="dni" type="text" th:field="*{person.dni}">
+        </div>
+
+        <div>
+            <label for="name">Nombre: </label>
+            <input id="name" type="text" th:field="*{person.name}">
+        </div>
+
+        <div>
+            <label for="surname">Apellidos: </label>
+            <input id="surname" type="text" th:field="*{person.surname}">
+        </div>
+
+        <div>
+            <label for="phoneNumber">Número de teléfono: </label>
+            <input id="phoneNumber" type="text" th:field="*{person.phoneNumber}">
+        </div>
+
+        <div>
+            <label for="email">Email: </label>
+            <input id="email" type="text" th:field="*{person.email}">
+        </div>
+
+        <div>
+            <label>Género:</label>
+
+            <input type="radio" id="masculino" value="Masculino" th:field="*{person.gender}">
+            <label for="masculino">Masculino</label>
+
+            <input type="radio" id="femenino" value="Femenino" th:field="*{person.gender}">
+            <label for="femenino">Femenino</label>
+
+            <input type="radio" id="otros" value="Otros" th:field="*{person.gender}">
+            <label for="otros">Otros</label>
+        </div>
+
+        <div>
+            <label for="password">Contraseña: </label>
+            <input id="password" type="password" th:field="*{person.password}">
+        </div>
+
+        <div>
+            <label for="city">Ciudad: </label>
+            <input id="city" type="text" th:field="*{person.city}">
+        </div>
+
+        <div>
+            <label for="province">Provincia: </label>
+            <input id="province" type="text" th:field="*{person.province}">
+        </div>
+
+        <div></div>
+
+        <div>
+            <label for="expertise">Especialidad: </label>
+            <input id="expertise" type="text" th:field="*{instructor.expertise}">
+        </div>
+
+        <button type="submit">Añadir instructor</button>
+
+
+    </form>
+</main>
+</body>
+</html>

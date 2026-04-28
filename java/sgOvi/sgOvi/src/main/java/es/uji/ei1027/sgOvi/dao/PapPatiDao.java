@@ -75,4 +75,8 @@ public class PapPatiDao {
             return new ArrayList<>();
         }
     }
+    public void updatePreferencias(String dni, String preferencias) {
+        jdbcTemplate.update("UPDATE Pap_Pati SET papPatiPreferences=? WHERE dni=?",
+                preferencias, dni);
+    }
 }

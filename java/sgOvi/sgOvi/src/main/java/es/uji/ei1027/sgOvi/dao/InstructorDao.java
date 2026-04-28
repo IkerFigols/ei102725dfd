@@ -36,8 +36,8 @@ public class InstructorDao {
 
     /* Actualzia el instructor */
     public void updateInstructor(Instructor instructor) {
-        jdbcTemplate.update("UPDATE Instructor SET expertise = " + instructor.getExpertise()
-                + " WHERE dni = '" + instructor.getDni() + "'");
+        jdbcTemplate.update("UPDATE Instructor SET expertise = '" + instructor.getExpertise()
+                + "' WHERE dni = '" + instructor.getDni() + "'");
     }
 
     /* Obtiene un instructor */

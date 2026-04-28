@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Preferencias</title>
+</head>
+<body>
+
+<div class="form-container">
+    <h1 class="title">Introduce tus nuevas preferencias</h1>
+
+    <form th:action="${userType == 'oviUser'} ? @{/Ovi_User/updatePreference} : @{/PapPati/updatePreference}"
+          th:object="${obj}" method="post">
+
+        <input type="hidden" th:field="*{dni}" />
+
+        <div class="form-group">
+            <textarea th:if="${userType == 'oviUser'}" th:field="*{userPreferences}" class="form-control" rows="8"></textarea>
+            <textarea th:if="${userType == 'papPati'}" th:field="*{papPatiPreferences}" class="form-control" rows="8"></textarea>
+
+            <p th:if="${userType == 'oviUser' and #fields.hasErrors('userPreferences')}" th:errors="*{userPreferences}" class="error-text"></p>
+            <p th:if="${userType == 'papPati' and #fields.hasErrors('papPatiPreferences')}" th:errors="*{papPatiPreferences}" class="error-text"></p>
+        </div>
+
+        <nav class="menu-grid">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            <a th:href="${userType == 'oviUser'} ? @{/Ovi_User/menu} : @{/PapPati/menu}"
+               class="btn btn-primary">Volver</a>
+        </nav>
+    </form>
+</div>
+
+</body>
+</html>

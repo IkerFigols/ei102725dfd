@@ -1,12 +1,16 @@
 package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.*;
+import es.uji.ei1027.sgOvi.model.Instructor;
 import es.uji.ei1027.sgOvi.model.OviUser;
 import es.uji.ei1027.sgOvi.model.PapPati;
+import es.uji.ei1027.sgOvi.model.Person;
 import es.uji.ei1027.sgOvi.service.ListByName;
+import es.uji.ei1027.sgOvi.service.PersonInstructorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -14,8 +18,9 @@ import java.time.LocalDate;
 @Controller
 @RequestMapping("/Technician")
 public class TechnicianController {
-
+    @Autowired
     private TechnicianDao technicianDao;
+    @Autowired
     private OviUserDao oviUserDao;
     @Autowired
     private ListByName lbn;
@@ -25,15 +30,12 @@ public class TechnicianController {
     private PapPatiDao papPatiDao;
     @Autowired
     private ActivityDao activityDao;
+    @Autowired
+    private InstructorDao instructorDao;
+    @Autowired
+    private PersonDao personDao;
 
-    @Autowired
-    public void setTechnicianDao(TechnicianDao technicianDao) {
-        this.technicianDao=technicianDao;
-    }
-    @Autowired
-    public void setOviUserDao(OviUserDao oviUserDao){this.oviUserDao=oviUserDao; }
-    // Operacions: Crear, llistar, actualitzar, esborrar
-    // ...
+
     @RequestMapping("/menuTechnician")
     public String menuTechnician(Model model) {
         return "Technician/menuTechnician";
@@ -162,5 +164,56 @@ public class TechnicianController {
         papPatiDao.updatePapPati(papPati);
 
         return "redirect:/Technician/papPatiList";
+    }
+
+    @RequestMapping(value="/instructorManagement/{dni}", method = RequestMethod.GET)
+    public String editInstructor(Model model, @PathVariable String dni) {
+        Instructor instructor = instructorDao.getInstructor(dni);
+
+        model.addAttribute("dni", instructor.getDni());
+        model.addAttribute("expertise", instructor.getExpertise());
+        return "Technician/instructorManagement";
+    }
+
+    @RequestMapping(value="/instructorManagement/update", method = RequestMethod.POST)
+    public String processUpdateSubmitInstructor(@RequestParam String dni,
+                                                @RequestParam String expertise
+    ) {
+
+        Instructor instructor = new Instructor();
+        instructor.setDni(dni);
+        instructor.setExpertise(expertise);
+
+        instructorDao.updateInstructor(instructor);
+
+        return "redirect:/Technician/instructorList";
+    }
+    @RequestMapping(value="/addInstructor")
+    public String addInstructor(Model model) {
+        model.addAttribute("personInstructor", new PersonInstructorDTO());
+        return "Technician/addInstructor";
+    }
+    @RequestMapping(value="/addInstructor", method=RequestMethod.POST)
+    public String processAddInstructor(@ModelAttribute("personInstructor") PersonInstructorDTO pidto,
+                                   BindingResult bindingResult) {
+       Person person = new Person();
+       person.setDni(pidto.getPerson().getDni());
+       person.setName(pidto.getPerson().getName());
+       person.setSurname(pidto.getPerson().getSurname());
+       person.setPhoneNumber(pidto.getPerson().getPhoneNumber());
+       person.setEmail(pidto.getPerson().getEmail());
+       person.setGender(pidto.getPerson().getGender());
+       person.setPassword(pidto.getPerson().getPassword());
+       person.setCity(pidto.getPerson().getCity());
+       person.setProvince(pidto.getPerson().getProvince());
+
+       personDao.addPerson(person);
+
+       Instructor instructor = new Instructor();
+       instructor.setDni(pidto.getPerson().getDni());
+       instructor.setExpertise(pidto.getInstructor().getExpertise());
+
+       instructorDao.addInstructor(instructor);
+        return "redirect:instructorList";
     }
 }

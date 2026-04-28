@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Panel de Usuario OVI</title>
+</head>
+<body>
+
+<div class="form-container">
+    <h1 class="title">Panel de Usuario</h1>
+    <p class="description">Seleccione una categoría para gestionar sus servicios y perfil.</p>
+
+    <nav class="menu-grid">
+        <a th:href="@{/Ovi_User/contracts}" class="btn btn-primary">Lista de Contratos</a>
+
+        <a th:href="@{/Ovi_User/activities}" class="btn btn-primary">Lista de Actividades</a>
+
+        <a th:href="@{/Ovi_User/requests}" class="btn btn-primary">Lista de Solicitudes</a>
+
+        <a th:href="@{'/Ovi_User/updatePreference/' + ${session.user.dni}}" class="btn btn-primary">Cambiar Preferencias</a>
+    </nav>
+</div>
+
+</body>
+</html>

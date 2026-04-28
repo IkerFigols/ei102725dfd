@@ -79,4 +79,8 @@ public class OviUserDao {
             return new ArrayList<OviUser>();
         }
     }
+    public void updatePreferencias(String dni, String preferencias) {
+        jdbcTemplate.update("UPDATE Ovi_User SET userPreferences=? WHERE dni=?",
+                preferencias, dni);
+    }
 }

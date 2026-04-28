@@ -22,11 +22,12 @@
         <td th:text="${instructor.value[1]}"></td>
         <td th:text="${instructor.key}"></td>
         <td th:text="${instructor.value[2]}"></td>
-        <td><a th:href="@{/Technician/userManagement/{dni}(dni=${instructor.key})}">Editar</a>
+        <td><a th:href="@{/Technician/instructorManagement/{dni}(dni=${instructor.key})}">Editar</a>
         </td>
     </tr>
     </tbody>
 </table>
+<a href="addInstructor">Añadir Instructor</a>
 <br><br>
 <a href="/" >Volver</a>
 </body>
