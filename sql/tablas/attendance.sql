@@ -29,5 +29,8 @@ CREATE TABLE Attendance (
 	CONSTRAINT ca_act FOREIGN KEY (idActivity)
 		REFERENCES Activity (idActivity)
 		ON DELETE RESTRICT
-		ON UPDATE CASCADE
+		ON UPDATE CASCADE,
+
+	CONSTRAINT chk_claves CHECK((idOviUser IS NULL AND idPapPati IS NOT NULL) 
+								OR (idOviUser IS NOT NULL AND idPapPati IS NULL))
 );
