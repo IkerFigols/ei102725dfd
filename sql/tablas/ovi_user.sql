@@ -1,11 +1,9 @@
 CREATE TABLE Ovi_User(
-    dni             VARCHAR(19),
-    birthdayDate    DATE        NOT NULL,
-    address         VARCHAR(50) NOT NULL,
+    dni             VARCHAR(9),
+    address         VARCHAR(100) NOT NULL,
     legalGuardian   VARCHAR(50),
     state        	VARCHAR(15) NOT NULL,
     reason          VARCHAR(250),
-    userPreferences VARCHAR(250) NOT NULL,
 
     CONSTRAINT cp_oviUser PRIMARY KEY (dni),
     CONSTRAINT ca_oviUser FOREIGN KEY (dni) REFERENCES PERSON(dni) 

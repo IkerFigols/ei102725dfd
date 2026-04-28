@@ -1,7 +1,7 @@
 CREATE TABLE Selection (
 	idSelection			VARCHAR(9),
 	date				DATE NOT NULL,
-	state				VARCHAR(40) NOT NULL,
+	state				VARCHAR(50) NOT NULL,
 	idCommunication		VARCHAR(9) NOT NULL,
 	idPap				VARCHAR(9) NOT NULL,
 	idAsReq				VARCHAR(9) NOT NULL,
@@ -16,6 +16,7 @@ CREATE TABLE Selection (
     CONSTRAINT ck_len_idCom CHECK (LENGTH(idCommunication) = 9),
     CONSTRAINT ck_len_idPap CHECK (LENGTH(idPap) = 9),
     CONSTRAINT ck_len_idAsR CHECK (LENGTH(idAsReq) = 9),
+    CONSTRAINT chk_state    CHECK (state IN ('APPROVED', 'PENDING', 'REJECTED')),
 	
 	-- Claves foráneas
 	
