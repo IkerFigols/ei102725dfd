@@ -15,6 +15,12 @@ public final class AssistanceReqRowMapper implements RowMapper<Assistance_Reques
        assistanceRequest.setReason(rs.getString("reason"));
        assistanceRequest.setState(rs.getString("state"));
        assistanceRequest.setIdOviUser(rs.getString("idOviUser"));
+       assistanceRequest.setExperience(rs.getInt("experience"));
+       assistanceRequest.setDrivingLicense(rs.getBoolean("drivingLicense"));
+       assistanceRequest.setCity(rs.getString("city"));
+       assistanceRequest.setProvince(rs.getString("province"));
+       assistanceRequest.setShiftPreference(rs.getString("shiftPreference"));
+       assistanceRequest.setAge(rs.getInt("age"));
        return assistanceRequest;
     }
 }

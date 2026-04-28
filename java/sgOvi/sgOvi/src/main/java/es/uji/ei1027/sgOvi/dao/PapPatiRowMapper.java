@@ -18,7 +18,10 @@ public class PapPatiRowMapper implements RowMapper<PapPati> {
         papPati.setDocument(rs.getString("document"));
         papPati.setReason(rs.getString("reason"));
         papPati.setState(rs.getString("state"));
-        papPati.setPapPatiPreferences(rs.getString("papPatiPreferences"));
+        papPati.setExperience(rs.getInt("experience"));
+        papPati.setDrivingLicense(rs.getBoolean("drivingLicense"));
+        papPati.setShift(rs.getString("shift"));
+
         return papPati;
     }
 }

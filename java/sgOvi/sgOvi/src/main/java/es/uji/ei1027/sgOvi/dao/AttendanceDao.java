@@ -23,11 +23,12 @@ public class AttendanceDao {
 
     /* Añade la asistencia a la base de datos */
     public void addAttendance(Attendance attendance) {
-        jdbcTemplate.update("INSERT INTO Attendance VALUES(?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Attendance VALUES(?, ?, ?, ?,?)",
                 attendance.getIdAtt(),
                 attendance.getIdOviUser(),
                 attendance.getIdPapPati(),
-                attendance.getIdActivity()
+                attendance.getIdActivity(),
+                attendance.getAttend()
         );
     }
 
@@ -41,6 +42,7 @@ public class AttendanceDao {
         jdbcTemplate.update("UPDATE Attendance SET idOviUser = '" + attendance.getIdOviUser()
                 + "', idPapPati = '" + attendance.getIdPapPati()
                 + "', idActivity = '" + attendance.getIdActivity()
+                + "', attend = '"+attendance.getAttend()
                 + "' WHERE idAtt = '" + attendance.getIdAtt() + "'");
     }
 

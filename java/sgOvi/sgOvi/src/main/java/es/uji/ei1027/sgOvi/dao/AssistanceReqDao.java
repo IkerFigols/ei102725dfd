@@ -25,13 +25,19 @@ public class AssistanceReqDao {
 
 
     public void addAssistanceRequest( Assistance_Request assistanceRequest) {
-        jdbcTemplate.update("INSERT INTO Assistance_Request VALUES(?, ?, ?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Assistance_Request VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?,?)",
                 assistanceRequest.getIdAsReq(),
                 assistanceRequest.getData(),
                 assistanceRequest.getDescription(),
                 assistanceRequest.getIdOviUser(),
-                assistanceRequest.getState(),
-                assistanceRequest.getReason()
+                assistanceRequest.getState().name(),
+                assistanceRequest.getReason(),
+                assistanceRequest.getExperience(),
+                assistanceRequest.getDrivingLicense(),
+                assistanceRequest.getCity(),
+                assistanceRequest.getProvince(),
+                assistanceRequest.getShiftPreference().name(),
+                assistanceRequest.getAge()
         );
     }
 
@@ -42,15 +48,21 @@ public class AssistanceReqDao {
 
     public void updateAssistanceRequest(Assistance_Request request) {
         // 1. Usa "?" para que Spring se encargue de las comillas y formatos
-        String sql = "UPDATE Assistance_Request SET data=?, description=?, idOviUser=?, state=?, reason=? WHERE idAsReq=?";
+        String sql = "UPDATE Assistance_Request SET data=?, description=?, idOviUser=?, state=?, reason=?, experience= ?, drivingLicense=?, city=?, province=?, shiftPreference=?, age=? WHERE idAsReq=?";
 
         // 2. Pasa los valores en un array de objetos
         jdbcTemplate.update(sql,
                 request.getData(),
                 request.getDescription(),
                 request.getIdOviUser(),
-                request.getState(),
+                request.getState().name(),
                 request.getReason(),
+                request.getExperience(),
+                request.getDrivingLicense(),
+                request.getCity(),
+                request.getProvince(),
+                request.getShiftPreference().name(),
+                request.getAge(),
                 request.getIdAsReq()
         );
     }

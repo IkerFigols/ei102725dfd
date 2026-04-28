@@ -1,20 +1,29 @@
 package es.uji.ei1027.sgOvi.model;
 
+import es.uji.ei1027.sgOvi.model.enums.Gender;
+
+import java.time.LocalDate;
+
 public class Person {
     private String dni;
     private String name;
     private String surname;
     private String phoneNumber;
     private String email;
-    private String gender;
+    private Gender gender;
     private String password;
     private String city;
     private String province;
+    private LocalDate birthdayDate;
 
     private String preference; // CAMBIAR NOMBRE
     private boolean dataProtection;
     private String userType; // OVI, PAP, TECH, INS
 
+
+    public LocalDate getBirthdayDate() {
+        return birthdayDate;
+    }
 
 
     public String getDni() {
@@ -37,7 +46,7 @@ public class Person {
         return email;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
@@ -74,7 +83,7 @@ public class Person {
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        this.gender = Gender.fromString(gender);
     }
 
     public void setPreference(String preference){this.preference = preference;}
@@ -83,9 +92,14 @@ public class Person {
 
     public void setUserType(String userType) {this.userType = userType;}
 
+    public void setBirthdayDate(LocalDate birthdayDate) {
+        this.birthdayDate = birthdayDate;
+    }
+
     public void setPassword(String password){this.password = password;}
     public void setCity(String city) { this.city = city; }
     public void setProvince(String province) { this.province = province;}
+
     @Override
     public String toString() {
         return "Person{" +
@@ -94,13 +108,15 @@ public class Person {
                 ", surname='" + surname + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", preference ='"+preference+'\''+
-                ", dataProtection = '"+dataProtection+ '\''+
-                ", password = '"+password+'\''+
-                ", city = '"+ city +'\''+
-                ", province = '"+province+'\''+
-                ", userType = '"+userType+'\''+
+                ", gender='" + gender.getDescription() + '\'' +
+                ", password='" + password + '\'' +
+                ", city='" + city + '\'' +
+                ", province='" + province + '\'' +
+                ", birthdayDate=" + birthdayDate +
+                ", preference='" + preference + '\'' +
+                ", dataProtection=" + dataProtection +
+                ", userType='" + userType + '\'' +
                 '}';
     }
+
 }

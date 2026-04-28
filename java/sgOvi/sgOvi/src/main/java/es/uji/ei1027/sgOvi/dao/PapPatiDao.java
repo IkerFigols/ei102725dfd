@@ -20,29 +20,33 @@ public class PapPatiDao {
     }
 
     public void addPapPati(PapPati papPati){
-        jdbcTemplate.update("INSERT INTO Pap_Pati  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Pap_Pati  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 papPati.getDni(),
                 papPati.getAddress(),
-                papPati.getType(),
-                papPati.isAvailable(),
+                papPati.getType().name(),
+                papPati.getAvailable(),
                 papPati.getTraining(),
+                papPati.getExperience(),
                 papPati.getDocument(),
                 papPati.getReason(),
-                papPati.getState(),
-                papPati.getPapPatiPreferences()
+                papPati.getState().name(),
+                papPati.getDrivingLicense(),
+                papPati.getShift().name()
         );
     }
 
     public void updatePapPati(PapPati papPati) {
-        jdbcTemplate.update("UPDATE Pap_Pati SET address=?, type=?, available=?, training=?, document=?, reason=?, state=?, papPatiPreferences=? WHERE dni=?",
+        jdbcTemplate.update("UPDATE Pap_Pati SET address=?, type=?, available=?, training=?, document=?, reason=?, state=?, experience=?, drivingLicense=?, shift=? WHERE dni=?",
                 papPati.getAddress(),
-                papPati.getType(),
-                papPati.isAvailable(),
+                papPati.getType().name(),
+                papPati.getAvailable(),
                 papPati.getTraining(),
                 papPati.getDocument(),
                 papPati.getReason(),
-                papPati.getState(),
-                papPati.getPapPatiPreferences(),
+                papPati.getState().name(),
+                papPati.getExperience(),
+                papPati.getDrivingLicense(),
+                papPati.getShift().name(),
                 papPati.getDni() // El dni va al final porque es el '?' del WHERE
         );
     }

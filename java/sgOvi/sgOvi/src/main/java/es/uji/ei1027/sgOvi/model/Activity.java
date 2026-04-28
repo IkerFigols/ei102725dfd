@@ -1,11 +1,12 @@
 package es.uji.ei1027.sgOvi.model;
 
+import es.uji.ei1027.sgOvi.model.enums.ActivityType;
+
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Activity {
     private String idActivity;
-    private String activityType;
+    private ActivityType type;
     private String tittle;
     private String description;
     private LocalDate date;
@@ -22,12 +23,12 @@ public class Activity {
         this.idActivity = idActivity;
     }
 
-    public String getActivityType() {
-        return activityType;
+    public ActivityType getType() {
+        return type;
     }
 
-    public void setActivityType(String activityType) {
-        this.activityType = activityType;
+    public void setType(String type) {
+        this.type = ActivityType.fromString(type);
     }
 
     public String getTittle() {
@@ -90,7 +91,7 @@ public class Activity {
     public String toString() {
         return "Activity{" +
                 "idActivity='" + idActivity + '\'' +
-                ", activityType='" + activityType + '\'' +
+                ", activityType='" + type.getDescription() + '\'' +
                 ", tittle='" + tittle + '\'' +
                 ", description='" + description + '\'' +
                 ", date=" + date +

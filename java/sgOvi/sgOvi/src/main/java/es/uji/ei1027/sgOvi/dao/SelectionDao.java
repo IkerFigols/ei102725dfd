@@ -27,7 +27,7 @@ public class SelectionDao {
         jdbcTemplate.update("INSERT INTO Selection VALUES(?, ?, ?, ?, ?, ?)",
                 selection.getIdSelection(),
                 selection.getDate(),
-                selection.getState(),
+                selection.getState().name(),
                 selection.getIdCommunication(),
                 selection.getIdPap(),
                 selection.getIdAsReq()
@@ -42,7 +42,7 @@ public class SelectionDao {
     /* Actualzia la seleccion */
     public void updateSelection(Selection selection) {
         jdbcTemplate.update("UPDATE Selection SET date = '" + selection.getDate()
-                + "', state = '" + selection.getState()
+                + "', state = '" + selection.getState().name()
                 + "', idCommunication = '" + selection.getIdCommunication()
                 + "', idPap = '" + selection.getIdPap()
                 + "', idAsReq = '" + selection.getIdAsReq()

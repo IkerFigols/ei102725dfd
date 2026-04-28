@@ -1,11 +1,13 @@
 package es.uji.ei1027.sgOvi.model;
 
+import es.uji.ei1027.sgOvi.model.enums.State;
+
 import java.time.LocalDate;
 
 public class Selection {
     private String idSelection;
     private LocalDate date;
-    private String state;
+    private State state;
     private String idCommunication;
     private String idPap;
     private String idAsReq;
@@ -18,7 +20,7 @@ public class Selection {
         return date;
     }
 
-    public String getState() {
+    public State getState() {
         return state;
     }
 
@@ -43,7 +45,7 @@ public class Selection {
     }
 
     public void setState(String state) {
-        this.state = state;
+        this.state = State.fromString(state);
     }
 
     public void setIdCommunication(String idCommunication) {
@@ -63,7 +65,7 @@ public class Selection {
         return "Selection{" +
                 "idSelection='" + idSelection + '\'' +
                 ", date=" + date +
-                ", state='" + state + '\'' +
+                ", state='" + state.getDescription() + '\'' +
                 ", idCommunication='" + idCommunication + '\'' +
                 ", idPap='" + idPap + '\'' +
                 ", idAsReq='" + idAsReq + '\'' +

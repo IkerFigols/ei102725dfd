@@ -29,14 +29,12 @@ public class OviUserDao {
             legalGuardian = null;
 
 
-        jdbcTemplate.update("INSERT INTO Ovi_User VALUES(?, ?, ?, ?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Ovi_User VALUES(?, ?, ?, ?, ?)",
                 oviUser.getDni(),
-                oviUser.getBirthdayDate(),
                 oviUser.getAddress(),
                 legalGuardian,
-                oviUser.getState(),
-                oviUser.getReason(),
-                oviUser.getUserPreferences()
+                oviUser.getState().name(),
+                oviUser.getReason()
         );
     }
 
@@ -46,15 +44,13 @@ public class OviUserDao {
     }
 
     public void updateOviUser(OviUser user) {
-        String sql = "UPDATE Ovi_User SET birthdayDate=?, address=?, legalGuardian=?, state=?, reason=?, userPreferences=? WHERE dni=?";
+        String sql = "UPDATE Ovi_User SET  address=?, legalGuardian=?, state=?, reason=? WHERE dni=?";
 
         jdbcTemplate.update(sql,
-                user.getBirthdayDate(),
                 user.getAddress(),
                 user.getLegalGuardian(),
-                user.getState(),
+                user.getState().name(),
                 user.getReason(),
-                user.getUserPreferences(),
                 user.getDni()
         );
     }

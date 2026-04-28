@@ -1,26 +1,22 @@
 package es.uji.ei1027.sgOvi.model;
-import java.time.LocalDate;
+import es.uji.ei1027.sgOvi.model.enums.State;
 
 public class OviUser {
     private String dni;
-    private LocalDate birthdayDate;
     private String address;
     private String legalGuardian;
-    private String state;
+    private State state;
     private String reason;
-    private String userPreferences;
+
 
     public OviUser(){
-        state = "PENDING";
+        state = State.fromString("PENDING");
     }
 
     public String getDni() {
         return dni;
     }
 
-    public LocalDate getBirthdayDate() {
-        return birthdayDate;
-    }
 
     public String getAddress() {
         return address;
@@ -30,7 +26,7 @@ public class OviUser {
         return legalGuardian;
     }
 
-    public String getState() {
+    public State getState() {
         return state;
     }
 
@@ -38,17 +34,11 @@ public class OviUser {
         return reason;
     }
 
-    public String getUserPreferences() {
-        return userPreferences;
-    }
 
     public void setDni(String dni) {
         this.dni = dni;
     }
 
-    public void setBirthdayDate(LocalDate birthdayDate) {
-        this.birthdayDate = birthdayDate;
-    }
 
     public void setAddress(String address) {
         this.address = address;
@@ -59,27 +49,22 @@ public class OviUser {
     }
 
     public void setState(String state) {
-        this.state = state;
+        this.state = State.fromString(state);
     }
 
     public void setReason(String reason) {
         this.reason = reason;
     }
 
-    public void setUserPreferences(String userPreferences) {
-        this.userPreferences = userPreferences;
-    }
 
     @Override
     public String toString() {
         return "Ovi_User{" +
                 "dni='" + dni + '\'' +
-                ", birthdayDate=" + birthdayDate +
                 ", address='" + address + '\'' +
                 ", legalGuardian='" + legalGuardian + '\'' +
-                ", accepted=" + state +
+                ", state=" + state.getDescription() +
                 ", reason='" + reason + '\'' +
-                ", userPreferences='" + userPreferences + '\'' +
                 '}';
     }
 

@@ -13,6 +13,7 @@ public final class AttendanceRowMapper implements RowMapper<Attendance> {
         attendance.setIdOviUser(rs.getString("idOviUser"));
         attendance.setIdPapPati(rs.getString("idPapPati"));
         attendance.setIdActivity(rs.getString("idActivity"));
+        attendance.setAttend(rs.getBoolean("attend"));
         return attendance;
     }
 }

@@ -22,9 +22,9 @@ public class ActivityDao {
     /* Afegeix una nova activitat a la base de dades */
     public void addActivity(Activity activity) {
         jdbcTemplate.update(
-                "INSERT INTO Activity (idActivity, activityType, tittle, description, date, address, capacity, sponsor, idInstructor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO Activity VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 activity.getIdActivity(),
-                activity.getActivityType(),
+                activity.getType().name(),
                 activity.getTittle(),
                 activity.getDescription(),
                 activity.getDate(),
@@ -38,8 +38,8 @@ public class ActivityDao {
     /* Actualitza els atributs d'una activitat existent */
     public void updateActivity(Activity activity) {
         jdbcTemplate.update(
-                "UPDATE Activity SET activityType=?, tittle=?, description=?, date=?, address=?, capacity=?, sponsor=?, idInstructor=? WHERE idActivity=?",
-                activity.getActivityType(),
+                "UPDATE Activity SET type=?, tittle=?, description=?, date=?, address=?, capacity=?, sponsor=?, idInstructor=? WHERE idActivity=?",
+                activity.getType().name(),
                 activity.getTittle(),
                 activity.getDescription(),
                 activity.getDate(),
