@@ -1,59 +1,18 @@
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON123456', '2024-01-01', '2024-12-31', '/docs/contrat_SEL123456.pdf', 30000.00, 'L-V 09:00-18:00', 'SEL123456');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000001', '2024-02-15', '2025-02-15', '/docs/contrat_SEL000001.pdf', 55000.50, 'Turno Rotativo', 'SEL000001');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000002', '2024-06-01', '2024-09-01', '/docs/contrat_SEL000002.pdf', 1200.00, 'Fines de semana', 'SEL000002');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000003', '2020-01-01', '2020-12-31', '/docs/contrat_SEL000003.pdf', 28000.00, 'L-V 08:00-15:00', 'SEL000003');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000004', '2024-03-01', '2026-03-01', '/docs/contrat_SEL000004.pdf', 75000.00, 'Flexible', 'SEL000004');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000005', '2024-04-01', '2025-04-01', '/docs/contrat_SEL000005.pdf', 32000.00, 'L-V 09:00-18:00', 'SEL000005');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000006', '2024-05-15', '2026-05-15', '/docs/contrat_SEL000006.pdf', 60000.00, 'Flexible Remoto', 'SEL000006');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000007', '2024-06-01', '2024-08-31', '/docs/contrat_SEL000007.pdf', 800.00, 'L-V 09:00-14:00', 'SEL000007');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000008', '2023-01-01', '2023-12-31', '/docs/contrat_SEL000008.pdf', 25000.00, 'Turno Mañana', 'SEL000008');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000009', '2024-09-01', '2025-09-01', '/docs/contrat_SEL000009.pdf', 40000.00, 'L-S Comercial', 'SEL000009');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000010', '2024-02-01', '2024-12-31', '/docs/contrat_SEL000010.pdf', 22000.00, 'Guardias 24x7', 'SEL000010');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000011', '2024-10-01', '2025-10-01', '/docs/contrat_SEL000011.pdf', 35000.00, 'L-V 08:30-17:30', 'SEL000011');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000012', '2021-05-01', '2022-05-01', '/docs/contrat_SEL000012.pdf', 29000.00, 'L-V Presencial', 'SEL000012');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000013', '2024-07-01', '2024-12-31', '/docs/contrat_SEL000013.pdf', 15000.00, 'Fines de semana', 'SEL000013');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000014', '2025-01-01', '2028-01-01', '/docs/contrat_SEL000014.pdf', 120000.00, 'Full Availability', 'SEL000014');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000015', '2024-03-15', '2025-03-15', '/docs/contrat_SEL000015.pdf', 21000.00, 'Turno Noche', 'SEL000015');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000016', '2024-04-01', '2025-04-01', '/docs/contrat_SEL000016.pdf', 21000.00, 'Turno Tarde', 'SEL000016');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000017', '2024-08-01', '2024-11-01', '/docs/contrat_SEL000017.pdf', 15000.00, 'Por Proyecto', 'SEL000017');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000018', '2024-01-01', '2024-12-31', '/docs/contrat_SEL000018.pdf', 30000.00, 'L-J 08:00-16:00', 'SEL000018');
-
-INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) 
-VALUES ('CON000019', '2020-03-01', '2021-03-01', '/docs/contrat_SEL000019.pdf', 26000.00, 'Teletrabajo', 'SEL000019');
+INSERT INTO Contract VALUES ('CON000001', '2026-01-18', '2027-01-18', '/docs/sel01.pdf', 1200.00, 'AFTERNOON', 'SEL000001');
+INSERT INTO Contract VALUES ('CON000004', '2026-02-04', '2026-08-04', '/docs/sel04.pdf', 1500.00, 'MORNING', 'SEL000004');
+INSERT INTO Contract VALUES ('CON000007', '2026-02-15', '2026-12-15', '/docs/sel07.pdf', 2200.00, 'ANY', 'SEL000007');
+INSERT INTO Contract VALUES ('CON000008', '2026-02-18', '2027-02-18', '/docs/sel08.pdf', 1800.00, 'AFTERNOON', 'SEL000008');
+INSERT INTO Contract VALUES ('CON000012', '2026-03-05', '2026-09-05', '/docs/sel12.pdf', 1350.00, 'MORNING', 'SEL000012');
+INSERT INTO Contract VALUES ('CON000015', '2026-03-13', '2027-03-13', '/docs/sel15.pdf', 2500.00, 'ANY', 'SEL000015');
+INSERT INTO Contract VALUES ('CON000016', '2026-03-15', '2026-06-15', '/docs/sel16.pdf', 900.00, 'AFTERNOON', 'SEL000016');
+INSERT INTO Contract VALUES ('CON000020', '2026-04-04', '2027-04-04', '/docs/sel20.pdf', 1900.00, 'AFTERNOON', 'SEL000020');
+INSERT INTO Contract VALUES ('CON000022', '2026-04-06', '2026-10-06', '/docs/sel22.pdf', 1100.00, 'MORNING', 'SEL000022');
+INSERT INTO Contract VALUES ('CON000023', '2026-04-07', '2027-04-07', '/docs/sel23.pdf', 2100.00, 'ANY', 'SEL000023');
+INSERT INTO Contract VALUES ('CON000026', '2026-04-10', '2026-11-10', '/docs/sel26.pdf', 1400.00, 'AFTERNOON', 'SEL000026');
+INSERT INTO Contract VALUES ('CON000028', '2026-04-12', '2027-04-12', '/docs/sel28.pdf', 1600.00, 'ANY', 'SEL000028');
+INSERT INTO Contract VALUES ('CON000030', '2026-04-14', '2026-12-14', '/docs/sel30.pdf', 2300.00, 'AFTERNOON', 'SEL000030');
+INSERT INTO Contract VALUES ('CON000031', '2026-04-15', '2027-04-15', '/docs/sel31.pdf', 1750.00, 'MORNING', 'SEL000031');
+INSERT INTO Contract VALUES ('CON000034', '2026-04-18', '2026-08-18', '/docs/sel34.pdf', 1250.00, 'AFTERNOON', 'SEL000034');
+INSERT INTO Contract VALUES ('CON000035', '2026-04-19', '2027-04-19', '/docs/sel35.pdf', 2000.00, 'MORNING', 'SEL000035');
+INSERT INTO Contract VALUES ('CON000037', '2026-04-21', '2026-11-21', '/docs/sel37.pdf', 1550.00, 'ANY', 'SEL000037');
+INSERT INTO Contract VALUES ('CON000038', '2026-04-22', '2027-04-22', '/docs/sel38.pdf', 1950.00, 'MORNING', 'SEL000038');
