@@ -36,7 +36,7 @@ INSERT INTO Person VALUES ('55667785P', 'Óscar', 'Arias', '615667715', 'oscar.a
 INSERT INTO Person VALUES ('66778896Q', 'Patricia', 'Peña', '616778816', 'p.peña@icloud.com', 'FEMALE', '66778896Q', 'Jávea', 'Alicante', '1997-05-22');
 INSERT INTO Person VALUES ('77889907R', 'Quico', 'Vidal', '617889917', 'quico.vidal@gmail.com', 'MALE', '77889907R', 'Peñíscola', 'Castellón', '1984-08-30');
 INSERT INTO Person VALUES ('88990018S', 'Rosa', 'Cabrera', '618990018', 'rosa.cabrera@outlook.com', 'FEMALE', '88990018S', 'Oliva', 'Valencia', '1991-10-04');
-INSERT INTO Harris VALUES ('99001129T', 'Samuel', 'Flores', '619001119', 'samu.flores@gmail.com', 'MALE', '99001129T', 'Crevillente', 'Alicante', '1994-02-18');
+INSERT INTO Person VALUES ('99001129T', 'Samuel', 'Flores', '619001119', 'samu.flores@gmail.com', 'MALE', '99001129T', 'Crevillente', 'Alicante', '1994-02-18');
 INSERT INTO Person VALUES ('10203041U', 'Teresa', 'Fuentes', '620112220', 'teresa.f@yahoo.com', 'FEMALE', '10203041U', 'Moncofa', 'Castellón', '1983-12-05');
 INSERT INTO Person VALUES ('50607082V', 'Hugo', 'Guerra', '621223321', 'hugo.guerra@gmail.com', 'MALE', '50607082V', 'Chirivella', 'Valencia', '1996-03-14');
 INSERT INTO Person VALUES ('13579246W', 'Irene', 'Parrilla', '622334422', 'irene.parr@hotmail.com', 'FEMALE', '13579246W', 'Campello', 'Alicante', '1990-11-20');
