@@ -2,7 +2,9 @@ package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.PapPatiDao;
 import es.uji.ei1027.sgOvi.model.PapPati;
+import es.uji.ei1027.sgOvi.model.Person;
 import es.uji.ei1027.sgOvi.model.UserDetails;
+import es.uji.ei1027.sgOvi.service.ResourcesByDni;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,13 +34,13 @@ public class PapPatiController {
 
     @RequestMapping(value="/updatePreference/{dni}", method = RequestMethod.GET)
     public String editPreferences(Model model, @PathVariable String dni, HttpSession session) {
-        UserDetails userSesion = (UserDetails) session.getAttribute("user");
+        Person user = (Person) session.getAttribute("user");
 
-        if (userSesion == null || !userSesion.getDni().equals(dni)) {
+        if (user == null || !user.getDni().equals(dni)) {
             return "redirect:/login";
         }
 
-        model.addAttribute("obj", papPatiDao.getPapPati(dni));
+        model.addAttribute("obj", user.getDni());
         model.addAttribute("userType", "papPati");
         return "changePreferences"; //
     }
@@ -58,5 +60,20 @@ public class PapPatiController {
         papPatiDao.updatePreferencias(papPati.getDni(), papPati.getPapPatiPreferences());
 
         return "redirect:/PapPati/menu";
+    }
+    @Autowired
+    private ResourcesByDni resourcesByDni;
+
+    @RequestMapping("/contracts")
+    public String listContracts(HttpSession session, Model model) {
+        Person user = (Person) session.getAttribute("user");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("contracts", resourcesByDni.getContractsByDni(user.getDni()));
+
+        model.addAttribute("userType", "papPati");
+        return "Contracts/list";
     }
 }

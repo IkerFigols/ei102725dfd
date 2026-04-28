@@ -2,6 +2,8 @@ package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.OviUserDao;
 import es.uji.ei1027.sgOvi.model.OviUser;
+import es.uji.ei1027.sgOvi.model.Person;
+import es.uji.ei1027.sgOvi.service.ResourcesByDni;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -63,12 +68,12 @@ public class OviUserController {
 
     @RequestMapping(value="/updatePreference/{dni}", method = RequestMethod.GET)
     public String editPreferences(Model model, @PathVariable String dni, HttpSession session) {
-        OviUser userSesion = (OviUser) session.getAttribute("user");
+        Person user = (Person) session.getAttribute("user");
 
-        if (userSesion == null || !userSesion.getDni().equals(dni)) {
+        if (user == null || !user.getDni().equals(dni)) {
             return "redirect:/login";
         }
-        model.addAttribute("obj", oviUserDao.getOviUser(dni));
+        model.addAttribute("obj", user.getDni());
         model.addAttribute("userType", "oviUser");
 
         return "changePreferences";
@@ -88,5 +93,21 @@ public class OviUserController {
 
         oviUserDao.updatePreferencias(oviUser.getDni(), oviUser.getUserPreferences());
         return "redirect:/Ovi_User/menu";
+    }
+    @Autowired
+    private ResourcesByDni resourcesByDni;
+
+    @RequestMapping("/contracts")
+    public String listContracts(HttpSession session, Model model) {
+        Person user = (Person) session.getAttribute("user");
+        if (user == null) return "redirect:/login";
+
+        List<Map<String, Object>> contracts = resourcesByDni.getContractsByDni(user.getDni());
+
+        model.addAttribute("contracts", contracts);
+
+        model.addAttribute("userType", (session.getAttribute("user") instanceof OviUser) ? "oviUser" : "papPati");
+
+        return "Contracts/list";
     }
 }
