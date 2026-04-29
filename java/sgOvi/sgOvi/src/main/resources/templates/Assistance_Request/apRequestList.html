@@ -11,29 +11,27 @@
     <tr>
         <th>idAsReq</th>
         <th>Fecha</th>
-        <th>Descripcion</th>
         <th>Estado</th>
         <th>Razón</th>
+
         <th>Opcion</th>
         <td></td>
         <td></td>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="assistanceRequests: ${assistanceRequests}">
-        <td th:text="${assistanceRequests.idAsReq}"></td>
-        <td th:text="${assistanceRequests.data}"></td>
-        <td th:text="${assistanceRequests.description}"></td>
-        <td th:text="${assistanceRequests.idOviUser}"></td>
-        <td th:text="${assistanceRequests.state}"></td>
-        </td>
-        <td th:text="${assistanceRequests.reason}"></td>
+    <tr th:each="assistanceRequest: ${assistanceRequests}">
+        <td th:text="${assistanceRequest.idAsReq}"></td>
+        <td th:text="${assistanceRequest.data}"></td>
+        <td th:text="${assistanceRequest.state}"></td>
+        <td th:text="${assistanceRequest.reason}"></td>
         <td th:if="assistanceRequests.state == 'APPROVED'">
             <a href="papPatiSelection">Seleccionar Asistente</a>
         </td>
         <td th:unless="assistanceRequest.state == 'APPROVED'">
             No disponible
         </td>
+        <td><a th:href="@{/Assistance_Request/details/{idAsReq} (idAsReq= ${assistanceRequest.idAsReq})}">Detalles</a></td>
     </tr>
     </tbody>
 </table>

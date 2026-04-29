@@ -28,18 +28,29 @@ public class AssistanceRequestController {
     }
     @RequestMapping("/apRequestList")
     public String listAssistanceRequests(Model model, HttpSession session) {
-
         Person person = (Person) session.getAttribute("user");
         model.addAttribute("assistanceRequests", assistanceReqDao.getOviAssistanceRequest(person.getDni()));
         return "Assistance_Request/apRequestList";
     }
     @RequestMapping(value="/requestAssistance")
     public String addAssistanceRequest(Model model, HttpSession session) {
+
+
         Person person = (Person) session.getAttribute("user");
         Assistance_Request ap = new Assistance_Request();
         ap.setIdOviUser(person.getDni());
         model.addAttribute("assistanceRequest", ap);
         return "Assistance_Request/requestAssistance";
+    }
+
+    @RequestMapping(value="/details/{idAsReq}")
+    public String getApDetails(@PathVariable("idAsReq") String idAsReq, HttpSession session, Model model){
+        Person person =(Person) session.getAttribute("user");
+        if(!person.getDni().equals(assistanceReqDao.getAssistanceRequest(idAsReq).getIdOviUser()))
+            return "redirect:/Assistance_Request/apRequestList";
+        model.addAttribute("assistanceRequest",assistanceReqDao.getAssistanceRequest(idAsReq));
+        return "Assistance_Request/details";
+
     }
     @RequestMapping(value="/requestAssistance", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("assistanceRequest") Assistance_Request request,

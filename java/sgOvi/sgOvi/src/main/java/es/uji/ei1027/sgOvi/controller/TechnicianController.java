@@ -227,7 +227,7 @@ public class TechnicianController {
         model.addAttribute("description", apReq.getDescription());
         model.addAttribute("state", apReq.getState());
         model.addAttribute("reason", apReq.getReason());
-        model.addAttribute("drivingLicense", apReq.hasDrivingLicense());
+        model.addAttribute("drivingLicense", apReq.getDrivingLicense());
         model.addAttribute("experience", apReq.getExperience());
         model.addAttribute("age", apReq.getAge());
         model.addAttribute("shiftPreference", apReq.getShiftPreference().name());

@@ -47,7 +47,7 @@ public class Assistance_Request {
         return experience;
     }
 
-    public Boolean hasDrivingLicense() {
+    public Boolean getDrivingLicense() {
         return drivingLicense;
     }
 
