@@ -2,6 +2,7 @@ package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.*;
 import es.uji.ei1027.sgOvi.model.*;
+import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.ListByName;
 import es.uji.ei1027.sgOvi.service.PersonInstructorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,18 +78,15 @@ public class TechnicianController {
         model.addAttribute("reason", user.getReason());
         model.addAttribute("address", user.getAddress());
         model.addAttribute("state", user.getState());
-        model.addAttribute("birthdayDate", user.getBirthdayDate());
         return "Technician/userManagement";
     }
 
     @RequestMapping(value="/userManagement/update", method = RequestMethod.POST)
     public String processUpdateSubmitUser(@RequestParam String dni,
-                                      @RequestParam String legalGuardian,
-                                      @RequestParam (required = false) String reason,
-                                      @RequestParam String address,
-                                      @RequestParam String userPreferences,
-                                      @RequestParam String state,
-                                      @RequestParam LocalDate birthdayDate
+                                          @RequestParam String legalGuardian,
+                                          @RequestParam (required = false) String reason,
+                                          @RequestParam String address,
+                                          @RequestParam String state
     ) {
 
         OviUser user = new OviUser();
@@ -96,9 +94,8 @@ public class TechnicianController {
         user.setState(state);
         user.setLegalGuardian(legalGuardian);
         user.setAddress(address);
-        user.setBirthdayDate(birthdayDate);
 
-        if(state.equals("PENDING") || state.equals("APPROVED")){
+        if(!state.equals(State.REJECTED.name())){
             user.setReason(null);
         }else if (reason == null ||reason.trim().isBlank()){
             user.setReason(null);
@@ -118,11 +115,14 @@ public class TechnicianController {
         model.addAttribute("dni", papPati.getDni());
         model.addAttribute("address", papPati.getAddress());
         model.addAttribute("reason", papPati.getReason());
-        model.addAttribute("type", papPati.getType());
+        model.addAttribute("type", papPati.getType().name());
         model.addAttribute("available", papPati.isAvailable());
-        model.addAttribute("state", papPati.getState());
+        model.addAttribute("state", papPati.getState().name());
         model.addAttribute("document", papPati.getDocument());
         model.addAttribute("training", papPati.getTraining());
+        model.addAttribute("drivingLicense", papPati.hasDrivingLicense());
+        model.addAttribute("shift", papPati.getShift().name());
+        model.addAttribute("experience", papPati.getExperience());
         return "Technician/papPatiManagement";
     }
 
@@ -134,20 +134,26 @@ public class TechnicianController {
                                               @RequestParam String document,
                                               @RequestParam (required = false) String reason,
                                               @RequestParam String training,
-                                              @RequestParam String state,
-                                              @RequestParam String papPatiPreferences
+                                              @RequestParam String shift,
+                                              @RequestParam int experience,
+                                              @RequestParam (value = "drivingLicense", defaultValue = "false") Boolean drivingLicense,
+                                              @RequestParam String state
     ) {
 
         PapPati papPati = new PapPati();
+
         papPati.setDni(dni);
         papPati.setTraining(training);
         papPati.setType(type);
         papPati.setAddress(address);
         papPati.setAvailable(available);
         papPati.setDocument(document);
+        papPati.setDrivingLicense(drivingLicense);
+        papPati.setExperience(experience);
+        papPati.setShift(shift);
         papPati.setState(state);
 
-        if(state.equals("PENDING") || state.equals("APPROVED")){
+        if(!state.equals(State.REJECTED.name())){
             papPati.setReason(null);
         }else if (reason == null || reason.trim().isBlank()){
             papPati.setReason(null);
@@ -188,25 +194,26 @@ public class TechnicianController {
     }
     @RequestMapping(value="/addInstructor", method=RequestMethod.POST)
     public String processAddInstructor(@ModelAttribute("personInstructor") PersonInstructorDTO pidto,
-                                   BindingResult bindingResult) {
-       Person person = new Person();
-       person.setDni(pidto.getPerson().getDni());
-       person.setName(pidto.getPerson().getName());
-       person.setSurname(pidto.getPerson().getSurname());
-       person.setPhoneNumber(pidto.getPerson().getPhoneNumber());
-       person.setEmail(pidto.getPerson().getEmail());
-       person.setGender(pidto.getPerson().getGender().name());
-       person.setPassword(pidto.getPerson().getPassword());
-       person.setCity(pidto.getPerson().getCity());
-       person.setProvince(pidto.getPerson().getProvince());
+                                       BindingResult bindingResult) {
+        Person person = new Person();
+        person.setDni(pidto.getPerson().getDni());
+        person.setName(pidto.getPerson().getName());
+        person.setSurname(pidto.getPerson().getSurname());
+        person.setPhoneNumber(pidto.getPerson().getPhoneNumber());
+        person.setEmail(pidto.getPerson().getEmail());
+        person.setGender(pidto.getPerson().getGender().name());
+        person.setPassword(pidto.getPerson().getPassword());
+        person.setCity(pidto.getPerson().getCity());
+        person.setProvince(pidto.getPerson().getProvince());
+        person.setBirthdayDate(pidto.getPerson().getBirthdayDate());
 
-       personDao.addPerson(person);
+        personDao.addPerson(person);
 
-       Instructor instructor = new Instructor();
-       instructor.setDni(pidto.getPerson().getDni());
-       instructor.setExpertise(pidto.getInstructor().getExpertise());
+        Instructor instructor = new Instructor();
+        instructor.setDni(pidto.getPerson().getDni());
+        instructor.setExpertise(pidto.getInstructor().getExpertise());
 
-       instructorDao.addInstructor(instructor);
+        instructorDao.addInstructor(instructor);
         return "redirect:instructorList";
     }
 
@@ -220,6 +227,12 @@ public class TechnicianController {
         model.addAttribute("description", apReq.getDescription());
         model.addAttribute("state", apReq.getState());
         model.addAttribute("reason", apReq.getReason());
+        model.addAttribute("drivingLicense", apReq.hasDrivingLicense());
+        model.addAttribute("experience", apReq.getExperience());
+        model.addAttribute("age", apReq.getAge());
+        model.addAttribute("shiftPreference", apReq.getShiftPreference().name());
+        model.addAttribute("city", apReq.getCity());
+        model.addAttribute("province", apReq.getProvince());
         return "Technician/apManagement";
     }
 
@@ -229,7 +242,13 @@ public class TechnicianController {
                                                         @RequestParam LocalDate date,
                                                         @RequestParam String description,
                                                         @RequestParam String state,
-                                                        @RequestParam String reason
+                                                        @RequestParam String reason,
+                                                        @RequestParam String shiftPreference,
+                                                        @RequestParam boolean drivingLicense,
+                                                        @RequestParam int experience,
+                                                        @RequestParam int age,
+                                                        @RequestParam String city,
+                                                        @RequestParam String province
     ) {
 
         Assistance_Request assistanceRequest = new Assistance_Request();
@@ -239,6 +258,12 @@ public class TechnicianController {
         assistanceRequest.setData(date);
         assistanceRequest.setState(state);
         assistanceRequest.setDescription(description);
+        assistanceRequest.setExperience(experience);
+        assistanceRequest.setAge(age);
+        assistanceRequest.setShiftPreference(shiftPreference);
+        assistanceRequest.setDrivingLicense(drivingLicense);
+        assistanceRequest.setCity(city);
+        assistanceRequest.setProvince(province);
 
         assistanceReqDao.updateAssistanceRequest(assistanceRequest);
 

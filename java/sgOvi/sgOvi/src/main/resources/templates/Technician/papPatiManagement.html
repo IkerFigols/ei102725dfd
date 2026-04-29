@@ -16,7 +16,7 @@
 
     <p>
         <label for="available">Disponibilidad:</label>
-        <input type="checkbox" id="available" name="available" value="true" th:checked="${available}" />
+        <input type="checkbox" id="available" name="available" value="true" th:checked="${available}"/>
     </p>
 
     <p>
@@ -33,13 +33,13 @@
     </p>
 
     <p>
-        <label for="papPatiPreferences">Preferencias</label>
-        <input type="text" id="papPatiPreferences" name="papPatiPreferences" th:value="${papPatiPreferences}" required />
+        <label for="training">Entrenamiento:</label>
+        <input type="text" id="training" name="training" th:value="${training}" required />
     </p>
 
     <p>
-        <label for="training">Entrenamiento:</label>
-        <input type="text" id="training" name="training" th:value="${training}" required />
+        <label for="experience">Años de experiencia</label>
+        <input type="number" id="experience" name="experience" th:value="${experience}" required />
     </p>
 
     <p>
@@ -48,11 +48,25 @@
     </p>
 
     <p>
+        <label for="shift">Turno</label>
+        <select id="shift" name="shift">
+            <option value="MORNING" th:selected="${shift == 'MORNING'}">Mañana</option>
+            <option value="AFTERNOON" th:selected="${shift == 'AFTERNOON'}">Tarde</option>
+            <option value="ANY" th:selected="${shift == 'ANY'}">Cualquiera</option>
+        </select>
+    </p>
+
+    <p>
+        <label for="drivingLicense">Carné de Conducir:</label>
+        <input type="checkbox" id="drivingLicense" name="drivingLicense" value="true" th:checked="${drivingLicense}"/>
+    </p>
+
+    <p>
         <label for="state">Estado:</label>
         <select id="state" name="state">
-            <option value="PENDING" th:selected="${state == 'PENDING'}">PENDING</option>
-            <option value="APPROVED" th:selected="${state == 'APPROVED'}">APPROVED</option>
-            <option value="REJECTED" th:selected="${state == 'REJECTED'}">REJECTED</option>
+            <option value="PENDING" th:selected="${state == 'PENDING'}">Pendiente</option>
+            <option value="APPROVED" th:selected="${state == 'APPROVED'}">Aprovado</option>
+            <option value="REJECTED" th:selected="${state == 'REJECTED'}">Rechazado</option>
         </select>
     </p>
 
@@ -66,7 +80,7 @@
 </form>
 
 <br><br>
-<a th:href="@{/Technician/userList}">Volver a la lista</a>
+<a th:href="@{/Technician/papPatiList}">Volver a la lista</a>
 
 </body>
 </html>

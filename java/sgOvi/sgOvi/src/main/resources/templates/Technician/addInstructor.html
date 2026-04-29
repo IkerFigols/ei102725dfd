@@ -37,14 +37,14 @@
 
         <div>
             <label>Género:</label>
-
-            <input type="radio" id="masculino" value="Masculino" th:field="*{person.gender}">
+                                                                <!-- ESTO FALLA SEGURO -->
+            <input type="radio" id="masculino" value="MALE" th:field="*{person.gender}">
             <label for="masculino">Masculino</label>
 
-            <input type="radio" id="femenino" value="Femenino" th:field="*{person.gender}">
+            <input type="radio" id="femenino" value="FEMALE" th:field="*{person.gender}">
             <label for="femenino">Femenino</label>
 
-            <input type="radio" id="otros" value="Otros" th:field="*{person.gender}">
+            <input type="radio" id="otros" value="UNDEFINED" th:field="*{person.gender}">
             <label for="otros">Otros</label>
         </div>
 
