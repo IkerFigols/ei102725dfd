@@ -28,17 +28,12 @@ public class PapPatiController {
 
     @RequestMapping("/menu")
     public String menu(HttpSession session) {
-        if (session.getAttribute("user") == null) return "redirect:/login";
         return "Pap_Pati/menuPapPati";
     }
 
     @RequestMapping(value="/updatePreference/{dni}", method = RequestMethod.GET)
     public String editPreferences(Model model, @PathVariable String dni, HttpSession session) {
         Person user = (Person) session.getAttribute("user");
-
-        if (user == null || !user.getDni().equals(dni)) {
-            return "redirect:/login";
-        }
 
         model.addAttribute("obj", user.getDni());
         model.addAttribute("userType", "papPati");
@@ -66,10 +61,6 @@ public class PapPatiController {
     @RequestMapping("/contracts")
     public String listContracts(HttpSession session, Model model) {
         Person user = (Person) session.getAttribute("user");
-
-        if (user == null) {
-            return "redirect:/login";
-        }
         model.addAttribute("contracts", resourcesByDni.getContractsByDni(user.getDni()));
 
         model.addAttribute("userType", "papPati");

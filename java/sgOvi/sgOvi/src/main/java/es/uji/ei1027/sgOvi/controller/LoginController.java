@@ -51,7 +51,7 @@ public class LoginController {
             return "login";
         }
 
-
+        session.setAttribute("rol",etiqueta);
         session.setAttribute("user", person);
 
         if (session.getAttribute("nextURL") != null ) {

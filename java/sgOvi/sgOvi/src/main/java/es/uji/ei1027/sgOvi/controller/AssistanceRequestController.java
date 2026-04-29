@@ -28,18 +28,13 @@ public class AssistanceRequestController {
     }
     @RequestMapping("/apRequestList")
     public String listAssistanceRequests(Model model, HttpSession session) {
-        if (session == null){;
-            return "redirect:/login";
-        }
+
         Person person = (Person) session.getAttribute("user");
         model.addAttribute("assistanceRequests", assistanceReqDao.getOviAssistanceRequest(person.getDni()));
         return "Assistance_Request/apRequestList";
     }
     @RequestMapping(value="/requestAssistance")
     public String addAssistanceRequest(Model model, HttpSession session) {
-        if (session == null){;
-            return "redirect:/login";
-        }
         Person person = (Person) session.getAttribute("user");
         Assistance_Request ap = new Assistance_Request();
         ap.setIdOviUser(person.getDni());

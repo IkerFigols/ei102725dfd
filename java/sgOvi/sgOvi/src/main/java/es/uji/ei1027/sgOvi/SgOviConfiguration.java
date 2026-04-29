@@ -4,11 +4,13 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 
 @Configuration
-public class SgOviConfiguration {
+public class SgOviConfiguration implements WebMvcConfigurer {
 
     // Configura l'accés a la base de dades (DataSource)
     // a partir de les propietats a src/main/resources/applications.properties
@@ -17,5 +19,20 @@ public class SgOviConfiguration {
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new SecurityInterceptor())
+                .addPathPatterns("/**") // Protege todo...
+                .excludePathPatterns(
+                        "/index*",
+                        "/login*",
+                        "/Register/**",
+                        "/Person/**",
+                        "/auth/**",
+                        "/css/**",
+                        "/images/**",
+                        "/js/**"); // ...excepto esto
     }
  }

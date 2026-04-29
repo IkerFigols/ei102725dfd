@@ -41,9 +41,6 @@ public class OviUserController {
 
     @RequestMapping("/menuOviUser")
     public String menu(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null) {
-            return "redirect:/login";
-        }
         return "Ovi_User/menuOviUser";
     }
 
@@ -51,13 +48,11 @@ public class OviUserController {
 
     @RequestMapping("/activities")
     public String listActivities(HttpSession session) {
-        if (session.getAttribute("user") == null) return "redirect:/login";
         return "redirect:/activity/list";
     }
 
     @RequestMapping("/requests")
     public String listRequests(HttpSession session) {
-        if (session.getAttribute("user") == null) return "redirect:/login";
         return "redirect:/Assistance_Request/apRequestList";
     }
 
@@ -65,9 +60,6 @@ public class OviUserController {
     public String editPreferences(Model model, @PathVariable String dni, HttpSession session) {
         Person user = (Person) session.getAttribute("user");
 
-        if (user == null || !user.getDni().equals(dni)) {
-            return "redirect:/login";
-        }
         model.addAttribute("obj", user.getDni());
         model.addAttribute("userType", "oviUser");
 
@@ -94,8 +86,6 @@ public class OviUserController {
     @RequestMapping("/contracts")
     public String listContracts(HttpSession session, Model model) {
         Person user = (Person) session.getAttribute("user");
-        if (user == null) return "redirect:/login";
-
         List<Map<String, Object>> contracts = resourcesByDni.getContractsByDni(user.getDni());
 
         model.addAttribute("contracts", contracts);

@@ -28,10 +28,9 @@ public class controller {
             return "si";
         }
 
-
         personDao.encryptPersons();// O tu lógica de guardado
         System.out.println("se ha realizado el cambio");
-        return "redirect:index";
+        return "redirect:/";
     }
 
     @RequestMapping(value="/si")
