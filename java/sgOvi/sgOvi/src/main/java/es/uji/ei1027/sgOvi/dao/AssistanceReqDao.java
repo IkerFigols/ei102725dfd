@@ -27,7 +27,7 @@ public class AssistanceReqDao {
     public void addAssistanceRequest( Assistance_Request assistanceRequest) {
         jdbcTemplate.update("INSERT INTO Assistance_Request VALUES(?, ?, ?, ?, ?, ?,?,?,?,?,?,?)",
                 assistanceRequest.getIdAsReq(),
-                assistanceRequest.getData(),
+                assistanceRequest.getDate(),
                 assistanceRequest.getDescription(),
                 assistanceRequest.getIdOviUser(),
                 assistanceRequest.getState().name(),
@@ -52,7 +52,7 @@ public class AssistanceReqDao {
 
         // 2. Pasa los valores en un array de objetos
         jdbcTemplate.update(sql,
-                request.getData(),
+                request.getDate(),
                 request.getDescription(),
                 request.getIdOviUser(),
                 request.getState().name(),

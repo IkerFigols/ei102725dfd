@@ -46,6 +46,9 @@ public class SelectionDao {
                 + "', idAsReq = '" + selection.getIdAsReq()
                 + "' WHERE idSelection = '" + selection.getIdSelection() + "'");
     }
+    public void updateState(String idSelection, String state) {
+        jdbcTemplate.update("UPDATE Selection SET state = ? WHERE idSelection = ?", idSelection, state);
+    }
 
     /*Obtiene la seleccion especificada */
     public Selection getSelection(String idSelection) {
@@ -59,7 +62,16 @@ public class SelectionDao {
             return null;
         }
     }
-    
+    /* Obtiene todas las selecciones de una apRequest */
+    public List<Selection> getSelectionsAPRequest(String idAsReq) {
+        try {
+            return jdbcTemplate.query("SELECT * FROM Selection WHERE idAsReq = ?", new SelectionRowMapper(), idAsReq);
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new ArrayList<Selection>();
+        }
+    }
+
 
     /* Obtiene todas las selecciones */
     public List<Selection> getSelections() {

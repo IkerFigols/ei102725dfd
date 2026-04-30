@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class Assistance_Request {
     private String idAsReq;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate data;
+    private LocalDate date;
     private State state;
     private String description;
     private String reason;
@@ -73,8 +73,8 @@ public class Assistance_Request {
         return idAsReq;
     }
 
-    public LocalDate getData() {
-        return data;
+    public LocalDate getDate() {
+        return date;
     }
 
     public State getState() {
@@ -97,8 +97,8 @@ public class Assistance_Request {
         this.idAsReq = idAsReq;
     }
 
-    public void setData(LocalDate date) {
-        this.data = date;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public void setState(String state) {
@@ -121,7 +121,7 @@ public class Assistance_Request {
     public String toString() {
         return "Assistance_Request{" +
                 "idAsReq='" + idAsReq + '\'' +
-                ", data=" + data +
+                ", data=" + date +
                 ", state='" + state.getDescription() + '\'' +
                 ", description='" + description + '\'' +
                 ", reason='" + reason + '\'' +

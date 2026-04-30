@@ -223,7 +223,7 @@ public class TechnicianController {
 
         model.addAttribute("idAsReq", apReq.getIdAsReq());
         model.addAttribute("idOviUser", apReq.getIdOviUser());
-        model.addAttribute("date", apReq.getData());
+        model.addAttribute("date", apReq.getDate());
         model.addAttribute("description", apReq.getDescription());
         model.addAttribute("state", apReq.getState());
         model.addAttribute("reason", apReq.getReason());
@@ -255,7 +255,7 @@ public class TechnicianController {
         assistanceRequest.setIdOviUser(idOviUser);
         assistanceRequest.setIdAsReq(idAsReq);
         assistanceRequest.setReason(reason);
-        assistanceRequest.setData(date);
+        assistanceRequest.setDate(date);
         assistanceRequest.setState(state);
         assistanceRequest.setDescription(description);
         assistanceRequest.setExperience(experience);

@@ -6,39 +6,40 @@
 </head>
 <body>
 <h1>Mis candidatos para asistencia personal </h1>
-<table th:unless="${pappatis.isEmpty()}">
-    <thead>
+<table th:unless="${selections.isEmpty()}">
     <tr>
-        <th>idAsReq</th>
+        <thead>
+        <th>idSelection</th>
         <th>Fecha</th>
         <th>Estado</th>
-        <th>Razón</th>
-
+        <th>Asistente Personal</th>
         <th>Opcion</th>
-        <td></td>
-        <td></td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="assistanceRequest: ${assistanceRequests}">
-        <td th:text="${assistanceRequest.idAsReq}"></td>
-        <td th:text="${assistanceRequest.data}"></td>
-        <td th:text="${assistanceRequest.state.getDescription()}"></td>
-        <td th:text="${assistanceRequest.reason}"></td>
-        <td th:if="${assistanceRequest.state.name() == 'APPROVED'}">
-            <a href="papPatiSelection">Seleccionar Asistente</a>
+    <tr th:each="selection: ${selections}">
+        <td th:text="${selection.idSelection}"></td>
+        <td th:text="${selection.date}"></td>
+        <td th:text="${selection.state.getDescription()}"></td>
+        <td th:text="${selection.idPapPati}"></td>
+
+        <td>
+            <a th:href="@{/Assistance_Request/papPatiInfo/{idPapPati}(idPapPati=${selection.idPapPati})}">Info Asistente</a>
         </td>
-        <td th:unless="${assistanceRequest.state.name() == 'APPROVED'}">
-            No disponible
+
+        <td>
+            <form th:action="@{/Assistance_Request/approveSelection/{idSelection}(idSelection=${selection.idSelection})}" method="post">
+                <button type="submit" th:disabled="${selection.state.name() == 'APPROVED'}">Aprobar</button>
+            </form>
         </td>
-        <td><a th:href="@{/Assistance_Request/details/{idAsReq} (idAsReq= ${assistanceRequest.idAsReq})}">Detalles</a></td>
+
+        <td>
+            <form th:action="@{/Assistance_Request/rejectSelection/{idSelection}(idSelection=${selection.idSelection})}" method="post">
+                <button type="submit" th:disabled="${selection.state.name() == 'REJECTED'}">Rechazar</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
-<h2 th:if="${assistanceRequests.isEmpty()}">No tienes asistencias activas en este momento</h2>
-</tr>
-<a href="requestAssistance">Solicitar Asistencia</a>
-<br><br>
+<h2 th:if="${selections.isEmpty()}">El técnico no te ha asignado ningún candidato todavia </h2>
+
 <a href="/" >Volver</a>
 </body>
 </html>

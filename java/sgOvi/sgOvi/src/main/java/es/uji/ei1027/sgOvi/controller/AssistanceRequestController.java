@@ -1,12 +1,15 @@
 package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
+import es.uji.ei1027.sgOvi.dao.PapPatiDao;
 import es.uji.ei1027.sgOvi.dao.SelectionDao;
 import es.uji.ei1027.sgOvi.model.Assistance_Request;
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
+import es.uji.ei1027.sgOvi.model.enums.State;
+import es.uji.ei1027.sgOvi.service.AssistanceRequestService;
 import es.uji.ei1027.sgOvi.service.ListPapPatiSelService;
-import groovy.lang.Binding;
+import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/Assistance_Request")
@@ -28,7 +30,9 @@ public class AssistanceRequestController {
     private AssistanceReqDao assistanceReqDao;
 
     @Autowired
-    private SelectionDao selectionDao;
+    private AssistanceRequestService assistanceRequestService;
+
+
 
     @Autowired
     private ListPapPatiSelService listPapPatiSelService;
@@ -67,7 +71,7 @@ public class AssistanceRequestController {
         if (bindingResult.hasErrors())
             return "Assistance_Request/requestAssistance";
 
-        request.setData(LocalDate.now());
+        request.setDate(LocalDate.now());
         request.setIdAsReq(generateARCode());
         request.setState("PENDING");
         request.setReason(null);
@@ -125,11 +129,35 @@ public class AssistanceRequestController {
         if(!assistanceRequest.getIdOviUser().equals(person.getDni()))
             return "redirect:/Ovi_User/menuOviUser";
 
-        List<PapPati> lista = listPapPatiSelService.getPapPatiSelection(idAsReq);
-        model.addAttribute("pappatis",lista);
+        model.addAttribute("selections",assistanceRequestService.getSelectionsAP(idAsReq));
         return "Assistance_Request/papPatiSelection";
     }
+    @RequestMapping(value = "/approveSelection/{id}", method = RequestMethod.POST)
+    public String approveSelection(@PathVariable("id") String idSelection) {
+        // Aquí llamarías a tu servicio o DAO
+        assistanceRequestService.updateState(idSelection, State.APPROVED.name());
 
+        // Redirigimos de vuelta a la lista para ver el cambio
+        return "redirect:/Assistance_Request/papPatiSelection";
+    }
+
+    @RequestMapping(value="/rejectSelection/{id}", method = RequestMethod.POST)
+    public String rejectSelection(@PathVariable("id") String idSelection) {
+        assistanceRequestService.updateState(idSelection, State.REJECTED.name());
+        return "redirect:/Assistance_Request/papPatiSelection";
+    }
+
+    @RequestMapping(value="/papPatiInfo/{idPapPati}")
+    public String getPapPatiInfo(Model model, @PathVariable("idPapPati") String idPapPati, HttpSession session){
+        Person person = assistanceRequestService.getPerson(idPapPati);
+        PapPati papPati = assistanceRequestService.getPapPati(idPapPati);
+        PersonPapPatiDTO personPapPatiDTO = new PersonPapPatiDTO();
+        personPapPatiDTO.setPapPati(papPati);
+        personPapPatiDTO.setPerson(person);
+        model.addAttribute("pappati",personPapPatiDTO);
+
+        return "Assistance_Request/papPatiInfo";
+    }
 }
 
 

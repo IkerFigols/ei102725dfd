@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+    <meta charset="UTF-8" />
+    <title>Perfil del Asistente Personal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* Ajustes adicionales para la tabla de información */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .info-item {
+            border-bottom: 1px solid var(--border-gray);
+            padding-bottom: 8px;
+        }
+        .label {
+            font-weight: 600;
+            color: var(--primary-blue);
+            display: block;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+        .value {
+            color: #334155;
+            font-size: 15px;
+        }
+        .section-title {
+            grid-column: span 2;
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 10px;
+            margin-top: 20px;
+            background: #f1f5f9;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+<main class="form-container">
+    <h1 class="title" style="font-size: 24px;">Perfil detallado del Asistente</h1>
+    <p class="description">Revisa la información completa antes de iniciar una comunicación.</p>
+
+    <div class="info-grid">
+        <h2 class="section-title title">Datos Personales</h2>
+
+        <div class="info-item">
+            <span class="label">Nombre completo</span>
+            <span class="value" th:text="${personPapPatiDTO.person.name + ' ' + personPapPatiDTO.person.surname}">Nombre Apellido</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Email</span>
+            <span class="value" th:text="${personPapPatiDTO.person.email}">email@ejemplo.com</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Teléfono</span>
+            <span class="value" th:text="${personPapPatiDTO.person.phoneNumber}">600000000</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Género</span>
+            <span class="value" th:text="${personPapPatiDTO.person.gender.getDescription()}">Género</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Ubicación</span>
+            <span class="value" th:text="${personPapPatiDTO.person.city + ' (' + personPapPatiDTO.person.province + ')'}">Ciudad (Provincia)</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Fecha de Nacimiento</span>
+            <span class="value" th:text="${#temporals.format(personPapPatiDTO.person.birthdayDate, 'dd/MM/yyyy')}">01/01/1990</span>
+        </div>
+
+        <h2 class="section-title title">Información Profesional</h2>
+
+        <div class="info-item">
+            <span class="label">DNI / NIE</span>
+            <span class="value" th:text="${personPapPatiDTO.papPati.dni}">12345678X</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Tipo de Asistente</span>
+            <span class="value" th:text="${personPapPatiDTO.papPati.type.getDescription()}">PAP / PATI</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Estado</span>
+            <span class="value" th:text="${personPapPatiDTO.papPati.state.getDescription()}">Pendiente</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Experiencia</span>
+            <span class="value" th:text="${personPapPatiDTO.papPati.experience + ' años'}">0 años</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Turno</span>
+            <span class="value" th:text="${personPapPatiDTO.papPati.shift.getDescription()}">Mañana/Tarde</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Vehículo propio</span>
+            <span class="value" th:text="${personPapPatiDTO.papPati.drivingLicense ? 'Sí' : 'No'}">No</span>
+        </div>
+
+        <div class="info-item" style="grid-column: span 2;">
+            <span class="label">Dirección Profesional</span>
+            <span class="value" th:text="${personPapPatiDTO.papPati.address}">Dirección</span>
+        </div>
+
+        <div class="info-item" style="grid-column: span 2;">
+            <span class="label">Formación y Especialidades</span>
+            <span class="value" th:text="${personPapPatiDTO.papPati.training}">Sin formación registrada</span>
+        </div>
+
+        <div class="info-item" style="grid-column: span 2;">
+            <span class="label">Documentación (Enlace)</span>
+            <a class="value" th:href="${personPapPatiDTO.papPati.document}" target="_blank" th:text="${personPapPatiDTO.papPati.document}">Ver documento</a>
+        </div>
+    </div>
+
+    <div class="button-group">
+        <a th:href="@{/Assistance_Request/papPatiSelection}" class="btn btn-secondary">Volver al listado</a>
+
+        <a th:href="@{/Assistance_Request/communication/{idPap}(idPap=${personPapPatiDTO.papPati.dni})}"
+           class="btn btn-primary">
+            Iniciar Comunicación
+        </a>
+    </div>
+</main>
+
+</body>
+</html>
