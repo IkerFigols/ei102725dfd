@@ -24,10 +24,11 @@ public class CommunicationDao {
 
 
     public void addCommunication( Communication communication) {
-        jdbcTemplate.update("INSERT INTO Communication VALUES(?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Communication VALUES(?, ?, ?, ?)",
                 communication.getIdCommunication(),
                 communication.getData(),
-                communication.getInformation()
+                communication.getInformation(),
+                communication.getIdSelection()
         );
     }
 
@@ -37,7 +38,7 @@ public class CommunicationDao {
     }
 
     public void updateCommunication(Communication communication) {
-        jdbcTemplate.update("UPDATE Communication SET data = "+ communication.getData() + ", information = " + communication.getInformation() + " WHERE idCommunication LIKE " + communication.getIdCommunication() + "'");
+        jdbcTemplate.update("UPDATE Communication SET data = "+ communication.getData() + ", information = " + communication.getInformation() + ", idSelection = "+ communication.getIdSelection() + " WHERE idCommunication LIKE " + communication.getIdCommunication() + "'");
     }
 
     public Communication getCommunication(String idCommunication) {

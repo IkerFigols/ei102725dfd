@@ -8,7 +8,6 @@ public class Selection {
     private String idSelection;
     private LocalDate date;
     private State state;
-    private String idCommunication;
     private String idPap;
     private String idAsReq;
 
@@ -24,9 +23,6 @@ public class Selection {
         return state;
     }
 
-    public String getIdCommunication() {
-        return idCommunication;
-    }
 
     public String getIdPap() {
         return idPap;
@@ -48,9 +44,6 @@ public class Selection {
         this.state = State.fromString(state);
     }
 
-    public void setIdCommunication(String idCommunication) {
-        this.idCommunication = idCommunication;
-    }
 
     public void setIdPap(String idPap) {
         this.idPap = idPap;
@@ -66,7 +59,6 @@ public class Selection {
                 "idSelection='" + idSelection + '\'' +
                 ", date=" + date +
                 ", state='" + state.getDescription() + '\'' +
-                ", idCommunication='" + idCommunication + '\'' +
                 ", idPap='" + idPap + '\'' +
                 ", idAsReq='" + idAsReq + '\'' +
                 '}';

@@ -83,4 +83,18 @@ public class PapPatiDao {
         jdbcTemplate.update("UPDATE Pap_Pati SET papPatiPreferences=? WHERE dni=?",
                 preferencias, dni);
     }
+
+    public List<PapPati> getCandidatesPapPati(String idAsReq){
+        try {
+            List<PapPati> papPatiList = jdbcTemplate.query(
+                    "SELECT pap.* FROM Pap_Pati as pap JOIN Selection as s ON pap.dni = s.idPapPati JOIN Assistance_Request as ap USING(idAsReq) WHERE ap.idAsReq = ?;  "
+                    ,new PapPatiRowMapper()
+                    ,idAsReq);
+            return papPatiList;
+
+
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
 }

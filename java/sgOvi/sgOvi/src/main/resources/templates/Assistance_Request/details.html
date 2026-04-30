@@ -101,10 +101,10 @@
   </div>
 
   <div class="button-group">
-    <a th:href="@{/Assistance_Request/list}" class="btn btn-secondary">Volver al listado</a>
-    <a th:href="@{/Assistance_Request/update/{id}(id=${assistanceRequest.idAsReq})}"
+    <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">Volver al listado</a>
+    <a th:href="@{/Assistance_Request/update/{idAsReq}(idAsReq=${assistanceRequest.idAsReq})}"
        class="btn btn-primary"
-       th:if="${session.rol == 'OVI_USER' && assistanceRequest.state == 'PENDING'}">Editar Solicitud</a>
+       th:if="${session.rol == 'OVI_USER' && assistanceRequest.state.name() == 'PENDING'}">Editar Solicitud</a>
   </div>
 </div>
 

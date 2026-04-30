@@ -26,19 +26,19 @@
         </div>
 
         <div>
-            <label>Que horario necesitas para que el asistente este disponible :</label>
+            <label for="age" >Edad máxima del asistente: </label>
+            <input id="age" type="number" th:field="*{age}">
+            <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+        </div>
 
-            <input type="radio" id="MORNING" value="MORNING" th:field="*{shiftPreference}">
-            <label for="MORNING">Mañanas </label>
-
-            <input type="radio" id="AFTERNOON" value="AFTERNOON" th:field="*{shiftPreference}">
-            <label for="AFTERNOON">Tardes </label>
-
-            <input type="radio" id="ANY" value="ANY" th:field="*{shiftPreference}">
-            <label for="ANY">Cualquiera </label>
-
-            <div th:if="${#fields.hasErrors('shift')}" th:errors="*{shiftPreference}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-
+        <div>
+            <label for="shiftPreference">¿Qué horario necesitas?</label>
+            <select id="shiftPreference" th:field="*{shiftPreference}">
+                <option th:value="${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).MORNING}">Mañanas</option>
+                <option th:value="${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).AFTERNOON}">Tardes</option>
+                <option th:value="${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).ANY}">Cualquiera</option>
+            </select>
+            <div th:if="${#fields.hasErrors('shiftPreference')}" th:errors="*{shiftPreference}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
         </div>
 
         <div>

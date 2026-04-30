@@ -1,8 +1,12 @@
 package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
+import es.uji.ei1027.sgOvi.dao.SelectionDao;
 import es.uji.ei1027.sgOvi.model.Assistance_Request;
+import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
+import es.uji.ei1027.sgOvi.service.ListPapPatiSelService;
+import groovy.lang.Binding;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,17 +19,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/Assistance_Request")
 public class AssistanceRequestController {
-
+    @Autowired
     private AssistanceReqDao assistanceReqDao;
 
     @Autowired
-    public void setAssistanceReqDao(AssistanceReqDao assistanceReqDao) {
-        this.assistanceReqDao = assistanceReqDao;
-    }
+    private SelectionDao selectionDao;
+
+    @Autowired
+    private ListPapPatiSelService listPapPatiSelService;
+
     @RequestMapping("/apRequestList")
     public String listAssistanceRequests(Model model, HttpSession session) {
         Person person = (Person) session.getAttribute("user");
@@ -69,6 +76,26 @@ public class AssistanceRequestController {
         return "redirect:request_confirmation";
     }
 
+    @RequestMapping(value="/update/{idAsReq}")
+    public String getUpdateAp(Model model, @PathVariable("idAsReq") String idAsReq, HttpSession session){
+        Assistance_Request ap = assistanceReqDao.getAssistanceRequest(idAsReq);
+        Person person = (Person) session.getAttribute("user");
+        if(!ap.getIdOviUser().equals(person.getDni()))
+            return "redirect:/";
+        model.addAttribute("assistanceRequest",ap);
+        return "Assistance_Request/update";
+    }
+    @RequestMapping(value="/update", method = RequestMethod.POST)
+    public String getUpdateAp(@ModelAttribute("assistanceRequest") Assistance_Request assistanceRequest, BindingResult bindingResult){
+        AssistanceRequestValidator assistanceRequestValidator = new AssistanceRequestValidator();
+        assistanceRequestValidator.validate(assistanceRequest, bindingResult);
+        if (bindingResult.hasErrors())
+            return "Assistance_Request/update";
+
+        assistanceReqDao.updateAssistanceRequest(assistanceRequest);
+        return "redirect:/Assistance_Request/apRequestList";
+    }
+
     @RequestMapping(value="/request_confirmation")
     public String showConfirmationPage() {
         return "Assistance_Request/request_confirmation";
@@ -88,6 +115,19 @@ public class AssistanceRequestController {
             base = base + "0";
         }
         return base;
+    }
+
+
+    @RequestMapping("/papPatiSelection/{idAsReq}")
+    public String getSelections(Model model, @PathVariable("idAsReq") String idAsReq, HttpSession session){
+        Assistance_Request assistanceRequest = assistanceReqDao.getAssistanceRequest(idAsReq);
+        Person person = (Person) session.getAttribute("user");
+        if(!assistanceRequest.getIdOviUser().equals(person.getDni()))
+            return "redirect:/Ovi_User/menuOviUser";
+
+        List<PapPati> lista = listPapPatiSelService.getPapPatiSelection(idAsReq);
+        model.addAttribute("pappatis",lista);
+        return "Assistance_Request/papPatiSelection";
     }
 
 }

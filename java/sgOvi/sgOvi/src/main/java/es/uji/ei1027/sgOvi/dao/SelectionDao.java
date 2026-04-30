@@ -24,11 +24,10 @@ public class SelectionDao {
 
     /* añade la seleccion */
     public void addSelection(Selection selection) {
-        jdbcTemplate.update("INSERT INTO Selection VALUES(?, ?, ?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Selection VALUES(?, ?, ?, ?, ?)",
                 selection.getIdSelection(),
                 selection.getDate(),
                 selection.getState().name(),
-                selection.getIdCommunication(),
                 selection.getIdPap(),
                 selection.getIdAsReq()
         );
@@ -43,7 +42,6 @@ public class SelectionDao {
     public void updateSelection(Selection selection) {
         jdbcTemplate.update("UPDATE Selection SET date = '" + selection.getDate()
                 + "', state = '" + selection.getState().name()
-                + "', idCommunication = '" + selection.getIdCommunication()
                 + "', idPap = '" + selection.getIdPap()
                 + "', idAsReq = '" + selection.getIdAsReq()
                 + "' WHERE idSelection = '" + selection.getIdSelection() + "'");

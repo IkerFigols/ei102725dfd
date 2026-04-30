@@ -23,12 +23,12 @@
     <tr th:each="assistanceRequest: ${assistanceRequests}">
         <td th:text="${assistanceRequest.idAsReq}"></td>
         <td th:text="${assistanceRequest.data}"></td>
-        <td th:text="${assistanceRequest.state}"></td>
+        <td th:text="${assistanceRequest.state.getDescription()}"></td>
         <td th:text="${assistanceRequest.reason}"></td>
-        <td th:if="assistanceRequests.state == 'APPROVED'">
+        <td th:if="${assistanceRequest.state.name() == 'APPROVED'}">
             <a href="papPatiSelection">Seleccionar Asistente</a>
         </td>
-        <td th:unless="assistanceRequest.state == 'APPROVED'">
+        <td th:unless="${assistanceRequest.state.name() == 'APPROVED'}">
             No disponible
         </td>
         <td><a th:href="@{/Assistance_Request/details/{idAsReq} (idAsReq= ${assistanceRequest.idAsReq})}">Detalles</a></td>

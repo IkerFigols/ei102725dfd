@@ -12,7 +12,6 @@ public final class SelectionRowMapper implements RowMapper<Selection> {
         selection.setIdSelection(rs.getString("idSelection"));
         selection.setDate(rs.getObject("date", java.time.LocalDate.class));
         selection.setState(rs.getString("state"));
-        selection.setIdCommunication(rs.getString("idCommunication"));
         selection.setIdPap(rs.getString("idPap"));
         selection.setIdAsReq(rs.getString("idAsReq"));
         return selection;

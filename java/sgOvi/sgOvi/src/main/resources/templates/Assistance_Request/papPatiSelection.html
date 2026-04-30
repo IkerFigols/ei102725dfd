@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Gestionar selecciones de asistente personal</title>
+    <meta charset="UTF-8" />
 </head>
 <body>
+<h1>Mis candidatos para asistencia personal </h1>
+<table th:unless="${pappatis.isEmpty()}">
+    <thead>
+    <tr>
+        <th>idAsReq</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Razón</th>
 
+        <th>Opcion</th>
+        <td></td>
+        <td></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="assistanceRequest: ${assistanceRequests}">
+        <td th:text="${assistanceRequest.idAsReq}"></td>
+        <td th:text="${assistanceRequest.data}"></td>
+        <td th:text="${assistanceRequest.state.getDescription()}"></td>
+        <td th:text="${assistanceRequest.reason}"></td>
+        <td th:if="${assistanceRequest.state.name() == 'APPROVED'}">
+            <a href="papPatiSelection">Seleccionar Asistente</a>
+        </td>
+        <td th:unless="${assistanceRequest.state.name() == 'APPROVED'}">
+            No disponible
+        </td>
+        <td><a th:href="@{/Assistance_Request/details/{idAsReq} (idAsReq= ${assistanceRequest.idAsReq})}">Detalles</a></td>
+    </tr>
+    </tbody>
+</table>
+<h2 th:if="${assistanceRequests.isEmpty()}">No tienes asistencias activas en este momento</h2>
+</tr>
+<a href="requestAssistance">Solicitar Asistencia</a>
+<br><br>
+<a href="/" >Volver</a>
 </body>
 </html>

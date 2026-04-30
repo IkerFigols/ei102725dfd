@@ -5,6 +5,7 @@ public class Communication {
     private String idCommunication;
     private LocalDate data;
     private String information;
+    private String idSelection;
 
     public String getIdCommunication() {
         return idCommunication;
@@ -18,6 +19,8 @@ public class Communication {
         return information;
     }
 
+    public String getIdSelection(){return idSelection;}
+
     public void setIdCommunication(String idCommunication) {
         this.idCommunication = idCommunication;
     }
@@ -30,12 +33,14 @@ public class Communication {
         this.information = information;
     }
 
+    public void setIdSelection(String idSelection){this.idSelection = idSelection;}
     @Override
     public String toString() {
         return "Communication{" +
                 "idCommunication='" + idCommunication + '\'' +
                 ", data=" + data +
                 ", information='" + information + '\'' +
+                ", idSelection='" + idSelection + '\'' +
                 '}';
     }
 }

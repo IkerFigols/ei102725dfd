@@ -20,11 +20,18 @@ public class AssistanceRequestValidator implements Validator {
         if(req.getDescription().length() >= 250)
             errors.rejectValue("description", "length0",
                     "El motivo es demasiado largo");
-        if (req.getIdOviUser().length() < 9)
-            errors.rejectValue("idOviUser", "required", "El DNI introducido no es correcto");
-        if (!req.getIdOviUser().matches("^\\d{8}[A-Z]$"))
-            errors.rejectValue("idOviUser", "format",
-                    "El DNI debe tener exactamente 8 números y 1 letra mayúscula");
+        if(req.getCity() == null || req.getCity().isEmpty())
+            errors.rejectValue("city","required","Debes introducir una ciudad");
+        if(req.getProvince() == null || req.getProvince().isEmpty())
+            errors.rejectValue("province","required","Debes introducir una provincia");
+        if(req.getShiftPreference() == null)
+            errors.rejectValue("shiftPreference","required","Debes introducir una preferencia de horario");
+
+        if(req.getCity() != null && req.getCity().length()> 50)
+            errors.rejectValue("city","required","El nombre de la ciudad no puede ser mayor a 50 caracteres");
+        if(req.getProvince() != null && req.getProvince().length()>50)
+            errors.rejectValue("province","required","El nombre de la provincia no puede ser mayor a 50 caracteres");
+
     }
 }
 

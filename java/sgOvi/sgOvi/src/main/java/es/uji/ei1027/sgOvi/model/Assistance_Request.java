@@ -2,11 +2,13 @@ package es.uji.ei1027.sgOvi.model;
 
 import es.uji.ei1027.sgOvi.model.enums.ShiftType;
 import es.uji.ei1027.sgOvi.model.enums.State;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 public class Assistance_Request {
     private String idAsReq;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate data;
     private State state;
     private String description;
