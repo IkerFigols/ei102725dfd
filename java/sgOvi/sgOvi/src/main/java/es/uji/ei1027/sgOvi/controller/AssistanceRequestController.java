@@ -43,6 +43,7 @@ public class AssistanceRequestController {
         return "Assistance_Request/requestAssistance";
     }
 
+
     @RequestMapping(value="/details/{idAsReq}")
     public String getApDetails(@PathVariable("idAsReq") String idAsReq, HttpSession session, Model model){
         Person person =(Person) session.getAttribute("user");
@@ -50,7 +51,6 @@ public class AssistanceRequestController {
             return "redirect:/Assistance_Request/apRequestList";
         model.addAttribute("assistanceRequest",assistanceReqDao.getAssistanceRequest(idAsReq));
         return "Assistance_Request/details";
-
     }
     @RequestMapping(value="/requestAssistance", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("assistanceRequest") Assistance_Request request,

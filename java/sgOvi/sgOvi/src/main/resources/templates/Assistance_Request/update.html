@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <title>Actualiza una solicitud de asistencia perosnal</title>
+</head>
+
+<body>
+<main>
+  <h1>Actualiza los datos de la solicitud de asistencia personal</h1>
+  <form th:action="@{/Assistance_Request/update}" th:object="${assistanceRequest}" method="post">
+    <div>
+      <label for="data">Fecha: </label>
+      <input id="data" type="date" th:field="*{data}">
+    </div>
+
+
+    <div>
+      <label for="description" >Descripción: </label>
+      <input id="description" type="text" th:field="*{description}" >
+    </div>
+
+
+    <div >
+      <label for="age">Edad máxima del asistente: </label>
+      <input id="age" type="number" th:field="*{age}">
+    </div>
+
+    <div>
+      <label for="experience">Experiencia minima del asistente: </label>
+      <input id="experience" type="number" th:field="*{experiencia}">
+    </div>
+
+    <div>
+
+      <label for="drivingLicense">Carnet de conducir?</label>
+      <input id="drivingLicense" type="checkbox" th:field="*{drivingLicense}" >
+    </div>
+
+    <div>
+      <label for="city">Ciudad en la que se realizará la asistencia</label>
+      <input id="city" type="text" th:field="*{city}">
+    </div>
+
+    <div >
+      <label for="province">Provincia en la que se realizará la asistencia</label>
+      <input id="province" type="text" th:field="*{province}">
+    </div>
+
+    <div>
+      <label>Que horario necesitas para que el asistente este disponible?</label>
+
+      <input type="radio" id="MORNING" value="MORNING" th:field="*{shiftPreference}">
+      <label for="MORNING">Mañanas </label>
+
+      <input type="radio" id="AFTERNOON" value="AFTERNOON" th:field="*{shiftPreference}">
+      <label for="AFTERNOON">Tardes </label>
+
+      <input type="radio" id="ANY" value="ANY" th:field="*{shiftPreference}">
+      <label for="ANY">Cualquiera </label>
+
+      <div th:if="${#fields.hasErrors('shift')}" th:errors="*{shiftPreference}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+    </div>
+
+
+
+    <button type="submit">Actualiza usuario OVI</button>
+  </form>
+</main>
+</body>
+</html>

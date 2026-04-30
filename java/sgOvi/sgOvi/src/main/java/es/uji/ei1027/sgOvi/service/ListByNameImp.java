@@ -51,7 +51,7 @@ public class ListByNameImp implements ListByName{
             parametros.add(personDao.getPerson(papPati.getDni()).getSurname());
             parametros.add(papPati.getType().name());
             String available = "No disponible";
-            if(papPati.isAvailable())
+            if(papPati.getAvailable())
                 available = "Disponible";
             parametros.add(available);
             parametros.add(papPati.getState().getDescription());

@@ -116,11 +116,11 @@ public class TechnicianController {
         model.addAttribute("address", papPati.getAddress());
         model.addAttribute("reason", papPati.getReason());
         model.addAttribute("type", papPati.getType().name());
-        model.addAttribute("available", papPati.isAvailable());
+        model.addAttribute("available", papPati.getAvailable());
         model.addAttribute("state", papPati.getState().name());
         model.addAttribute("document", papPati.getDocument());
         model.addAttribute("training", papPati.getTraining());
-        model.addAttribute("drivingLicense", papPati.hasDrivingLicense());
+        model.addAttribute("drivingLicense", papPati.getDrivingLicense());
         model.addAttribute("shift", papPati.getShift().name());
         model.addAttribute("experience", papPati.getExperience());
         return "Technician/papPatiManagement";

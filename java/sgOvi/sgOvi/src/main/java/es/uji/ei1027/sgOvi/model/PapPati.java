@@ -45,7 +45,7 @@ public class PapPati {
         return experience;
     }
 
-    public boolean hasDrivingLicense() {
+    public boolean getDrivingLicense() {
         return drivingLicense;
     }
 
@@ -69,7 +69,7 @@ public class PapPati {
         this.type = StaffType.fromString(type);
     }
 
-    public boolean isAvailable() {
+    public boolean getAvailable() {
         return available;
     }
 
