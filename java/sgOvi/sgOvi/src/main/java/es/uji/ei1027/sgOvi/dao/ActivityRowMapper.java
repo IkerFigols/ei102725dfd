@@ -13,7 +13,7 @@ public final class ActivityRowMapper implements RowMapper<Activity> {
         Activity activity = new Activity();
 
         activity.setIdActivity(rs.getString("idActivity"));
-        activity.setType(rs.getString("type"));
+        activity.setType(rs.getString("activityType"));
         activity.setTittle(rs.getString("tittle"));
         activity.setDescription(rs.getString("description"));
         activity.setDate(rs.getObject("date", LocalDate.class));

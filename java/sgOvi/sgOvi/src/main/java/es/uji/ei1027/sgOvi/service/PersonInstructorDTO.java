@@ -22,4 +22,5 @@ public class PersonInstructorDTO {
     public Instructor getInstructor() {
         return instructor;
     }
+
 }

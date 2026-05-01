@@ -82,4 +82,15 @@ public class SelectionDao {
             return new ArrayList<Selection>();
         }
     }
+    //Este bloque en principio solo se usa para generar los códigos mas eficientemente
+    public String getMaxId(){
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT MAX(idSelection) FROM Selection",
+                    String.class
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 }

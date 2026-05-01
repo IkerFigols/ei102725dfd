@@ -61,4 +61,15 @@ public class CommunicationDao {
             return new ArrayList<Communication>();
         }
     }
+    //Este bloque en principio solo se usa para generar los códigos mas eficientemente
+    public String getMaxId(){
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT MAX(idCommunication) FROM Communication",
+                    String.class
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 }

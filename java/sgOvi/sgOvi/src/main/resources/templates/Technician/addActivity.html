@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <title>Crear nueva persona</title>
+</head>
+
+
+<body>
+<main>
+  <h1>Nuevo Instructor/a</h1>
+  <form th:action="@{/Technician/addActivity}" th:object="${activity}" method="post">
+
+    <div>
+      <label for="tittle">Título de la actividad: </label>
+      <input id="tittle" type="text" th:field="*{tittle}">
+    </div>
+
+    <div>
+      <label for="type">Tipo de Actividad:</label>
+      <select id="type" name="type">
+        <option value="DISSEMINATION" th:selected="${type == 'DISSEMINATION'}">Diseminacion</option>
+        <option value="TRAINING" th:selected="${type == 'TRAINING'}">Formación</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="description">Descripción: </label>
+      <input id="description" type="text" th:field="*{description}">
+    </div>
+
+    <div>
+      <label for="date">Fecha: </label>
+      <input id="date" type="date" th:field="*{date}">
+    </div>
+
+    <div>
+      <label for="address">Dirección: </label>
+      <input id="address" type="text" th:field="*{address}">
+    </div>
+
+    <div>
+      <label for="capacity">Aforo: </label>
+      <input id="capacity" type="number" th:field="*{capacity}">
+    </div>
+
+    <div>
+      <label for="sponsor">Sponsor: </label>
+      <input id="sponsor" type="text" th:field="*{sponsor}">
+    </div>
+
+    <div>
+      <label for="idInstructor">DNI del instructor: </label>
+      <input id="idInstructor" type="text" th:field="*{idInstructor}">
+    </div>
+
+    <button type="submit">Añadir instructor</button>
+
+
+  </form>
+</main>
+</body>
+</html>

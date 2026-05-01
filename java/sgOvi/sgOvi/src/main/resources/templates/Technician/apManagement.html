@@ -7,42 +7,42 @@
 <body>
 <h1>Editar Petición de Asistencia</h1>
 
-<form th:action="@{/Technician/apManagement/update}" method="post">
+<form th:action="@{/Technician/apManagement/update}" th:object="${assistanceRequest}" method="post">
 
   <p>
     <label for="idAsReq">Identificador:</label>
-    <input type="text" id="idAsReq" name="idAsReq" th:value="${idAsReq}" readonly />
+    <input type="text" id="idAsReq" name="idAsReq" th:value="*{idAsReq}" readonly />
   </p>
 
   <p>
     <label for="idOviUser">DNI Solicitante:</label>
-    <input type="text" id="idOviUser" name="idOviUser" th:value="${idOviUser}" readonly/>
+    <input type="text" id="idOviUser" name="idOviUser" th:value="*{idOviUser}" readonly/>
   </p>
 
 
   <p>
     <label for="date">Fecha:</label>
-    <input type="date" id="date" name="date" th:value="${date}" readonly/>
+    <input type="date" id="date" name="date" th:value="*{data}" readonly/>
   </p>
 
   <p>
     <label for="description">Descripción:</label>
-    <input type="text" id="description" name="description" th:value="${description}" readonly/>
+    <input type="text" id="description" name="description" th:value="*{description}" readonly/>
   </p>
 
   <p>
     <label for="state">Estado:</label>
     <select id="state" name="state">
-      <option value="PENDING" th:selected="${state == 'PENDING'}">PENDING</option>
-      <option value="APPROVED" th:selected="${state == 'APPROVED'}">APPROVED</option>
-      <option value="REJECTED" th:selected="${state == 'REJECTED'}">REJECTED</option>
+      <option value="PENDING" th:selected="*{state == 'PENDING'}">PENDING</option>
+      <option value="APPROVED" th:selected="*{state == 'APPROVED'}">APPROVED</option>
+      <option value="REJECTED" th:selected="*{state == 'REJECTED'}">REJECTED</option>
     </select>
   </p>
 
 
   <p>
     <label for="reason">Razón de la denegación:</label>
-    <input type="text" id="reason" name="reason" th:value="${reason}" />
+    <input type="text" id="reason" name="reason" th:value="*{reason}" />
   </p>
 
 

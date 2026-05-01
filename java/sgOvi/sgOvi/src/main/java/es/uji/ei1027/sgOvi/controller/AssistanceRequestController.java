@@ -8,6 +8,7 @@ import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
 import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.AssistanceRequestService;
+import es.uji.ei1027.sgOvi.service.CodeGenerator;
 import es.uji.ei1027.sgOvi.service.ListPapPatiSelService;
 import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
 import jakarta.servlet.http.HttpSession;
@@ -66,13 +67,15 @@ public class AssistanceRequestController {
     @RequestMapping(value="/requestAssistance", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("assistanceRequest") Assistance_Request request,
                                    BindingResult bindingResult) {
+        CodeGenerator cg = new CodeGenerator();
+
         AssistanceRequestValidator requestValidator = new AssistanceRequestValidator();
         requestValidator.validate(request, bindingResult);
         if (bindingResult.hasErrors())
             return "Assistance_Request/requestAssistance";
 
         request.setDate(LocalDate.now());
-        request.setIdAsReq(generateARCode());
+        request.setIdAsReq(cg.generateCode("ASR"));
         request.setState("PENDING");
         request.setReason(null);
 
@@ -103,22 +106,6 @@ public class AssistanceRequestController {
     @RequestMapping(value="/request_confirmation")
     public String showConfirmationPage() {
         return "Assistance_Request/request_confirmation";
-    }
-
-    private String generateARCode(){
-        ArrayList<Assistance_Request> ARList = (ArrayList<Assistance_Request>) assistanceReqDao.getAssistanceRequests();
-        String last = ARList.getLast().getIdAsReq();
-        int n = Integer.parseInt(last.trim().substring(3)) + 1;
-        int a = Integer.toString(n).length();
-        String base = "ASR";
-        while(base.length()<=9){
-            if(base.length() + a == 9) {
-                base = base + n;
-                break;
-            }
-            base = base + "0";
-        }
-        return base;
     }
 
 

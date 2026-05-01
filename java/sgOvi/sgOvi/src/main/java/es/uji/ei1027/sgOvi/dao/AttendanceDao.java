@@ -68,4 +68,16 @@ public class AttendanceDao {
             return new ArrayList<Attendance>();
         }
     }
+
+    //Este bloque en principio solo se usa para generar los códigos mas eficientemente
+    public String getMaxId(){
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT MAX(idAtt) FROM Attendance",
+                    String.class
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 }

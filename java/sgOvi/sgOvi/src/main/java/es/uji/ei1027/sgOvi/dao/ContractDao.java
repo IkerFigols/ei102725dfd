@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
+@Repository
 public class ContractDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -89,6 +90,18 @@ public class ContractDao {
             return jdbcTemplate.query(sql, new ContractRowMapper(), dni, dni);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<>();
+        }
+    }
+
+    //Este bloque en principio solo se usa para generar los códigos mas eficientemente
+    public String getMaxId(){
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT MAX(idContract) FROM Contract",
+                    String.class
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         }
     }
 }

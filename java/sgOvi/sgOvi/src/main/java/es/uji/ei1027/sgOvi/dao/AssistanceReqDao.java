@@ -99,4 +99,15 @@ public class AssistanceReqDao {
             return new ArrayList<Assistance_Request>();
         }
     }
+    //Este bloque en principio solo se usa para generar los códigos mas eficientemente
+    public String getMaxId(){
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT MAX(idAsReq) FROM Assistance_Request",
+                    String.class
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 }
