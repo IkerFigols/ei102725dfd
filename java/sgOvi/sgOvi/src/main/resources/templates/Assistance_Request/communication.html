@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Chat de Comunicación</title>
-  <link rel="stylesheet" th:href="@{/css/tu-estilo.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 
   <style>
     /* Estilos adicionales para el comportamiento de chat */
@@ -64,11 +64,11 @@
 
   <div class="chat-viewport">
     <div th:each="msg : ${communications}"
-         th:classappend="${#strings.startsWith(msg.comunicacion, 'OviUser')} ? 'msg-bubble msg-ovi' : 'msg-bubble msg-pap'">
+         th:classappend="${#strings.startsWith(msg.information, 'OviUser')} ? 'msg-bubble msg-ovi' : 'msg-bubble msg-pap'">
 
-      <span class="msg-info" th:text="${msg.fecha} + ' - ' + ${msg.idCommunication}"></span>
+      <span class="msg-info" th:text="${msg.date} + ' - ' + ${msg.idCommunication}"></span>
 
-      <div th:text="${msg.comunicacion}"></div>
+      <div th:text="${msg.information}"></div>
     </div>
 
     <div th:if="${#lists.isEmpty(communications)}" class="description" style="text-align: center;">
@@ -78,18 +78,18 @@
 
   <form th:action="@{/Assistance_Request/communication/add}" th:object="${comunication}" method="post">
 
-    <input type="hidden" name="idSelection" th:value="${idSelection}" />
+    <input type="hidden" th:field="*{idSelection}" />
 
     <div class="textarea-container">
       <label class="title" style="font-size: 14px;">Escribir mensaje:</label>
-      <textarea th:field="*{comunicacion}"
+      <textarea th:field="*{information}"
                 class="textarea-field"
                 placeholder="Escribe aquí tu mensaje"
                 required></textarea>
     </div>
 
     <div class="button-group">
-      <a th:href="@{/Assistance_Request/papPatiSelection/{id}(id=${idSelection})}" class="btn btn-secondary">Volver</a>
+      <a th:href="@{/Assistance_Request/papPatiSelection/{idAsReq}(idAsReq=${idAsReq})}" class="btn btn-secondary">Volver</a>
 
       <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
     </div>

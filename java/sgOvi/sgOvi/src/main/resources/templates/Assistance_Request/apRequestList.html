@@ -22,14 +22,13 @@
     <tbody>
     <tr th:each="assistanceRequest: ${assistanceRequests}">
         <td th:text="${assistanceRequest.idAsReq}"></td>
-        <td th:text="${assistanceRequest.date
-        }"></td>
+        <td th:text="${assistanceRequest.date}"></td>
         <td th:text="${assistanceRequest.state.getDescription()}"></td>
         <td th:text="${assistanceRequest.reason}"></td>
         <td th:if="${assistanceRequest.state.name() == 'APPROVED'}">
-            <a href="papPatiSelection">Seleccionar Asistente</a>
+            <a th:href="@{/Assistance_Request/papPatiSelection/{idAsReq} (idAsReq= ${assistanceRequest.idAsReq})}">Seleccionar Asistente</a>
         </td>
-        <td th:unless="${assistanceRequest.state.name() == 'APPROVED'}">
+        <td th:unless="${assistanceRequest.state.name() != 'PENDING'}">
             No disponible
         </td>
         <td><a th:href="@{/Assistance_Request/details/{idAsReq} (idAsReq= ${assistanceRequest.idAsReq})}">Detalles</a></td>
@@ -40,6 +39,7 @@
 </tr>
 <a href="requestAssistance">Solicitar Asistencia</a>
 <br><br>
-<a href="/" >Volver</a>
+<a href="/Ovi_User/menuOviUser" >Volver</a>
 </body>
 </html>
+

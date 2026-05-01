@@ -75,10 +75,7 @@ public class CommunicationDao {
     public List<Communication> getCommunicationsSelectionOrdered(String idSelection){
         try{
             return jdbcTemplate.query(
-                    "SELECT \t*\n" +
-                    "FROM \tCommunication as c \n" +
-                    "WHERE \tc.idSelection = ?\n" +
-                    "ORDER BY c.date ASC;\n"
+                    "SELECT * FROM Communication as c WHERE c.idSelection = ? ORDER BY c.date ASC, c.idCommunication ASC"
                     ,new CommunicationRowMapper()
                     , idSelection);
         }

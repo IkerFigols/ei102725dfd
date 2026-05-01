@@ -26,7 +26,7 @@
         </div>
 
         <div>
-            <label for="age" >Edad máxima del asistente: </label>
+            <label for="age" >Edad minima del asistente: </label>
             <input id="age" type="number" th:field="*{age}">
             <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
         </div>

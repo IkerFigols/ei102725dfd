@@ -9,7 +9,7 @@ public enum State {
     APPROVED("Aprobado"),
     REJECTED("Rechazado"),
     CLOSED_WITH_CONTRACT("Cerrado con contrato"),
-    CLOSED_WITH_CONTRACT_DONE("Finalizado con contrato");
+    CLOSED_WITH_CONTRACT_DONE("Cerrada con contrato finalizado");
 
     private final String description;
 

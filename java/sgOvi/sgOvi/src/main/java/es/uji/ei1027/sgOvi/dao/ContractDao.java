@@ -21,7 +21,7 @@ public class ContractDao {
 
     public void addContract(Contract contract){
         jdbcTemplate.update(
-                "INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO Contract (idContract, startDate, endDate, document, salary, schedule, idSelection) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 contract.getIdContract(),
                 contract.getStartDate(),
                 contract.getEndDate(),

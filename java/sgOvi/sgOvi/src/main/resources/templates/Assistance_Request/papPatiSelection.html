@@ -21,21 +21,21 @@
         <td th:text="${selection.idPapPati}"></td>
 
         <td>
-            <a th:href="@{/Assistance_Request/papPatiInfo/{idPapPati}(idPapPati=${selection.idPapPati})}">Info Asistente</a>
+            <a th:href="@{/Assistance_Request/papPatiInfo/{idPapPati}(idPapPati=${selection.idPapPati}, idAsReq= ${selection.idAsReq})}">Info Asistente</a>
         </td>
 
         <td>
-            <a th:href="@{/Assistance_Request/communication/{idSelection} (idSelection= selection.idSelection)}">Comunicarse con el asistente</a>
+            <a th:href="@{/Assistance_Request/communication/{idSelection} (idSelection= ${selection.idSelection}, idAsReq= ${selection.idAsReq})}">Comunicarse con el asistente</a>
         </td>
 
         <td>
-            <form th:action="@{/Assistance_Request/approveSelection/{idSelection}(idSelection=${selection.idSelection})}" method="post">
+            <form th:action="@{/Assistance_Request/approveSelection/{idSelection}(idSelection=${selection.idSelection}, idAsReq=${selection.idAsReq}, idPapPati= ${selection.idPapPati})}" method="post">
                 <button type="submit" th:disabled="${selection.state.name() == 'APPROVED'}">Aprobar</button>
             </form>
         </td>
 
         <td>
-            <form th:action="@{/Assistance_Request/rejectSelection/{idSelection}(idSelection=${selection.idSelection})}" method="post">
+            <form th:action="@{/Assistance_Request/rejectSelection/{idSelection}(idSelection=${selection.idSelection}, idAsReq=${selection.idAsReq})}" method="post">
                 <button type="submit" th:disabled="${selection.state.name() == 'REJECTED'}">Rechazar</button>
             </form>
         </td>
@@ -44,6 +44,6 @@
 </table>
 <h2 th:if="${selections.isEmpty()}">El técnico no te ha asignado ningún candidato todavia </h2>
 
-<a href="/" >Volver</a>
+<a href="/Assistance_Request/apRequestList" >Volver</a>
 </body>
 </html>

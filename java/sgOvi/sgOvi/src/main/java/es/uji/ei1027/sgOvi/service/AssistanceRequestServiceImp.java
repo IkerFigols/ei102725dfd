@@ -1,13 +1,12 @@
 package es.uji.ei1027.sgOvi.service;
 
 import es.uji.ei1027.sgOvi.dao.*;
-import es.uji.ei1027.sgOvi.model.Communication;
-import es.uji.ei1027.sgOvi.model.PapPati;
-import es.uji.ei1027.sgOvi.model.Person;
-import es.uji.ei1027.sgOvi.model.Selection;
+import es.uji.ei1027.sgOvi.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +28,12 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     @Autowired
     CommunicationDao communicationDao;
 
+    @Autowired
+    ContractDao contractDao;
+
+    @Autowired
+    CodeGenerator codeGenerator;
+
     @Override
     public List<Selection> getSelectionsAP(String idAsReq) {
         if (idAsReq == null || assistanceReqDao.getAssistanceRequest(idAsReq) == null)
@@ -47,7 +52,7 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     }
 
     @Override
-    public void updateState( String idSelection, String state) {
+    public void updateStateSelection(String idSelection, String state) {
          selectionDao.updateState(idSelection, state);
     }
 
@@ -63,5 +68,26 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     @Override
     public void addCommunication(Communication communication) {
         communicationDao.addCommunication(communication);
+    }
+
+    @Override
+    public void generateContract(String idSelection, Assistance_Request ap) {
+        // simulación de contrato con dos meses de duración
+        Contract contract = new Contract();
+        contract.setIdContract(codeGenerator.generateCode("CON"));
+        contract.setIdSelection(idSelection);
+        contract.setSchedule(ap.getShiftPreference().name());
+        contract.setStartDate(ap.getDate());
+
+        LocalDate date = ap.getDate().plusMonths(2);
+        contract.setEndDate(date);
+        contract.setDocument("/document/"+idSelection.toLowerCase()+".pdf");
+        contract.setSalary(1000);
+        contractDao.addContract(contract);
+    }
+
+    @Override
+    public void rejectOtherCandidates(String idAsReq, String idPapPati) {
+        selectionDao.rejectSelections(idAsReq,idPapPati);
     }
 }

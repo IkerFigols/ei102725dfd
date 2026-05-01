@@ -10,7 +10,7 @@ public class Selection {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private State state;
-    private String idPap;
+    private String idPapPati;
     private String idAsReq;
 
     public String getIdSelection() {
@@ -26,8 +26,8 @@ public class Selection {
     }
 
 
-    public String getIdPap() {
-        return idPap;
+    public String getIdPapPati() {
+        return idPapPati;
     }
 
     public String getIdAsReq() {
@@ -47,8 +47,8 @@ public class Selection {
     }
 
 
-    public void setIdPap(String idPap) {
-        this.idPap = idPap;
+    public void setIdPapPati(String idPapPati) {
+        this.idPapPati = idPapPati;
     }
 
     public void setIdAsReq(String idAsReq) {
@@ -61,7 +61,7 @@ public class Selection {
                 "idSelection='" + idSelection + '\'' +
                 ", date=" + date +
                 ", state='" + state.getDescription() + '\'' +
-                ", idPap='" + idPap + '\'' +
+                ", idPapPati='" + idPapPati + '\'' +
                 ", idAsReq='" + idAsReq + '\'' +
                 '}';
     }

@@ -86,7 +86,7 @@
 
         <div class="info-item">
             <span class="label">Tipo de Asistente</span>
-            <span class="value" th:text="${personPapPatiDTO.papPati.type.getDescription()}">PAP / PATI</span>
+            <span class="value" th:text="${personPapPatiDTO.papPati.type.name()}">PAP / PATI</span>
         </div>
 
         <div class="info-item">
@@ -126,12 +126,8 @@
     </div>
 
     <div class="button-group">
-        <a th:href="@{/Assistance_Request/papPatiSelection}" class="btn btn-secondary">Volver al listado</a>
+        <a th:href="@{/Assistance_Request/papPatiSelection/{idAsReq} (idAsReq= ${idAsReq})}" class="btn btn-secondary">Volver al listado</a>
 
-            <a th:href="@{/Assistance_Request/communication/{idSelection}(idSelection=${personPapPatiDTO.papPati.dni})}"
-           class="btn btn-primary">
-            Iniciar Comunicación
-        </a>
     </div>
 </main>
 

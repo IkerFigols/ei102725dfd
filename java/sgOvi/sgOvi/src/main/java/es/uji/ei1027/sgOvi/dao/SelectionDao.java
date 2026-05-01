@@ -1,6 +1,5 @@
 package es.uji.ei1027.sgOvi.dao;
 
-import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Selection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -28,7 +27,7 @@ public class SelectionDao {
                 selection.getIdSelection(),
                 selection.getDate(),
                 selection.getState().name(),
-                selection.getIdPap(),
+                selection.getIdPapPati(),
                 selection.getIdAsReq()
         );
     }
@@ -42,12 +41,16 @@ public class SelectionDao {
     public void updateSelection(Selection selection) {
         jdbcTemplate.update("UPDATE Selection SET date = '" + selection.getDate()
                 + "', state = '" + selection.getState().name()
-                + "', idPap = '" + selection.getIdPap()
+                + "', idPap = '" + selection.getIdPapPati()
                 + "', idAsReq = '" + selection.getIdAsReq()
                 + "' WHERE idSelection = '" + selection.getIdSelection() + "'");
     }
     public void updateState(String idSelection, String state) {
-        jdbcTemplate.update("UPDATE Selection SET state = ? WHERE idSelection = ?", idSelection, state);
+        jdbcTemplate.update("UPDATE Selection SET state = ? WHERE idSelection = ?", state, idSelection);
+    }
+
+    public void rejectSelections(String idAsReq, String idPapPati){
+        jdbcTemplate.update("UPDATE Selection SET    state = 'REJECTED' WHERE  idAsReq = ? AND  idPap <> ?",idAsReq,idPapPati);
     }
 
     /*Obtiene la seleccion especificada */
@@ -62,6 +65,7 @@ public class SelectionDao {
             return null;
         }
     }
+
     /* Obtiene todas las selecciones de una apRequest */
     public List<Selection> getSelectionsAPRequest(String idAsReq) {
         try {

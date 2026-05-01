@@ -1,9 +1,6 @@
 package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
-import es.uji.ei1027.sgOvi.dao.PapPatiDao;
-import es.uji.ei1027.sgOvi.dao.PersonRowMapper;
-import es.uji.ei1027.sgOvi.dao.SelectionDao;
 import es.uji.ei1027.sgOvi.model.Assistance_Request;
 import es.uji.ei1027.sgOvi.model.Communication;
 import es.uji.ei1027.sgOvi.model.PapPati;
@@ -21,7 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/Assistance_Request")
@@ -32,7 +28,8 @@ public class AssistanceRequestController {
     @Autowired
     private AssistanceRequestService assistanceRequestService;
 
-
+    @Autowired
+    private CodeGenerator codeGenerator;
 
     @Autowired
     private ListPapPatiSelService listPapPatiSelService;
@@ -66,7 +63,6 @@ public class AssistanceRequestController {
     @RequestMapping(value="/requestAssistance", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("assistanceRequest") Assistance_Request request,
                                    BindingResult bindingResult) {
-        CodeGenerator cg = new CodeGenerator();
 
         AssistanceRequestValidator requestValidator = new AssistanceRequestValidator();
         requestValidator.validate(request, bindingResult);
@@ -74,7 +70,7 @@ public class AssistanceRequestController {
             return "Assistance_Request/requestAssistance";
 
         request.setDate(LocalDate.now());
-        request.setIdAsReq(cg.generateCode("ASR"));
+        request.setIdAsReq(codeGenerator.generateCode("ASR"));
         request.setState("PENDING");
         request.setReason(null);
 
@@ -118,54 +114,62 @@ public class AssistanceRequestController {
         model.addAttribute("selections",assistanceRequestService.getSelectionsAP(idAsReq));
         return "Assistance_Request/papPatiSelection";
     }
-    @RequestMapping(value = "/approveSelection/{id}", method = RequestMethod.POST)
-    public String approveSelection(@PathVariable("id") String idSelection) {
+    @RequestMapping(value = "/approveSelection/{idSelection}", method = RequestMethod.POST)
+    public String approveSelection(@PathVariable("idSelection") String idSelection, @RequestParam("idAsReq") String idAsReq, @RequestParam("idPapPati") String idPapPati) {
         // Aquí llamarías a tu servicio o DAO
-        assistanceRequestService.updateState(idSelection, State.APPROVED.name());
-
+        assistanceRequestService.updateStateSelection(idSelection, State.APPROVED.name());
+        Assistance_Request ap = assistanceReqDao.getAssistanceRequest(idAsReq);
+        ap.setState("CLOSED_WITH_CONTRACT");
+        assistanceReqDao.updateAssistanceRequest(ap);
+        assistanceRequestService.generateContract(idSelection,ap);
+        assistanceRequestService.rejectOtherCandidates(idAsReq,idPapPati);
         // Redirigimos de vuelta a la lista para ver el cambio
-        return "redirect:/Assistance_Request/papPatiSelection";
+        return "redirect:/Assistance_Request/apRequestList";
     }
 
-    @RequestMapping(value="/rejectSelection/{id}", method = RequestMethod.POST)
-    public String rejectSelection(@PathVariable("id") String idSelection) {
-        assistanceRequestService.updateState(idSelection, State.REJECTED.name());
-        return "redirect:/Assistance_Request/papPatiSelection";
+    @RequestMapping(value="/rejectSelection/{idSelection}", method = RequestMethod.POST)
+    public String rejectSelection(@PathVariable("idSelection") String idSelection,  @RequestParam("idAsReq") String idAsReq) {
+        assistanceRequestService.updateStateSelection(idSelection, State.REJECTED.name());
+        return "redirect:/Assistance_Request/papPatiSelection/"+idAsReq;
     }
 
     @RequestMapping(value="/papPatiInfo/{idPapPati}")
-    public String getPapPatiInfo(Model model, @PathVariable("idPapPati") String idPapPati){
+    public String getPapPatiInfo(Model model, @PathVariable("idPapPati") String idPapPati, @RequestParam("idAsReq") String idAsReq){
         Person person = assistanceRequestService.getPerson(idPapPati);
         PapPati papPati = assistanceRequestService.getPapPati(idPapPati);
         PersonPapPatiDTO personPapPatiDTO = new PersonPapPatiDTO();
         personPapPatiDTO.setPapPati(papPati);
         personPapPatiDTO.setPerson(person);
-        model.addAttribute("pappati",personPapPatiDTO);
+        model.addAttribute("idAsReq", idAsReq);
+        model.addAttribute("personPapPatiDTO",personPapPatiDTO);
 
         return "Assistance_Request/papPatiInfo";
     }
 
     @RequestMapping(value = "/communication/{idSelection}")
-    public String getCommunicationSelection(Model model, @PathVariable("idSelection") String idSelection, HttpSession session){
+    public String getCommunicationSelection(Model model, @PathVariable("idSelection") String idSelection, @RequestParam("idAsReq")  String idAsReq){
         model.addAttribute("communications",assistanceRequestService.getComunicationsSelection(idSelection));
         model.addAttribute("idSelection",idSelection);
-        model.addAttribute("comunication", new Communication());
+        Communication communication = new Communication();
+        communication.setIdSelection(idSelection);
+        model.addAttribute("idAsReq",idAsReq);
+        model.addAttribute("comunication", communication);
+
 
         return "Assistance_Request/communication";
     }
     @RequestMapping(value = "/communication/add", method = RequestMethod.POST)
-    public String proccessAndSubmitCommunication(Model model, BindingResult bindingResult){
-
+    public String proccessAndSubmitCommunication(@ModelAttribute("comunication") Communication communication ,BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return "/comunication";
-        Communication communication = (Communication) model.getAttribute("comunication");
-        if (communication != null) {
-            String information = "OviUser: " + communication.getInformation();
-            communication.setInformation(information);
-            communication.setDate(LocalDate.now());
-            communication.setIdSelection((String) model.getAttribute("idSelection"));
-            
-        }
+            return "Assistance_Request/comunication";
+        String idSelection = communication.getIdSelection();
+        String information = "OviUser: " + communication.getInformation();
+        communication.setInformation(information);
+        communication.setDate(LocalDate.now());
+        communication.setIdSelection(idSelection);
+        communication.setIdCommunication(codeGenerator.generateCode("COM"));
+        assistanceRequestService.addCommunication(communication);
+        return"redirect:/Assistance_Request/communication/" + idSelection;
     }
 
 }
