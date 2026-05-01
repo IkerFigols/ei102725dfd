@@ -7,28 +7,28 @@
 <body>
 <h1>Editar PAP/PATI</h1>
 
-<form th:action="@{/Technician/papPatiManagement/update}" method="post">
+<form th:action="@{/Technician/papPatiManagement/update}" th:object="${papPati}" method="post">
 
     <p>
         <label for="dni">DNI:</label>
-        <input type="text" id="dni" name="dni" th:value="${dni}" readonly />
+        <input type="text" id="dni" name="dni" th:value="*{dni}" readonly />
     </p>
 
     <p>
         <label for="available">Disponibilidad:</label>
-        <input type="checkbox" id="available" name="available" value="true" th:checked="${available}"/>
+        <input type="checkbox" id="available" name="available" value="true" th:checked="*{available}"/>
     </p>
 
     <p>
         <label for="address">Dirección:</label>
-        <input type="text" id="address" name="address" th:value="${address}" required />
+        <input type="text" id="address" name="address" th:value="*{address}" required />
     </p>
 
     <p>
         <label for="type">Tipo:</label>
         <select id="type" name="type">
-            <option value="PAP" th:selected="${type == 'PAP'}">PAP</option>
-            <option value="PATI" th:selected="${type == 'PATI'}">PATI</option>
+            <option value="PAP" th:selected="*{type == 'PAP'}">PAP</option>
+            <option value="PATI" th:selected="*{type == 'PATI'}">PATI</option>
         </select>
     </p>
 

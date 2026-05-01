@@ -1,11 +1,13 @@
 package es.uji.ei1027.sgOvi.model;
 
 import es.uji.ei1027.sgOvi.model.enums.State;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 public class Selection {
     private String idSelection;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private State state;
     private String idPap;

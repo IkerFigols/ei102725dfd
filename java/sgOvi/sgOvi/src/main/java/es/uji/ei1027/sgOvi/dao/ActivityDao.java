@@ -38,7 +38,7 @@ public class ActivityDao {
     /* Actualitza els atributs d'una activitat existent */
     public void updateActivity(Activity activity) {
         jdbcTemplate.update(
-                "UPDATE Activity SET type=?, tittle=?, description=?, date=?, address=?, capacity=?, sponsor=?, idInstructor=? WHERE idActivity=?",
+                "UPDATE Activity SET activityType=?, tittle=?, description=?, date=?, address=?, capacity=?, sponsor=?, idInstructor=? WHERE idActivity=?",
                 activity.getType().name(),
                 activity.getTittle(),
                 activity.getDescription(),
@@ -88,6 +88,19 @@ public class ActivityDao {
             );
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<>();
+        }
+
+    }
+
+    //Este bloque en principio solo se usa para generar los códigos mas eficientemente
+    public String getMaxId(){
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT MAX(idActivity) FROM Activity",
+                    String.class
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         }
     }
 }

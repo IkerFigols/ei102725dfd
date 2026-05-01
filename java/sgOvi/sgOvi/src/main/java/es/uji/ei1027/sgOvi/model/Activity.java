@@ -1,6 +1,7 @@
 package es.uji.ei1027.sgOvi.model;
 
 import es.uji.ei1027.sgOvi.model.enums.ActivityType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -9,9 +10,10 @@ public class Activity {
     private ActivityType type;
     private String tittle;
     private String description;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private String address;
-    private Integer Capacity;   //Integer para que pueda admitir nulos
+    private Integer capacity;   //Integer para que pueda admitir nulos
     private String sponsor;
     private String idInstructor;
 
@@ -64,11 +66,11 @@ public class Activity {
     }
 
     public Integer getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(Integer capacity) {
-        Capacity = capacity;
+        this.capacity = capacity;
     }
 
     public String getSponsor() {
@@ -96,7 +98,7 @@ public class Activity {
                 ", description='" + description + '\'' +
                 ", date=" + date +
                 ", address='" + address + '\'' +
-                ", Capacity=" + Capacity +
+                ", Capacity=" + capacity +
                 ", sponsor='" + sponsor + '\'' +
                 ", idInstructor='" + idInstructor + '\'' +
                 '}';

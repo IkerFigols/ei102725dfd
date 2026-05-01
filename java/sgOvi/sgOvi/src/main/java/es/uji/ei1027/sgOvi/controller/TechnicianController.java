@@ -3,6 +3,7 @@ package es.uji.ei1027.sgOvi.controller;
 import es.uji.ei1027.sgOvi.dao.*;
 import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.State;
+import es.uji.ei1027.sgOvi.service.CodeGenerator;
 import es.uji.ei1027.sgOvi.service.ListByName;
 import es.uji.ei1027.sgOvi.service.PersonInstructorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 @Controller
 @RequestMapping("/Technician")
 public class TechnicianController {
+
     @Autowired
     private TechnicianDao technicianDao;
     @Autowired
@@ -32,6 +34,8 @@ public class TechnicianController {
     private InstructorDao instructorDao;
     @Autowired
     private PersonDao personDao;
+    @Autowired
+    private CodeGenerator cg;
 
 
     @RequestMapping("/menuTechnician")
@@ -77,7 +81,7 @@ public class TechnicianController {
         model.addAttribute("legalGuardian", user.getLegalGuardian());
         model.addAttribute("reason", user.getReason());
         model.addAttribute("address", user.getAddress());
-        model.addAttribute("state", user.getState());
+        model.addAttribute("state", user.getState().name());
         return "Technician/userManagement";
     }
 
@@ -112,17 +116,7 @@ public class TechnicianController {
     public String editPapPati(Model model, @PathVariable String dni) {
         PapPati papPati = papPatiDao.getPapPati(dni);
 
-        model.addAttribute("dni", papPati.getDni());
-        model.addAttribute("address", papPati.getAddress());
-        model.addAttribute("reason", papPati.getReason());
-        model.addAttribute("type", papPati.getType().name());
-        model.addAttribute("available", papPati.getAvailable());
-        model.addAttribute("state", papPati.getState().name());
-        model.addAttribute("document", papPati.getDocument());
-        model.addAttribute("training", papPati.getTraining());
-        model.addAttribute("drivingLicense", papPati.getDrivingLicense());
-        model.addAttribute("shift", papPati.getShift().name());
-        model.addAttribute("experience", papPati.getExperience());
+        model.addAttribute("papPati", papPati);
         return "Technician/papPatiManagement";
     }
 
@@ -169,20 +163,13 @@ public class TechnicianController {
     public String editInstructor(Model model, @PathVariable String dni) {
         Instructor instructor = instructorDao.getInstructor(dni);
 
-        model.addAttribute("dni", instructor.getDni());
-        model.addAttribute("expertise", instructor.getExpertise());
+        model.addAttribute("instructor", instructor);
         return "Technician/instructorManagement";
     }
 
     @RequestMapping(value="/instructorManagement/update", method = RequestMethod.POST)
-    public String processUpdateSubmitInstructor(@RequestParam String dni,
-                                                @RequestParam String expertise
+    public String processUpdateSubmitInstructor(@ModelAttribute Instructor instructor
     ) {
-
-        Instructor instructor = new Instructor();
-        instructor.setDni(dni);
-        instructor.setExpertise(expertise);
-
         instructorDao.updateInstructor(instructor);
 
         return "redirect:/Technician/instructorList";
@@ -195,25 +182,12 @@ public class TechnicianController {
     @RequestMapping(value="/addInstructor", method=RequestMethod.POST)
     public String processAddInstructor(@ModelAttribute("personInstructor") PersonInstructorDTO pidto,
                                        BindingResult bindingResult) {
-        Person person = new Person();
-        person.setDni(pidto.getPerson().getDni());
-        person.setName(pidto.getPerson().getName());
-        person.setSurname(pidto.getPerson().getSurname());
-        person.setPhoneNumber(pidto.getPerson().getPhoneNumber());
-        person.setEmail(pidto.getPerson().getEmail());
-        person.setGender(pidto.getPerson().getGender().name());
-        person.setPassword(pidto.getPerson().getPassword());
-        person.setCity(pidto.getPerson().getCity());
-        person.setProvince(pidto.getPerson().getProvince());
-        person.setBirthdayDate(pidto.getPerson().getBirthdayDate());
-
+        Person person = pidto.getPerson();
         personDao.addPerson(person);
-
-        Instructor instructor = new Instructor();
-        instructor.setDni(pidto.getPerson().getDni());
-        instructor.setExpertise(pidto.getInstructor().getExpertise());
-
+        Instructor instructor = pidto.getInstructor();
+        instructor.setDni(person.getDni());
         instructorDao.addInstructor(instructor);
+
         return "redirect:instructorList";
     }
 
@@ -221,52 +195,49 @@ public class TechnicianController {
     public String editAssistanceRequest(Model model, @PathVariable String idAsReq) {
         Assistance_Request apReq = assistanceReqDao.getAssistanceRequest(idAsReq);
 
-        model.addAttribute("idAsReq", apReq.getIdAsReq());
-        model.addAttribute("idOviUser", apReq.getIdOviUser());
-        model.addAttribute("date", apReq.getDate());
-        model.addAttribute("description", apReq.getDescription());
-        model.addAttribute("state", apReq.getState());
-        model.addAttribute("reason", apReq.getReason());
-        model.addAttribute("drivingLicense", apReq.getDrivingLicense());
-        model.addAttribute("experience", apReq.getExperience());
-        model.addAttribute("age", apReq.getAge());
-        model.addAttribute("shiftPreference", apReq.getShiftPreference().name());
-        model.addAttribute("city", apReq.getCity());
-        model.addAttribute("province", apReq.getProvince());
+        model.addAttribute("assistanceRequest", apReq);
         return "Technician/apManagement";
     }
 
     @RequestMapping(value="/apManagement/update", method = RequestMethod.POST)
-    public String processUpdateSubmitAssistanceRequest( @RequestParam String idAsReq,
-                                                        @RequestParam String idOviUser,
-                                                        @RequestParam LocalDate date,
-                                                        @RequestParam String description,
-                                                        @RequestParam String state,
-                                                        @RequestParam String reason,
-                                                        @RequestParam String shiftPreference,
-                                                        @RequestParam boolean drivingLicense,
-                                                        @RequestParam int experience,
-                                                        @RequestParam int age,
-                                                        @RequestParam String city,
-                                                        @RequestParam String province
+    public String processUpdateSubmitAssistanceRequest( @ModelAttribute Assistance_Request assistanceRequest
     ) {
-
-        Assistance_Request assistanceRequest = new Assistance_Request();
-        assistanceRequest.setIdOviUser(idOviUser);
-        assistanceRequest.setIdAsReq(idAsReq);
-        assistanceRequest.setReason(reason);
-        assistanceRequest.setDate(date);
-        assistanceRequest.setState(state);
-        assistanceRequest.setDescription(description);
-        assistanceRequest.setExperience(experience);
-        assistanceRequest.setAge(age);
-        assistanceRequest.setShiftPreference(shiftPreference);
-        assistanceRequest.setDrivingLicense(drivingLicense);
-        assistanceRequest.setCity(city);
-        assistanceRequest.setProvince(province);
 
         assistanceReqDao.updateAssistanceRequest(assistanceRequest);
 
         return "redirect:/Technician/assistanceRequestList";
+    }
+
+    @RequestMapping(value="/addActivity")
+    public String addActivity(Model model) {
+        model.addAttribute("activity", new Activity());
+        return "Technician/addActivity";
+    }
+    @RequestMapping(value="/addActivity", method=RequestMethod.POST)
+    public String processAddActivity(@ModelAttribute("activity") Activity activity,
+                                       BindingResult bindingResult) {
+
+        activity.setIdActivity(cg.generateCode("ACT"));
+        activityDao.addActivity(activity);
+
+        return "redirect:activityList";
+    }
+
+    @RequestMapping(value="/activityManagement/{idActivity}", method = RequestMethod.GET)
+    public String editActivity(Model model, @PathVariable String idActivity) {
+        Activity activity = activityDao.getActivity(idActivity);
+
+        model.addAttribute("activity", activity);
+        return "Technician/activityManagement";
+    }
+
+    @RequestMapping(value="/activityManagement/update", method = RequestMethod.POST)
+    public String processUpdateSubmitActivity(  @ModelAttribute ("activity") Activity activity,
+                                                BindingResult bindingResult
+    ) {
+
+        activityDao.updateActivity(activity);
+
+        return "redirect:/Technician/activityList";
     }
 }

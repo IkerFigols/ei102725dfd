@@ -3,7 +3,7 @@ import java.time.LocalDate;
 
 public class Communication {
     private String idCommunication;
-    private LocalDate date;
+    private LocalDate data;
     private String information;
     private String idSelection;
 
@@ -12,7 +12,7 @@ public class Communication {
     }
 
     public LocalDate getDate() {
-        return date;
+        return data;
     }
 
     public String getInformation() {
@@ -26,7 +26,7 @@ public class Communication {
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.data = date;
     }
 
     public void setInformation(String information) {
@@ -38,7 +38,7 @@ public class Communication {
     public String toString() {
         return "Communication{" +
                 "idCommunication='" + idCommunication + '\'' +
-                ", data=" + date +
+                ", data=" + data +
                 ", information='" + information + '\'' +
                 ", idSelection='" + idSelection + '\'' +
                 '}';

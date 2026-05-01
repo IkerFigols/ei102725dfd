@@ -1,6 +1,7 @@
 package es.uji.ei1027.sgOvi.model;
 
 import es.uji.ei1027.sgOvi.model.enums.Gender;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -14,6 +15,7 @@ public class Person {
     private String password;
     private String city;
     private String province;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthdayDate;
 
     private String preference; // CAMBIAR NOMBRE

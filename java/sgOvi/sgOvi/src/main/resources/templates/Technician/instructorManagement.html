@@ -7,16 +7,16 @@
 <body>
 <h1>Editar PAP/PATI</h1>
 
-<form th:action="@{/Technician/instructorManagement/update}" method="post">
+<form th:action="@{/Technician/instructorManagement/update}" th:object="${instructor}" method="post">
 
     <p>
         <label for="dni">DNI:</label>
-        <input type="text" id="dni" name="dni" th:value="${dni}" readonly />
+        <input type="text" id="dni" name="dni" th:value="*{dni}" readonly />
     </p>
 
     <p>
         <label for="expertise">Especialidad:</label>
-        <input type="text" id="expertise" name="expertise" th:value="${expertise}" />
+        <input type="text" id="expertise" name="expertise" th:value="*{expertise}" />
     </p>
 
     <button type="submit">Guardar cambios</button>

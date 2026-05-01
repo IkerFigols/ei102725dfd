@@ -20,7 +20,7 @@
     <tbody>
     <tr th:each="activity: ${activities}">
         <td th:text="${activity.idActivity}"></td>
-        <td th:text="${activity.activityType}"></td>
+        <td th:text="${activity.type}"></td>
         <td th:text="${activity.tittle}"></td>
         <td th:text="${activity.date}"></td>
         <td th:text="${activity.address}"></td>
@@ -31,6 +31,7 @@
     </tr>
     </tbody>
 </table>
+<a href="addActivity">Añadir Actividad</a>
 <br><br>
 <a href="/" >Volver</a>
 </body>

@@ -1,11 +1,15 @@
 package es.uji.ei1027.sgOvi.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.Date;
 
 public class Contract {
     private String idContract;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private String document;
     private double salary;
