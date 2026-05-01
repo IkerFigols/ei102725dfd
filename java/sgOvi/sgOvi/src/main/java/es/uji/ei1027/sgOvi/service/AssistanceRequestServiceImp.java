@@ -47,6 +47,6 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
 
     @Override
     public void updateState( String idSelection, String state) {
-        return selectionDao.updateState(idSelection, state);
+         selectionDao.updateState(idSelection, state);
     }
 }

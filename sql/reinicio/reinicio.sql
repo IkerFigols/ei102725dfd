@@ -1,6 +1,6 @@
 DROP TABLE Contract;
-DROP TABLE Selection;
 DROP TABLE Communication;
+DROP TABLE Selection;
 DROP TABLE Assistance_Request;
 DROP TABLE Attendance;
 DROP TABLE Ovi_User;
@@ -16,7 +16,21 @@ DROP TABLE Person;
 \i ovi_user.sql;
 \i attendance.sql;
 \i assistance_request.sql;
-\i communication.sql;
 \i selection.sql;
+\i communication.sql;
 \i contract.sql;
 \i technician.sql;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
