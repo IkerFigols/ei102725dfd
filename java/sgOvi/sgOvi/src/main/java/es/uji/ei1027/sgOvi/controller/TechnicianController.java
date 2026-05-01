@@ -203,6 +203,8 @@ public class TechnicianController {
     public String processUpdateSubmitAssistanceRequest( @ModelAttribute Assistance_Request assistanceRequest
     ) {
 
+        if(assistanceRequest.getReason().isBlank())
+            assistanceRequest.setReason(null);
         assistanceReqDao.updateAssistanceRequest(assistanceRequest);
 
         return "redirect:/Technician/assistanceRequestList";

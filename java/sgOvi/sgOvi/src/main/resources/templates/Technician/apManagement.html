@@ -3,51 +3,107 @@
 <head>
   <title>Petición de asistencia</title>
   <meta charset="UTF-8" />
+  <style>
+    .request-details {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .request-details li {
+      margin-bottom: 10px;
+    }
+    .form-actions {
+      margin-top: 20px;
+      border-top: 1px solid #ccc;
+      padding-top: 15px;
+    }
+  </style>
 </head>
 <body>
-<h1>Editar Petición de Asistencia</h1>
+<h1>Gestionar Petición de Asistencia</h1>
 
 <form th:action="@{/Technician/apManagement/update}" th:object="${assistanceRequest}" method="post">
 
-  <p>
-    <label for="idAsReq">Identificador:</label>
-    <input type="text" id="idAsReq" name="idAsReq" th:value="*{idAsReq}" readonly />
-  </p>
+  <ul class="request-details">
+    <li>
+      <strong>Identificador:</strong>
+      <span th:text="*{idAsReq}"></span>
+      <input type="hidden" th:field="*{idAsReq}" />
+    </li>
 
-  <p>
-    <label for="idOviUser">DNI Solicitante:</label>
-    <input type="text" id="idOviUser" name="idOviUser" th:value="*{idOviUser}" readonly/>
-  </p>
+    <li>
+      <strong>DNI Solicitante:</strong>
+      <span th:text="*{idOviUser}"></span>
+      <input type="hidden" th:field="*{idOviUser}" />
+    </li>
 
+    <li>
+      <strong>Fecha:</strong>
+      <span th:text="*{date}"></span>
+      <input type="hidden" th:field="*{date}" />
+    </li>
 
-  <p>
-    <label for="date">Fecha:</label>
-    <input type="date" id="date" name="date" th:value="*{data}" readonly/>
-  </p>
+    <li>
+      <strong>Descripción:</strong>
+      <span th:text="*{description}"></span>
+      <input type="hidden" th:field="*{description}" />
+    </li>
 
-  <p>
-    <label for="description">Descripción:</label>
-    <input type="text" id="description" name="description" th:value="*{description}" readonly/>
-  </p>
+    <li>
+      <strong>Preferencia de edad:</strong>
+      <span th:text="*{age}"></span>
+      <input type="hidden" th:field="*{age}" />
+    </li>
 
-  <p>
-    <label for="state">Estado:</label>
-    <select id="state" name="state">
-      <option value="PENDING" th:selected="*{state == 'PENDING'}">PENDING</option>
-      <option value="APPROVED" th:selected="*{state == 'APPROVED'}">APPROVED</option>
-      <option value="REJECTED" th:selected="*{state == 'REJECTED'}">REJECTED</option>
-    </select>
-  </p>
+    <li>
+      <strong>Años de experiencia:</strong>
+      <span th:text="*{experience}"></span>
+      <input type="hidden" th:field="*{experience}" />
+    </li>
 
+    <li>
+      <strong>Preferencia de turno:</strong>
+      <span th:text="*{shiftPreference}"></span>
+      <input type="hidden" name="shiftPreference" th:value="*{shiftPreference != null ? shiftPreference.name() : ''}" />
+    </li>
 
-  <p>
-    <label for="reason">Razón de la denegación:</label>
-    <input type="text" id="reason" name="reason" th:value="*{reason}" />
-  </p>
+    <li>
+      <strong>Carné de conducir:</strong>
+      <span th:text="*{drivingLicense} ? 'Sí' : 'No'"></span>
+      <input type="hidden" th:field="*{drivingLicense}" />
+    </li>
 
+    <li>
+      <strong>Ciudad:</strong>
+      <span th:text="*{city}"></span>
+      <input type="hidden" th:field="*{city}" />
+    </li>
 
+    <li>
+      <strong>Provincia:</strong>
+      <span th:text="*{province}"></span>
+      <input type="hidden" th:field="*{province}" />
+    </li>
+  </ul>
 
-  <button type="submit">Guardar cambios</button>
+  <div class="form-actions">
+    <p>
+      <label for="state">Estado de la solicitud:</label>
+      <select id="state" name="state">
+        <option value="PENDING" th:selected="*{state?.name() == 'PENDING'}">PENDING</option>
+        <option value="APPROVED" th:selected="*{state?.name() == 'APPROVED'}">APPROVED</option>
+        <option value="REJECTED" th:selected="*{state?.name() == 'REJECTED'}">REJECTED</option>
+        <option value="CLOSED_WITH_CONTRACT" th:selected="*{state?.name() == 'CLOSED_WITH_CONTRACT'}">Cerrado con contrato</option>
+        <option value="CLOSED_WITH_CONTRACT_DONE" th:selected="*{state?.name() == 'CLOSED_WITH_CONTRACT_DONE'}">Cerrado con contrato finalizado</option>
+      </select>
+    </p>
+
+    <p>
+      <label for="reason">Razón de la denegación:</label>
+      <input type="text" id="reason" name="reason" th:field="*{reason}" />
+    </p>
+
+    <button type="submit">Guardar cambios</button>
+  </div>
 
 </form>
 
@@ -55,4 +111,4 @@
 <a th:href="@{/Technician/assistanceRequestList}">Volver a la lista</a>
 
 </body>
-</html>>
+</html>
