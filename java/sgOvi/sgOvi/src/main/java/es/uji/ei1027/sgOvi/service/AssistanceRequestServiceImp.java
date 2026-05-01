@@ -1,9 +1,7 @@
 package es.uji.ei1027.sgOvi.service;
 
-import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
-import es.uji.ei1027.sgOvi.dao.PapPatiDao;
-import es.uji.ei1027.sgOvi.dao.PersonDao;
-import es.uji.ei1027.sgOvi.dao.SelectionDao;
+import es.uji.ei1027.sgOvi.dao.*;
+import es.uji.ei1027.sgOvi.model.Communication;
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
 import es.uji.ei1027.sgOvi.model.Selection;
@@ -28,6 +26,9 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     @Autowired
     PapPatiDao papPatiDao;
 
+    @Autowired
+    CommunicationDao communicationDao;
+
     @Override
     public List<Selection> getSelectionsAP(String idAsReq) {
         if (idAsReq == null || assistanceReqDao.getAssistanceRequest(idAsReq) == null)
@@ -48,5 +49,19 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     @Override
     public void updateState( String idSelection, String state) {
          selectionDao.updateState(idSelection, state);
+    }
+
+    public String getDniAP(String idSelection){
+        return assistanceReqDao.getAssistanceRequest(selectionDao.getSelection(idSelection).getIdAsReq()).getIdOviUser();
+    }
+
+    @Override
+    public List<Communication> getComunicationsSelection(String idSelection) {
+        return communicationDao.getCommunicationsSelectionOrdered(idSelection);
+    }
+
+    @Override
+    public void addCommunication(Communication communication) {
+        communicationDao.addCommunication(communication);
     }
 }

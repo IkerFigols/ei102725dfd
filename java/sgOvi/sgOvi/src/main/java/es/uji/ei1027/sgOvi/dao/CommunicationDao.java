@@ -61,4 +61,19 @@ public class CommunicationDao {
             return new ArrayList<Communication>();
         }
     }
+    public List<Communication> getCommunicationsSelectionOrdered(String idSelection){
+
+        try{
+            return jdbcTemplate.query(
+                    "SELECT \t*\n" +
+                    "FROM \tCommunication as c \n" +
+                    "WHERE \tc.idSelection = ?\n" +
+                    "ORDER BY c.date ASC;\n"
+                    ,new CommunicationRowMapper()
+                    , idSelection);
+        }
+        catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
 }

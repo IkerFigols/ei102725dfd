@@ -25,6 +25,10 @@
         </td>
 
         <td>
+            <a th:href="@{/Assistance_Request/communication/{idSelection} (idSelection= selection.idSelection)}">Comunicarse con el asistente</a>
+        </td>
+
+        <td>
             <form th:action="@{/Assistance_Request/approveSelection/{idSelection}(idSelection=${selection.idSelection})}" method="post">
                 <button type="submit" th:disabled="${selection.state.name() == 'APPROVED'}">Aprobar</button>
             </form>

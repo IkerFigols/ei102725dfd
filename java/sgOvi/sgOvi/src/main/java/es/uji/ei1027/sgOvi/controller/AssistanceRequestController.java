@@ -2,8 +2,10 @@ package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import es.uji.ei1027.sgOvi.dao.PapPatiDao;
+import es.uji.ei1027.sgOvi.dao.PersonRowMapper;
 import es.uji.ei1027.sgOvi.dao.SelectionDao;
 import es.uji.ei1027.sgOvi.model.Assistance_Request;
+import es.uji.ei1027.sgOvi.model.Communication;
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
 import es.uji.ei1027.sgOvi.model.enums.State;
@@ -15,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -148,7 +147,7 @@ public class AssistanceRequestController {
     }
 
     @RequestMapping(value="/papPatiInfo/{idPapPati}")
-    public String getPapPatiInfo(Model model, @PathVariable("idPapPati") String idPapPati, HttpSession session){
+    public String getPapPatiInfo(Model model, @PathVariable("idPapPati") String idPapPati){
         Person person = assistanceRequestService.getPerson(idPapPati);
         PapPati papPati = assistanceRequestService.getPapPati(idPapPati);
         PersonPapPatiDTO personPapPatiDTO = new PersonPapPatiDTO();
@@ -158,6 +157,30 @@ public class AssistanceRequestController {
 
         return "Assistance_Request/papPatiInfo";
     }
+
+    @RequestMapping(value = "/communication/{idSelection}")
+    public String getCommunicationSelection(Model model, @PathVariable("idSelection") String idSelection, HttpSession session){
+        model.addAttribute("communications",assistanceRequestService.getComunicationsSelection(idSelection));
+        model.addAttribute("idSelection",idSelection);
+        model.addAttribute("comunication", new Communication());
+
+        return "Assistance_Request/communication";
+    }
+    @RequestMapping(value = "/communication/add", method = RequestMethod.POST)
+    public String proccessAndSubmitCommunication(Model model, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors())
+            return "/comunication";
+        Communication communication = (Communication) model.getAttribute("comunication");
+        if (communication != null) {
+            String information = "OviUser: " + communication.getInformation();
+            communication.setInformation(information);
+            communication.setDate(LocalDate.now());
+            communication.setIdSelection((String) model.getAttribute("idSelection"));
+            
+        }
+    }
+
 }
 
 

@@ -22,7 +22,8 @@
     <tbody>
     <tr th:each="assistanceRequest: ${assistanceRequests}">
         <td th:text="${assistanceRequest.idAsReq}"></td>
-        <td th:text="${assistanceRequest.data}"></td>
+        <td th:text="${assistanceRequest.date
+        }"></td>
         <td th:text="${assistanceRequest.state.getDescription()}"></td>
         <td th:text="${assistanceRequest.reason}"></td>
         <td th:if="${assistanceRequest.state.name() == 'APPROVED'}">
