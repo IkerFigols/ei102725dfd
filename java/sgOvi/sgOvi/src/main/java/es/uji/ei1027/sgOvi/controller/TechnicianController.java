@@ -183,7 +183,7 @@ public class TechnicianController {
                 selection.setIdSelection(cg.generateCode("SEL"));
                 selection.setDate(LocalDate.now());
                 selection.setState(State.PENDING.name());
-                selection.setIdPap(papPati.getDni());
+                selection.setIdPapPati(papPati.getDni());
                 selection.setIdAsReq(request.getIdAsReq());
 
                 selectionDao.addSelection(selection);
