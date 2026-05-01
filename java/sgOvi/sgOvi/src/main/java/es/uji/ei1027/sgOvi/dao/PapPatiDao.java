@@ -1,11 +1,13 @@
 package es.uji.ei1027.sgOvi.dao;
 
 import es.uji.ei1027.sgOvi.model.PapPati;
+import es.uji.ei1027.sgOvi.model.enums.ShiftType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +94,47 @@ public class PapPatiDao {
                     ,idAsReq);
             return papPatiList;
 
+
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public ArrayList<PapPati> findCompatiblePapPatis(String type,
+                                                     Boolean drivingLicense,
+                                                     ShiftType shiftType,
+                                                     String province,
+                                                     int minAge,
+                                                     int minExperience
+    ) {
+        LocalDate minBirthdayDate = LocalDate.now().minusYears(minAge);
+        String stringShiftType = "";
+        if(shiftType == null || shiftType.name().equals("ANY")){
+            stringShiftType = "%";
+        }else{
+            stringShiftType = shiftType.name();
+        }
+
+        try{
+            List<PapPati> papPatiList = jdbcTemplate.query(
+                    "SELECT pap.* " +
+                            "FROM Pap_Pati AS pap " +
+                            "JOIN Person AS per USING (dni) " +
+                            "WHERE pap.type = ? " +
+                            "AND (? = FALSE OR pap.drivingLicense = TRUE)" +
+                            "AND pap.shift LIKE ? " +
+                            "AND pap.experience >= ? " +
+                            "AND per.birthdayDate <= ? " +
+                            "AND LOWER(per.province) = LOWER(?)",
+                    new PapPatiRowMapper(),
+                    type,
+                    drivingLicense,
+                    stringShiftType,
+                    minExperience,
+                    minBirthdayDate,
+                    province
+            );
+            return new ArrayList<>(papPatiList);
 
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<>();

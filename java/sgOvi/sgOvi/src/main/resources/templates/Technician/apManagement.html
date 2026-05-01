@@ -83,28 +83,44 @@
       <span th:text="*{province}"></span>
       <input type="hidden" th:field="*{province}" />
     </li>
+
+    <li>
+      <strong>Estado:</strong>
+      <span th:text="*{state}"></span>
+      <input type="hidden" name="state" th:value="*{state != null ? state.getDescription() : ''}" />
+    </li>
+
+    <li th:if="${assistanceRequest.getState().name() == 'REJECTED'}">
+      <strong>Razón:</strong>
+      <span th:text="*{reason}"></span>
+      <input type="hidden" th:field="*{reason}" />
+    </li>
   </ul>
 
-  <div class="form-actions">
+  <div class="form-actions" th:if="${assistanceRequest.getState().name() == 'PENDING'}">
     <p>
-      <label for="state">Estado de la solicitud:</label>
-      <select id="state" name="state">
-        <option value="PENDING" th:selected="*{state?.name() == 'PENDING'}">PENDING</option>
-        <option value="APPROVED" th:selected="*{state?.name() == 'APPROVED'}">APPROVED</option>
-        <option value="REJECTED" th:selected="*{state?.name() == 'REJECTED'}">REJECTED</option>
-        <option value="CLOSED_WITH_CONTRACT" th:selected="*{state?.name() == 'CLOSED_WITH_CONTRACT'}">Cerrado con contrato</option>
-        <option value="CLOSED_WITH_CONTRACT_DONE" th:selected="*{state?.name() == 'CLOSED_WITH_CONTRACT_DONE'}">Cerrado con contrato finalizado</option>
-      </select>
+      <label>Acción sobre la solicitud:</label>
     </p>
 
+    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+      <button type="submit"
+              th:formaction="@{/Technician/apManagement/accept}"
+              style="background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Aceptar
+      </button>
+
+      <button type="submit"
+              th:formaction="@{/Technician/apManagement/reject}"
+              style="background-color: #dc3545; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Denegar
+      </button>
+    </div>
+
     <p>
-      <label for="reason">Razón de la denegación:</label>
+      <label for="reason">Razón de la denegación (rellenar antes de denegar):</label>
       <input type="text" id="reason" name="reason" th:field="*{reason}" />
     </p>
-
-    <button type="submit">Guardar cambios</button>
   </div>
-
 </form>
 
 <br><br>

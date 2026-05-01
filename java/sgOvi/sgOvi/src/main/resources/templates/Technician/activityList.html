@@ -26,13 +26,14 @@
         <td th:text="${activity.address}"></td>
 
         </td>
-        <td><a th:href="@{/Technician/activityManagement/{idActivity}(idActivity=${activity.getIdActivity})}">Editar</a>
-        </td>
+        <td><a th:href="@{/Technician/activityManagement/{idActivity}(idActivity=${activity.getIdActivity})}">Editar</a></td>
+        <td><a th:href="@{/Technician/activityList/delete/{idActivity}(idActivity=${activity.getIdActivity})}">Borrar</a></td>
+
     </tr>
     </tbody>
 </table>
 <a href="addActivity">Añadir Actividad</a>
 <br><br>
-<a href="/" >Volver</a>
+<a href="/Technician/menuTechnician" >Volver</a>
 </body>
 </html>

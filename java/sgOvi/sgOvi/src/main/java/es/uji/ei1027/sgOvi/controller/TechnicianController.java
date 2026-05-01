@@ -5,6 +5,7 @@ import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.CodeGenerator;
 import es.uji.ei1027.sgOvi.service.ListByName;
+import es.uji.ei1027.sgOvi.service.ListPapPatiSelService;
 import es.uji.ei1027.sgOvi.service.PersonInstructorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,13 +14,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/Technician")
 public class TechnicianController {
 
-    @Autowired
-    private TechnicianDao technicianDao;
     @Autowired
     private OviUserDao oviUserDao;
     @Autowired
@@ -36,6 +36,10 @@ public class TechnicianController {
     private PersonDao personDao;
     @Autowired
     private CodeGenerator cg;
+    @Autowired
+    private ListPapPatiSelService lppss;
+    @Autowired
+    private SelectionDao selectionDao;
 
 
     @RequestMapping("/menuTechnician")
@@ -77,35 +81,19 @@ public class TechnicianController {
     public String editOviUser(Model model, @PathVariable String dni) {
         OviUser user = oviUserDao.getOviUser(dni);
 
-        model.addAttribute("dni", user.getDni());
-        model.addAttribute("legalGuardian", user.getLegalGuardian());
-        model.addAttribute("reason", user.getReason());
-        model.addAttribute("address", user.getAddress());
-        model.addAttribute("state", user.getState().name());
+        model.addAttribute("user", user);
         return "Technician/userManagement";
     }
 
     @RequestMapping(value="/userManagement/update", method = RequestMethod.POST)
-    public String processUpdateSubmitUser(@RequestParam String dni,
-                                          @RequestParam String legalGuardian,
-                                          @RequestParam (required = false) String reason,
-                                          @RequestParam String address,
-                                          @RequestParam String state
+    public String processUpdateSubmitUser(@ModelAttribute OviUser user
+
     ) {
 
-        OviUser user = new OviUser();
-        user.setDni(dni);
-        user.setState(state);
-        user.setLegalGuardian(legalGuardian);
-        user.setAddress(address);
-
-        if(!state.equals(State.REJECTED.name())){
+        if (user.getReason().isBlank())
             user.setReason(null);
-        }else if (reason == null ||reason.trim().isBlank()){
-            user.setReason(null);
-        }else{
-            user.setReason(reason);
-        }
+        if (user.getLegalGuardian().isBlank())
+            user.setLegalGuardian(null);
 
         oviUserDao.updateOviUser(user);
 
@@ -121,39 +109,10 @@ public class TechnicianController {
     }
 
     @RequestMapping(value="/papPatiManagement/update", method = RequestMethod.POST)
-    public String processUpdateSubmitPapPati( @RequestParam String dni,
-                                              @RequestParam String address,
-                                              @RequestParam String type,
-                                              @RequestParam (value = "available", defaultValue = "false") boolean available,
-                                              @RequestParam String document,
-                                              @RequestParam (required = false) String reason,
-                                              @RequestParam String training,
-                                              @RequestParam String shift,
-                                              @RequestParam int experience,
-                                              @RequestParam (value = "drivingLicense", defaultValue = "false") Boolean drivingLicense,
-                                              @RequestParam String state
+    public String processUpdateSubmitPapPati( @ModelAttribute PapPati papPati
     ) {
-
-        PapPati papPati = new PapPati();
-
-        papPati.setDni(dni);
-        papPati.setTraining(training);
-        papPati.setType(type);
-        papPati.setAddress(address);
-        papPati.setAvailable(available);
-        papPati.setDocument(document);
-        papPati.setDrivingLicense(drivingLicense);
-        papPati.setExperience(experience);
-        papPati.setShift(shift);
-        papPati.setState(state);
-
-        if(!state.equals(State.REJECTED.name())){
+        if(papPati.getReason().isBlank())
             papPati.setReason(null);
-        }else if (reason == null || reason.trim().isBlank()){
-            papPati.setReason(null);
-        }else{
-            papPati.setReason(reason);
-        }
         papPatiDao.updatePapPati(papPati);
 
         return "redirect:/Technician/papPatiList";
@@ -209,6 +168,40 @@ public class TechnicianController {
 
         return "redirect:/Technician/assistanceRequestList";
     }
+    @PostMapping("/apManagement/accept")
+    public String acceptRequest(@ModelAttribute("assistanceRequest") Assistance_Request request) {
+        ArrayList<PapPati> listaCoincidencias = lppss.listCompatiblePapPati(request.getIdAsReq());
+        if(listaCoincidencias.isEmpty()){
+            request.setState(State.REJECTED.name());
+            request.setReason("No se han encontrado candidatos compatibles para la solicitud");
+        }else {
+            request.setState(State.APPROVED.name());
+            request.setReason(null);
+            for(PapPati papPati : listaCoincidencias){
+                Selection selection = new Selection();
+
+                selection.setIdSelection(cg.generateCode("SEL"));
+                selection.setDate(LocalDate.now());
+                selection.setState(State.PENDING.name());
+                selection.setIdPap(papPati.getDni());
+                selection.setIdAsReq(request.getIdAsReq());
+
+                selectionDao.addSelection(selection);
+            }
+        }
+        assistanceReqDao.updateAssistanceRequest(request);
+
+        return "redirect:/Technician/assistanceRequestList";
+    }
+
+    @PostMapping("/apManagement/reject")
+    public String rejectRequest(@ModelAttribute("assistanceRequest") Assistance_Request request) {
+        // 1. Cambiar el estado internamente
+        request.setState(State.REJECTED.name());
+        assistanceReqDao.updateAssistanceRequest(request);
+        return "redirect:/Technician/assistanceRequestList";
+    }
+
 
     @RequestMapping(value="/addActivity")
     public String addActivity(Model model) {
@@ -217,7 +210,7 @@ public class TechnicianController {
     }
     @RequestMapping(value="/addActivity", method=RequestMethod.POST)
     public String processAddActivity(@ModelAttribute("activity") Activity activity,
-                                       BindingResult bindingResult) {
+                                     BindingResult bindingResult) {
 
         activity.setIdActivity(cg.generateCode("ACT"));
         activityDao.addActivity(activity);
@@ -241,5 +234,11 @@ public class TechnicianController {
         activityDao.updateActivity(activity);
 
         return "redirect:/Technician/activityList";
+    }
+
+    @RequestMapping(value="/activityList/delete/{idActivity}")
+    public String processDeleteActivity(@PathVariable String idActivity) {
+        activityDao.deleteActivity(idActivity);
+        return "redirect:Technician/activityList";
     }
 }
