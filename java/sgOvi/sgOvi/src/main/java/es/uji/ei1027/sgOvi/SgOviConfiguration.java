@@ -26,6 +26,7 @@ public class SgOviConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(new SecurityInterceptor())
                 .addPathPatterns("/**") // Protege todo...
                 .excludePathPatterns(
+                        "/si*",
                         "/index*",
                         "/login*",
                         "/Register/**",
