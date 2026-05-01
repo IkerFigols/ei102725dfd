@@ -73,7 +73,6 @@ public class CommunicationDao {
         }
     }
     public List<Communication> getCommunicationsSelectionOrdered(String idSelection){
-
         try{
             return jdbcTemplate.query(
                     "SELECT \t*\n" +
