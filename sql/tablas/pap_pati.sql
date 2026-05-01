@@ -19,7 +19,7 @@ CREATE TABLE Pap_Pati (
 		CONSTRAINT chk_state CHECK( state IN ('PENDING','APPROVED','REJECTED')),
 		CONSTRAINT chk_reason CHECK( (reason IS NULL AND state IN ('APPROVED', 'PENDING')) OR
 (reason IS NOT NULL AND state = 'REJECTED')),
-		CONSTRAINT chk_type CHECK( type IN ('PAP', 'PATI', 'PAP/PATI')),
+		CONSTRAINT chk_type CHECK( type IN ('PAP', 'PATI')),
 		CONSTRAINT chk_shift CHECK( shift IN ('MORNING', 'AFTERNOON', 'ANY'))
 
 );	

@@ -5,10 +5,7 @@
 \i oviUser_inserts.sql
 \i attendance_inserts.sql
 \i assistance_request_inserts.sql
-\i selection_inserts.sql
 \i communication_inserts.sql
+\i selection_inserts.sql
 \i contract_inserts.sql
 \i technician_inserts.sql
-
-
-
