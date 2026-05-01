@@ -22,6 +22,7 @@ public enum State {
     public String getDescription() {
         return description;
     }
+
     public static State fromString(String text) {
         for (State s : State.values()) {
             if (s.name().equalsIgnoreCase(text)) {
