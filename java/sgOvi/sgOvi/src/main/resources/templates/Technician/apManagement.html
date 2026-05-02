@@ -119,7 +119,10 @@
     <p>
       <label for="reason">Razón de la denegación (rellenar antes de denegar):</label>
       <input type="text" id="reason" name="reason" th:field="*{reason}" />
+      <div th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+
     </p>
+
   </div>
 </form>
 

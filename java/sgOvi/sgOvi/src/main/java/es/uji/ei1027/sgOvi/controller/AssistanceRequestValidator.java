@@ -31,7 +31,12 @@ public class AssistanceRequestValidator implements Validator {
             errors.rejectValue("city","required","El nombre de la ciudad no puede ser mayor a 50 caracteres");
         if(req.getProvince() != null && req.getProvince().length()>50)
             errors.rejectValue("province","required","El nombre de la provincia no puede ser mayor a 50 caracteres");
-
+        if(!req.getState().name().equals("REJECTED") && !req.getReason().isBlank()){
+            errors.rejectValue("reason", "required", "Para un solicitud ACEPTADA no hay razón");
+        }
+        if(req.getState().name().equals("REJECTED") && req.getReason().isBlank()){
+            errors.rejectValue("reason", "required", "Es necesario incluir una razón de denegación");
+        }
     }
 }
 
