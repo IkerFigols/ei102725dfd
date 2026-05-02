@@ -62,10 +62,11 @@
 
       <div class="textarea-container">
         <label class="detail-label" for="shiftPreference">Preferencia de horario:</label>
-        <select id="shiftPreference" th:field="*{shiftPreference}" class="textarea-field-small">
+        <select id="shiftPreference" name="shiftPreference" class="textarea-field-small">
           <option th:each="shift : ${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).values()}"
-                  th:value="${shift.name()}"
-                  th:text="${shift.getDescription()}">
+                  th:value="${shift}"
+                  th:text="${shift.description}"
+                  th:selected="${shift == assistanceRequest.shiftPreference}">
           </option>
         </select>
       </div>
