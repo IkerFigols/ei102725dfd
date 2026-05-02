@@ -41,6 +41,11 @@ public class TechnicianController {
     @Autowired
     private SelectionDao selectionDao;
 
+    private OviUserValidator ouv = new OviUserValidator();
+    private PapPatiValidator papPatiValidator = new PapPatiValidator();
+    private InstructorValidator instructorValidator = new InstructorValidator();
+    private PersonDtoValidator personDtoValidator = new PersonDtoValidator();
+
 
     @RequestMapping("/menuTechnician")
     public String menuTechnician(Model model) {
@@ -86,10 +91,13 @@ public class TechnicianController {
     }
 
     @RequestMapping(value="/userManagement/update", method = RequestMethod.POST)
-    public String processUpdateSubmitUser(@ModelAttribute OviUser user
-
+    public String processUpdateSubmitUser(@ModelAttribute ("user") OviUser user,
+                                          BindingResult bindingResult
     ) {
-
+        ouv.validate(user, bindingResult);
+        if(bindingResult.hasErrors()){
+            return "Technician/userManagement";
+        }
         if (user.getReason().isBlank())
             user.setReason(null);
         if (user.getLegalGuardian().isBlank())
@@ -109,8 +117,14 @@ public class TechnicianController {
     }
 
     @RequestMapping(value="/papPatiManagement/update", method = RequestMethod.POST)
-    public String processUpdateSubmitPapPati( @ModelAttribute PapPati papPati
+    public String processUpdateSubmitPapPati( @ModelAttribute ("papPati") PapPati papPati,
+                                              BindingResult bindingResult
     ) {
+
+        papPatiValidator.validate(papPati,bindingResult);
+        if(bindingResult.hasErrors()){
+            return "Technician/papPatiManagement";
+        }
         if(papPati.getReason().isBlank())
             papPati.setReason(null);
         papPatiDao.updatePapPati(papPati);
@@ -127,8 +141,13 @@ public class TechnicianController {
     }
 
     @RequestMapping(value="/instructorManagement/update", method = RequestMethod.POST)
-    public String processUpdateSubmitInstructor(@ModelAttribute Instructor instructor
+    public String processUpdateSubmitInstructor(@ModelAttribute ("instructor") Instructor instructor,
+                                                BindingResult bindingResult
     ) {
+        instructorValidator.validate(instructor, bindingResult);
+        if(bindingResult.hasErrors()){
+            return "Technician/instructorManagement";
+        }
         instructorDao.updateInstructor(instructor);
 
         return "redirect:/Technician/instructorList";
@@ -141,6 +160,13 @@ public class TechnicianController {
     @RequestMapping(value="/addInstructor", method=RequestMethod.POST)
     public String processAddInstructor(@ModelAttribute("personInstructor") PersonInstructorDTO pidto,
                                        BindingResult bindingResult) {
+
+        personDtoValidator.validate(pidto, bindingResult);
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors().toString());
+            return "Technician/addInstructor";
+        }
+
         Person person = pidto.getPerson();
         personDao.addPerson(person);
         Instructor instructor = pidto.getInstructor();

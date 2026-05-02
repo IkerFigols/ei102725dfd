@@ -17,6 +17,8 @@
     <p>
         <label for="expertise">Especialidad:</label>
         <input type="text" id="expertise" name="expertise" th:value="*{expertise}" />
+        <div th:if="${#fields.hasErrors('expertise')}" th:errors="*{expertise}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+
     </p>
 
     <button type="submit">Guardar cambios</button>

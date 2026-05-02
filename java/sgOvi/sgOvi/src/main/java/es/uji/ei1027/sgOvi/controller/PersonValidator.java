@@ -4,7 +4,8 @@ import es.uji.ei1027.sgOvi.model.Person;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-public class RegisterValidator implements Validator {
+
+public class PersonValidator implements Validator {
     @Override
     public boolean supports(Class<?> cls) {
         return Person.class.equals(cls);
