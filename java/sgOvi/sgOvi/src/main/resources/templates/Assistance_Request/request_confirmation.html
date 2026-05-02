@@ -1,20 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>Solicitud Registrada - SgOvi</title>
 </head>
 <body>
-<div class="success-container">
-    <h2 class="title">Solicitud Registrada</h2>
 
-    <p class="success-message">
-        La solicitud se ha registrado correctamente, la resolución<br>
-        de la solicitud se le enviará a su correo electrónico
-    </p>
+<div layout:fragment="content">
+    <div class="success-container">
+        <div style="margin-bottom: 20px; color: #166534;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        </div>
 
-    <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-primary">Aceptar</a>
+        <h2 class="title">Solicitud Registrada</h2>
+
+        <p class="success-message">
+            La solicitud se ha registrado correctamente. <br>
+            La resolución de la misma se le enviará a su correo electrónico institucional.
+        </p>
+
+        <div class="actions-group">
+            <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-primary">Aceptar</a>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>

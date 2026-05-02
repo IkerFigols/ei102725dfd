@@ -1,68 +1,93 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Solicitar Asistencia - SgOvi</title>
 </head>
 <body>
-<div class="form-container">
-    <form th:action="@{/Assistance_Request/requestAssistance}" th:object="${assistanceRequest}" method="post">
 
-        <input type="hidden" th:field="*{idOviUser}" />
-        <h3 class="title">Motivo de la solicitud de asistencia</h3>
-        <div class="textarea-container">
-            <label for="description">
-                <input id="description" class="textarea-field" th:field="*{description}" placeholder="Describa el motivo de su solicitud...">
-            </label>
-            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-        </div>
+<div layout:fragment="content">
+    <div class="form-container">
+        <h1 class="title">Motivo de la solicitud de asistencia</h1>
+        <p class="description">Complete los siguientes campos para publicar su solicitud de asistencia personal.</p>
 
-        <div>
-            <label for="experience">Años de experiencia como minimo: </label>
-            <input id="experience" type="number" th:field="*{experience}">
-            <div th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+        <form th:action="@{/Assistance_Request/requestAssistance}" th:object="${assistanceRequest}" method="post">
 
-        </div>
+            <input type="hidden" th:field="*{idOviUser}" />
 
-        <div>
-            <label for="age" >Edad minima del asistente: </label>
-            <input id="age" type="number" th:field="*{age}">
-            <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-        </div>
 
-        <div>
-            <label for="shiftPreference">¿Qué horario necesitas?</label>
-            <select id="shiftPreference" th:field="*{shiftPreference}">
-                <option th:value="${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).MORNING}">Mañanas</option>
-                <option th:value="${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).AFTERNOON}">Tardes</option>
-                <option th:value="${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).ANY}">Cualquiera</option>
-            </select>
-            <div th:if="${#fields.hasErrors('shiftPreference')}" th:errors="*{shiftPreference}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-        </div>
+            <div class="textarea-container">
+                <label class="detail-label" for="description">Descripción del motivo:</label>
+                <textarea id="description" class="textarea-field" th:field="*{description}"
+                          placeholder="Describa detalladamente el motivo de su solicitud..."></textarea>
+                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                     style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
 
-        <div>
-            <label for="drivingLicense">Necesita el asistente carnet de conducir? </label>
-            <input id="drivingLicense" type="checkbox" th:field="*{drivingLicense}">
-        </div>
-        <div>
-            <label for="city"> En que ciudad se hara la asistencia: </label>
-            <input id="city" type="text" th:field="*{city}">
-            <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-        </div>
 
-        <div>
-            <label for="province">En que provincia se hara la asistencia: </label>
-            <input id="province" type="text" th:field="*{province}">
-            <div th:if="${#fields.hasErrors('province')}" th:errors="*{province}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-        </div>
+            <div class="textarea-container">
+                <label class="detail-label" for="experience">Años de experiencia mínimos:</label>
+                <input id="experience" type="number" class="textarea-field-small" th:field="*{experience}" placeholder="Ej: 2">
+                <div th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"
+                     style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
 
-        <div class="button-group">
-            <button class="btn btn-primary" type="submit">Solicitar asistencia</button>
-            <button class="btn btn-secondary" type="button" onclick="window.history.back();">Volver</button>
-        </div>
 
-    </form>
+            <div class="textarea-container">
+                <label class="detail-label" for="age">Edad mínima del asistente:</label>
+                <input id="age" type="number" class="textarea-field-small" th:field="*{age}" placeholder="Ej: 18">
+                <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+                     style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="shiftPreference">¿Qué horario necesitas?</label>
+                <select id="shiftPreference" name="shiftPreference" class="textarea-field-small">
+                    <option value="">Seleccione un horario...</option>
+
+                    <option th:each="shift : ${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).values()}"
+                            th:value="${shift.name()}"
+                            th:text="${shift}"
+                            th:selected="${assistanceRequest.shiftPreference == shift}">
+                    </option>
+                </select>
+                <div th:if="${#fields.hasErrors('shiftPreference')}" th:errors="*{shiftPreference}"
+                     style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+
+            <div class="textarea-container" style="display: flex; align-items: center; gap: 10px;">
+                <input id="drivingLicense" type="checkbox" th:field="*{drivingLicense}" style="width: 18px; height: 18px; cursor: pointer;">
+                <label class="detail-label" for="drivingLicense" style="margin-bottom: 0;">¿Requiere carnet de conducir?</label>
+            </div>
+
+
+            <div class="textarea-container">
+                <label class="detail-label" for="city">Ciudad de la asistencia:</label>
+                <input id="city" type="text" class="textarea-field-small" th:field="*{city}" placeholder="Ej: Castellón">
+                <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}"
+                     style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+
+            <div class="textarea-container">
+                <label class="detail-label" for="province">Provincia de la asistencia:</label>
+                <input id="province" type="text" class="textarea-field-small" th:field="*{province}" placeholder="Ej: Castellón">
+                <div th:if="${#fields.hasErrors('province')}" th:errors="*{province}"
+                     style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+
+            <div class="button-group" style="margin-top: 30px;">
+                <button class="btn btn-secondary" type="button" onclick="window.history.back();">Volver</button>
+                <button class="btn btn-primary" type="submit">Solicitar asistencia</button>
+            </div>
+
+        </form>
+    </div>
 </div>
+
 </body>
 </html>
