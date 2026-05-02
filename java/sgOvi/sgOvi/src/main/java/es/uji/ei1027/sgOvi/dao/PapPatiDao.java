@@ -81,9 +81,14 @@ public class PapPatiDao {
             return new ArrayList<>();
         }
     }
-    public void updatePreferencias(String dni, String preferencias) {
-        jdbcTemplate.update("UPDATE Pap_Pati SET papPatiPreferences=? WHERE dni=?",
-                preferencias, dni);
+
+    public void updatePreferences(PapPati papPati) {
+        jdbcTemplate.update(
+                "UPDATE Pap_Pati SET drivingLicense=?, shift=? WHERE dni=?",
+                papPati.getDrivingLicense(),
+                papPati.getShift().name(),
+                papPati.getDni()
+        );
     }
 
     public List<PapPati> getCandidatesPapPati(String idAsReq){
@@ -140,4 +145,5 @@ public class PapPatiDao {
             return new ArrayList<>();
         }
     }
+
 }

@@ -15,4 +15,5 @@ public interface AssistanceRequestService {
     public void addCommunication (Communication communication);
     public void generateContract(String idSelection, Assistance_Request ap);
     public void rejectOtherCandidates(String idAsReq,String idPapPati);
+    public List<AssistanceRequestSelectionDTO> getRequestsByPapPati(String idPapPati);
 }

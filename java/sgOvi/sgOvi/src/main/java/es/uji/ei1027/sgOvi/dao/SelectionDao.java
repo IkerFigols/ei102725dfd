@@ -97,4 +97,16 @@ public class SelectionDao {
             return null;
         }
     }
+    //Para obtener las selection de un PapPati
+    public List<Selection> getSelectionsByPapPati(String dniPap) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM Selection WHERE idPapPati = ?",
+                    new SelectionRowMapper(),
+                    dniPap
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
 }

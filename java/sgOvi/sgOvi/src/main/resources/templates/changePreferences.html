@@ -1,34 +1,66 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
     <meta charset="UTF-8">
-    <title>Preferencias</title>
+    <title>SgOvi - Cambiar Preferencias</title>
 </head>
 <body>
 
-<div class="form-container">
-    <h1 class="title">Introduce tus nuevas preferencias</h1>
+<div layout:fragment="content">
+    <main class="main-content">
+        <section class="form-container" style="max-width: 500px;">
 
-    <form th:action="${userType == 'oviUser'} ? @{/Ovi_User/updatePreference} : @{/PapPati/updatePreference}"
-          th:object="${obj}" method="post">
+            <header class="app-header">
+                <h1 class="title">Mis Preferencias</h1>
+                <p class="description">Ajusta tu disponibilidad horaria y requisitos de transporte.</p>
+            </header>
 
-        <input type="hidden" th:field="*{dni}" />
+            <form action="#" th:action="@{/PapPati/updatePreference}" th:object="${obj}" method="post">
 
-        <div class="form-group">
-            <textarea th:if="${userType == 'oviUser'}" th:field="*{userPreferences}" class="form-control" rows="8"></textarea>
-            <textarea th:if="${userType == 'papPati'}" th:field="*{papPatiPreferences}" class="form-control" rows="8"></textarea>
+                <input type="hidden" th:field="*{dni}" />
 
-            <p th:if="${userType == 'oviUser' and #fields.hasErrors('userPreferences')}" th:errors="*{userPreferences}" class="error-text"></p>
-            <p th:if="${userType == 'papPati' and #fields.hasErrors('papPatiPreferences')}" th:errors="*{papPatiPreferences}" class="error-text"></p>
-        </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label class="label" for="shift">Preferencia de Horario:</label>
+                    <select id="shift" th:field="*{shift}" class="input-field"
+                            th:classappend="${#fields.hasErrors('shift')} ? 'input-error' : ''"
+                            style="width: 100%;">
 
-        <nav class="menu-grid">
-            <button type="submit" class="btn btn-primary">Enviar</button>
-            <a th:href="${userType == 'oviUser'} ? @{/Ovi_User/menu} : @{/PapPati/menu}"
-               class="btn btn-primary">Volver</a>
-        </nav>
-    </form>
+                        <option value="">-- Selecciona un turno --</option>
+
+                        <option th:each="shiftOpt : ${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).values()}"
+                                th:value="${shiftOpt}"
+                                th:text="${shiftOpt.description}">Mañana</option>
+                    </select>
+
+                    <span th:if="${#fields.hasErrors('shift')}" th:errors="*{shift}"
+                          style="color: #dc3545; font-size: 13px; margin-top: 5px; display: block;">
+                    </span>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 30px; display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                    <input type="checkbox" id="drivingLicense" th:field="*{drivingLicense}"
+                           style="width: 18px; height: 18px; cursor: pointer;" />
+                    <label class="label" for="drivingLicense" style="margin-bottom: 0; cursor: pointer; font-weight: 500;">
+                        Dispongo de carnet de conducir propio
+                    </label>
+                </div>
+
+                <div style="display: flex; gap: 15px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        Guardar Cambios
+                    </button>
+                    <a th:href="@{/PapPati/menu}" class="btn btn-secondary"
+                       style="flex: 1; text-align: center; text-decoration: none; line-height: 2.4;">
+                        Cancelar
+                    </a>
+                </div>
+
+            </form>
+        </section>
+    </main>
 </div>
 
 </body>

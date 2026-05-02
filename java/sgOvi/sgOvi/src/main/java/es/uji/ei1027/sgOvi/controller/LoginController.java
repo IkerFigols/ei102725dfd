@@ -80,6 +80,10 @@ public class LoginController {
                 bindingResult.rejectValue("dni","required","Tu solicitud ha sido rechazada, Razon: "+oviUser.getReason());
             }
         }
+        //Para asegurarnos que es PAP_PATI
+        if (etiqueta.equalsIgnoreCase("PAP") || etiqueta.equalsIgnoreCase("PATI") || etiqueta.equalsIgnoreCase("PAP_PATI")) {
+            etiqueta = "PAP_PATI";
+        }
         if(etiqueta.equals("PAP_PATI")){
             PapPati papPati = papPatiDao.getPapPati(person.getDni());
             if (papPati.getState().name().equals("PENDING")) {

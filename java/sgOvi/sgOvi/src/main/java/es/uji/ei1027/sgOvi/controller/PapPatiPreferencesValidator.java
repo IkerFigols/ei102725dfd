@@ -1,6 +1,7 @@
 package es.uji.ei1027.sgOvi.controller;
 
-import es.uji.ei1027.sgOvi.model.PapPati; // Ajusta el nombre de la clase según tu modelo
+import es.uji.ei1027.sgOvi.model.PapPati;
+import es.uji.ei1027.sgOvi.model.enums.ShiftType;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -14,6 +15,8 @@ public class PapPatiPreferencesValidator implements Validator {
     public void validate(Object target, Errors errors) {
         PapPati papPati = (PapPati) target;
 
-        // Fíjate que aquí usamos el nombre del campo de tu diseño lógico: papPatiPreferences
+        if (papPati.getShift() == null) {
+            errors.rejectValue("shift", "obligatorio", "Debes seleccionar un turno de preferencia.");
+        }
     }
 }

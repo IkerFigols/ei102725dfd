@@ -90,4 +90,25 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     public void rejectOtherCandidates(String idAsReq, String idPapPati) {
         selectionDao.rejectSelections(idAsReq,idPapPati);
     }
+    @Override
+    public List<AssistanceRequestSelectionDTO> getRequestsByPapPati(String idPapPati) {
+        List<AssistanceRequestSelectionDTO> resultado = new ArrayList<>();
+
+
+        List<Selection> selecciones = selectionDao.getSelectionsByPapPati(idPapPati);
+
+
+        for (Selection sel : selecciones) {
+            Assistance_Request ar = assistanceReqDao.getAssistanceRequest(sel.getIdAsReq());
+
+            if (ar != null) {
+                AssistanceRequestSelectionDTO dto = new AssistanceRequestSelectionDTO();
+                dto.setAssistanceRequest(ar);
+                dto.setIdSelection(sel.getIdSelection());
+                dto.setSelectionState(sel.getState().name());
+                resultado.add(dto);
+            }
+        }
+        return resultado;
+    }
 }

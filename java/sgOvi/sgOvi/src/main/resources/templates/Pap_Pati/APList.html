@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
+<head>
+    <meta charset="UTF-8" />
+    <title>SgOvi - Mis Colaboraciones</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="form-container" style="max-width: 1000px;">
+
+        <header class="app-header">
+            <h1 class="title">Solicitudes de Asistencia</h1>
+            <p class="description">Listado de solicitudes en las que participas como asistente.</p>
+        </header>
+
+        <div class="table-responsive" style="margin-top: 20px;">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Ubicación</th>
+                    <th>Descripción</th>
+                    <th>Estado Solicitud</th>
+                    <th>Tu Estado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${requests}">
+                    <td th:text="${#temporals.format(item.assistanceRequest.date, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${item.assistanceRequest.city + ' (' + item.assistanceRequest.province + ')'}"></td>
+                    <td th:text="${item.assistanceRequest.description}"></td>
+
+                    <td>
+                        <span class="badge"
+                              th:text="${item.assistanceRequest.state}"></span>
+                    </td>
+
+                    <td>
+                        <strong th:text="${item.selectionState}"
+                                th:style="${item.selectionState == 'ACCEPTED' ? 'color: green' : (item.selectionState == 'REJECTED' ? 'color: red' : 'color: orange')}"></strong>
+                    </td>
+
+                    <td>
+                        <div class="actions-group">
+                            <a th:href="@{/PapPati/messages(idSelection=${item.idSelection})}"
+                               class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;">
+                                Mensajes
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${requests == null or requests.isEmpty()}" style="text-align: center; padding: 40px;">
+            <p class="description">Aún no has sido seleccionado para ninguna solicitud de asistencia.</p>
+        </div>
+
+        <div class="register-footer" style="margin-top: 30px;">
+            <a th:href="@{/}" class="btn btn-secondary">← Volver al Menú</a>
+        </div>
+
+    </section>
+</div>
+
+</body>
+</html>
