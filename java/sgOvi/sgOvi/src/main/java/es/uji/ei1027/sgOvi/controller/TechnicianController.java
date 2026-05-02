@@ -185,8 +185,10 @@ public class TechnicianController {
     }
 
     @RequestMapping(value="/apManagement/update", method = RequestMethod.POST)
-    public String processUpdateSubmitAssistanceRequest( @ModelAttribute Assistance_Request assistanceRequest
+    public String processUpdateSubmitAssistanceRequest( @ModelAttribute ("assistanceRequest") Assistance_Request assistanceRequest,
+                                                        BindingResult bindingResult
     ) {
+
 
         if(assistanceRequest.getReason().isBlank())
             assistanceRequest.setReason(null);
