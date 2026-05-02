@@ -9,71 +9,79 @@
 
 <form th:action="@{/Technician/papPatiManagement/update}" th:object="${papPati}" method="post">
 
-    <p>
+    <div>
         <label for="dni">DNI:</label>
         <input type="text" id="dni" name="dni" th:value="*{dni}" readonly />
-    </p>
+    </div>
 
-    <p>
+    <div>
         <label for="available">Disponibilidad:</label>
         <input type="checkbox" id="available" name="available" value="true" th:checked="*{available}"/>
-    </p>
+        <div th:if="${#fields.hasErrors('available')}" th:errors="*{available}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+    </div>
 
-    <p>
+    <div>
         <label for="address">Dirección:</label>
         <input type="text" id="address" name="address" th:value="*{address}" required />
-    </p>
+        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
 
-    <p>
+    </div>
+
+    <div>
         <label for="type">Tipo:</label>
         <select id="type" name="type">
             <option value="PAP" th:selected="*{type.name() == 'PAP'}">PAP</option>
             <option value="PATI" th:selected="*{type.name() == 'PATI'}">PATI</option>
         </select>
-    </p>
+    </div>
 
-    <p>
+    <div>
         <label for="training">Entrenamiento:</label>
         <input type="text" id="training" name="training" th:value="*{training}" required />
-    </p>
+        <div th:if="${#fields.hasErrors('training')}" th:errors="*{training}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+    </div>
 
-    <p>
+    <div>
         <label for="experience">Años de experiencia</label>
         <input type="number" id="experience" name="experience" th:value="*{experience}" required />
-    </p>
+        <div th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+    </div>
 
-    <p>
+    <div>
         <label for="document">Documento</label>
         <input type="text" id="document" name="document" th:value="*{document}" required />
-    </p>
+        <div th:if="${#fields.hasErrors('document')}" th:errors="*{document}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+    </div>
 
-    <p>
+    <div>
         <label for="shift">Turno</label>
         <select id="shift" name="shift">
             <option value="MORNING" th:selected="*{shift.name() == 'MORNING'}">Mañana</option>
             <option value="AFTERNOON" th:selected="*{shift.name() == 'AFTERNOON'}">Tarde</option>
             <option value="ANY" th:selected="*{shift.name() == 'ANY'}">Cualquiera</option>
         </select>
-    </p>
+    </div>
 
-    <p>
+    <div>
         <label for="drivingLicense">Carné de Conducir:</label>
         <input type="checkbox" id="drivingLicense" name="drivingLicense" value="true" th:checked="*{drivingLicense}"/>
-    </p>
+    </div>
 
-    <p>
+    <div>
         <label for="state">Estado:</label>
         <select id="state" name="state">
             <option value="PENDING" th:selected="*{state.name() == 'PENDING'}">Pendiente</option>
             <option value="APPROVED" th:selected= "*{state.name() == 'APPROVED'}">Aprovado</option>
             <option value="REJECTED" th:selected="*{state.name() == 'REJECTED'}">Rechazado</option>
         </select>
-    </p>
+    </div>
 
-    <p>
+    <div>
         <label for="reason">Razón:</label>
         <input type="text" id="reason" name="reason" th:value="*{reason}" />
-    </p>
+        <div th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+
+    </div>
 
     <button type="submit">Guardar cambios</button>
 

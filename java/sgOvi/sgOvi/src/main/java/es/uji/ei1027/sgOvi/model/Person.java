@@ -88,6 +88,10 @@ public class Person {
         this.gender = Gender.fromString(gender);
     }
 
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     public void setPreference(String preference){this.preference = preference;}
 
     public void setDataProtection(boolean dataProtection){this.dataProtection = dataProtection;}

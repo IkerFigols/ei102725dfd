@@ -39,8 +39,8 @@ public class RegisterController {
     public String proccesAndSubmit(@ModelAttribute("person") Person person,
                                    BindingResult bindingResult,
                                    Model model){
-        RegisterValidator registerValidator = new RegisterValidator();
-        registerValidator.validate(person,bindingResult);
+        PersonValidator personValidator = new PersonValidator();
+        personValidator.validate(person,bindingResult);
         List<Person> persons = personDao.getPersons();
         if (personDao.getPerson(person.getDni()) != null) {
             bindingResult.rejectValue("dni", "exists", "Este DNI ya está registrado");
@@ -96,8 +96,8 @@ public class RegisterController {
     @RequestMapping(value="/registerPapPati", method = RequestMethod.POST)
     public String processPapPatisubmit(@ModelAttribute("pappati") PapPati papPati,
                                        BindingResult bindingResult) {
-        RegisterPapPatiValidator registerPapPatiValidator = new RegisterPapPatiValidator();
-        registerPapPatiValidator.validate(papPati,bindingResult);
+        PapPatiValidator papPatiValidator = new PapPatiValidator();
+        papPatiValidator.validate(papPati,bindingResult);
         if (bindingResult.hasErrors()) {
             return "Register/registerPapPati";
         }
