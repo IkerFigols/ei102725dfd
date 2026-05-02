@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<nav th:fragment="navbar-simple" class="navbar">
+    <div class="nav-container" style="justify-content: center;"> <a th:href="@{/}" class="nav-brand">
+        <img th:src="@{/images/logo_ovi.png}" alt="Logo" class="nav-logo-small">
+        <span>SgOvi</span>
+    </a>
+    </div>
+</nav>
+
+<footer th:fragment="footer-simple" class="app-footer">
+    <div class="footer-container">
+        <p>Contacto: <strong>ovicastello@gmail.com</strong></p>
+        <p class="academic-text">EI1027 - Disseny i Implementació de Sistemes d'Informació</p>
+    </div>
+</footer>
+
+</body>
+</html>

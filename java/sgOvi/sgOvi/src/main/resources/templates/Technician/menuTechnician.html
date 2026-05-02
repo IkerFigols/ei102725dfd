@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}"> <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SgOvi - Panel Técnico</title>
 </head>
 <body>
 
-<div class="form-container">
-    <h1 class="title">Panel de Administración</h1>
-    <p class="description">Seleccione una categoría para gestionar los registros del sistema.</p>
+<div layout:fragment="content">
+    <section class="form-container" style="max-width: 600px;">
+        <header class="app-header" style="margin-bottom: 30px;">
+            <h1 class="title">Panel de Administración</h1>
+            <p class="description">Seleccione una categoría para gestionar los registros del sistema.</p>
+            <a th:href="@{/menuIndex}" class="btn btn-secondary" style="font-size: 12px; padding: 5px 15px; margin-bottom: 20px;">
+                ← Volver al inicio
+            </a>
+        </header>
 
-    <nav class="menu-grid">
-        <a href="userList" class="btn btn-primary">Lista de Usuarios</a>
-        <a href="papPatiList" class="btn btn-primary">Lista de Asistentes</a>
-        <a href="instructorList" class="btn btn-primary">Lista de Instructores</a>
-        <a href="assistanceRequestList" class="btn btn-primary">Lista de Solicitudes de Asistencia</a>
-        <a href="activityList" class="btn btn-primary">Lista de Actividades</a>
-    </nav>
+        <nav class="menu-grid">
+            <a th:href="@{/Technician/userList}" class="btn btn-primary">Lista de Usuarios</a>
+            <a th:href="@{/Technician/papPatiList}" class="btn btn-primary">Lista de Asistentes</a>
+            <a th:href="@{/Technician/instructorList}" class="btn btn-primary">Lista de Instructores</a>
+            <a th:href="@{/Technician/assistanceRequestList}" class="btn btn-primary">Lista de Solicitudes de Asistencia</a>
+            <a th:href="@{/Technician/activityList}" class="btn btn-primary">Lista de Actividades</a>
+        </nav>
+    </section>
 </div>
 
 </body>

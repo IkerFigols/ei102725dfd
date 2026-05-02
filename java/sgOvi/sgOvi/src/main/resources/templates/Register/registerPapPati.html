@@ -1,86 +1,91 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <link rel="stylesheet"  th:href="@{/css/style.css}">
     <meta charset="UTF-8">
-    <title>Registro Asistente personal</title>
+    <title>SgOvi - Registro Asistente Personal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="icon" type="image/png" th:href="@{/images/logo_ovi.png}">
 </head>
 <body>
-<main>
-    <h1>Nuevo Asistente personal </h1>
-    <form th:action="@{/Register/registerPapPati}" th:object="${pappati}" method="post">
-        <input type="hidden" th:field="*{dni}" />
+<div th:replace="~{Fragments/general_fragment :: navbar-simple}"></div>
 
-        <div>
-            <label>Tipo de asistente personal :</label>
+<main class="main-content">
+    <section class="form-container" style="max-width: 700px;">
+        <header class="app-header">
+            <h1 class="title">Perfil de Asistente Personal</h1>
+            <p class="description">Completa tu perfil profesional para empezar a trabajar con nosotros.</p>
+        </header>
 
-            <input type="radio" id="PAP" value="PAP" th:field="*{type}">
-            <label for="PAP">Pap (Asistente personal para personas desde 18 años hasta los 64 años) </label>
+        <form th:action="@{/Register/registerPapPati}" th:object="${pappati}" method="post">
+            <input type="hidden" th:field="*{dni}" />
 
-            <input type="radio" id="PATI" value="PATI" th:field="*{type}">
-            <label for="PATI">Pati (Persona asistente terapeutica infantil) </label>
+            <div class="textarea-container" style="background-color: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid var(--border-gray);">
+                <label class="title" style="font-size: 14px; display: block; margin-bottom: 10px;">Tipo de Asistente Personal:</label>
+                <div style="margin-bottom: 8px;">
+                    <input type="radio" id="PAP" value="PAP" th:field="*{type}">
+                    <label for="PAP"><strong>PAP:</strong> Asistencia a personas de 18 a 64 años</label>
+                </div>
+                <div>
+                    <input type="radio" id="PATI" value="PATI" th:field="*{type}">
+                    <label for="PATI"><strong>PATI:</strong> Asistente terapéutico infantil</label>
+                </div>
+                <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
 
-            <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <div class="info-grid" style="grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div class="textarea-container">
+                    <label for="address" class="title" style="font-size: 14px;">Dirección:</label>
+                    <input id="address" type="text" th:field="*{address}" class="textarea-field-small" placeholder="Calle, número, piso...">
+                    <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+                </div>
 
-        </div>
+                <div class="textarea-container">
+                    <label for="training" class="title" style="font-size: 14px;">Especialidades / Formación:</label>
+                    <input id="training" type="text" th:field="*{training}" class="textarea-field-small" placeholder="Ej: Enfermería, Psicología...">
+                    <div th:if="${#fields.hasErrors('training')}" th:errors="*{training}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+                </div>
 
-        <div>
-            <label for="address">Dirección: </label>
-            <input id="address" type="text" th:field="*{address}">
-            <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+                <div class="textarea-container">
+                    <label for="experience" class="title" style="font-size: 14px;">Años de experiencia:</label>
+                    <input id="experience" type="number" th:field="*{experience}" class="textarea-field-small" min="0">
+                    <div th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+                </div>
 
-        </div>
+                <div class="textarea-container">
+                    <label for="document" class="title" style="font-size: 14px;">Enlace a CV o Títulos (URL):</label>
+                    <input id="document" type="text" th:field="*{document}" class="textarea-field-small" placeholder="https://drive.google.com/...">
+                    <div th:if="${#fields.hasErrors('document')}" th:errors="*{document}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+                </div>
+            </div>
 
-        <div>
-            <label for="available">Disponibilidad: </label>
-            <input id="available" type="checkbox" th:field="*{available}">
-        </div>
+            <div style="display: flex; gap: 30px; margin-bottom: 20px; padding: 10px;">
+                <div>
+                    <input id="available" type="checkbox" th:field="*{available}">
+                    <label for="available" class="title" style="font-size: 14px; cursor:pointer;">¿Disponible actualmente?</label>
+                </div>
+                <div>
+                    <input id="drivingLicense" type="checkbox" th:field="*{drivingLicense}">
+                    <label for="drivingLicense" class="title" style="font-size: 14px; cursor:pointer;">¿Tienes carnet de conducir?</label>
+                </div>
+            </div>
 
-        <div>
-            <label for="drivingLicense">Carnet de conducir? </label>
-            <input id="drivingLicense" type="checkbox" th:field="*{drivingLicense}">
-        </div>
-        <div>
-            <label for="training">Especialidades: </label>
-            <input id="training" type="text" th:field="*{training}">
-            <div th:if="${#fields.hasErrors('training')}" th:errors="*{training}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <div class="textarea-container">
+                <label class="title" style="font-size: 14px; display: block; margin-bottom: 10px;">Preferencia de horario:</label>
+                <div style="display: flex; gap: 20px;">
+                    <span><input type="radio" id="MORNING" value="MORNING" th:field="*{shift}"> <label for="MORNING">Mañanas</label></span>
+                    <span><input type="radio" id="AFTERNOON" value="AFTERNOON" th:field="*{shift}"> <label for="AFTERNOON">Tardes</label></span>
+                    <span><input type="radio" id="ANY" value="ANY" th:field="*{shift}"> <label for="ANY">Indiferente</label></span>
+                </div>
+                <div th:if="${#fields.hasErrors('shift')}" th:errors="*{shift}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
 
-        </div>
-
-        <div>
-            <label for="experience">Años de experiencia: </label>
-            <input id="experience" type="number" th:field="*{experience}">
-            <div th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-
-        </div>
-
-        <div>
-            <label for="document">Enlace a documento: </label>
-            <input id="document" type="text" th:field="*{document}">
-            <div th:if="${#fields.hasErrors('document')}" th:errors="*{document}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-
-        </div>
-
-        <div>
-            <label>Que horario estas disponible :</label>
-
-            <input type="radio" id="MORNING" value="MORNING" th:field="*{shift}">
-            <label for="MORNING">Mañanas </label>
-
-            <input type="radio" id="AFTERNOON" value="AFTERNOON" th:field="*{shift}">
-            <label for="AFTERNOON">Tardes </label>
-
-            <input type="radio" id="ANY" value="ANY" th:field="*{shift}">
-            <label for="ANY">Tardes </label>
-
-            <div th:if="${#fields.hasErrors('shift')}" th:errors="*{shift}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-
-        </div>
-
-
-
-        <button type="submit">Añadir </button>
-    </form>
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="submit" class="btn btn-primary" style="width: 250px;">Completar Registro</button>
+            </div>
+        </form>
+    </section>
 </main>
+
+<div th:replace="~{Fragments/general_fragment :: footer-simple}"></div>
 </body>
 </html>

@@ -1,99 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
-  <meta charset="UTF-8">
-  <title>Chat de Comunicación</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
-
-  <style>
-    /* Estilos adicionales para el comportamiento de chat */
-    .chat-viewport {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        max-height: 450px;
-        overflow-y: auto;
-        padding: 10px;
-        margin-bottom: 25px;
-        border-bottom: 1px solid var(--border-gray);
-    }
-
-    .msg-bubble {
-        padding: 12px 16px;
-        border-radius: 12px;
-        max-width: 75%;
-        font-size: 14px;
-        line-height: 1.5;
-        position: relative;
-    }
-
-    /* OviUser (Tú) -> A la derecha, fondo azul marino */
-    .msg-ovi {
-        align-self: flex-end;
-        background-color: var(--primary-blue);
-        color: var(--bg-white);
-        border-bottom-right-radius: 2px;
-    }
-
-    /* PapPati (El otro) -> A la izquierda, fondo gris claro */
-    .msg-pap {
-        align-self: flex-start;
-        background-color: #f1f5f9;
-        color: #334155;
-        border: 1px solid var(--border-gray);
-        border-bottom-left-radius: 2px;
-    }
-
-    .msg-info {
-        display: block;
-        font-size: 10px;
-        margin-bottom: 4px;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    .msg-ovi .msg-info { color: #cbd5e1; text-align: right; }
-    .msg-pap .msg-info { color: var(--text-muted); }
-  </style>
+  <title>Chat de Comunicación - SgOvi</title>
 </head>
 <body>
 
-<div class="form-container">
-  <h1 class="title">Chat con Especialista</h1>
-  <p class="description">Historial de mensajes para la selección: <strong th:text="${idSelection}"></strong></p>
-
-  <div class="chat-viewport">
-    <div th:each="msg : ${communications}"
-         th:classappend="${#strings.startsWith(msg.information, 'OviUser')} ? 'msg-bubble msg-ovi' : 'msg-bubble msg-pap'">
-
-      <span class="msg-info" th:text="${msg.date} + ' - ' + ${msg.idCommunication}"></span>
-
-      <div th:text="${msg.information}"></div>
+<div layout:fragment="content">
+  <div class="form-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h1 class="title" style="margin: 0;">Chat con Especialista</h1>
+      <a th:href="@{/Assistance_Request/papPatiSelection/{idAsReq}(idAsReq=${idAsReq})}" class="nav-btn nav-btn-outline">
+        &larr; Volver
+      </a>
     </div>
 
-    <div th:if="${#lists.isEmpty(communications)}" class="description" style="text-align: center;">
-      No hay mensajes previos en esta conversación.
+    <p class="description">Historial de mensajes para la selección: <strong th:text="${idSelection}"></strong></p>
+
+    <div class="chat-viewport">
+      <div th:each="msg : ${communications}"
+           th:classappend="${#strings.startsWith(msg.information, 'OviUser')} ? 'msg-bubble msg-ovi' : 'msg-bubble msg-pap'">
+
+        <span class="msg-info" th:text="${msg.date} + ' - ' + ${msg.idCommunication}"></span>
+        <div th:text="${msg.information}"></div>
+      </div>
+
+      <div th:if="${#lists.isEmpty(communications)}" class="description" style="text-align: center; padding: 20px;">
+        No hay mensajes previos en esta conversación.
+      </div>
     </div>
+
+    <form th:action="@{/Assistance_Request/communication/add (idAsReq= ${idAsReq})}" th:object="${comunication}" method="post">
+
+      <input type="hidden" th:field="*{idSelection}" />
+
+      <div class="textarea-container">
+        <label class="title" style="font-size: 14px;">Escribir mensaje:</label>
+        <textarea th:field="*{information}"
+                  class="textarea-field-small"
+                  style="min-height: 80px;"
+                  placeholder="Escribe aquí tu mensaje..."
+                  required></textarea>
+      </div>
+
+        <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+      </div>
+    </form>
   </div>
-
-  <form th:action="@{/Assistance_Request/communication/add}" th:object="${comunication}" method="post">
-
-    <input type="hidden" th:field="*{idSelection}" />
-
-    <div class="textarea-container">
-      <label class="title" style="font-size: 14px;">Escribir mensaje:</label>
-      <textarea th:field="*{information}"
-                class="textarea-field"
-                placeholder="Escribe aquí tu mensaje"
-                required></textarea>
-    </div>
-
-    <div class="button-group">
-      <a th:href="@{/Assistance_Request/papPatiSelection/{idAsReq}(idAsReq=${idAsReq})}" class="btn btn-secondary">Volver</a>
-
-      <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
-    </div>
-  </form>
 </div>
 
 </body>

@@ -110,4 +110,16 @@ public class AssistanceReqDao {
             return null;
         }
     }
+
+    public List<Assistance_Request> getAssistanceRequestsByIdOviUserAndState(String idOviUser, String state) {
+        try {
+            return  jdbcTemplate.query(
+                    "SELECT * FROM Assistance_Request WHERE idOviUser =? AND state =? ",
+                    new AssistanceReqRowMapper(), idOviUser, state);
+
+
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Assistance_Request>();
+        }
+    }
 }

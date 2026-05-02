@@ -1,31 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <link rel="stylesheet"  th:href="@{/css/style.css}">
     <meta charset="UTF-8">
-    <title>Registro Usuario Ovi</title>
+    <title>SgOvi - Registro Usuario OVI</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="icon" type="image/png" th:href="@{/images/logo_ovi.png}">
 </head>
 <body>
-<main>
-<h1>Nuevo Usuario Ovi</h1>
-    <form th:action="@{/Register/registerOviUser}" th:object="${oviuser}" method="post">
-        <input type="hidden" th:field="*{dni}" />
-        <input type="hidden" th:field="*{birthdayDate}"/>
+<div th:replace="~{Fragments/general_fragment :: navbar-simple}"></div>
 
-        <div>
-            <label for="address">Dirección: </label>
-            <input id="address" type="text" th:field="*{address}">
-            <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-        </div>
+<main class="main-content">
+    <section class="form-container" style="max-width: 550px;">
+        <header class="app-header">
+            <h1 class="title">Datos de Usuario OVI</h1>
+            <p class="description">Por favor, completa la información adicional para tu perfil de usuario.</p>
+        </header>
 
-        <div>
-            <label for="legalGuardian">Nombre del tutor: </label>
-            <input id="legalGuardian" type="text" th:field="*{legalGuardian}">
-            <div th:if="${#fields.hasErrors('legalGuardian')}" th:errors="*{legalGuardian}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-        </div>
-        
-        <button type="submit">Añadir </button>
-    </form>
+        <form th:action="@{/Register/registerOviUser}" th:object="${oviuser}" method="post">
+            <input type="hidden" th:field="*{dni}" />
+            <input type="hidden" th:field="*{birthdayDate}"/>
+
+            <div class="textarea-container">
+                <label for="address" class="title" style="font-size: 14px; display: block; margin-bottom: 8px;">Dirección:</label>
+                <input id="address" type="text" th:field="*{address}"
+                       class="textarea-field-small" placeholder="Tu dirección completa">
+                <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+                     style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label for="legalGuardian" class="title" style="font-size: 14px; display: block; margin-bottom: 8px;">Nombre del tutor legal (si aplica):</label>
+                <input id="legalGuardian" type="text" th:field="*{legalGuardian}"
+                       class="textarea-field-small" placeholder="Nombre completo del tutor">
+                <div th:if="${#fields.hasErrors('legalGuardian')}" th:errors="*{legalGuardian}"
+                     style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="submit" class="btn btn-primary" style="width: 200px;">Finalizar Registro</button>
+            </div>
+        </form>
+    </section>
 </main>
+
+<div th:replace="~{Fragments/general_fragment :: footer-simple}"></div>
 </body>
 </html>

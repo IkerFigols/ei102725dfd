@@ -52,7 +52,7 @@
     <tbody>
     <tr th:each="activity: ${activities}">
       <td th:text="${activity.tittle}" style="font-weight: bold;"></td>
-      <td th:text="${activity.activityType}"></td>
+      <td th:text="${activity.type.getDescription()}"></td>
       <td th:text="${activity.description}"></td>
       <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
       <td th:text="${activity.capacity}"></td>

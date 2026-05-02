@@ -1,25 +1,38 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}"> <head>
     <meta charset="UTF-8">
-    <title>Panel de Usuario OVI</title>
+    <title>SgOvi - Panel de Usuario OVI</title>
 </head>
 <body>
 
-<div class="form-container">
-    <h1 class="title">Panel de Usuario</h1>
-    <p class="description">Seleccione una categoría para gestionar sus servicios y perfil.</p>
+<div layout:fragment="content">
+    <section class="form-container" style="max-width: 600px;">
+        <header class="app-header">
+            <h1 class="title">Panel de Usuario</h1>
+            <p class="description">Seleccione una categoría para gestionar sus servicios y perfil.</p>
+            <a th:href="@{/menuIndex}" class="btn btn-secondary" style="font-size: 12px; padding: 5px 15px; margin-bottom: 20px;">
+                ← Volver al inicio
+            </a>
+        </header>
 
-    <nav class="menu-grid">
-        <a th:href="@{/Ovi_User/contracts}" class="btn btn-primary">Lista de Contratos</a>
+        <nav class="menu-grid">
+            <a th:href="@{/Ovi_User/contracts}" class="btn btn-primary">Lista de Contratos</a>
 
-        <a th:href="@{/Ovi_User/activities}" class="btn btn-primary">Lista de Actividades</a>
+            <a th:href="@{/Ovi_User/activities}" class="btn btn-primary">Lista de Actividades</a>
 
-        <a th:href="@{/Ovi_User/requests}" class="btn btn-primary">Lista de Solicitudes</a>
+            <a th:href="@{/Ovi_User/requests}" class="btn btn-primary">Lista de Solicitudes</a>
 
-        <a th:href="@{'/Ovi_User/updatePreference/' + ${session.user.dni}}" class="btn btn-primary">Cambiar Preferencias</a>
-    </nav>
+            <a th:href="@{'/Ovi_User/updatePreference/' + ${session.user.dni}}" class="btn btn-primary">
+                Cambiar Preferencias
+            </a>
+
+        </nav>
+
+
+    </section>
 </div>
 
 </body>

@@ -1,110 +1,86 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
-  <meta charset="UTF-8">
-  <title>Detalles de la Solicitud</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
-  <style>
-    /* Ajustes adicionales para la vista de solo lectura */
-    .detail-row {
-        display: flex;
-        margin-bottom: 15px;
-        border-bottom: 1px solid var(--border-gray);
-        padding-bottom: 8px;
-    }
-    .detail-label {
-        font-weight: 600;
-        color: var(--primary-blue);
-        width: 200px;
-        font-size: 14px;
-    }
-    .detail-value {
-        color: #334155;
-        font-size: 14px;
-        flex: 1;
-    }
-    .section-title {
-        border-left: 4px solid var(--primary-blue);
-        padding-left: 10px;
-        margin: 25px 0 15px 0;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: var(--text-muted);
-    }
-  </style>
+  <title>Detalles de la Solicitud - SgOvi</title>
 </head>
 <body>
 
-<div class="form-container">
-  <h2 class="title">Detalles de Solicitud de Asistencia</h2>
-  <p class="description">ID de Solicitud: <span th:text="${assistanceRequest.idAsReq}"></span></p>
+<div layout:fragment="content">
+  <div class="form-container">
+    <h2 class="title">Detalles de Solicitud de Asistencia</h2>
+    <p class="description">ID de Solicitud: <span th:text="${assistanceRequest.idAsReq}"></span></p>
 
-  <div class="section-title">Estado y Registro</div>
+    <div class="section-title">Estado y Registro</div>
 
-  <div class="detail-row">
-    <div class="detail-label">Fecha de Solicitud:</div>
-    <div class="detail-value" th:text="${#temporals.format(assistanceRequest.date, 'dd/MM/yyyy')}">01/01/2024</div>
-  </div>
-
-  <div class="detail-row">
-    <div class="detail-label">Estado Actual:</div>
-    <div class="detail-value">
-      <strong th:text="${assistanceRequest.state.description}">Pendiente</strong>
+    <div class="detail-row">
+      <div class="detail-label">Fecha de Solicitud:</div>
+      <div class="detail-value" th:text="${#temporals.format(assistanceRequest.date, 'dd/MM/yyyy')}">01/01/2024</div>
     </div>
-  </div>
 
-  <div class="detail-row">
-    <div class="detail-label">Usuario OVI:</div>
-    <div class="detail-value" th:text="${assistanceRequest.idOviUser}">USR-001</div>
-  </div>
+    <div class="detail-row">
+      <div class="detail-label">Estado Actual:</div>
+      <div class="detail-value">
+        <strong th:text="${assistanceRequest.state.description}">Pendiente</strong>
+      </div>
+    </div>
 
-  <div class="section-title">Perfil del Solicitante</div>
+    <div class="detail-row">
+      <div class="detail-label">Usuario OVI:</div>
+      <div class="detail-value" th:text="${assistanceRequest.idOviUser}">USR-001</div>
+    </div>
 
-  <div class="detail-row">
-    <div class="detail-label">Edad:</div>
-    <div class="detail-value" th:text="${assistanceRequest.age} + ' años'">25 años</div>
-  </div>
+    <div class="section-title">Perfil del Solicitante</div>
 
-  <div class="detail-row">
-    <div class="detail-label">Experiencia:</div>
-    <div class="detail-value" th:text="${assistanceRequest.experience} + ' meses'">12 meses</div>
-  </div>
+    <div class="detail-row">
+      <div class="detail-label">Edad:</div>
+      <div class="detail-value" th:text="${assistanceRequest.age} + ' años'">25 años</div>
+    </div>
 
-  <div class="detail-row">
-    <div class="detail-label">Carné de Conducir:</div>
-    <div class="detail-value" th:text="${assistanceRequest.drivingLicense ? 'Sí' : 'No'}">Sí</div>
-  </div>
+    <div class="detail-row">
+      <div class="detail-label">Experiencia:</div>
+      <div class="detail-value" th:text="${assistanceRequest.experience} + ' meses'">12 meses</div>
+    </div>
 
-  <div class="section-title">Ubicación y Disponibilidad</div>
+    <div class="detail-row">
+      <div class="detail-label">Carné de Conducir:</div>
+      <div class="detail-value" th:text="${assistanceRequest.drivingLicense ? 'Sí' : 'No'}">Sí</div>
+    </div>
 
-  <div class="detail-row">
-    <div class="detail-label">Ciudad / Provincia:</div>
-    <div class="detail-value" th:text="${assistanceRequest.city} + ' (' + ${assistanceRequest.province} + ')'">Castellón</div>
-  </div>
+    <div class="section-title">Ubicación y Disponibilidad</div>
 
-  <div class="detail-row">
-    <div class="detail-label">Preferencia de Turno:</div>
-    <div class="detail-value" th:text="${assistanceRequest.shiftPreference.description}">Mañana</div>
-  </div>
+    <div class="detail-row">
+      <div class="detail-label">Ciudad / Provincia:</div>
+      <div class="detail-value" th:text="${assistanceRequest.city} + ' (' + ${assistanceRequest.province} + ')'">Castellón</div>
+    </div>
 
-  <div class="section-title">Motivos y Descripción</div>
+    <div class="detail-row">
+      <div class="detail-label">Preferencia de Turno:</div>
+      <div class="detail-value" th:text="${assistanceRequest.shiftPreference.description}">Mañana</div>
+    </div>
 
-  <div class="textarea-container">
-    <label class="detail-label">Razón de la solicitud:</label>
-    <div class="textarea-field-small" style="background-color: #f1f5f9;" th:text="${assistanceRequest.reason}">Motivo...</div>
-  </div>
+    <div class="section-title">Motivos y Descripción</div>
 
-  <div class="textarea-container">
-    <label class="detail-label">Descripción detallada:</label>
-    <div class="textarea-field" style="background-color: #f1f5f9;" th:text="${assistanceRequest.description}">Descripción...</div>
-  </div>
+    <div class="textarea-container">
+      <label class="detail-label" style="display: block; margin-bottom: 8px;">Razón de la solicitud:</label>
+      <div class="textarea-read-only" th:text="${assistanceRequest.reason}">Motivo...</div>
+    </div>
 
-  <div class="button-group">
-    <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">Volver al listado</a>
-    <a th:href="@{/Assistance_Request/update/{idAsReq}(idAsReq=${assistanceRequest.idAsReq})}"
-       class="btn btn-primary"
-       th:if="${session.rol == 'OVI_USER' && assistanceRequest.state.name() == 'PENDING'}">Editar Solicitud</a>
+    <div class="textarea-container">
+      <label class="detail-label" style="display: block; margin-bottom: 8px;">Descripción detallada:</label>
+      <div class="textarea-read-only" style="min-height: 100px;" th:text="${assistanceRequest.description}">Descripción...</div>
+    </div>
+
+    <div class="button-group">
+      <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">Volver al listado</a>
+
+      <a th:href="@{/Assistance_Request/update/{idAsReq}(idAsReq=${assistanceRequest.idAsReq})}"
+         class="btn btn-primary"
+         th:if="${session.rol == 'OVI_USER' && assistanceRequest.state.name() == 'PENDING'}">
+        Editar Solicitud
+      </a>
+    </div>
   </div>
 </div>
 

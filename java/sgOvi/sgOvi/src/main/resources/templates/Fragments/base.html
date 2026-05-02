@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SgOvi</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="icon" type="image/png" th:href="@{/images/logo_ovi.png}">
+
+    <th:block layout:fragment="specific-css"></th:block>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a th:href="@{/}" class="nav-brand">
+            <img th:src="@{/images/logo_ovi.png}" alt="Logo" class="nav-logo-small">
+            <span>SgOvi</span>
+        </a>
+
+        <div class="nav-menu">
+            <div class="login-info" th:if="${session.user != null}">
+                <span class="user-name">Hola, <strong th:text="${session.user.getName()}">Usuario</strong></span>
+
+                <a th:href="@{/profile/{dni} (dni= ${session.user.getDni()})}" class="profile-icon-link" title="Mi Perfil">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </a>
+
+                <a th:href="@{/logout}" class="btn-logout">Salir</a>
+            </div>
+
+            <div class="login-info" th:if="${session.user == null}">
+                <a th:href="@{/login}" class="btn-login-nav">Iniciar Sesión</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <div layout:fragment="content">
+    </div>
+</main>
+
+<footer class="app-footer">
+    <div class="footer-container">
+        <p>Contacto: <strong>ovicastello@gmail.com</strong></p>
+        <p class="academic-text">EI1027 - Disseny i Implementació de Sistemes d'Informació</p>
+    </div>
+</footer>
+
+</body>
+</html>

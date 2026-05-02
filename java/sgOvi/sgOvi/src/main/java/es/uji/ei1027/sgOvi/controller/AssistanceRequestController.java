@@ -1,10 +1,7 @@
 package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
-import es.uji.ei1027.sgOvi.model.Assistance_Request;
-import es.uji.ei1027.sgOvi.model.Communication;
-import es.uji.ei1027.sgOvi.model.PapPati;
-import es.uji.ei1027.sgOvi.model.Person;
+import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.AssistanceRequestService;
 import es.uji.ei1027.sgOvi.service.CodeGenerator;
@@ -18,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("/Assistance_Request")
@@ -34,10 +32,22 @@ public class AssistanceRequestController {
     @Autowired
     private ListPapPatiSelService listPapPatiSelService;
 
-    @RequestMapping("/apRequestList")
-    public String listAssistanceRequests(Model model, HttpSession session) {
-        Person person = (Person) session.getAttribute("user");
-        model.addAttribute("assistanceRequests", assistanceReqDao.getOviAssistanceRequest(person.getDni()));
+    @RequestMapping("/apRequestList") // Usamos la ruta principal
+    public String listAssistanceRequests(HttpSession session, Model model,
+                                         @RequestParam(required = false) String state) {
+        Person user = (Person) session.getAttribute("user");
+        List<Assistance_Request> requests;
+        // Si hay un estado, filtramos. Si no, traemos todos.
+        if (state != null && !state.isEmpty()) {
+            requests = assistanceReqDao.getAssistanceRequestsByIdOviUserAndState(user.getDni(), state);
+        } else {
+            requests = assistanceReqDao.getOviAssistanceRequest(user.getDni());
+        }
+
+        model.addAttribute("assistanceRequests", requests);
+        model.addAttribute("selectedState", state);
+
+        // Elige UNA sola ruta para tu HTML (la que tenga el diseño nuevo)
         return "Assistance_Request/apRequestList";
     }
     @RequestMapping(value="/requestAssistance")
@@ -159,7 +169,8 @@ public class AssistanceRequestController {
         return "Assistance_Request/communication";
     }
     @RequestMapping(value = "/communication/add", method = RequestMethod.POST)
-    public String proccessAndSubmitCommunication(@ModelAttribute("comunication") Communication communication ,BindingResult bindingResult){
+    public String proccessAndSubmitCommunication(@ModelAttribute("comunication") Communication communication ,Model model, BindingResult bindingResult,
+                                                 @RequestParam("idAsReq") String idAsReq){
         if(bindingResult.hasErrors())
             return "Assistance_Request/comunication";
         String idSelection = communication.getIdSelection();
@@ -169,8 +180,9 @@ public class AssistanceRequestController {
         communication.setIdSelection(idSelection);
         communication.setIdCommunication(codeGenerator.generateCode("COM"));
         assistanceRequestService.addCommunication(communication);
-        return"redirect:/Assistance_Request/communication/" + idSelection;
+        return "redirect:/Assistance_Request/communication/" + idSelection + "?idAsReq=" + idAsReq;
     }
+
 
 }
 
