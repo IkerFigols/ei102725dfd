@@ -45,7 +45,7 @@ public class TechnicianController {
     private PapPatiValidator papPatiValidator = new PapPatiValidator();
     private InstructorValidator instructorValidator = new InstructorValidator();
     private PersonDtoValidator personDtoValidator = new PersonDtoValidator();
-
+    private AssistanceRequestValidator assistanceRequestValidator = new AssistanceRequestValidator();
 
     @RequestMapping("/menuTechnician")
     public String menuTechnician(Model model) {
@@ -189,6 +189,10 @@ public class TechnicianController {
                                                         BindingResult bindingResult
     ) {
 
+        assistanceRequestValidator.validate(assistanceRequest, bindingResult);
+        if(bindingResult.hasErrors()){
+            return "Technician/apManagement/update";
+        }
 
         if(assistanceRequest.getReason().isBlank())
             assistanceRequest.setReason(null);
