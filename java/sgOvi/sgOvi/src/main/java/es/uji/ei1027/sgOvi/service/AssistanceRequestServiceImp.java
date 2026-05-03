@@ -93,22 +93,40 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     @Override
     public List<AssistanceRequestSelectionDTO> getRequestsByPapPati(String idPapPati) {
         List<AssistanceRequestSelectionDTO> resultado = new ArrayList<>();
-
-
         List<Selection> selecciones = selectionDao.getSelectionsByPapPati(idPapPati);
-
 
         for (Selection sel : selecciones) {
             Assistance_Request ar = assistanceReqDao.getAssistanceRequest(sel.getIdAsReq());
-
             if (ar != null) {
                 AssistanceRequestSelectionDTO dto = new AssistanceRequestSelectionDTO();
                 dto.setAssistanceRequest(ar);
                 dto.setIdSelection(sel.getIdSelection());
                 dto.setSelectionState(sel.getState().name());
+                dto.setSelectionDate(sel.getDate());
+
+                Person ovi = personDao.getPerson(ar.getIdOviUser());
+                dto.setOviUserName(ovi != null ? ovi.getName() : "Desconocido");
+
                 resultado.add(dto);
             }
         }
+
+        //ORDENACIÓN POR ESTADO: 1. APPROVED, 2. PENDING, 3. REJECTED
+        resultado.sort((a, b) -> {
+            return Integer.compare(
+                    prioridadEstado(a.getSelectionState()),
+                    prioridadEstado(b.getSelectionState())
+            );
+        });
+
         return resultado;
+    }
+    private int prioridadEstado(String estado) {
+        switch (estado) {
+            case "APPROVED": return 1;
+            case "PENDING":  return 2;
+            case "REJECTED": return 3;
+            default:         return 4;
+        }
     }
 }

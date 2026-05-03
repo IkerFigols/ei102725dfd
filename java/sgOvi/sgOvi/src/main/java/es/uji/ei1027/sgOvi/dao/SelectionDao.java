@@ -101,7 +101,7 @@ public class SelectionDao {
     public List<Selection> getSelectionsByPapPati(String dniPap) {
         try {
             return jdbcTemplate.query(
-                    "SELECT * FROM Selection WHERE idPapPati = ?",
+                    "SELECT * FROM Selection WHERE idPap = ?",
                     new SelectionRowMapper(),
                     dniPap
             );
