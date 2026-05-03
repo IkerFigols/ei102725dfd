@@ -103,11 +103,6 @@ public class PapPatiController {
         return "Contracts/list";
     }
 
-    @RequestMapping("/activityList")
-    public String listActivities(Model model) {
-        return "Pap_Pati/activityList";
-    }
-
     @RequestMapping("/apRequestList")
     public String listRequests(Model model, HttpSession session) {
         Person user = (Person) session.getAttribute("user");
@@ -141,7 +136,7 @@ public class PapPatiController {
 
 
         model.addAttribute("assistance", assistance);
-        model.addAttribute("selection", selection); // Pasamos la selection para poder ver su estado
+        model.addAttribute("selection", selection);
         model.addAttribute("oviUserName", (oviUser != null) ? oviUser.getName() : "--------------");
         model.addAttribute("userType", RolUser.PAP_PATI.name());
 

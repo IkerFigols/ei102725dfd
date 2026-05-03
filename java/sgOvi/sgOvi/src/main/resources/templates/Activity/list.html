@@ -1,74 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
   <meta charset="UTF-8" />
-  <title>SgOvi - Actividades Recientes</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
-  <style>
-    /* Estilos específicos para la tabla de actividades */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        background-color: white;
-    }
-    th {
-        background-color: var(--primary-blue);
-        color: white;
-        padding: 12px;
-        text-align: left;
-    }
-    td {
-        padding: 12px;
-        border-bottom: 1px solid var(--border-gray);
-        color: #334155;
-        font-size: 14px;
-    }
-    tr:hover {
-        background-color: #f1f5f9;
-    }
-    .container-wide {
-        max-width: 900px; /* Un poco más ancho para la tabla */
-    }
-  </style>
+  <title>SgOvi - Mis Actividades</title>
 </head>
 <body>
 
-<div class="form-container container-wide">
-  <h1 class="title">Próximas Actividades</h1>
-  <p class="description">Consulta las 10 actividades más recientes programadas en la OVI.</p>
+<div layout:fragment="content">
+  <section class="form-container">
 
-  <table>
-    <thead>
-    <tr>
-      <th>Título</th>
-      <th>Tipo</th>
-      <th>Descripción</th>
-      <th>Fecha</th>
-      <th>Capacidad</th>
-      <th>Sponsor</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="activity: ${activities}">
-      <td th:text="${activity.tittle}" style="font-weight: bold;"></td>
-      <td th:text="${activity.type.getDescription()}"></td>
-      <td th:text="${activity.description}"></td>
-      <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
-      <td th:text="${activity.capacity}"></td>
-      <td th:text="${activity.sponsor}"></td>
-    </tr>
-    </tbody>
-  </table>
+    <header class="app-header">
+      <h1 class="title">Mis Actividades</h1>
+      <p class="description">Listado de las actividades en las que estás inscrito.</p>
+    </header>
 
-  <div style="margin-top: 30px; text-align: center;">
-    <a th:href="@{/}" class="btn btn-secondary">Volver al inicio</a>
-  </div>
+    <div class="table-responsive">
+      <table class="table-custom">
+        <thead>
+        <tr>
+          <th>Título</th>
+          <th>Tipo</th>
+          <th>Descripción</th>
+          <th>Fecha</th>
+          <th>Capacidad</th>
+          <th>Sponsor</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="activity: ${activities}">
+          <td><strong th:text="${activity.tittle}"></strong></td>
+          <td th:text="${activity.type.getDescription()}"></td>
+          <td th:text="${activity.description}"></td>
+          <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
+          <td th:text="${activity.capacity}"></td>
+          <td th:text="${activity.sponsor}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div th:if="${activities == null or activities.isEmpty()}" class="description">
+      <p>Aún no te has inscrito en ninguna actividad.</p>
+    </div>
+
+    <footer class="register-footer">
+      <div class="button-group">
+        <a th:href="@{/Activity/listAll}" class="btn btn-primary">Ver todas las actividades disponibles</a>
+
+        <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
+          Volver al Menú
+        </a>
+
+        <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
+          Volver al Menú
+        </a>
+      </div>
+    </footer>
+
+  </section>
 </div>
-
-<footer style="margin-top: 40px; text-align: center;">
-  <p class="description">SgOvi - Sistema de Gestión de Vida Independiente</p>
-</footer>
 
 </body>
 </html>

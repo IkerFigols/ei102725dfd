@@ -4,61 +4,58 @@
       layout:decorate="~{Fragments/base}">
 <head>
     <meta charset="UTF-8" />
-    <title>SgOvi - Mis Colaboraciones</title>
+    <title>SgOvi - Mis Solicitudes</title>
 </head>
 <body>
 
-    <div layout:fragment="content">
-        <section class="form-container" style="max-width: 900px;">
-            <header class="app-header">
-                <h1 class="title">Solicitudes de Asistencia</h1>
-            </header>
+<div layout:fragment="content">
+    <section class="form-container">
 
-            <div class="table-responsive" style="margin-top: 20px;">
-                <table class="table" style="width: 100%; border-collapse: collapse;">
-                    <thead>
-                    <tr>
-                        <th style="text-align: center; border-bottom: 2px solid #eee; padding: 10px;">Fecha</th>
-                        <th style="text-align: center; border-bottom: 2px solid #eee; padding: 10px;">Usuario OVI</th>
-                        <th style="text-align: center; border-bottom: 2px solid #eee; padding: 10px;">Tu Estado</th>
-                        <th style="text-align: center; border-bottom: 2px solid #eee; padding: 10px;">Acción</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="item : ${requests}" style="border-bottom: 1px solid #f0f0f0;">
-                        <td style="text-align: center; vertical-align: middle; padding: 12px;"
-                            th:text="${item.selectionDate != null ? #temporals.format(item.selectionDate, 'dd/MM/yyyy') : '--/--/----'}">
-                        </td>
+        <header class="app-header">
+            <h1 class="title">Solicitudes de Asistencia</h1>
+            <p class="description">Listado de servicios donde colaboras.</p>
+        </header>
 
-                        <td style="text-align: center; vertical-align: middle; padding: 12px;"
-                            th:text="${item.oviUserName}">
-                        </td>
+        <div class="table-responsive">
+            <table class="table" style="text-align: center; width: 100%;">
+                <thead>
+                <tr>
+                    <th style="text-align: center;">Fecha Inicio</th>
+                    <th style="text-align: center;">Usuario</th>
+                    <th style="text-align: center;">Estado</th>
+                    <th style="text-align: center;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${requests}">
 
-                        <td style="text-align: center; vertical-align: middle; padding: 12px;">
-                                <span th:text="${item.selectionState == 'APPROVED' ? 'Aprobada' : (item.selectionState == 'PENDING' ? 'Pendiente' : 'Rechazada')}"
-                                      th:style="'font-weight: bold; padding: 5px 12px; border-radius: 4px; display: inline-block; ' +
-                                               (${item.selectionState == 'APPROVED'} ? 'color: #155724; background-color: #d4edda;' :
-                                               (${item.selectionState == 'PENDING'} ? 'color: #856404; background-color: #fff3cd;' :
-                                               'color: #721c24; background-color: #f8d7da;'))">
-                                </span>
-                        </td>
+                    <td style="vertical-align: middle;" th:text="${item.assistanceRequest.date != null ? #temporals.format(item.assistanceRequest.date, 'dd/MM/yyyy') : '--/--/----'}"></td>
 
-                        <td style="text-align: center; vertical-align: middle; padding: 12px;">
-                            <form th:action="@{/Pap_Pati/papPatiAssistances}" method="post" style="margin: 0;">
-                                <input type="hidden" name="idSelection" th:value="${item.idSelection}" />
-                                <button type="submit" class="btn btn-primary btn-sm">Ver Detalles</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <td style="vertical-align: middle;" th:text="${item.oviUserName}"></td>
 
-            <div style="margin-top: 30px; text-align: center;">
-                <a th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">Volver al Menú</a>
-            </div>
-        </section>
-    </div>
+                    <td style="vertical-align: middle;">
+                        <span th:text="${item.selectionState == 'APPROVED' ? 'Aprobada' : (item.selectionState == 'PENDING' ? 'Pendiente' : 'Rechazada')}"
+                              th:class="'status-badge ' + (${item.selectionState == 'APPROVED'} ? 'status-approved' : (${item.selectionState == 'PENDING'} ? 'status-pending' : 'status-rejected'))">
+                        </span>
+                    </td>
+
+                    <td style="vertical-align: middle;">
+                        <form th:action="@{/Pap_Pati/papPatiAssistances}" method="post" style="margin: 0;">
+                            <input type="hidden" name="idSelection" th:value="${item.idSelection}" />
+                            <button type="submit" class="btn btn-primary btn-sm">Ver Detalles</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="register-footer" style="margin-top: 30px; text-align: center;">
+            <a th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">Volver al Menú</a>
+        </footer>
+
+    </section>
+</div>
 
 </body>
 </html>

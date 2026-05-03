@@ -504,3 +504,26 @@ select.textarea-field-small {
     line-height: 1.5;
     white-space: pre-wrap; /* Mantiene los saltos de línea del texto */
 }
+
+/* Estilos para las etiquetas de estado */
+.status-badge {
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.status-approved {
+    color: #155724;
+    background-color: #d4edda;
+}
+
+.status-pending {
+    color: #856404;
+    background-color: #fff3cd;
+}
+
+.status-rejected {
+    color: #721c24;
+    background-color: #f8d7da;
+}

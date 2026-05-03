@@ -45,7 +45,7 @@ public class ContractDao {
         );
     }
 
-    public void deletePapPati(String idContract){
+    public void deleteContract(String idContract){
         jdbcTemplate.update("DELEtE FROM Contract WHERE idContract=?", idContract);
     }
 

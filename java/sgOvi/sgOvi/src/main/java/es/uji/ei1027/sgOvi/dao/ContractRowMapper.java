@@ -16,7 +16,7 @@ ContractRowMapper implements RowMapper<Contract> {
     public Contract mapRow(ResultSet rs, int rowNum) throws SQLException {
         Contract contract = new Contract();
         contract.setIdContract(rs.getString("idContract"));
-        contract.setStartDate(rs.getObject("starDate", LocalDate.class));
+        contract.setStartDate(rs.getObject("startDate", LocalDate.class));
         contract.setEndDate(rs.getObject("endDate",LocalDate.class));
         contract.setDocument(rs.getString("document"));
         contract.setSalary(rs.getDouble("salary"));
