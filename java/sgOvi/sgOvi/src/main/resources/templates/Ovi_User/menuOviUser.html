@@ -2,35 +2,36 @@
 <html lang="es"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{Fragments/base}"> <head>
+      layout:decorate="~{Fragments/base}">
+<head>
     <meta charset="UTF-8">
-    <title>SgOvi - Panel de Usuario OVI</title>
+    <title>SgOvi - Menú Usuario</title>
 </head>
 <body>
 
 <div layout:fragment="content">
     <section class="form-container" style="max-width: 600px;">
-        <header class="app-header">
-            <h1 class="title">Panel de Usuario</h1>
-            <p class="description">Seleccione una categoría para gestionar sus servicios y perfil.</p>
-            <a th:href="@{/menuIndex}" class="btn btn-secondary" style="font-size: 12px; padding: 5px 15px; margin-bottom: 20px;">
-                ← Volver al inicio
-            </a>
+
+        <header class="app-header" style="margin-bottom: 30px;">
+            <h1 class="title">Panel del Usuario (OVI)</h1>
+            <p class="description">Bienvenido a tu panel de gestión personal. Selecciona una opción para continuar.</p>
         </header>
 
         <nav class="menu-grid">
-            <a th:href="@{/Ovi_User/contracts}" class="btn btn-primary">Lista de Contratos</a>
+            <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-primary">Mis solicitudes de asistencia</a>
 
-            <a th:href="@{/Ovi_User/activities}" class="btn btn-primary">Lista de Actividades</a>
+            <a th:href="@{/Activity/list}" class="btn btn-primary">Mis actividades</a>
 
-            <a th:href="@{/Ovi_User/requests}" class="btn btn-primary">Lista de Solicitudes</a>
-
-            <a th:href="@{'/Ovi_User/updatePreference/' + ${session.user.dni}}" class="btn btn-primary">
-                Cambiar Preferencias
-            </a>
-
+            <a th:href="@{/Contracts/list}" class="btn btn-primary">Mis contratos</a>
         </nav>
 
+        <footer style="margin-top: 40px;">
+            <div style="display: flex; justify-content: space-between; width: 100%;">
+                <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
+
+                <a th:href="@{/logout}" class="btn btn-secondary">Cerrar sesión</a>
+            </div>
+        </footer>
 
     </section>
 </div>
