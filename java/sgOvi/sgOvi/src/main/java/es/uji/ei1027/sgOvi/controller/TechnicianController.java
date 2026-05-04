@@ -37,7 +37,7 @@ public class TechnicianController {
     @Autowired
     private CodeGenerator cg;
     @Autowired
-    private ListPapPatiSelService lppss;
+    private ListPapPatiSelService listPapPatiSelService;
     @Autowired
     private SelectionDao selectionDao;
 
@@ -46,6 +46,7 @@ public class TechnicianController {
     private InstructorValidator instructorValidator = new InstructorValidator();
     private PersonDtoValidator personDtoValidator = new PersonDtoValidator();
     private AssistanceRequestValidator assistanceRequestValidator = new AssistanceRequestValidator();
+    private ActivityValidator activityValidator = new ActivityValidator();
 
     @RequestMapping("/menuTechnician")
     public String menuTechnician(Model model) {
@@ -188,12 +189,6 @@ public class TechnicianController {
     public String processUpdateSubmitAssistanceRequest( @ModelAttribute ("assistanceRequest") Assistance_Request assistanceRequest,
                                                         BindingResult bindingResult
     ) {
-
-        assistanceRequestValidator.validate(assistanceRequest, bindingResult);
-        if(bindingResult.hasErrors()){
-            return "Technician/apManagement/update";
-        }
-
         if(assistanceRequest.getReason().isBlank())
             assistanceRequest.setReason(null);
         assistanceReqDao.updateAssistanceRequest(assistanceRequest);
@@ -201,14 +196,27 @@ public class TechnicianController {
         return "redirect:/Technician/assistanceRequestList";
     }
     @PostMapping("/apManagement/accept")
-    public String acceptRequest(@ModelAttribute("assistanceRequest") Assistance_Request request) {
-        ArrayList<PapPati> listaCoincidencias = lppss.listCompatiblePapPati(request.getIdAsReq());
+    public String acceptRequest(@ModelAttribute("assistanceRequest") Assistance_Request request,
+                                BindingResult bindingResult) {
+
+        ArrayList<PapPati> listaCoincidencias = listPapPatiSelService.listCompatiblePapPati(request.getIdAsReq());
+
         if(listaCoincidencias.isEmpty()){
             request.setState(State.REJECTED.name());
             request.setReason("No se han encontrado candidatos compatibles para la solicitud");
+            assistanceRequestValidator.validate(request, bindingResult);
+            if(bindingResult.hasErrors()) {
+                request.setState(State.PENDING.name());
+                return "Technician/apManagement";
+            }
         }else {
             request.setState(State.APPROVED.name());
             request.setReason(null);
+            assistanceRequestValidator.validate(request, bindingResult);
+            if(bindingResult.hasErrors()) {
+                request.setState(State.PENDING.name());
+                return "Technician/apManagement";
+            }
             for(PapPati papPati : listaCoincidencias){
                 Selection selection = new Selection();
 
@@ -227,9 +235,15 @@ public class TechnicianController {
     }
 
     @PostMapping("/apManagement/reject")
-    public String rejectRequest(@ModelAttribute("assistanceRequest") Assistance_Request request) {
-        // 1. Cambiar el estado internamente
+    public String rejectRequest(@ModelAttribute("assistanceRequest") Assistance_Request request,
+                                BindingResult bindingResult) {
+
         request.setState(State.REJECTED.name());
+        assistanceRequestValidator.validate(request, bindingResult);
+        if(bindingResult.hasErrors()) {
+            request.setState(State.PENDING.name());
+            return "Technician/apManagement";
+        }
         assistanceReqDao.updateAssistanceRequest(request);
         return "redirect:/Technician/assistanceRequestList";
     }
@@ -243,6 +257,13 @@ public class TechnicianController {
     @RequestMapping(value="/addActivity", method=RequestMethod.POST)
     public String processAddActivity(@ModelAttribute("activity") Activity activity,
                                      BindingResult bindingResult) {
+
+        if(instructorDao.getInstructor(activity.getIdInstructor()) == null){
+            bindingResult.rejectValue("idInstructor", "nonExistent", "El instructor especificado no existe en la base de datos");
+        }
+        activityValidator.validate(activity, bindingResult);
+        if(bindingResult.hasErrors())
+            return "Technician/addActivity";
 
         activity.setIdActivity(cg.generateCode("ACT"));
         activityDao.addActivity(activity);
@@ -262,7 +283,12 @@ public class TechnicianController {
     public String processUpdateSubmitActivity(  @ModelAttribute ("activity") Activity activity,
                                                 BindingResult bindingResult
     ) {
-
+        if(instructorDao.getInstructor(activity.getIdInstructor()) == null){
+            bindingResult.rejectValue("idInstructor", "nonExistent", "El instructor especificado no existe en la base de datos");
+        }
+        activityValidator.validate(activity, bindingResult);
+        if(bindingResult.hasErrors())
+            return "Technician/activityManagement";
         activityDao.updateActivity(activity);
 
         return "redirect:/Technician/activityList";
