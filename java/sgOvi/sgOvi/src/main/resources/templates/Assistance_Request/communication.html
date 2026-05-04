@@ -10,7 +10,7 @@
 <div layout:fragment="content">
   <div class="form-container">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-      <h1 class="title" style="margin: 0;">Chat con Especialista</h1>
+      <h1 class="title" style="margin: 0;">Chat entre Usuario OVI y Asistente Personal</h1>
       <a th:href="@{/Assistance_Request/papPatiSelection/{idAsReq}(idAsReq=${idAsReq})}" class="nav-btn nav-btn-outline">
         &larr; Volver
       </a>
@@ -20,7 +20,9 @@
 
     <div class="chat-viewport">
       <div th:each="msg : ${communications}"
-           th:classappend="${#strings.startsWith(msg.information, 'OviUser')} ? 'msg-bubble msg-ovi' : 'msg-bubble msg-pap'">
+           th:with="isOvi=${session.rol == 'OVI_USER' and #strings.startsWith(msg.information, 'OviUser')},
+                isPap=${session.rol == 'PAP_PATI' and #strings.startsWith(msg.information, 'PapPati')}"
+           th:classappend="${isOvi or isPap} ? 'msg-bubble msg-me' : 'msg-bubble msg-other'">
 
         <span class="msg-info" th:text="${msg.date} + ' - ' + ${msg.idCommunication}"></span>
         <div th:text="${msg.information}"></div>
@@ -45,7 +47,7 @@
       </div>
 
         <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
-      </div>
+
     </form>
   </div>
 </div>
