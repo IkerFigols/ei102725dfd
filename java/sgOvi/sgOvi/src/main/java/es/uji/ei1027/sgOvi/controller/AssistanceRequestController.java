@@ -170,11 +170,18 @@ public class AssistanceRequestController {
     }
     @RequestMapping(value = "/communication/add", method = RequestMethod.POST)
     public String proccessAndSubmitCommunication(@ModelAttribute("comunication") Communication communication ,Model model, BindingResult bindingResult,
-                                                 @RequestParam("idAsReq") String idAsReq){
+                                                 @RequestParam("idAsReq") String idAsReq, HttpSession session){
         if(bindingResult.hasErrors())
             return "Assistance_Request/comunication";
         String idSelection = communication.getIdSelection();
-        String information = "OviUser: " + communication.getInformation();
+        String information="";
+        String role = (String) session.getAttribute("rol" +
+                "");
+        if(role.equals("OVI_USER"))
+            information = "OviUser: " + communication.getInformation();
+        else
+            information = "PapPati: "+ communication.getInformation();
+
         communication.setInformation(information);
         communication.setDate(LocalDate.now());
         communication.setIdSelection(idSelection);

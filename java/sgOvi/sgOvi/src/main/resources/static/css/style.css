@@ -434,22 +434,7 @@ select.textarea-field-small {
     position: relative;
 }
 
-/* Mensajes enviados (Derecha) */
-.msg-ovi {
-    align-self: flex-end;
-    background-color: var(--primary-blue);
-    color: var(--bg-white);
-    border-bottom-right-radius: 2px;
-}
 
-/* Mensajes recibidos (Izquierda) */
-.msg-pap {
-    align-self: flex-start;
-    background-color: #f1f5f9;
-    color: #334155;
-    border: 1px solid var(--border-gray);
-    border-bottom-left-radius: 2px;
-}
 
 .msg-info {
     display: block;
@@ -459,8 +444,36 @@ select.textarea-field-small {
     text-transform: uppercase;
 }
 
-.msg-ovi .msg-info { color: #cbd5e1; text-align: right; }
-.msg-pap .msg-info { color: var(--text-muted); }
+
+/* --- COMPONENTES DE CHAT DINÁMICO --- */
+
+/* Mis mensajes (Derecha) */
+.msg-me {
+    align-self: flex-end;
+    background-color: var(--primary-blue);
+    color: var(--bg-white);
+    border-bottom-right-radius: 2px;
+}
+
+/* Mensajes del otro (Izquierda) */
+.msg-other {
+    align-self: flex-start;
+    background-color: #f1f5f9;
+    color: #334155;
+    border: 1px solid var(--border-gray);
+    border-bottom-left-radius: 2px;
+}
+
+/* Alineación de la meta-información (fecha/ID) */
+.msg-me .msg-info {
+    color: #cbd5e1;
+    text-align: right;
+}
+
+.msg-other .msg-info {
+    color: var(--text-muted);
+    text-align: left;
+}
 
 /* --- COMPONENTES DE DETALLES (SOLO LECTURA) --- */
 .detail-row {
