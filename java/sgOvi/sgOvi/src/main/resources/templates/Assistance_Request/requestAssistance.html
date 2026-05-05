@@ -17,6 +17,11 @@
 
             <input type="hidden" th:field="*{idOviUser}" />
 
+            <div class="textarea-container">
+                <label class="detail-label" for="tittle">Título de la asistencia:</label>
+                <input id="tittle" type="text" class="textarea-field-small" th:field="*{tittle}" placeholder="Ej: Acompañamiento médico">
+                <div th:if="${#fields.hasErrors('tittle')}" th:errors="*{tittle}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
 
             <div class="textarea-container">
                 <label class="detail-label" for="description">Descripción del motivo:</label>
@@ -61,14 +66,6 @@
             <div class="textarea-container" style="display: flex; align-items: center; gap: 10px;">
                 <input id="drivingLicense" type="checkbox" th:field="*{drivingLicense}" style="width: 18px; height: 18px; cursor: pointer;">
                 <label class="detail-label" for="drivingLicense" style="margin-bottom: 0;">¿Requiere carnet de conducir?</label>
-            </div>
-
-
-            <div class="textarea-container">
-                <label class="detail-label" for="city">Ciudad de la asistencia:</label>
-                <input id="city" type="text" class="textarea-field-small" th:field="*{city}" placeholder="Ej: Castellón">
-                <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}"
-                     style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
             </div>
 
 
