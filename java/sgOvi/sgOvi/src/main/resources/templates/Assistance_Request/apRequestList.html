@@ -32,7 +32,8 @@
                 <div style="display: flex; flex-direction: column; gap: 5px;">
                     <label class="detail-label" style="margin-bottom: 0;">Ordenar por:</label>
                     <select name="sort" class="textarea-field-small" style="width: 200px;">
-                        <option value="date" th:selected="${selectedSort == 'date'}">Fecha (Más recientes)</option>
+                        <option value="dateDesc" th:selected="${selectedSort == 'dateDesc' or selectedSort == null}">Fecha (Más antiguas)</option>
+                        <option value="dateAsc" th:selected="${selectedSort == 'dateAsc'}">Fecha (Más recientes)</option>
                         <option value="state" th:selected="${selectedSort == 'state'}">Estado</option>
                         <option value="tittle" th:selected="${selectedSort == 'tittle'}">Título (A-Z)</option>
                     </select>

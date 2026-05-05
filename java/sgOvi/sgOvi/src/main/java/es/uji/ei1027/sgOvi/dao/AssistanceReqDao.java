@@ -126,8 +126,9 @@ public class AssistanceReqDao {
             sql += " ORDER BY state ASC";
         } else if ("tittle".equals(sort)) {
             sql += " ORDER BY tittle ASC";
+        } else if ("dateAsc".equals(sort)) {
+            sql += " ORDER BY data ASC";
         } else {
-
             sql += " ORDER BY data DESC";
         }
 

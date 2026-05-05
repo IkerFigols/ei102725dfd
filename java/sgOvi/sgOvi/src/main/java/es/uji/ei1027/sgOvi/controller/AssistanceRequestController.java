@@ -35,7 +35,7 @@ public class AssistanceRequestController {
     @RequestMapping("/apRequestList") // Usamos la ruta principal
     public String listAssistanceRequests(HttpSession session, Model model,
                                          @RequestParam(required = false) String state,
-                                         @RequestParam(required = false, defaultValue = "date") String sort) {
+                                         @RequestParam(required = false, defaultValue = "dateDesc") String sort) {
         Person user = (Person) session.getAttribute("user");
 
         model.addAttribute("selectedState", state);
