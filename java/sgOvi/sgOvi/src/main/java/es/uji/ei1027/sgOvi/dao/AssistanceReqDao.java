@@ -111,15 +111,26 @@ public class AssistanceReqDao {
         }
     }
 
-    public List<Assistance_Request> getAssistanceRequestsByIdOviUserAndState(String idOviUser, String state) {
-        try {
-            return  jdbcTemplate.query(
-                    "SELECT * FROM Assistance_Request WHERE idOviUser =? AND state =? ",
-                    new AssistanceReqRowMapper(), idOviUser, state);
+    public List<Assistance_Request> getAssistanceRequestsByOviUser(String dni, String state, String sort) {
 
+        String sql = "SELECT * FROM Assistance_Request WHERE idOviUser = ?";
+        List<Object> params = new ArrayList<>();
+        params.add(dni);
 
-        } catch (EmptyResultDataAccessException e) {
-            return new ArrayList<Assistance_Request>();
+        if (state != null && !state.isEmpty()) {
+            sql += " AND state = ?";
+            params.add(state);
         }
+
+        if ("state".equals(sort)) {
+            sql += " ORDER BY state ASC";
+        } else if ("tittle".equals(sort)) {
+            sql += " ORDER BY tittle ASC";
+        } else {
+
+            sql += " ORDER BY data DESC";
+        }
+
+        return jdbcTemplate.query(sql, new AssistanceReqRowMapper(), params.toArray());
     }
 }

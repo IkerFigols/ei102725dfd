@@ -34,20 +34,14 @@ public class AssistanceRequestController {
 
     @RequestMapping("/apRequestList") // Usamos la ruta principal
     public String listAssistanceRequests(HttpSession session, Model model,
-                                         @RequestParam(required = false) String state) {
+                                         @RequestParam(required = false) String state,
+                                         @RequestParam(required = false, defaultValue = "date") String sort) {
         Person user = (Person) session.getAttribute("user");
-        List<Assistance_Request> requests;
-        // Si hay un estado, filtramos. Si no, traemos todos.
-        if (state != null && !state.isEmpty()) {
-            requests = assistanceReqDao.getAssistanceRequestsByIdOviUserAndState(user.getDni(), state);
-        } else {
-            requests = assistanceReqDao.getOviAssistanceRequest(user.getDni());
-        }
 
-        model.addAttribute("assistanceRequests", requests);
         model.addAttribute("selectedState", state);
+        model.addAttribute("selectedSort", sort);
+        model.addAttribute("assistanceRequests", assistanceReqDao.getAssistanceRequestsByOviUser(user.getDni(), state, sort));
 
-        // Elige UNA sola ruta para tu HTML (la que tenga el diseño nuevo)
         return "Assistance_Request/apRequestList";
     }
     @RequestMapping(value="/requestAssistance")

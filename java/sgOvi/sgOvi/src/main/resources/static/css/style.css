@@ -19,12 +19,8 @@
     /* Colores de Estado y Badges */
     --success-bg: #dcfce7;
     --success-text: #166534;
-    --approved-bg: #d4edda;
-    --approved-text: #155724;
     --warning-bg: #fef9c3;
     --warning-text: #854d0e;
-    --pending-bg: #fff3cd;
-    --pending-text: #856404;
     --info-bg: #e0f2fe;
     --info-text: #0369a1;
     --rejected-bg: #f8d7da;
