@@ -200,26 +200,20 @@ public class TechnicianController {
                                 BindingResult bindingResult) {
 
         ArrayList<PapPati> listaCoincidencias = listPapPatiSelService.listCompatiblePapPati(request.getIdAsReq());
-
+        request.setState(State.APPROVED.name());
+        assistanceRequestValidator.validate(request, bindingResult);
+        if(bindingResult.hasErrors()){
+            request.setState(State.PENDING.name());
+            request.setReason(null);
+            return "Technician/apManagement";
+        }
         if(listaCoincidencias.isEmpty()){
             request.setState(State.REJECTED.name());
             request.setReason("No se han encontrado candidatos compatibles para la solicitud");
-            assistanceRequestValidator.validate(request, bindingResult);
-            if(bindingResult.hasErrors()) {
-                request.setState(State.PENDING.name());
-                return "Technician/apManagement";
-            }
         }else {
             request.setState(State.APPROVED.name());
-            request.setReason(null);
-            assistanceRequestValidator.validate(request, bindingResult);
-            if(bindingResult.hasErrors()) {
-                request.setState(State.PENDING.name());
-                return "Technician/apManagement";
-            }
             for(PapPati papPati : listaCoincidencias){
                 Selection selection = new Selection();
-
                 selection.setIdSelection(cg.generateCode("SEL"));
                 selection.setDate(LocalDate.now());
                 selection.setState(State.PENDING.name());
@@ -240,10 +234,13 @@ public class TechnicianController {
 
         request.setState(State.REJECTED.name());
         assistanceRequestValidator.validate(request, bindingResult);
+        System.out.println("Falla para el state " + request.getState().name() + " y la reason " + request.getReason() + "?");
         if(bindingResult.hasErrors()) {
+            System.out.println("Ha fallao :(");
             request.setState(State.PENDING.name());
             return "Technician/apManagement";
         }
+        System.out.println("non");
         assistanceReqDao.updateAssistanceRequest(request);
         return "redirect:/Technician/assistanceRequestList";
     }

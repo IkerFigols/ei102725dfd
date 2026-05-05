@@ -75,14 +75,15 @@ public class AssistanceRequestController {
                                    BindingResult bindingResult) {
 
         AssistanceRequestValidator requestValidator = new AssistanceRequestValidator();
-        requestValidator.validate(request, bindingResult);
-        if (bindingResult.hasErrors())
-            return "Assistance_Request/requestAssistance";
 
         request.setDate(LocalDate.now());
         request.setIdAsReq(codeGenerator.generateCode("ASR"));
         request.setState("PENDING");
         request.setReason(null);
+        requestValidator.validate(request, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "Assistance_Request/requestAssistance";
+        }
 
         assistanceReqDao.addAssistanceRequest(request);
         return "redirect:request_confirmation";
