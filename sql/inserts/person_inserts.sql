@@ -118,7 +118,7 @@ INSERT INTO Person VALUES ('49506172B', 'Daniela', 'Romero', '600000072', 'danie
 INSERT INTO Person VALUES ('50617283M', 'Enrique', 'Espinosa', '600000073', 'e.rubio@outlook.es', 'MALE', '50617283M', 'Castellon de la Plana', 'Castellon', '1985-05-05');
 INSERT INTO Person VALUES ('61728394E', 'Fátima', 'Torres', '600000074', 'fatima.t@hotmail.com', 'FEMALE', '61728394E', 'Ontinyent', 'Valencia', '1992-11-21');
 INSERT INTO Person VALUES ('72839405W', 'Lucas', 'Medina', '600000075', 'l.medina@icloud.com', 'MALE', '72839405W', 'Castellon de la Plana', 'Castellon', '1983-02-28');
-INSERT INTO Person VALUES ('83940516P', 'Helena', 'Castillo', '600000076', 'h.castillo@gmail.com', 'FEMALE', '83940516P', 'Oropesa del Mar', 'Castellon', '1997-09-14');
+INSERT INTO Person VALUES ('83940516P', 'Helena', 'Castillo', '600000076', 'h.castillo2@gmail.com', 'FEMALE', '83940516P', 'Oropesa del Mar', 'Castellon', '1997-09-14');
 INSERT INTO Person VALUES ('94051627C', 'Iván', 'Torres', '600000077', 'ivan.c@yahoo.es', 'MALE', '94051627C', 'Castellon de la Plana', 'Castellon', '1984-06-30');
 INSERT INTO Person VALUES ('05162738B', 'Julia', 'Blanco', '600000078', 'j.blanco@gmail.com', 'FEMALE', '05162738B', 'Villena', 'Alicante', '1990-03-15');
 INSERT INTO Person VALUES ('17283950H', 'Kevin', 'Vargas', '600000079', 'kevin.v@outlook.com', 'MALE', '17283950H', 'Castellon de la Plana', 'Castellon', '1983-08-25');
@@ -126,11 +126,11 @@ INSERT INTO Person VALUES ('28395061Y', 'Lorena', 'Bravo', '600000080', 'lorena.
 INSERT INTO Person VALUES ('39406172D', 'Mario', 'Jimenez', '600000081', 'mario.j@gmail.com', 'MALE', '39406172D', 'Castellon de la Plana', 'Castellon', '1985-01-22');
 INSERT INTO Person VALUES ('40517283L', 'Natalia', 'Puertas', '600000082', 'n.puertas@yahoo.com', 'FEMALE', '40517283L', 'Alcala de Xivert', 'Castellon', '1998-11-05');
 INSERT INTO Person VALUES ('51628394F', 'Óscar', 'Arias', '600000083', 'oscar.a@gmail.com', 'MALE', '51628394F', 'Castellon de la Plana', 'Castellon', '1982-04-12');
-INSERT INTO Person VALUES ('62739405A', 'Merlina', 'Peña', '600000084', 'p.pena@outlook.es', 'FEMALE', '62739405A', 'Javea', 'Alicante', '1991-08-20');
+INSERT INTO Person VALUES ('62739405A', 'Merlina', 'Peña', '600000084', 'p.pena2@outlook.es', 'FEMALE', '62739405A', 'Javea', 'Alicante', '1991-08-20');
 INSERT INTO Person VALUES ('73840516K', 'Quico', 'Vidal', '600000085', 'quico.v@hotmail.com', 'MALE', '73840516K', 'Castellon de la Plana', 'Castellon', '1987-01-15');
 INSERT INTO Person VALUES ('84951627V', 'Rosa', 'Buelva', '600000086', 'rosa.b@icloud.com', 'FEMALE', '84951627V', 'Oliva', 'Valencia', '1993-05-12');
 INSERT INTO Person VALUES ('95062738X', 'Samuel', 'Flema', '600000087', 'samuel.f@gmail.com', 'MALE', '95062738X', 'Castellon de la Plana', 'Castellon', '1980-08-24');
-INSERT INTO Person VALUES ('06173849D', 'Teresa', 'Fuentes', '600000088', 'teresa.f@yahoo.es', 'FEMALE', '06173849D', 'Moncofa', 'Castellon', '1989-11-30');
+INSERT INTO Person VALUES ('06173849D', 'Teresa', 'Fuentes', '600000088', 'teresa.f2@yahoo.es', 'FEMALE', '06173849D', 'Moncofa', 'Castellon', '1989-11-30');
 INSERT INTO Person VALUES ('18395072P', 'Brayan', 'Guerra', '600000089', 'brayan.g@gmail.com', 'MALE', '18395072P', 'Castellon de la Plana', 'Castellon', '1996-03-15');
 INSERT INTO Person VALUES ('29406183K', 'Irene', 'Pilas', '600000090', 'irene.p@outlook.com', 'FEMALE', '29406183K', 'Campello', 'Alicante', '1985-07-22');
 INSERT INTO Person VALUES ('40517294B', 'Jorge', 'Lotus', '600000091', 'jorge.l@hotmail.es', 'MALE', '40517294B', 'Castellon de la Plana', 'Castellon', '1992-01-10');
