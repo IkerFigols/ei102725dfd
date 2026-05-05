@@ -172,7 +172,7 @@ public class AssistanceRequestController {
     public String proccessAndSubmitCommunication(@ModelAttribute("comunication") Communication communication ,Model model, BindingResult bindingResult,
                                                  @RequestParam("idAsReq") String idAsReq, HttpSession session){
         if(bindingResult.hasErrors())
-            return "Assistance_Request/comunication";
+            return "Assistance_Request/communication";
         String idSelection = communication.getIdSelection();
         String information="";
         String role = (String) session.getAttribute("rol" +
