@@ -2,13 +2,13 @@ CREATE TABLE Assistance_Request(
 
 	idAsReq			VARCHAR(9),
 	data			DATE 			NOT NULL,
+    tittle          VARCHAR(50)     NOT NULL,
 	description 	VARCHAR(250)	NOT NULL,
 	idOviUser		VARCHAR(9) 		NOT NULL,
 	state			VARCHAR(30)		NOT NULL,
 	reason 			VARCHAR(250),
 	experience      NUMERIC,
 	drivingLicense  BOOLEAN,
-	city            VARCHAR(50)     NOT NULL,
 	province        VARCHAR(50)     NOT NULL,
 	shiftPreference VARCHAR(50)     NOT NULL,    --MORNING / AFTERNOON / ANY
     age             NUMERIC,
