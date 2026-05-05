@@ -37,7 +37,6 @@ public class ListPapPatiSelServiceImpl implements  ListPapPatiSelService{
         Assistance_Request asReq = assistanceReqDao.getAssistanceRequest(idAsReq);
         String type = ChronoUnit.YEARS.between(personDao.getPerson(asReq.getIdOviUser()).getBirthdayDate(), LocalDate.now()) >= 18 ? "PAP" : "PATI";
         Boolean drivingLicense = asReq.getDrivingLicense();
-        String city = asReq.getCity();
         String province = asReq.getProvince();
         ShiftType shiftType = asReq.getShiftPreference();
         int minAge = asReq.getAge();

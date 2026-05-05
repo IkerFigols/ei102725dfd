@@ -20,15 +20,15 @@ public class AssistanceRequestValidator implements Validator {
         if(req.getDescription().length() >= 250)
             errors.rejectValue("description", "length0",
                     "El motivo es demasiado largo");
-        if(req.getCity() == null || req.getCity().isEmpty())
-            errors.rejectValue("city","required","Debes introducir una ciudad");
+        if(req.getTittle() == null || req.getTittle().isEmpty())
+            errors.rejectValue("tittle","required","Debes introducir un título");
         if(req.getProvince() == null || req.getProvince().isEmpty())
             errors.rejectValue("province","required","Debes introducir una provincia");
         if(req.getShiftPreference() == null)
             errors.rejectValue("shiftPreference","required","Debes introducir una preferencia de horario");
 
-        if(req.getCity() != null && req.getCity().length()> 50)
-            errors.rejectValue("city","required","El nombre de la ciudad no puede ser mayor a 50 caracteres");
+        if(req.getTittle() != null && req.getTittle().length()> 20)
+            errors.rejectValue("tittle","required","El titulo de la asistencia no puede ser mayor a 20 caracteres");
         if(req.getProvince() != null && req.getProvince().length()>50)
             errors.rejectValue("province","required","El nombre de la provincia no puede ser mayor a 50 caracteres");
         if((req.getReason() != null && !req.getReason().isBlank()) && !req.getState().name().equals("REJECTED")){

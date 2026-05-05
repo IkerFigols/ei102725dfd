@@ -10,6 +10,7 @@ public final class AssistanceReqRowMapper implements RowMapper<Assistance_Reques
     public Assistance_Request mapRow(ResultSet rs, int rowNum) throws SQLException {
        Assistance_Request assistanceRequest = new Assistance_Request();
        assistanceRequest.setIdAsReq(rs.getString("idAsReq"));
+       assistanceRequest.setTittle(rs.getString("tittle"));
        assistanceRequest.setDescription(rs.getString("description"));
        assistanceRequest.setDate(rs.getObject("data", LocalDate.class));
        assistanceRequest.setReason(rs.getString("reason"));
@@ -17,7 +18,6 @@ public final class AssistanceReqRowMapper implements RowMapper<Assistance_Reques
        assistanceRequest.setIdOviUser(rs.getString("idOviUser"));
        assistanceRequest.setExperience(rs.getInt("experience"));
        assistanceRequest.setDrivingLicense(rs.getBoolean("drivingLicense"));
-       assistanceRequest.setCity(rs.getString("city"));
        assistanceRequest.setProvince(rs.getString("province"));
        assistanceRequest.setShiftPreference(rs.getString("shiftPreference"));
        assistanceRequest.setAge(rs.getInt("age"));

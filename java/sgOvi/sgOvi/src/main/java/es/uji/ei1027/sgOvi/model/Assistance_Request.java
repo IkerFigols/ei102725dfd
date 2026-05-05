@@ -11,12 +11,12 @@ public class Assistance_Request {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private State state;
+    private String tittle;
     private String description;
     private String reason;
     private String idOviUser;
     private Integer experience;
     private Boolean drivingLicense;
-    private String city;
     private String province;
     private ShiftType shiftPreference;
     private Integer age;
@@ -27,10 +27,6 @@ public class Assistance_Request {
 
     public void setDrivingLicense(Boolean drivingLicense) {
         this.drivingLicense = drivingLicense;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public void setProvince(String province) {
@@ -45,16 +41,16 @@ public class Assistance_Request {
         this.age = age;
     }
 
+    public String getTittle() {return tittle;}
+
+    public void setTittle(String tittle) {this.tittle = tittle;}
+
     public Integer getExperience() {
         return experience;
     }
 
     public Boolean getDrivingLicense() {
         return drivingLicense;
-    }
-
-    public String getCity() {
-        return city;
     }
 
     public String getProvince() {
@@ -123,12 +119,12 @@ public class Assistance_Request {
                 "idAsReq='" + idAsReq + '\'' +
                 ", data=" + date +
                 ", state='" + state.getDescription() + '\'' +
+                ", tittle='" + tittle + '\'' +
                 ", description='" + description + '\'' +
                 ", reason='" + reason + '\'' +
                 ", idOviUser='" + idOviUser + '\'' +
                 ", experience=" + experience +
                 ", drivingLicense=" + drivingLicense +
-                ", city='" + city + '\'' +
                 ", province='" + province + '\'' +
                 ", shiftPreference='" + shiftPreference.getDescription() + '\'' +
                 ", age=" + age +
