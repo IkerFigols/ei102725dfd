@@ -335,11 +335,6 @@ body {
     display: inline-block;
 }
 
-
-.badge-success { background-color: #dcfce7; color: #166534; }
-.badge-warning { background-color: #fef9c3; color: #854d0e; }
-.badge-info    { background-color: #e0f2fe; color: #0369a1; }
-
 /* Grupo de botones dentro de celdas */
 .actions-group {
     display: flex;

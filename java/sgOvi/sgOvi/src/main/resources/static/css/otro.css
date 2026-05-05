@@ -1,0 +1,587 @@
+/* ==========================================================================
+   1. VARIABLES Y PALETA DE COLORES (Único lugar con Hexadecimales)
+   ========================================================================== */
+
+:root { /* Definición centralizada de todos los colores del sistema */
+    --primary-blue: #1c3d61;
+    --primary-hover: #2d5a8b;
+    --text-main: #334155;
+    --text-muted: #728197;
+    --text-light: #94a3b8;
+    --border-gray: #cbd5e1;
+    --placeholder-gray: #94a3b8;
+    --bg-white: #ffffff;
+    --bg-light: #f8fafc;
+    --bg-hover: #f1f5f9;
+    --bg-footer: #f1f5f9;
+    --bg-login: #edf2f7;
+    
+    /* Colores de Estado y Badges */
+    --success-bg: #dcfce7;
+    --success-text: #166534;
+    --approved-bg: #d4edda;
+    --approved-text: #155724;
+    --warning-bg: #fef9c3;
+    --warning-text: #854d0e;
+    --pending-bg: #fff3cd;
+    --pending-text: #856404;
+    --info-bg: #e0f2fe;
+    --info-text: #0369a1;
+    --rejected-bg: #f8d7da;
+    --rejected-text: #721c24;
+    --danger-red: #ef4444;
+}
+
+/* ==========================================================================
+   2. BASE Y TIPOGRAFÍA
+   ========================================================================== */
+
+html, body { /* Ajuste para que el contenido ocupe el 100% de la altura de la ventana */
+    height: 100%;
+}
+
+body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vertical */
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-light);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.title { /* Título principal con el color azul corporativo */
+    color: var(--primary-blue);
+    margin-top: 0;
+}
+
+.description { /* Texto informativo secundario con color suavizado */
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.academic-text { /* Texto pequeño en cursiva para notas al pie o aclaraciones */
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.quote { /* Bloque de texto resaltado con una línea lateral azul */
+    font-style: italic;
+    border-left: 4px solid var(--primary-blue);
+    padding-left: 20px;
+    margin-bottom: 30px;
+    color: var(--text-main);
+}
+
+/* ==========================================================================
+   3. ESTRUCTURA Y CONTENEDORES (LAYOUT)
+   ========================================================================== */
+
+.menu-grid { /* Contenedor para botones de menú en columna */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.main-content { /* Contenedor principal que empuja el footer hacia abajo */
+    flex: 1 0 auto;
+    width: 100%;
+    display: block;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.form-container { /* Caja blanca con sombra para agrupar formularios y centrarlos */
+    background: var(--bg-white);
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.success-container { /* Contenedor específico para mensajes de confirmación de éxito */
+    background: var(--bg-white);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.success-container .title { /* Tamaño específico del título en confirmaciones */
+    font-size: 22px; 
+    margin-bottom: 15px; 
+}
+
+.success-message { /* Estilo del mensaje dentro de la caja de éxito */
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    max-width: 420px;
+}
+
+.navbar { /* Barra de navegación superior pegajosa */
+    background-color: var(--bg-white);
+    border-bottom: 1px solid var(--border-gray);
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container { /* Contenedor interno de la navbar para alinear logo y botones */
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-footer { /* Pie de página con fondo gris y borde superior */
+    background-color: var(--bg-footer);
+    border-top: 1px solid var(--border-gray);
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: auto;
+}
+
+.register-footer { /* Sección inferior del registro con borde punteado */
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-gray);
+}
+
+.content-footer { /* Footer dentro de contenidos con botones a los lados */
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-header { /* Cabecera de la aplicación para el index */
+    text-align: center; 
+    margin-bottom: 40px; 
+}
+
+.app-header h1 { /* Estilo del título gigante en la página de inicio */
+    color: var(--primary-blue); 
+    font-size: 3rem; 
+    margin: 0; 
+    letter-spacing: 2px; 
+}
+
+.info-grid { /* Rejilla de dos columnas para mostrar información variada */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.info-card { /* Tarjeta individual con borde para secciones informativas */
+    border: 1px solid var(--border-gray);
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--bg-white);
+}
+
+.login-section { /* Estilo destacado para la caja de inicio de sesión */
+    background-color: var(--bg-login);
+    border: 2px solid var(--primary-blue);
+}
+
+.login-info { /* Contenedor para info de usuario logueado en la navbar */
+    display: flex;
+    align-items: center; 
+    gap: 15px; 
+    color: var(--text-muted); 
+}
+
+.activities-actions { /* Contenedor para centrar botones en la vista de actividades */
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   4. BOTONES Y ACCIONES
+   ========================================================================== */
+
+.btn { /* Clase base para todos los botones con transiciones suaves */
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary { /* Botón principal con fondo azul y texto blanco */
+    background-color: var(--primary-blue);
+    color: var(--bg-white);
+    border: 1px solid var(--primary-blue);
+}
+
+.btn-primary:hover { opacity: 0.9; }
+
+.btn-secondary { /* Botón secundario con fondo blanco y borde azul */
+    background-color: var(--bg-white);
+    color: var(--primary-blue);
+    border: 1px solid var(--primary-blue);
+}
+
+.btn-secondary:hover { background-color: var(--bg-hover); }
+
+.nav-btn { /* Botón de navegación destacado para la barra superior */
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: var(--primary-blue);
+    color: var(--bg-white) !important;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.nav-btn:hover { /* Efecto de elevación y sombra en botones de navbar */
+    background-color: var(--primary-hover);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.nav-btn-outline { /* Botón de navegación con estilo de borde únicamente */
+    background-color: transparent;
+    color: var(--primary-blue) !important;
+    border: 1px solid var(--primary-blue);
+}
+
+.nav-btn-outline:hover { /* Cambio de estado para botones de contorno */
+    background-color: var(--primary-blue);
+    color: var(--bg-white) !important;
+}
+
+.btn-logout { /* Botón de cierre de sesión con color rojo de advertencia */
+    padding: 4px 12px;
+    border: 1px solid var(--danger-red);
+    color: var(--danger-red);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.btn-logout:hover { /* Hover para el botón de cerrar sesión */
+    background-color: var(--danger-red); 
+    color: var(--bg-white); 
+}
+
+.button-group { /* Agrupador de botones para alinearlos en los extremos */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-login-nav { /* Botón específico de login en navbar */
+    background-color: var(--primary-blue);
+    color: var(--bg-white);
+    padding: 8px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    display: inline-block;
+}
+
+.btn-login-nav:hover { /* Hover para botón de login navbar */
+    background-color: var(--primary-hover);
+}
+
+/* ==========================================================================
+   5. FORMULARIOS E INPUTS
+   ========================================================================== */
+
+.textarea-container { margin-bottom: 20px; }
+
+.textarea-field, .textarea-field-small { /* Campos de texto compartidos */
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border-gray);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-main);
+    box-sizing: border-box;
+}
+
+.textarea-field { /* Campo de texto multilínea estándar */
+    min-height: 180px;
+    resize: vertical;
+}
+
+.textarea-field-small { /* Versión compacta para inputs de una sola línea */
+    min-height: 40px;
+}
+
+.textarea-field::placeholder { color: var(--placeholder-gray); }
+
+.textarea-field:focus { /* Efecto de foco en inputs */
+    outline: none; 
+    border-color: var(--primary-blue); 
+}
+
+select.textarea-field-small { /* Ajuste específico para que el elemento select sea legible */
+    color: var(--text-main) !important;
+    background-color: var(--bg-white);
+    cursor: pointer;
+    padding: 0 10px;
+    height: 40px;
+    appearance: auto;
+}
+
+.textarea-read-only { /* Estilo para mostrar texto en cuadros de solo lectura */
+    background-color: var(--bg-hover);
+    border: 1px solid var(--border-gray);
+    border-radius: 4px;
+    padding: 15px;
+    font-size: 14px;
+    color: var(--text-main);
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+/* ==========================================================================
+   6. TABLAS Y DATOS
+   ========================================================================== */
+
+.table-responsive { /* Contenedor con scroll horizontal para tablas en móviles */
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.table-custom { /* Estilo de tabla personalizada con fondo blanco */
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-white);
+}
+
+.table-custom th,
+.table-custom td { /* Celdas comunes de la tabla */
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-gray);
+    font-size: 14px;
+}
+
+.table-custom th { /* Encabezados de tabla con fondo suave y texto azul resaltado */
+    background-color: var(--bg-light);
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.table-custom tr:hover { /* Resaltado al pasar por encima de filas de tabla */
+    background-color: var(--bg-hover);
+}
+
+.actions-group { /* Agrupación horizontal de botones de acción dentro de una celda */
+    display: flex;
+    gap: 8px;
+}
+
+/* ==========================================================================
+   7. ETIQUETAS Y ESTADOS (BADGES)
+   ========================================================================== */
+
+.status-badge { /* Base pequeña para etiquetas de estado */
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.status-approved { /* Etiqueta verde para estados aprobados o completados */
+    background-color: var(--success-bg);
+    color: var(--success-text);
+}
+
+.status-pending { /* Etiqueta amarilla para procesos en espera */
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+.status-rejected { /* Estado rechazado con color rojo */
+    color: var(--rejected-text);
+    background-color: var(--rejected-bg);
+}
+
+.badge-info { /* Etiqueta azul para información neutra */
+    background-color: var(--info-bg);
+    color: var(--info-text);
+}
+
+
+/* ==========================================================================
+   8. COMPONENTES DE CHAT
+   ========================================================================== */
+
+.chat-viewport { /* Área de mensajes con scroll automático vertical */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 450px;
+    overflow-y: auto;
+    padding: 10px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-gray);
+}
+
+.msg-bubble { /* Burbuja base para cada mensaje de chat */
+    padding: 12px 16px;
+    border-radius: 12px;
+    max-width: 75%;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.msg-info { /* Información superior del mensaje (remitente o fecha) */
+    display: block;
+    font-size: 10px;
+    margin-bottom: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.msg-me { /* Mensajes enviados por el usuario actual (derecha) */
+    align-self: flex-end;
+    background-color: var(--primary-blue);
+    color: var(--bg-white);
+    border-bottom-right-radius: 2px;
+}
+
+.msg-other { /* Mensajes recibidos de otros usuarios (izquierda) */
+    align-self: flex-start;
+    background-color: var(--bg-hover);
+    color: var(--text-main);
+    border: 1px solid var(--border-gray);
+    border-bottom-left-radius: 2px;
+}
+
+.msg-me .msg-info { /* Meta-información en mis mensajes */
+    color: var(--border-gray);
+    text-align: right;
+}
+
+.msg-other .msg-info { /* Meta-información en mensajes ajenos */
+    color: var(--text-muted);
+    text-align: left;
+}
+
+/* ==========================================================================
+   9. VISTA DE DETALLES (LECTURA)
+   ========================================================================== */
+
+.detail-row { /* Fila informativa que separa la etiqueta del valor */
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-gray);
+    padding-bottom: 8px;
+}
+
+.detail-label { /* Etiqueta descriptiva para la vista de detalles */
+    font-weight: 600;
+    color: var(--primary-blue);
+    width: 200px;
+    font-size: 14px;
+}
+
+.detail-value { /* Valor de la información en la vista de detalles */
+    color: var(--text-main);
+    font-size: 14px;
+    flex: 1;
+}
+
+.section-title { /* Título de sección secundaria con borde lateral sutil */
+    border-left: 4px solid var(--primary-blue);
+    padding-left: 10px;
+    margin: 25px 0 15px 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.section-margin { /* Espaciado extra para secciones */
+    margin-bottom: 50px; 
+}
+
+/* ==========================================================================
+   10. ICONOS Y LOGOS
+   ========================================================================== */
+
+.nav-brand { /* Enlace y contenedor del logo en la barra de navegación */
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary-blue);
+    font-weight: bold;
+    font-size: 1.5rem;
+    gap: 12px;
+}
+
+.nav-logo-small { /* Dimensionado para el logo en la navbar */
+    height: 40px; 
+    width: auto; 
+}
+
+.main-logo { /* Logo principal de gran tamaño para la cabecera */
+    max-width: 150px;
+    height: auto;
+    margin: 0 auto 10px auto;
+    display: block;
+}
+
+.profile-icon-link { /* Enlace para el icono de perfil con efecto de zoom */
+    color: var(--primary-blue);
+    display: flex;
+    transition: transform 0.2s;
+}
+
+.profile-icon-link:hover { transform: scale(1.1); }
+
+/* ==========================================================================
+   11. RESPONSIVIDAD
+   ========================================================================== */
+
+@media (max-width: 768px) { /* Ajustes para pantallas de móviles */
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    .nav-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
