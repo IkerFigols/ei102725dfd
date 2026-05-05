@@ -3,83 +3,83 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{Fragments/base}">
 <head>
+  <meta charset="UTF-8" />
   <title>Detalles de la Solicitud - SgOvi</title>
 </head>
 <body>
 
 <div layout:fragment="content">
   <div class="form-container">
-    <h2 class="title">Detalles de Solicitud de Asistencia</h2>
-    <p class="description">ID de Solicitud: <span th:text="${assistanceRequest.idAsReq}"></span></p>
+    <h1 class="title" th:text="${assistanceRequest.tittle}">Título de la Solicitud</h1>
+    <p class="description">Consulte los detalles específicos de su petición de asistencia personal.</p>
 
-    <div class="section-title">Estado y Registro</div>
+    <div class="section-title">Estado de la solicitud</div>
 
     <div class="detail-row">
-      <div class="detail-label">Fecha de Solicitud:</div>
+      <div class="detail-label">Fecha de solicitud:</div>
       <div class="detail-value" th:text="${#temporals.format(assistanceRequest.date, 'dd/MM/yyyy')}">01/01/2024</div>
     </div>
 
     <div class="detail-row">
-      <div class="detail-label">Estado Actual:</div>
+      <div class="detail-label">Estado actual:</div>
       <div class="detail-value">
-        <strong th:text="${assistanceRequest.state.description}">Pendiente</strong>
+                <span th:text="${assistanceRequest.state.description}"
+                      th:class="'status-badge ' + ${assistanceRequest.state.name() == 'PENDING' ? 'status-pending' : (assistanceRequest.state.name() == 'APPROVED' ? 'status-approved' : 'status-rejected')}">
+                    Estado
+                </span>
       </div>
     </div>
 
-    <div class="detail-row">
-      <div class="detail-label">Usuario OVI:</div>
-      <div class="detail-value" th:text="${assistanceRequest.idOviUser}">USR-001</div>
+    <div class="textarea-container" th:if="${assistanceRequest.state.name() == 'REJECTED'}">
+      <div class="detail-label">Razón del rechazo:</div>
+      <div class="textarea-read-only" th:text="${assistanceRequest.reason}">
+        Motivo del rechazo...
+      </div>
     </div>
 
-    <div class="section-title">Perfil del Solicitante</div>
+    <div class="section-title">Perfil solicitado</div>
 
     <div class="detail-row">
-      <div class="detail-label">Edad:</div>
-      <div class="detail-value" th:text="${assistanceRequest.age} + ' años'">25 años</div>
-    </div>
-
-    <div class="detail-row">
-      <div class="detail-label">Experiencia:</div>
-      <div class="detail-value" th:text="${assistanceRequest.experience} + ' meses'">12 meses</div>
+      <div class="detail-label">Edad requerida:</div>
+      <div class="detail-value" th:text="${assistanceRequest.age != null ? assistanceRequest.age + ' años' : 'No especificada'}">--</div>
     </div>
 
     <div class="detail-row">
-      <div class="detail-label">Carné de Conducir:</div>
-      <div class="detail-value" th:text="${assistanceRequest.drivingLicense ? 'Sí' : 'No'}">Sí</div>
+      <div class="detail-label">Experiencia mínima:</div>
+      <div class="detail-value" th:text="${assistanceRequest.experience + ' años'}">0 años</div>
     </div>
 
-    <div class="section-title">Ubicación y Disponibilidad</div>
+    <div class="detail-row">
+      <div class="detail-label">Carnet de conducir:</div>
+      <div class="detail-value" th:text="${assistanceRequest.drivingLicense ? 'Requerido' : 'No necesario'}">No</div>
+    </div>
+
+    <div class="section-title">Ubicación y disponibilidad</div>
 
     <div class="detail-row">
       <div class="detail-label">Provincia:</div>
-      <div class="detail-value" th:text="${assistanceRequest.province} + ')'">Castellón</div>
+      <div class="detail-value" th:text="${assistanceRequest.province}">Castellón</div>
     </div>
 
     <div class="detail-row">
-      <div class="detail-label">Preferencia de Turno:</div>
+      <div class="detail-label">Preferencia de turno:</div>
       <div class="detail-value" th:text="${assistanceRequest.shiftPreference.description}">Mañana</div>
     </div>
 
-    <div class="section-title">Motivos y Descripción</div>
+    <div class="section-title">Descripción de la solicitud</div>
 
     <div class="textarea-container">
-      <label class="detail-label" style="display: block; margin-bottom: 8px;">Razón de la solicitud:</label>
-      <div class="textarea-read-only" th:text="${assistanceRequest.reason}">Motivo...</div>
-    </div>
-
-    <div class="textarea-container">
-      <label class="detail-label" style="display: block; margin-bottom: 8px;">Descripción detallada:</label>
-      <div class="textarea-read-only" style="min-height: 100px;" th:text="${assistanceRequest.description}">Descripción...</div>
+      <div class="textarea-read-only" th:text="${assistanceRequest.description}">
+        Descripción detallada...
+      </div>
     </div>
 
     <div class="button-group">
       <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">Volver al listado</a>
 
-      <a th:href="@{/Assistance_Request/update/{idAsReq}(idAsReq=${assistanceRequest.idAsReq})}"
-         class="btn btn-primary"
-         th:if="${session.rol == 'OVI_USER' && assistanceRequest.state.name() == 'PENDING'}">
-        Editar Solicitud
-      </a>
+      <a th:if="${assistanceRequest.state.name() == 'PENDING'}"
+         th:href="@{/Assistance_Request/update/{idAsReq}(idAsReq=${assistanceRequest.idAsReq})}"
+         class="btn btn-primary">Editar Solicitud</a>
     </div>
   </div>
 </div>
