@@ -10,17 +10,18 @@
 <div layout:fragment="content">
   <div class="form-container">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-      <h1 class="title" style="margin: 0;">Chat entre Usuario OVI y Asistente Personal</h1>
+      <h1 class="title" style="margin: 0;">Chat de Comunicación</h1>
+
       <a th:if="${session.rol == 'OVI_USER'}"
-         th:href="@{/Assistance_Request/papPatiSelection/{idAsReq}(idAsReq=${idAsReq})}"
+         th:href="@{/Assistance_Request/apRequestList}"
          class="nav-btn nav-btn-outline">
-        &larr; Volver a selección
+        &larr; Volver al listado
       </a>
 
       <a th:if="${session.rol == 'PAP_PATI'}"
-         th:href="@{/Pap_Pati/assistanceDetails/{idAsReq}(idAsReq=${idAsReq})}"
+         th:href="@{/Pap_Pati/apRequestList}"
          class="nav-btn nav-btn-outline">
-        &larr; Volver a detalles
+        &larr; Volver al listado
       </a>
     </div>
 
