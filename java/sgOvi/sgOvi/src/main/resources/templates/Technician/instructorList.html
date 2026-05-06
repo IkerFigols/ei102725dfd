@@ -1,34 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
-    <title>Gestionar Ovi Users</title>
+    <title>Gestionar Instructores</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<h1>Lista de Instructores</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Nombre</th>
-        <th>Apellidos</th>
-        <th>DNI</th>
-        <th>Especialidad</th>
-        <td></td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="instructor: ${instructors}">
-        <td th:text="${instructor.value[0]}"></td>
-        <td th:text="${instructor.value[1]}"></td>
-        <td th:text="${instructor.key}"></td>
-        <td th:text="${instructor.value[2]}"></td>
-        <td><a th:href="@{/Technician/instructorManagement/{dni}(dni=${instructor.key})}">Editar</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a href="addInstructor">Añadir Instructor</a>
-<br><br>
-<a href="/Technician/menuTechnician" >Volver</a>
+<body class="main-content">
+
+<div class="page-container">
+    <h1 class="title">Lista de Instructores</h1>
+    <p class="description">Panel de gestión para la administración y edición de los instructores registrados en el sistema.</p>
+
+    <div class="table-responsive">
+        <table class="table-custom">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Especialidad</th>
+                <th style="text-align: center;">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="instructor: ${instructors}">
+                <td th:text="${instructor.value[0]}"></td>
+                <td th:text="${instructor.value[1]}"></td>
+                <td th:text="${instructor.key}"></td>
+                <td th:text="${instructor.value[2]}"></td>
+                <td>
+                    <div class="actions-group" style="justify-content: center;">
+                        <a class="btn btn-primary"
+                           th:href="@{/Technician/instructorManagement/{dni}(dni=${instructor.key})}">
+                            Editar
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="content-footer">
+        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+        <a href="addInstructor" class="btn btn-primary">Añadir Instructor</a>
+    </div>
+
+    <div class="bottom-spacer"></div>
+</div>
+
 </body>
 </html>

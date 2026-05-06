@@ -3,30 +3,39 @@
 <head>
     <title>Editar Instructor</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<h1>Editar PAP/PATI</h1>
+<body class="main-content">
 
-<form th:action="@{/Technician/instructorManagement/update}" th:object="${instructor}" method="post">
+<div class="page-container">
+    <div class="form-container">
+        <h1 class="title">Editar Instructor/a</h1>
+        <p class="description">Actualice la información profesional del instructor seleccionado.</p>
 
-    <p>
-        <label for="dni">DNI:</label>
-        <input type="text" id="dni" name="dni" th:value="*{dni}" readonly />
-    </p>
+        <form th:action="@{/Technician/instructorManagement/update}" th:object="${instructor}" method="post">
 
-    <p>
-        <label for="expertise">Especialidad:</label>
-        <input type="text" id="expertise" name="expertise" th:value="*{expertise}" />
-        <div th:if="${#fields.hasErrors('expertise')}" th:errors="*{expertise}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <div class="textarea-container">
+                <label class="detail-label" for="dni">DNI (No editable):</label>
+                <input type="text" id="dni" name="dni" th:value="*{dni}" class="textarea-read-only" readonly />
+            </div>
 
-    </p>
+            <div class="textarea-container">
+                <label class="detail-label" for="expertise">Especialidad:</label>
+                <input type="text" id="expertise" name="expertise" th:value="*{expertise}" class="textarea-field-small" placeholder="Ej: Fisioterapia, Geriatría..." />
+                <div th:if="${#fields.hasErrors('expertise')}" th:errors="*{expertise}" class="error-text"></div>
+            </div>
 
-    <button type="submit">Guardar cambios</button>
+            <div class="activities-actions">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
 
-</form>
+        </form>
 
-<br><br>
-<a th:href="@{/Technician/instructorList}">Volver a la lista</a>
+        <div class="content-footer">
+            <a th:href="@{/Technician/instructorList}" class="btn btn-secondary">Volver a la lista</a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

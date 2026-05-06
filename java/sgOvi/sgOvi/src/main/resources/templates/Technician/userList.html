@@ -3,30 +3,55 @@
 <head>
     <title>Gestionar Ovi Users</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<h1>Lista de Ovi Users</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Nombre</th>
-        <th>Apellidos</th>
-        <th>DNI</th>
-        <th>Estado</th>
-        <td></td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user: ${users}">
-        <td th:text="${user.value[0]}"></td>
-        <td th:text="${user.value[1]}"></td>
-        <td th:text="${user.key}"></td>
-        <td th:text="${user.value[2]}"></td>
-        <td><a th:href="@{/Technician/userManagement/{dni}(dni=${user.key})}">Editar</a></td>
-    </tr>
-    </tbody>
-</table>
-<br><br>
-<a href="/Technician/menuTechnician" >Volver</a>
+<body class="main-content">
+
+<div class="page-container">
+    <h1 class="title">Lista de Ovi Users</h1>
+    <p class="description">Administre las cuentas de usuario y supervise su estado actual en el sistema.</p>
+
+    <div class="table-responsive">
+        <table class="table-custom">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Estado</th>
+                <th style="text-align: center;">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user: ${users}">
+                <td th:text="${user.value[0]}"></td>
+                <td th:text="${user.value[1]}"></td>
+                <td th:text="${user.key}"></td>
+                <td>
+                            <span th:text="${user.value[2]}"
+                                  th:class="${user.value[2] == 'APPROVED' ? 'status-badge status-approved' :
+                                             (user.value[2] == 'PENDING' ? 'status-badge status-pending' : 'status-badge status-rejected')}">
+                            </span>
+                </td>
+                <td>
+                    <div class="actions-group" style="justify-content: center;">
+                        <a class="btn btn-primary"
+                           th:href="@{/Technician/userManagement/{dni}(dni=${user.key})}">
+                            Editar
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="content-footer">
+        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+    </div>
+
+    <div class="bottom-spacer"></div>
+</div>
+
 </body>
 </html>

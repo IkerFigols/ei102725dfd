@@ -3,31 +3,53 @@
 <head>
     <title>Lista de solicitudes de asistencia</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<h1>Lista solicitudes de asistencia</h1>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Fecha</th>
-        <th>Descripción</th>
-        <th>Estado</th>
-        <td></td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="request: ${requests}">
-        <td th:text="${request.idAsReq}"></td>
-        <td th:text="${request.date}"></td>
-        <td th:text="${request.description}"></td>
-        <td th:text="${request.state}"></td>
-        <td><a th:href="@{/Technician/apManagement/{idAsReq}(idAsReq=${request.idAsReq})}">Editar</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<br><br>
-<a href="/" >Volver</a>
+<body class="main-content">
+
+<h1 class="title">Lista solicitudes de asistencia</h1>
+<p class="description">Gestión y revisión de las peticiones de soporte técnico.</p>
+
+<div class="table-responsive">
+    <table class="table-custom">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Motivo</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="request: ${requests}">
+            <td th:text="${request.idAsReq}"></td>
+            <td th:text="${request.date}"></td>
+            <td th:text="${request.tittle}"></td>
+            <td>
+                        <span class="status-badge"
+                              th:classappend="${request.state.name == 'PENDING' ? 'status-pending' :
+                                               (request.state.name == 'APPROVED' ? 'status-approved' :
+                                               (request.state.name == 'REJECTED' ? 'status-rejected' :
+                                               (request.state.name == 'CLOSED_WITH_CONTRACT' ? 'status-closed' :
+                                               'status-closed-done')))}"
+                              th:text="${request.state}">
+                        </span>
+            </td>
+            <td>
+                <a class="btn btn-primary"
+                   th:href="@{/Technician/apManagement/{idAsReq}(idAsReq=${request.idAsReq})}">
+                    Editar
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="content-footer">
+    <a href="/" class="btn btn-secondary">Volver al inicio</a>
+</div>
+
 </body>
 </html>

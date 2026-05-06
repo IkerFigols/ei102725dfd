@@ -3,77 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <title>Crear nueva actividad</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
+<body class="main-content">
+<main class="page-container">
+  <div class="form-container">
+    <h1 class="title">Nueva Actividad</h1>
+    <p class="description">Rellene los siguientes campos para dar de alta una nueva actividad en el sistema.</p>
 
-<body>
-<main>
-  <h1>Nueva Actividad</h1>
-  <form th:action="@{/Technician/addActivity}" th:object="${activity}" method="post">
+    <form th:action="@{/Technician/addActivity}" th:object="${activity}" method="post">
 
-    <div>
-      <label for="tittle">Título de la actividad: </label>
-      <input id="tittle" type="text" th:field="*{tittle}" required>
-      <div th:if="${#fields.hasErrors('tittle')}" th:errors="*{tittle}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+      <div class="textarea-container">
+        <label class="detail-label" for="tittle">Título de la actividad:</label>
+        <input id="tittle" type="text" th:field="*{tittle}" class="textarea-field-small" required placeholder="Ej: Taller de formación básica">
+        <div th:if="${#fields.hasErrors('tittle')}" th:errors="*{tittle}" class="error-text"></div>
+      </div>
 
+      <div class="textarea-container">
+        <label class="detail-label" for="type">Tipo de Actividad:</label>
+        <select id="type" name="type" class="textarea-field-small">
+          <option value="DISSEMINATION" th:selected="${type == 'DISSEMINATION'}">Diseminación</option>
+          <option value="TRAINING" th:selected="${type == 'TRAINING'}">Formación</option>
+        </select>
+      </div>
+
+      <div class="textarea-container">
+        <label class="detail-label" for="description">Descripción:</label>
+        <input id="description" type="text" th:field="*{description}" class="textarea-field-small" required placeholder="Breve resumen de la actividad">
+        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-text"></div>
+      </div>
+
+      <div class="textarea-container">
+        <label class="detail-label" for="date">Fecha:</label>
+        <input id="date" type="date" th:field="*{date}" class="textarea-field-small" required>
+        <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="error-text"></div>
+      </div>
+
+      <div class="textarea-container">
+        <label class="detail-label" for="address">Dirección:</label>
+        <input id="address" type="text" th:field="*{address}" class="textarea-field-small" required placeholder="Ubicación del evento">
+        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error-text"></div>
+      </div>
+
+      <div class="textarea-container">
+        <label class="detail-label" for="capacity">Aforo:</label>
+        <input id="capacity" type="number" th:field="*{capacity}" class="textarea-field-small" placeholder="Número máximo de asistentes">
+        <div th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}" class="error-text"></div>
+      </div>
+
+      <div class="textarea-container">
+        <label class="detail-label" for="sponsor">Sponsor:</label>
+        <input id="sponsor" type="text" th:field="*{sponsor}" class="textarea-field-small" placeholder="Nombre de la entidad colaboradora">
+        <div th:if="${#fields.hasErrors('sponsor')}" th:errors="*{sponsor}" class="error-text"></div>
+      </div>
+
+      <div class="textarea-container">
+        <label class="detail-label" for="idInstructor">DNI del instructor:</label>
+        <input id="idInstructor" type="text" th:field="*{idInstructor}" class="textarea-field-small" placeholder="DNI del profesional encargado">
+        <div th:if="${#fields.hasErrors('idInstructor')}" th:errors="*{idInstructor}" class="error-text"></div>
+      </div>
+
+      <div class="activities-actions">
+        <button type="submit" class="btn btn-primary">Crear Actividad</button>
+      </div>
+
+    </form>
+
+    <div class="content-footer">
+      <a th:href="@{/Technician/activityList}" class="btn btn-secondary">Volver a la lista</a>
     </div>
-
-    <div>
-      <label for="type">Tipo de Actividad:</label>
-      <select id="type" name="type" >
-        <option value="DISSEMINATION" th:selected="${type == 'DISSEMINATION'}">Diseminacion</option>
-        <option value="TRAINING" th:selected="${type == 'TRAINING'}">Formación</option>
-      </select>
-    </div>
-
-
-    <div>
-      <label for="description">Descripción: </label>
-      <input id="description" type="text" th:field="*{description}" required>
-    </div>
-    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-
-
-    <div>
-      <label for="date">Fecha: </label>
-      <input id="date" type="date" th:field="*{date}" required>
-    </div>
-    <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-
-
-    <div>
-      <label for="address">Dirección: </label>
-      <input id="address" type="text" th:field="*{address}" required>
-    </div>
-    <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-
-
-    <div>
-      <label for="capacity">Aforo: </label>
-      <input id="capacity" type="number" th:field="*{capacity}">
-    </div>
-    <div th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-
-
-    <div>
-      <label for="sponsor">Sponsor: </label>
-      <input id="sponsor" type="text" th:field="*{sponsor}">
-    </div>
-    <div th:if="${#fields.hasErrors('sponsor')}" th:errors="*{sponsor}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-
-
-    <div>
-      <label for="idInstructor">DNI del instructor: </label>
-      <input id="idInstructor" type="text" th:field="*{idInstructor}">
-    </div>
-    <div th:if="${#fields.hasErrors('idInstructor')}" th:errors="*{idInstructor}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
-
-
-
-    <button type="submit">Añadir instructor</button>
-
-
-  </form>
+  </div>
 </main>
 </body>
 </html>

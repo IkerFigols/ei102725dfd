@@ -3,131 +3,118 @@
 <head>
   <title>Petición de asistencia</title>
   <meta charset="UTF-8" />
-  <style>
-    .request-details {
-      list-style-type: none;
-      padding-left: 0;
-    }
-    .request-details li {
-      margin-bottom: 10px;
-    }
-    .form-actions {
-      margin-top: 20px;
-      border-top: 1px solid #ccc;
-      padding-top: 15px;
-    }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<h1>Gestionar Petición de Asistencia</h1>
+<body class="main-content">
 
-<form th:action="@{/Technician/apManagement/update}" th:object="${assistanceRequest}" method="post">
+<div class="form-container">
+  <h1 class="title">Gestionar Petición de Asistencia</h1>
+  <p class="description">Revise los detalles de la solicitud y tome una decisión administrativa.</p>
 
-  <ul class="request-details">
-    <li>
-      <strong>Identificador:</strong>
-      <span th:text="*{idAsReq}"></span>
+  <form th:action="@{/Technician/apManagement/update}" th:object="${assistanceRequest}" method="post">
+
+    <div class="detail-row">
+      <div class="detail-label">Identificador:</div>
+      <div class="detail-value" th:text="*{idAsReq}"></div>
       <input type="hidden" th:field="*{idAsReq}" />
-    </li>
-
-    <li>
-      <strong>DNI Solicitante:</strong>
-      <span th:text="*{idOviUser}"></span>
-      <input type="hidden" th:field="*{idOviUser}" />
-    </li>
-
-    <li>
-      <strong>Fecha:</strong>
-      <span th:text="*{date}"></span>
-      <input type="hidden" th:field="*{date}" />
-    </li>
-
-    <li>
-      <strong>Descripción:</strong>
-      <span th:text="*{description}"></span>
-      <input type="hidden" th:field="*{description}" />
-    </li>
-
-    <li>
-      <strong>Preferencia de edad:</strong>
-      <span th:text="*{age}"></span>
-      <input type="hidden" th:field="*{age}" />
-    </li>
-
-    <li>
-      <strong>Años de experiencia:</strong>
-      <span th:text="*{experience}"></span>
-      <input type="hidden" th:field="*{experience}" />
-    </li>
-
-    <li>
-      <strong>Preferencia de turno:</strong>
-      <span th:text="*{shiftPreference}"></span>
-      <input type="hidden" name="shiftPreference" th:value="*{shiftPreference != null ? shiftPreference.name() : ''}" />
-    </li>
-
-    <li>
-      <strong>Carné de conducir:</strong>
-      <span th:text="*{drivingLicense} ? 'Sí' : 'No'"></span>
-      <input type="hidden" th:field="*{drivingLicense}" />
-    </li>
-
-    <li>
-      <strong>Ciudad:</strong>
-      <span th:text="*{city}"></span>
-      <input type="hidden" th:field="*{city}" />
-    </li>
-
-    <li>
-      <strong>Provincia:</strong>
-      <span th:text="*{province}"></span>
-      <input type="hidden" th:field="*{province}" />
-    </li>
-
-    <li>
-      <strong>Estado:</strong>
-      <span th:text="*{state}"></span>
-      <input type="hidden" name="state" th:value="*{state != null ? state.getDescription() : ''}" />
-    </li>
-
-    <li th:if="${assistanceRequest.getState().name() == 'REJECTED'}">
-      <strong>Razón:</strong>
-      <span th:text="*{reason}"></span>
-      <input type="hidden" th:field="*{reason}" />
-    </li>
-  </ul>
-
-  <div class="form-actions" th:if="${assistanceRequest.getState().name() == 'PENDING'}">
-    <p>
-      <label>Acción sobre la solicitud:</label>
-    </p>
-
-    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-      <button type="submit"
-              th:formaction="@{/Technician/apManagement/accept}"
-              style="background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-        Aceptar
-      </button>
-
-      <button type="submit"
-              th:formaction="@{/Technician/apManagement/reject}"
-              style="background-color: #dc3545; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-        Denegar
-      </button>
     </div>
 
-    <p>
-      <label for="reason">Razón de la denegación (rellenar antes de denegar):</label>
-      <input type="text" id="reason" name="reason" th:field="*{reason}" />
-      <div th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+    <div class="detail-row">
+      <div class="detail-label">Razón:</div>
+      <div class="detail-value" th:text="*{tittle}"></div>
+      <input type="hidden" th:field="*{tittle}" />
+    </div>
 
-    </p>
+    <div class="detail-row">
+      <div class="detail-label">DNI Solicitante:</div>
+      <div class="detail-value" th:text="*{idOviUser}"></div>
+      <input type="hidden" th:field="*{idOviUser}" />
+    </div>
 
+    <div class="detail-row">
+      <div class="detail-label">Fecha:</div>
+      <div class="detail-value" th:text="*{date}"></div>
+      <input type="hidden" th:field="*{date}" />
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Descripción:</div>
+      <div class="detail-value" th:text="*{description}"></div>
+      <input type="hidden" th:field="*{description}" />
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Preferencia de edad:</div>
+      <div class="detail-value" th:text="*{age}"></div>
+      <input type="hidden" th:field="*{age}" />
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Años de experiencia:</div>
+      <div class="detail-value" th:text="*{experience}"></div>
+      <input type="hidden" th:field="*{experience}" />
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Preferencia de turno:</div>
+      <div class="detail-value" th:text="*{shiftPreference}"></div>
+      <input type="hidden" name="shiftPreference" th:value="*{shiftPreference != null ? shiftPreference.name() : ''}" />
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Carné de conducir:</div>
+      <div class="detail-value" th:text="*{drivingLicense} ? 'Sí' : 'No'"></div>
+      <input type="hidden" th:field="*{drivingLicense}" />
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Provincia:</div>
+      <div class="detail-value" th:text="*{province}"></div>
+      <input type="hidden" th:field="*{province}" />
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-label">Estado:</div>
+      <div class="detail-value">
+                <span class="status-badge"
+                      th:classappend="${assistanceRequest.state.name() == 'PENDING' ? 'status-pending' :
+                                       (assistanceRequest.state.name() == 'APPROVED' ? 'status-approved' : 'status-rejected')}"
+                      th:text="*{state}">
+                </span>
+      </div>
+      <input type="hidden" name="state" th:value="*{state != null ? state.getDescription() : ''}" />
+    </div>
+
+    <div class="detail-row" th:if="${assistanceRequest.getState().name() == 'REJECTED'}">
+      <div class="detail-label">Razón de rechazo:</div>
+      <div class="detail-value" th:text="*{reason}"></div>
+      <input type="hidden" th:field="*{reason}" />
+    </div>
+
+    <div class="section-margin" th:if="${assistanceRequest.getState().name() == 'PENDING'}">
+      <h3 class="section-title">Acción sobre la solicitud</h3>
+
+      <div class="textarea-container">
+        <label class="description" for="reason">Razón de la denegación (obligatorio para denegar):</label>
+        <input type="text" id="reason" name="reason" th:field="*{reason}" class="textarea-field-small" placeholder="Escriba el motivo aquí..." />
+        <div th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}" class="academic-text" style="color: var(--danger-red); font-style: normal;"></div>
+      </div>
+
+      <div class="actions-group">
+        <button type="submit" th:formaction="@{/Technician/apManagement/accept}" class="btn btn-primary">
+          Aceptar Solicitud
+        </button>
+        <button type="submit" th:formaction="@{/Technician/apManagement/reject}" class="btn assistanceRequest-btn-danger">
+          Denegar Solicitud
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="content-footer">
+    <a th:href="@{/Technician/assistanceRequestList}" class="btn btn-secondary">Volver a la lista</a>
   </div>
-</form>
-
-<br><br>
-<a th:href="@{/Technician/assistanceRequestList}">Volver a la lista</a>
+</div>
 
 </body>
 </html>

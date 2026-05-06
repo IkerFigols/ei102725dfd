@@ -13,9 +13,6 @@ import java.time.LocalDate;
 
 public class OviUserValidator implements Validator {
 
-    @Autowired
-    private PersonDao personDao;
-
     @Override
     public boolean supports(Class<?> cls) {
         return OviUser.class.equals(cls);
@@ -27,9 +24,6 @@ public class OviUserValidator implements Validator {
         OviUser user = (OviUser) obj;
         if(user.getAddress().trim().isEmpty()){
             errors.rejectValue("address", "required", "Es necesario añadir una dirección");
-        }
-        if(personDao.getPerson(user.getDni()).getBirthdayDate().plusYears(18).isAfter(LocalDate.now()) && user.getLegalGuardian().isBlank()){
-            errors.rejectValue("legalGuardian", "required", "Los menores de 18 años deben de tener un tutor legal");
         }
         if(!user.getState().name().equals("REJECTED") && !user.getReason().isEmpty()){
             errors.rejectValue("reason", "required", "Para un usuario ACEPTADO o PENDIENTE no hay razón");
@@ -45,4 +39,5 @@ public class OviUserValidator implements Validator {
             errors.rejectValue("address", "length", "La Dirección no puede ser mayor a 100 carácteres");
         }
     }
+
 }

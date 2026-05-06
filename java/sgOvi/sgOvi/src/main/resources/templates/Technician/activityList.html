@@ -1,39 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
-    <title>Gestionar Ovi Users</title>
+    <title>Gestionar Actividades</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1>Lista de Actividades</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Id Actividad</th>
-        <th>Tipo</th>
-        <th>Titulo</th>
-        <th>Fecha</th>
-        <th>Dirección</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="activity: ${activities}">
-        <td th:text="${activity.idActivity}"></td>
-        <td th:text="${activity.type}"></td>
-        <td th:text="${activity.tittle}"></td>
-        <td th:text="${activity.date}"></td>
-        <td th:text="${activity.address}"></td>
 
-        </td>
-        <td><a th:href="@{/Technician/activityManagement/{idActivity}(idActivity=${activity.getIdActivity})}">Editar</a></td>
-        <td><a th:href="@{/Technician/activityList/delete/{idActivity}(idActivity=${activity.getIdActivity})}">Borrar</a></td>
+<main class="main-content">
+    <div class="page-container">
 
-    </tr>
-    </tbody>
-</table>
-<a href="addActivity">Añadir Actividad</a>
-<br><br>
-<a href="/Technician/menuTechnician" >Volver</a>
+        <h1 class="title">Lista de Actividades</h1>
+        <p class="description">Gestione las actividades del sistema desde este panel centralizado.</p>
+
+        <div class="table-responsive">
+            <table class="table-custom">
+                <thead>
+                <tr>
+                    <th>Id Actividad</th>
+                    <th>Tipo</th>
+                    <th>Título</th>
+                    <th>Fecha</th>
+                    <th>Dirección</th>
+                    <th style="text-align: center;">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="activity: ${activities}">
+                    <td th:text="${activity.idActivity}"></td>
+                    <td th:text="${activity.type}"></td>
+                    <td th:text="${activity.tittle}"></td>
+                    <td th:text="${activity.date}"></td>
+                    <td th:text="${activity.address}"></td>
+                    <td>
+                        <div class="actions-group" style="justify-content: center;">
+                            <a class="btn btn-primary"
+                               th:href="@{/Technician/activityManagement/{idActivity}(idActivity=${activity.getIdActivity})}">
+                                Editar
+                            </a>
+                            <a class="btn btn-danger"
+                               th:href="@{/Technician/activityList/delete/{idActivity}(idActivity=${activity.getIdActivity})}">
+                                Borrar
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-footer">
+            <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+            <a href="addActivity" class="btn btn-primary">Añadir Nueva Actividad</a>
+        </div>
+
+    </div>
+</main>
+
 </body>
 </html>

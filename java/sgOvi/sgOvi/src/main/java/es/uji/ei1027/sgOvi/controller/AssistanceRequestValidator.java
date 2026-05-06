@@ -20,15 +20,19 @@ public class AssistanceRequestValidator implements Validator {
         if(req.getDescription().length() >= 250)
             errors.rejectValue("description", "length0",
                     "El motivo es demasiado largo");
-        if(req.getTittle() == null || req.getTittle().isEmpty())
-            errors.rejectValue("tittle","required","Debes introducir un título");
+        if(req.getTittle() == null || req.getTittle().isEmpty()) {
+            errors.rejectValue("tittle", "required", "Debes introducir un título");
+        }
         if(req.getProvince() == null || req.getProvince().isEmpty())
             errors.rejectValue("province","required","Debes introducir una provincia");
         if(req.getShiftPreference() == null)
             errors.rejectValue("shiftPreference","required","Debes introducir una preferencia de horario");
 
-        if(req.getTittle() != null && req.getTittle().length()> 20)
-            errors.rejectValue("tittle","required","El titulo de la asistencia no puede ser mayor a 20 caracteres");
+        if(req.getTittle() != null && req.getTittle().length() > 50) {
+            errors.rejectValue("tittle", "required", "El titulo de la asistencia no puede ser mayor a 20 caracteres");
+            System.out.println("Falla el titulo");
+            System.out.println(req.getTittle());
+        }
         if(req.getProvince() != null && req.getProvince().length()>50)
             errors.rejectValue("province","required","El nombre de la provincia no puede ser mayor a 50 caracteres");
         if((req.getReason() != null && !req.getReason().isBlank()) && !req.getState().name().equals("REJECTED")){

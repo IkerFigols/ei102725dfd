@@ -3,37 +3,54 @@
 <head>
     <title>Gestionar PAP/PATIs</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<h1>Lista de asistentes</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>DNI</th>
-        <th>Tipo</th>
-        <th>Disponibilidad</th>
-        <th>Estado</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="papPati: ${papPatis}">
-        <td th:text="${papPati.value[0]}"></td>
-        <td th:text="${papPati.value[1]}"></td>
-        <td th:text="${papPati.key}"></td>
-        <td th:text="${papPati.value[2]}"></td>
-        <td th:text="${papPati.value[3]}"></td>
-        <td th:text="${papPati.value[4]}"></td>
+<body class="main-content">
 
-        </td>
-        <td><a th:href="@{/Technician/papPatiManagement/{dni}(dni=${papPati.key})}">Editar</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<br><br>
-<a href="/Technician/menuTechnician" >Volver</a>
+<div class="page-container">
+    <h1 class="title">Lista de Asistentes</h1>
+    <p class="description">Panel de control para la gestión de usuarios PAP/PATI y supervisión de sus estados de disponibilidad.</p>
+
+    <div class="table-responsive">
+        <table class="table-custom">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>DNI</th>
+                <th>Tipo</th>
+                <th>Disponibilidad</th>
+                <th>Estado</th>
+                <th style="text-align: center;">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="papPati: ${papPatis}">
+                <td th:text="${papPati.value[0]}"></td>
+                <td th:text="${papPati.value[1]}"></td>
+                <td th:text="${papPati.key}"></td>
+                <td th:text="${papPati.value[2]}"></td>
+                <td th:text="${papPati.value[3]}"></td>
+                <td th:text="${papPati.value[4]}"></td>
+                <td>
+                    <div class="actions-group" style="justify-content: center;">
+                        <a class="btn btn-primary"
+                           th:href="@{/Technician/papPatiManagement/{dni}(dni=${papPati.key})}">
+                            Editar
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="content-footer">
+        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+    </div>
+
+    <div class="bottom-spacer"></div>
+</div>
+
 </body>
 </html>

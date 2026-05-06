@@ -3,76 +3,83 @@
 <head>
     <title>Editar Actividad</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<h1>Editar PAP/PATI</h1>
+<body class="main-content">
 
-<form th:action="@{/Technician/activityManagement/update}" th:object="${activity}" method="post">
+<div class="page-container">
+    <div class="form-container">
+        <h1 class="title">Editar PAP/PATI</h1>
+        <p class="description">Modifique los campos necesarios para actualizar la información de la actividad.</p>
 
-    <p>
-        <label for="idActivity">Identificador de la actividad:</label>
-        <input type="text" id="idActivity" name="idActivity" th:field="*{idActivity}" readonly />
+        <form th:action="@{/Technician/activityManagement/update}" th:object="${activity}" method="post">
 
-    </p>
+            <div class="textarea-container">
+                <label class="detail-label" for="idActivity">Identificador de la actividad:</label>
+                <input type="text" id="idActivity" name="idActivity" th:field="*{idActivity}" class="textarea-read-only" readonly />
+            </div>
 
-    <p>
-        <label for="tittle">Título:</label>
-        <input type="text" id="tittle" name="tittle" th:field="*{tittle}" required/>
-        <div th:if="${#fields.hasErrors('tittle')}" th:errors="*{tittle}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <div class="textarea-container">
+                <label class="detail-label" for="tittle">Título:</label>
+                <input type="text" id="tittle" name="tittle" th:field="*{tittle}" class="textarea-field-small" required/>
+                <div th:if="${#fields.hasErrors('tittle')}" th:errors="*{tittle}" class="error-text"></div>
+            </div>
 
-    </p>
+            <div class="textarea-container">
+                <label class="detail-label" for="description">Descripción:</label>
+                <input type="text" id="description" name="description" th:field="*{description}" class="textarea-field-small" required/>
+                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-text"></div>
+            </div>
 
-    <p>
-        <label for="description">Descripción:</label>
-        <input type="text" id="description" name="description" th:field="*{description}" required/>
-        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <div class="textarea-container">
+                <label class="detail-label" for="type">Tipo de Actividad:</label>
+                <select id="type" name="type" class="textarea-field-small" required>
+                    <option value="DISSEMINATION" th:selected="*{type == 'DISSEMINATION'}">Diseminación</option>
+                    <option value="TRAINING" th:selected="*{type == 'TRAINING'}">Formación</option>
+                </select>
+            </div>
 
-    </p>
+            <div class="textarea-container">
+                <label class="detail-label" for="date">Fecha:</label>
+                <input type="date" id="date" name="date" th:field="*{date}" class="textarea-field-small" required/>
+                <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="error-text"></div>
+            </div>
 
-    <p>
+            <div class="textarea-container">
+                <label class="detail-label" for="address">Dirección:</label>
+                <input type="text" id="address" name="address" th:field="*{address}" class="textarea-field-small" required/>
+                <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error-text"></div>
+            </div>
 
-        <label for="type">Tipo de Actividad:</label>
-        <select id="type" name="type" required>
-            <option value="DISSEMINATION" th:selected="*{type == 'DISSEMINATION'}">Diseminacion</option>
-            <option value="TRAINING" th:selected="*{type == 'TRAINING'}">Formación</option>
-        </select>
-    </p>
-    <p>
-        <label for="date">Fecha:</label>
-        <input type="date" id="date" name="date" th:field="*{date}" required/>
-        <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <div class="textarea-container">
+                <label class="detail-label" for="capacity">Capacidad:</label>
+                <input type="number" id="capacity" name="capacity" th:field="*{capacity}" class="textarea-field-small" />
+                <div th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}" class="error-text"></div>
+            </div>
 
-    </p>
-    <p>
-        <label for="address">Dirección:</label>
-        <input type="text" id="address" name="address" th:field="*{address}" required/>
-        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <div class="textarea-container">
+                <label class="detail-label" for="sponsor">Sponsor:</label>
+                <input type="text" id="sponsor" name="sponsor" th:field="*{sponsor}" class="textarea-field-small" />
+                <div th:if="${#fields.hasErrors('sponsor')}" th:errors="*{sponsor}" class="error-text"></div>
+            </div>
 
-    </p>
-    <p>
-        <label for="capacity">Capacidad:</label>
-        <input type="number" id="capacity" name="capacity" th:field="*{capacity}" />
-        <div th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <div class="textarea-container">
+                <label class="detail-label" for="idInstructor">DNI del Instructor:</label>
+                <input type="text" id="idInstructor" name="idInstructor" th:field="*{idInstructor}" class="textarea-field-small" required/>
+                <div th:if="${#fields.hasErrors('idInstructor')}" th:errors="*{idInstructor}" class="error-text"></div>
+            </div>
 
-    </p>
-    <p>
-        <label for="sponsor">Sponsor:</label>
-        <input type="text" id="sponsor" name="sponsor" th:field="*{sponsor}" />
-        <div th:if="${#fields.hasErrors('sponsor')}" th:errors="*{sponsor}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+            <div class="activities-actions">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
 
-    </p>
-    <p>
-        <label for="idInstructor">DNI del Instructor:</label>
-        <input type="text" id="idInstructor" name="idInstructor" th:field="*{idInstructor}" required/>
-        <div th:if="${#fields.hasErrors('idInstructor')}" th:errors="*{idInstructor}" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
+        </form>
 
-    </p>
-    <button type="submit">Guardar cambios</button>
-
-</form>
-
-<br><br>
-<a th:href="@{/Technician/activityList}">Volver a la lista</a>
+        <div class="content-footer">
+            <a th:href="@{/Technician/activityList}" class="btn btn-secondary">Volver a la lista</a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

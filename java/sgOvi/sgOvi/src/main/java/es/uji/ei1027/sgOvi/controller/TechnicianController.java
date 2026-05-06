@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 @Controller
@@ -95,6 +96,9 @@ public class TechnicianController {
     public String processUpdateSubmitUser(@ModelAttribute ("user") OviUser user,
                                           BindingResult bindingResult
     ) {
+        if(personDao.getPerson(user.getDni()).getBirthdayDate().isAfter(LocalDate.now().minusYears(18)) && (user.getLegalGuardian() == null || user.getLegalGuardian().isBlank())){
+            bindingResult.rejectValue("legalGuardian", "required", "Los menores de 18 años deben tener un tutor legal");
+        }
         ouv.validate(user, bindingResult);
         if(bindingResult.hasErrors()){
             return "Technician/userManagement";
@@ -163,6 +167,9 @@ public class TechnicianController {
                                        BindingResult bindingResult) {
 
         personDtoValidator.validate(pidto, bindingResult);
+        if(personDao.getPerson(pidto.getPerson().getDni()) != null){
+            bindingResult.rejectValue("person.dni", "duplicated", "Ya hay una persona con ese dni en la base de datos");
+        }
         if(bindingResult.hasErrors()){
             System.out.println(bindingResult.getAllErrors().toString());
             return "Technician/addInstructor";
@@ -212,6 +219,7 @@ public class TechnicianController {
             request.setReason("No se han encontrado candidatos compatibles para la solicitud");
         }else {
             request.setState(State.APPROVED.name());
+            request.setReason(null);
             for(PapPati papPati : listaCoincidencias){
                 Selection selection = new Selection();
                 selection.setIdSelection(cg.generateCode("SEL"));
@@ -223,8 +231,9 @@ public class TechnicianController {
                 selectionDao.addSelection(selection);
             }
         }
-        assistanceReqDao.updateAssistanceRequest(request);
 
+        System.out.println("reason=" + request.getReason());
+        assistanceReqDao.updateAssistanceRequest(request);
         return "redirect:/Technician/assistanceRequestList";
     }
 
@@ -240,7 +249,6 @@ public class TechnicianController {
             request.setState(State.PENDING.name());
             return "Technician/apManagement";
         }
-        System.out.println("non");
         assistanceReqDao.updateAssistanceRequest(request);
         return "redirect:/Technician/assistanceRequestList";
     }
