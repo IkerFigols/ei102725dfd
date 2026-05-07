@@ -13,9 +13,6 @@
         <header class="app-header" style="margin-bottom: 30px;">
             <h1 class="title">Panel de Administración</h1>
             <p class="description">Seleccione una categoría para gestionar los registros del sistema.</p>
-            <a th:href="@{/menuIndex}" class="btn btn-secondary" style="font-size: 12px; padding: 5px 15px; margin-bottom: 20px;">
-                ← Volver al inicio
-            </a>
         </header>
 
         <nav class="menu-grid">
@@ -25,6 +22,13 @@
             <a th:href="@{/Technician/assistanceRequestList}" class="btn btn-primary">Lista de Solicitudes de Asistencia</a>
             <a th:href="@{/Technician/activityList}" class="btn btn-primary">Lista de Actividades</a>
         </nav>
+
+        <footer style="margin-top: 40px;">
+            <div style="display: flex; justify-content: space-between; width: 100%;">
+                <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
+                <a th:href="@{/logout}" class="btn btn-secondary">Cerrar sesión</a>
+            </div>
+        </footer>
     </section>
 </div>
 
