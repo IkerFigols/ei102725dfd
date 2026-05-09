@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
     <title>Gestionar Ovi Users</title>
     <meta charset="UTF-8" />
@@ -7,7 +9,7 @@
 </head>
 <body class="main-content">
 
-<div class="page-container">
+<div class="page-container" layout:fragment="content">
     <h1 class="title">Lista de Ovi Users</h1>
     <p class="description">Administre las cuentas de usuario y supervise su estado actual en el sistema.</p>
 

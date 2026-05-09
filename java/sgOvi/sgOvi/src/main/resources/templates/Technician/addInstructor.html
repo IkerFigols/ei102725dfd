@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
     <meta charset="UTF-8" />
     <title>Crear nueva persona</title>
@@ -7,7 +9,7 @@
 </head>
 
 <body class="main-content">
-<main class="page-container">
+<main class="page-container" layout:fragment="content">
     <div class="form-container">
         <h1 class="title">Nuevo Instructor/a</h1>
         <p class="description">Complete los datos personales y profesionales para registrar un nuevo instructor en la plataforma.</p>

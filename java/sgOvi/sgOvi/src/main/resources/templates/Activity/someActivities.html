@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
+<head>
+    <meta charset="UTF-8" />
+    <title>SgOvi - Actividades</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="form-container">
+
+        <header class="app-header">
+            <h1 class="title">Algunas actividades </h1>
+            <p class="description">Listado de las actividades que puedes encontrar en la OVI.</p>
+        </header>
+
+        <div class="table-responsive">
+            <table class="table-custom">
+                <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Capacidad</th>
+                    <th>Sponsor</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="activity: ${activities}">
+                    <td><strong th:text="${activity.tittle}"></strong></td>
+                    <td th:text="${activity.type.getDescription()}"></td>
+                    <td th:text="${activity.description}"></td>
+                    <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${activity.capacity}"></td>
+                    <td th:text="${activity.sponsor}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${activities == null or activities.isEmpty()}" class="description">
+            <p>No hay actividades para mostrar.</p>
+        </div>
+
+        <footer class="register-footer">
+            <div class="button-group">
+            <a th:href="@{/}" class="btn btn-secondary">Volver al Menú </a>
+            </div>
+        </footer>
+    </section>
+</div>
+
+</body>
+</html>

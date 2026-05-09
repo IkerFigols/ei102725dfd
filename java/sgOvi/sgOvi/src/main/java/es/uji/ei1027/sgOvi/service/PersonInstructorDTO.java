@@ -3,7 +3,7 @@ package es.uji.ei1027.sgOvi.service;
 import es.uji.ei1027.sgOvi.model.Instructor;
 import es.uji.ei1027.sgOvi.model.Person;
 
-public class PersonInstructorDTO {
+public class PersonInstructorDTO implements PersonDTO {
     private Person person;
     private Instructor instructor;
 

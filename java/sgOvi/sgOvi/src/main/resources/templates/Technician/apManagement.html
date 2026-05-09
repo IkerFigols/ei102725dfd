@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{Fragments/base}">
 <head>
   <title>Petición de asistencia</title>
   <meta charset="UTF-8" />
@@ -7,7 +9,7 @@
 </head>
 <body class="main-content">
 
-<div class="form-container">
+<div class="form-container" layout:fragment="content">
   <h1 class="title">Gestionar Petición de Asistencia</h1>
   <p class="description">Revise los detalles de la solicitud y tome una decisión administrativa.</p>
 

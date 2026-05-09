@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
   <title>Editar Ovi User</title>
   <meta charset="UTF-8" />
@@ -7,7 +9,7 @@
 </head>
 <body class="main-content">
 
-<div class="page-container">
+<div class="page-container" layout:fragment="content">
   <div class="form-container">
     <h1 class="title">Editar Ovi User</h1>
     <p class="description">Actualice la información de contacto y el estado de validación del usuario en el sistema.</p>

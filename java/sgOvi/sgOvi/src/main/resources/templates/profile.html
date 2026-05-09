@@ -1,10 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
-    <meta charset="UTF-8">
-    <title>PACO HAS ESTO</title>
+    <meta charset="UTF-8" />
+    <title>Perfil</title>
 </head>
 <body>
+
+<div layout:fragment="content">
+    <div class="form-container">
+        <h1 class="title"> Tus datos personales </h1>
+        <p class="description">Si deseas modificar algún, simplemente cambia los datos y pulsa el botón actualizar.</p>
+
+        <form th:action="@{/profile}" th:object="${dto}" method="post">
+
+            <div class="textarea-container">
+                <label class="detail-label" for="dni">Dni:</label>
+                <input id="dni" type="text" th:field="*{person.dni}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.dni')}" th:errors="*{person.dni}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="name">Nombre completo:</label>
+                <input id="name" type="text" th:field="*{person.name}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.name')}" th:errors="*{person.name}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="surname">Apellidos:</label>
+                <input id="surname" type="text" th:field="*{person.surname}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.surname')}" th:errors="*{person.surname}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="phoneNumber">Número de Telefono:</label>
+                <input id="phoneNumber" type="text" th:field="*{person.phoneNumber}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.phoneNumber')}" th:errors="*{person.phoneNumber}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="email">Email: </label>
+                <input id="email" type="text" th:field="*{person.email}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.email')}" th:errors="*{person.email}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label for="birthdaydate" class="title" style="font-size: 14px;">Fecha de nacimiento:</label>
+                <input id="birthdaydate" type="date" th:field="*{person.birthdayDate}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.birthdayDate')}" th:errors="*{person.birthdayDate}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="gender">Tipo:</label>
+                <select id="gender" name="person.gender" class="textarea-field-small">
+                    <option value="MALE" th:selected="*{person.gender.name() == 'MALE'}">Mascúlino</option>
+                    <option value="FEMALE" th:selected="*{person.gender.name() == 'FEMALE'}">Femenino</option>
+                    <option value="UNDEFINED" th:selected="*{person.gender.name() == 'UNDEFINED'}">Otro</option>
+                </select>
+            </div>
+            <div th:if="${#fields.hasErrors('person.gender')}" th:errors="*{person.gender}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+
+            <div th:if="${session.rol == 'OVI_USER'}">
+                <input type="hidden" th:field="*{oviUser.dni}" />
+                <input type="hidden" th:field="*{oviUser.birthdayDate}"/>
+
+                <div class="textarea-container">
+                    <label for="address" class="title" style="font-size: 14px;">Dirección:</label>
+                    <input id="address" type="text" th:field="*{oviUser.address}" class="textarea-field-small">
+                    <div th:if="${#fields.hasErrors('oviUser.address')}" th:errors="*{oviUser.address}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+                </div>
+
+                <div class="textarea-container">
+                    <label for="legalGuardian" class="title" style="font-size: 14px;">Tutor Legal:</label>
+                    <input id="legalGuardian" type="text" th:field="*{oviUser.legalGuardian}" class="textarea-field-small">
+                    <div th:if="${#fields.hasErrors('oviUser.legalGuardian')}" th:errors="*{oviUser.legalGuardian}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+                </div>
+            </div>
+
+
+
+            <div th:if="${session.rol == 'PAP_PATI'}">
+                <input type="hidden" th:field="*{papPati.dni}" />
+                <input type="hidden" name="papPati.state" th:value="*{papPati.state}"/>
+                <input type="hidden" th:field="*{papPati.reason}"/>
+
+                <div class="textarea-container">
+                    <label class="detail-label" for="addressPap">Dirección:</label>
+                    <input type="text" id="addressPap" th:field="*{papPati.address}" class="textarea-field-small">
+                    <div th:if="${#fields.hasErrors('papPati.address')}" th:errors="*{papPati.address}" class="error-text"></div>
+                </div>
+
+                <div class="textarea-container">
+                    <label class="detail-label" for="type">Tipo:</label>
+                    <select id="type" name="type" class="textarea-field-small">
+                        <option value="PAP" th:selected="*{papPati.type.name() == 'PAP'}">PAP</option>
+                        <option value="PATI" th:selected="*{papPati.type.name() == 'PATI'}">PATI</option>
+                    </select>
+                </div>
+
+                <div class="textarea-container">
+                    <label class="detail-label" for="training">Entrenamiento:</label>
+                    <input type="text" id="training" th:field="*{papPati.training}" class="textarea-field-small"/>
+                    <div th:if="${#fields.hasErrors('papPati.training')}" th:errors="*{papPati.training}" class="error-text"></div>
+                </div>
+
+                <div class="textarea-container">
+                    <label class="detail-label" for="experience">Años de experiencia:</label>
+                    <input type="number" id="experience" th:field="*{papPati.experience}" class="textarea-field-small" required />
+                    <div th:if="${#fields.hasErrors('papPati.experience')}" th:errors="*{papPati.experience}" class="error-text"></div>
+                </div>
+
+                <div class="textarea-container">
+                    <label class="detail-label" for="document">Documento:</label>
+                    <input type="text" id="document" th:field="*{papPati.document}" class="textarea-field-small" required />
+                    <div th:if="${#fields.hasErrors('papPati.document')}" th:errors="*{papPati.document}" class="error-text"></div>
+                </div>
+
+                <div class="textarea-container">
+                    <label class="detail-label" for="shift">Turno:</label>
+                    <select id="shift" name="papPati.shift" class="textarea-field-small">
+                        <option value="MORNING" th:selected="*{papPati.shift.name() == 'MORNING'}">Mañana</option>
+                        <option value="AFTERNOON" th:selected="*{papPati.shift.name() == 'AFTERNOON'}">Tarde</option>
+                        <option value="ANY" th:selected="*{papPati.shift.name() == 'ANY'}">Cualquiera</option>
+                    </select>
+                </div>
+
+                <div class="textarea-container" style="display: flex; align-items: center; gap: 10px; margin-bottom: 25px;">
+                    <label class="detail-label" for="drivingLicense" style="width: auto; margin-bottom: 0;">Carné de Conducir:</label>
+                    <input type="checkbox" id="drivingLicense" name="papPati.drivingLicense" value="true" th:checked="*{papPati.drivingLicense}"/>
+                </div>
+            </div>
+
+            <div th:if="${session.rol == 'INSTRUCTOR'}">
+                <input type="hidden" th:field="*{instructor.dni}" />
+
+                <div class="textarea-container">
+                    <label class="detail-label" for="expertise" style="width: auto; margin-bottom: 0;">Especialidades: </label>
+                    <input type="text" id="expertise" th:field="*{instructor.expertise}"/>
+                </div>
+                <div th:if="${#fields.hasErrors('instructor.expertise')}" th:errors="*{instructor.expertise}" class="error-text"></div>
+            </div>
+
+            <div class="activities-actions">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

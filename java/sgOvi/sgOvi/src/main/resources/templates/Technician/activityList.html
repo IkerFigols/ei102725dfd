@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
     <title>Gestionar Actividades</title>
     <meta charset="UTF-8" />
@@ -7,7 +9,7 @@
 </head>
 <body>
 
-<main class="main-content">
+<main class="main-content" layout:fragment="content">
     <div class="page-container">
 
         <h1 class="title">Lista de Actividades</h1>
@@ -38,7 +40,7 @@
                                th:href="@{/Technician/activityManagement/{idActivity}(idActivity=${activity.getIdActivity})}">
                                 Editar
                             </a>
-                            <a class="btn btn-danger"
+                            <a class="btn btn-primary"
                                th:href="@{/Technician/activityList/delete/{idActivity}(idActivity=${activity.getIdActivity})}">
                                 Borrar
                             </a>

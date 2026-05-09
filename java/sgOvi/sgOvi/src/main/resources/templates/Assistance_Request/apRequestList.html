@@ -20,8 +20,8 @@
             <form th:action="@{/Assistance_Request/apRequestList}" method="get" style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end;">
 
                 <div style="display: flex; flex-direction: column; gap: 5px;">
-                    <label class="detail-label" style="margin-bottom: 0;">Filtrar por estado:</label>
-                    <select name="state" class="textarea-field-small" style="width: 200px;">
+                    <label for ="filter-state"class="detail-label" style="margin-bottom: 0;">Filtrar por estado:</label>
+                    <select id="filter-state" name="state" class="textarea-field-small" style="width: 200px;">
                         <option value="">Todos los estados</option>
                         <option value="PENDING" th:selected="${selectedState == 'PENDING'}">Pendiente</option>
                         <option value="APPROVED" th:selected="${selectedState == 'APPROVED'}">Aprobado</option>
@@ -30,8 +30,8 @@
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 5px;">
-                    <label class="detail-label" style="margin-bottom: 0;">Ordenar por:</label>
-                    <select name="sort" class="textarea-field-small" style="width: 200px;">
+                    <label for="filter-order" class="detail-label" style="margin-bottom: 0;">Ordenar por:</label>
+                    <select id="filter-order" name="sort" class="textarea-field-small" style="width: 200px;">
                         <option value="dateDesc" th:selected="${selectedSort == 'dateDesc' or selectedSort == null}">Fecha (Más antiguas)</option>
                         <option value="dateAsc" th:selected="${selectedSort == 'dateAsc'}">Fecha (Más recientes)</option>
                         <option value="state" th:selected="${selectedSort == 'state'}">Estado</option>

@@ -19,8 +19,8 @@
         <form th:action="@{/Register/registerPapPati}" th:object="${pappati}" method="post">
             <input type="hidden" th:field="*{dni}" />
 
-            <div class="textarea-container" style="background-color: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid var(--border-gray);">
-                <label class="title" style="font-size: 14px; display: block; margin-bottom: 10px;">Tipo de Asistente Personal:</label>
+            <fieldset class="textarea-container" style="background-color: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid var(--border-gray);">
+                <legend class="title" style="font-size: 14px; display: block; margin-bottom: 10px;">Tipo de Asistente Personal:</legend>
                 <div style="margin-bottom: 8px;">
                     <input type="radio" id="PAP" value="PAP" th:field="*{type}">
                     <label for="PAP"><strong>PAP:</strong> Asistencia a personas de 18 a 64 años</label>
@@ -30,7 +30,7 @@
                     <label for="PATI"><strong>PATI:</strong> Asistente terapéutico infantil</label>
                 </div>
                 <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
-            </div>
+            </fieldset>
 
             <div class="info-grid" style="grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
                 <div class="textarea-container">
@@ -69,15 +69,15 @@
                 </div>
             </div>
 
-            <div class="textarea-container">
-                <label class="title" style="font-size: 14px; display: block; margin-bottom: 10px;">Preferencia de horario:</label>
+            <fieldset class="textarea-container">
+                <legend class="title" style="font-size: 14px; display: block; margin-bottom: 10px;">Preferencia de horario:</legend>
                 <div style="display: flex; gap: 20px;">
                     <span><input type="radio" id="MORNING" value="MORNING" th:field="*{shift}"> <label for="MORNING">Mañanas</label></span>
                     <span><input type="radio" id="AFTERNOON" value="AFTERNOON" th:field="*{shift}"> <label for="AFTERNOON">Tardes</label></span>
                     <span><input type="radio" id="ANY" value="ANY" th:field="*{shift}"> <label for="ANY">Indiferente</label></span>
                 </div>
                 <div th:if="${#fields.hasErrors('shift')}" th:errors="*{shift}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
-            </div>
+            </fieldset>
 
             <div style="text-align: center; margin-top: 30px;">
                 <button type="submit" class="btn btn-primary" style="width: 250px;">Completar Registro</button>

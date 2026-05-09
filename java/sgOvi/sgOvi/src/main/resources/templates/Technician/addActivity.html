@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
   <meta charset="UTF-8" />
   <title>Crear nueva actividad</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
-<body class="main-content">
+<body class="main-content" layout:fragment="content">
 <main class="page-container">
   <div class="form-container">
     <h1 class="title">Nueva Actividad</h1>

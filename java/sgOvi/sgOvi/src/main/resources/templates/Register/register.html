@@ -68,15 +68,15 @@
                 </div>
             </div>
 
-            <div class="textarea-container">
-                <label class="title" style="font-size: 14px; display: block; margin-bottom: 10px;">Género:</label>
+            <fieldset class="textarea-container">
+                <legend class="title" style="font-size: 14px; display: block; margin-bottom: 10px;">Género:</legend>
                 <div style="display: flex; gap: 20px;">
                     <span><input type="radio" id="masculino" value="MALE" th:field="*{gender}"> <label for="masculino">Masculino</label></span>
                     <span><input type="radio" id="femenino" value="FEMALE" th:field="*{gender}"> <label for="femenino">Femenino</label></span>
                     <span><input type="radio" id="otros" value="UNDEFINED" th:field="*{gender}"> <label for="otros">Otros</label></span>
                 </div>
                 <div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
-            </div>
+            </fieldset>
 
             <div class="textarea-container">
                 <label for="birthdaydate" class="title" style="font-size: 14px;">Fecha de nacimiento:</label>
@@ -84,8 +84,8 @@
                 <div th:if="${#fields.hasErrors('birthdayDate')}" th:errors="*{birthdayDate}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
             </div>
 
-            <div class="textarea-container" style="background-color: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid var(--border-gray);">
-                <label class="title" style="font-size: 14px; display: block; margin-bottom: 10px;">¿Qué perfil deseas registrar?</label>
+            <fieldset class="textarea-container" style="background-color: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid var(--border-gray);">
+                <legend class="title" style="font-size: 14px; display: block; margin-bottom: 10px;">¿Qué perfil deseas registrar?</legend>
                 <div style="margin-bottom: 10px;">
                     <input type="radio" id="pappati" value="PapPati" th:field="*{preference}">
                     <label for="pappati"><strong>Asistente Personal</strong> (Profesional)</label>
@@ -95,7 +95,7 @@
                     <label for="oviuser"><strong>Usuario OVI</strong> (Diversidad funcional)</label>
                 </div>
                 <div th:if="${#fields.hasErrors('preference')}" th:errors="*{preference}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
-            </div>
+            </fieldset>
 
             <div class="textarea-container">
                 <input type="checkbox" id="dataProtection" th:field="*{dataProtection}">

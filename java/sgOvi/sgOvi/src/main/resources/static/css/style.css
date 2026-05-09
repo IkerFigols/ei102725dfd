@@ -192,6 +192,17 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
     gap: 20px;
     margin-bottom: 30px;
 }
+.info-grid-papPatiInfo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+.info-item{
+    border-bottom: 1px solid var(--border-gray);
+    padding-bottom: 8px;
+}
 
 .info-card { /* Tarjeta individual con borde para secciones informativas */
     border: 1px solid var(--border-gray);
@@ -199,6 +210,19 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
     border-radius: 8px;
     background-color: var(--bg-white);
 }
+
+.label {
+    font-weight: 600;
+    color: var(--primary-blue);
+    display: block;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+.value {
+    color: #334155;
+    font-size: 15px;
+}
+
 
 .login-section { /* Estilo destacado para la caja de inicio de sesión */
     background-color: var(--bg-login);
@@ -288,8 +312,8 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
 
 .btn-logout { /* Botón de cierre de sesión con color rojo de advertencia */
     padding: 4px 12px;
-    border: 1px solid var(--danger-red);
-    color: var(--danger-red);
+    border: 1px solid var(--rejected-text);
+    color: var(--rejected-text);
     text-decoration: none;
     border-radius: 4px;
     font-size: 13px;
@@ -560,6 +584,16 @@ select.textarea-field-small { /* Ajuste específico para que el elemento select 
     letter-spacing: 1px;
     color: var(--text-muted);
 }
+.section-title-papPatiInfo {
+    grid-column: span 2;
+    border-left: 4px solid var(--primary-blue);
+    padding-left: 10px;
+    font-size: 20px;
+    margin-top: 20px;
+    background: #f1f5f9;
+    padding: 5px 10px;
+}
+
 
 .section-margin { /* Espaciado extra para secciones */
     margin-bottom: 50px;
@@ -613,10 +647,11 @@ select.textarea-field-small { /* Ajuste específico para que el elemento select 
 
 @media (max-width: 768px) { /* Ajustes para pantallas de móviles */
     .info-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
     .nav-container {
         flex-direction: column;
         gap: 10px;
     }
 }
+

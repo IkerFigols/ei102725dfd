@@ -32,4 +32,10 @@ public class ActivityController {
 
         return "Activity/listAll";
     }
+
+    @RequestMapping("/someActivities")
+    public String listSomeActivities(Model model){
+        model.addAttribute("activities", activityDao.getRecentActivities());
+        return "Activity/someActivities";
+    }
 }
