@@ -105,7 +105,7 @@ public class PapPatiDao {
         }
     }
 
-    public ArrayList<PapPati> findCompatiblePapPatis(String type,
+    public ArrayList<PapPati> findCompatiblePapPatis(//String type,
                                                      Boolean drivingLicense,
                                                      ShiftType shiftType,
                                                      String province,
@@ -125,14 +125,16 @@ public class PapPatiDao {
                     "SELECT pap.* " +
                             "FROM Pap_Pati AS pap " +
                             "JOIN Person AS per USING (dni) " +
-                            "WHERE pap.type = ? " +
-                            "AND (? = FALSE OR pap.drivingLicense = TRUE)" +
-                            "AND pap.shift LIKE ? " +
+                            "WHERE state = 'APPROVED' " +
+                            "AND available = TRUE " +
+                            //"AND pap.type = ? " +
+                            "AND (? = FALSE OR pap.drivingLicense = TRUE) " +
+                            "AND (pap.shift LIKE ? OR pap.shift LIKE 'ANY') " +
                             "AND pap.experience >= ? " +
                             "AND per.birthdayDate <= ? " +
                             "AND LOWER(per.province) = LOWER(?)",
                     new PapPatiRowMapper(),
-                    type,
+                    //type,
                     drivingLicense,
                     stringShiftType,
                     minExperience,
