@@ -103,4 +103,18 @@ public class ActivityDao {
             return null;
         }
     }
+    public List<Activity> getUserActivities(String dni) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT a.* FROM Activity a " +
+                            "JOIN Attendance att ON a.idActivity = att.idActivity " +
+                            "WHERE att.idOviUser = ? OR att.idPapPati = ? " +
+                            "ORDER BY a.date DESC",
+                    new ActivityRowMapper(),
+                    dni, dni
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
 }
