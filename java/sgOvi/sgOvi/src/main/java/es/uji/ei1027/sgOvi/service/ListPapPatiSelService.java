@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ListPapPatiSelService {
     public List<PapPati> getPapPatiSelection(String idAsReq);
-    public ArrayList<PapPati> listCompatiblePapPati(String idAsReq);
+    public ArrayList<PersonPapPatiDTO> listCompatiblePapPati(String idAsReq);
 }

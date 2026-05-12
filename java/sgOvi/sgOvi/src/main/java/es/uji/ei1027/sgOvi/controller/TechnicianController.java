@@ -3,10 +3,8 @@ package es.uji.ei1027.sgOvi.controller;
 import es.uji.ei1027.sgOvi.dao.*;
 import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.State;
-import es.uji.ei1027.sgOvi.service.CodeGenerator;
-import es.uji.ei1027.sgOvi.service.ListByName;
-import es.uji.ei1027.sgOvi.service.ListPapPatiSelService;
-import es.uji.ei1027.sgOvi.service.PersonInstructorDTO;
+import es.uji.ei1027.sgOvi.service.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/Technician")
@@ -48,6 +48,7 @@ public class TechnicianController {
     private PersonDtoValidator personDtoValidator = new PersonDtoValidator();
     private AssistanceRequestValidator assistanceRequestValidator = new AssistanceRequestValidator();
     private ActivityValidator activityValidator = new ActivityValidator();
+    private RequestPersonUserDTO requestPersonUserDTO = new RequestPersonUserDTO();
 
     @RequestMapping("/menuTechnician")
     public String menuTechnician(Model model) {
@@ -76,6 +77,24 @@ public class TechnicianController {
     public String listAssistanceRequest(Model model) {
         model.addAttribute("requests", assistanceReqDao.getAssistanceRequests());
         return "Technician/assistanceRequestList";
+    }
+
+    @PostMapping("/listFilter")
+    public String filterRequests(@RequestParam(name = "stateFilter", required = false) String stateFilter, Model model) {
+
+        List<Assistance_Request> filteredRequests;
+/*
+        if (stateFilter != null && !stateFilter.isEmpty()) {
+            filteredRequests = service.findByStateName(stateFilter);
+        } else {
+            filteredRequests = service.findAll();
+        }
+
+        model.addAttribute("requests", filteredRequests);
+        // IMPORTANTE: Devolvemos el valor para que el HTML sepa cuál marcar como 'selected'
+        model.addAttribute("selectedState", stateFilter);
+*/
+        return "nombre_de_tu_plantilla";
     }
 
     @RequestMapping("/activityList")
@@ -202,11 +221,11 @@ public class TechnicianController {
 
         return "redirect:/Technician/assistanceRequestList";
     }
+
     @PostMapping("/apManagement/accept")
     public String acceptRequest(@ModelAttribute("assistanceRequest") Assistance_Request request,
                                 BindingResult bindingResult) {
 
-        ArrayList<PapPati> listaCoincidencias = listPapPatiSelService.listCompatiblePapPati(request.getIdAsReq());
         request.setState(State.APPROVED.name());
         assistanceRequestValidator.validate(request, bindingResult);
         if(bindingResult.hasErrors()){
@@ -214,38 +233,95 @@ public class TechnicianController {
             request.setReason(null);
             return "Technician/apManagement";
         }
-        if(listaCoincidencias.isEmpty()){
-            request.setState(State.REJECTED.name());
-            request.setReason("No se han encontrado candidatos compatibles para la solicitud");
-        }else {
-            request.setState(State.APPROVED.name());
+        if(request.getReason().isBlank())
             request.setReason(null);
-            for(PapPati papPati : listaCoincidencias){
-                Selection selection = new Selection();
-                selection.setIdSelection(cg.generateCode("SEL"));
-                selection.setDate(LocalDate.now());
-                selection.setState(State.PENDING.name());
-                selection.setIdPapPati(papPati.getDni());
-                selection.setIdAsReq(request.getIdAsReq());
+        assistanceReqDao.updateAssistanceRequest(request);
+        return "redirect:/Technician/selectPapPati/" + request.getIdAsReq();
+    }
+    @RequestMapping(value="/selectPapPati/{idAsReq}", method = RequestMethod.GET)
+    public String selectPapPati(Model model, @PathVariable String idAsReq, HttpSession session) {
 
-                selectionDao.addSelection(selection);
-            }
+        ArrayList<PersonPapPatiDTO> recomendados = listPapPatiSelService.listCompatiblePapPati(idAsReq);
+        List<PersonPapPatiDTO> todosLosPapPatis = personDao.getPapPatiPersons();
+        List<String> seleccionadosDni = (List<String>) session.getAttribute("seleccionados");
+
+        if (seleccionadosDni == null) {
+            seleccionadosDni = new ArrayList<>();
+            session.setAttribute("seleccionados", seleccionadosDni);
         }
 
-        System.out.println("reason=" + request.getReason());
-        assistanceReqDao.updateAssistanceRequest(request);
-        return "redirect:/Technician/assistanceRequestList";
+        List<PersonPapPatiDTO> listaFinalSeleccionados = new ArrayList<>();
+        for (String dni : seleccionadosDni) {
+            PersonPapPatiDTO ppdto = new PersonPapPatiDTO();
+            ppdto.setPapPati(papPatiDao.getPapPati(dni));
+            ppdto.setPerson(personDao.getPerson(dni));
+            listaFinalSeleccionados.add(ppdto);
+        }
+
+        RequestPersonUserDTO requestDTO = new RequestPersonUserDTO();
+        Assistance_Request ar = assistanceReqDao.getAssistanceRequest(idAsReq);
+        requestDTO.setAssistanceRequest(ar);
+        requestDTO.setOviUser(oviUserDao.getOviUser(ar.getIdOviUser()));
+        requestDTO.setPerson(personDao.getPerson(ar.getIdOviUser()));
+
+        model.addAttribute("request", requestDTO);
+        model.addAttribute("seleccionados", listaFinalSeleccionados); // Lista definitiva
+        model.addAttribute("recomendados", recomendados);           // Sugerencias
+        model.addAttribute("allPapPatis", todosLosPapPatis);               // El resto
+
+        return "Technician/selectPapPati";
+    }
+    @RequestMapping("/selectPapPati/add/{idAsReq}/{dni}")
+    public String addCandidate(@PathVariable String idAsReq, @PathVariable String dni, HttpSession session) {
+        List<String> seleccionados = (List<String>) session.getAttribute("seleccionados");
+        if (seleccionados != null && !seleccionados.contains(dni)) {
+            seleccionados.add(dni);
+        }
+        return "redirect:/Technician/selectPapPati/" + idAsReq;
     }
 
+    @RequestMapping("/selectPapPati/remove/{idAsReq}/{dni}")
+    public String removeCandidate(@PathVariable String idAsReq, @PathVariable String dni, HttpSession session) {
+        List<String> seleccionados = (List<String>) session.getAttribute("seleccionados");
+        if (seleccionados != null) {
+            seleccionados.remove(dni);
+        }
+        return "redirect:/Technician/selectPapPati/" + idAsReq;
+    }
+
+    @PostMapping("/processSelection")
+    public String processSelection(@RequestParam("idAsReq") String idAsReq, HttpSession session) {
+
+        List<String> seleccionadosDni = (List<String>) session.getAttribute("seleccionados");
+
+        if (seleccionadosDni == null || seleccionadosDni.isEmpty()) {
+            // Aquí podrías redirigir de vuelta con un error: "Debes seleccionar al menos uno"
+            return "redirect:/Technician/selectPapPati/" + idAsReq;
+        }
+
+        for (String dni : seleccionadosDni) {
+            Selection selection = new Selection();
+            selection.setIdSelection(cg.generateCode("SEL"));
+            selection.setDate(LocalDate.now());
+            selection.setState(State.PENDING.name());
+            selection.setIdPapPati(dni);
+            selection.setIdAsReq(idAsReq);
+
+            selectionDao.addSelection(selection);
+        }
+
+        // Limpiamos la sesión para que la próxima solicitud empiece de cero
+        session.removeAttribute("seleccionados");
+
+        return "redirect:/Technician/assistanceRequestList";
+    }
     @PostMapping("/apManagement/reject")
     public String rejectRequest(@ModelAttribute("assistanceRequest") Assistance_Request request,
                                 BindingResult bindingResult) {
 
         request.setState(State.REJECTED.name());
         assistanceRequestValidator.validate(request, bindingResult);
-        System.out.println("Falla para el state " + request.getState().name() + " y la reason " + request.getReason() + "?");
         if(bindingResult.hasErrors()) {
-            System.out.println("Ha fallao :(");
             request.setState(State.PENDING.name());
             return "Technician/apManagement";
         }
@@ -302,6 +378,6 @@ public class TechnicianController {
     @RequestMapping(value="/activityList/delete/{idActivity}")
     public String processDeleteActivity(@PathVariable String idActivity) {
         activityDao.deleteActivity(idActivity);
-        return "redirect:Technician/activityList";
+        return "redirect:/Technician/activityList";
     }
 }

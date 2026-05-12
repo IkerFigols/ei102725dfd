@@ -53,7 +53,7 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
 
     @Override
     public void updateStateSelection(String idSelection, String state) {
-         selectionDao.updateState(idSelection, state);
+        selectionDao.updateState(idSelection, state);
     }
 
     public String getDniAP(String idSelection){

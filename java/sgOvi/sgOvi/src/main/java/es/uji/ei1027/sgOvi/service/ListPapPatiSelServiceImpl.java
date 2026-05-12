@@ -33,7 +33,7 @@ public class ListPapPatiSelServiceImpl implements  ListPapPatiSelService{
     }
 
     @Override
-    public ArrayList<PapPati> listCompatiblePapPati(String idAsReq) {
+    public ArrayList<PersonPapPatiDTO> listCompatiblePapPati(String idAsReq) {
         Assistance_Request asReq = assistanceReqDao.getAssistanceRequest(idAsReq);
         //DESCOMENTAR LA LINEA DE ABAJO CUANDO SEPAMOS SEGURO SI UN PATI PUEDE ASISTIR A UN ADULTO --> Recoedar volver a añadir el type a la consulta a la bbdd
         //String type = ChronoUnit.YEARS.between(personDao.getPerson(asReq.getIdOviUser()).getBirthdayDate(), LocalDate.now()) >= 18 ? "PAP" : "PATI";
@@ -45,8 +45,14 @@ public class ListPapPatiSelServiceImpl implements  ListPapPatiSelService{
 
         ArrayList<PapPati> compatiblePapPatis = papPatiDao.findCompatiblePapPatis(drivingLicense, shiftType,  province, minAge, minExperience);
         System.out.println("Hay " + compatiblePapPatis.size() + " coincidencias");
-
-        return compatiblePapPatis;
+        ArrayList<PersonPapPatiDTO> listaDtos = new ArrayList<>();
+        for (PapPati papPati : compatiblePapPatis){
+            PersonPapPatiDTO pppdto = new PersonPapPatiDTO();
+            pppdto.setPerson(personDao.getPerson(papPati.getDni()));
+            pppdto.setPapPati(papPati);
+            listaDtos.add(pppdto);
+        }
+        return listaDtos;
 
     }
 }

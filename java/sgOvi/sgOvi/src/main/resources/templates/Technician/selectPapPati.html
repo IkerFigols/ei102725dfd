@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Selección de Voluntarios</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="page-container" layout:fragment="content">
+
+    <main class="main-content">
+        <div class="page-container">
+
+            <div class="button-group" style="margin-bottom: 20px;">
+                <h1 class="title" style="margin: 0;">Gestión de Candidatos</h1>
+                <a th:href="@{/Technician/assistanceRequestList}" class="btn btn-secondary">
+                    &larr; Volver a Gestión
+                </a>
+            </div>
+            <p class="description">Asigna voluntarios a la solicitud de asistencia actual comparando perfiles y recomendaciones.</p>
+
+            <div class="form-container">
+                <h2 class="section-title">Detalles de la Petición</h2>
+                <div class="info-grid" th:object="${request}">
+                    <div class="info-item">
+                        <span class="label">ID Solicitud</span>
+                        <span class="value" th:text="*{assistanceRequest?.idAsReq}"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Usuario OVI</span>
+                        <span class="value" th:text="*{person?.name} + ' ' + *{person?.surname}"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Provincia</span>
+                        <span class="value" th:text="*{assistanceRequest?.province}"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Turno</span>
+                        <span class="value" th:text="*{assistanceRequest?.shiftPreference}"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Experiencia (Años)</span>
+                        <span class="value" th:text="*{assistanceRequest?.experience}"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Preferencia de edad</span>
+                        <span class="value" th:text="*{assistanceRequest?.age}"></span>
+                    </div>
+                    <div style="grid-column: span 2;" class="info-item">
+                        <span class="label">Descripción</span>
+                        <div class="textarea-read-only" th:text="*{assistanceRequest?.description}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-container">
+                <h2 class="section-title" style="border-left-color: var(--success-text);">Candidatos Seleccionados</h2>
+
+                <div th:if="${#lists.isEmpty(seleccionados)}" class="quote">
+                    No has añadido ningún candidato todavía. Selecciona perfiles de las listas inferiores.
+                </div>
+
+                <div class="table-responsive" th:if="${not #lists.isEmpty(seleccionados)}">
+                    <table class="table-custom">
+                        <thead>
+                        <tr>
+                            <th>DNI</th>
+                            <th>Nombre completo</th>
+                            <th>Provincia</th>
+                            <th>Tipo</th>
+                            <th>Edad</th>
+                            <th>Experiencia</th>
+                            <th>Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="sel : ${seleccionados}">
+                            <td th:text="${sel.person?.dni}"></td>
+                            <td th:text="${sel.person?.province}"></td>
+                            <td th:text="${sel.person?.name} + ' ' + ${sel.person?.surname}"></td>
+                            <td><span class="status-badge badge-info" th:text="${sel.papPati?.type}"></span></td>
+                            <td th:text="${sel.person?.getAge()}"></td>
+                            <td th:text="${sel.papPati?.experience}"></td>
+                            <td>
+                                <a class="btn-logout" style="text-decoration: none;"
+                                   th:href="@{/Technician/selectPapPati/remove/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${sel.person.dni})}">
+                                    Quitar
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-footer" th:if="${not #lists.isEmpty(seleccionados)}">
+                    <p class="academic-text">Al confirmar, se enviará una notificación a los voluntarios seleccionados.</p>
+                    <form th:action="@{/Technician/processSelection}" method="post">
+                        <input type="hidden" name="idAsReq" th:value="${request.assistanceRequest.idAsReq}" />
+                        <button type="submit" class="btn btn-primary">Confirmar y Guardar Selección</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-container" style="border-top: 4px solid var(--info-text);">
+                <h2 class="section-title">Recomendaciones del Sistema</h2>
+                <div class="table-responsive">
+                    <table class="table-custom">
+                        <thead>
+                        <tr>
+                            <th>DNI</th>
+                            <th>Nombre</th>
+                            <th>Provincia</th>
+                            <th>Tipo</th>
+                            <th>Edad</th>
+                            <th>Experiencia</th>
+                            <th>Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="rec : ${recomendados}">
+                            <td th:text="${rec.person?.dni}"></td>
+                            <td th:text="${rec.person?.name} + ' ' + ${rec.person?.surname}"></td>
+                            <td th:text="${rec.person?.province}"></td>
+                            <td><span class="status-badge badge-info" th:text="${rec.papPati?.type}"></span></td>
+                            <td th:text="${rec.person?.getAge()}"></td>
+                            <td th:text="${rec.papPati?.experience}"></td>
+                            <td>
+                                <a class="btn btn-secondary" style="padding: 5px 15px; font-size: 12px;"
+                                   th:href="@{/Technician/selectPapPati/add/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${rec.person.dni})}">
+                                    Añadir
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(recomendados)}">
+                            <td colspan="5" class="description" style="text-align: center;">No hay recomendaciones automáticas para esta solicitud.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-container">
+                <h2 class="section-title">Todos los Candidatos Disponibles</h2>
+                <div class="table-responsive">
+                    <table class="table-custom">
+                        <thead>
+                        <tr>
+                            <th>DNI</th>
+                            <th>Nombre</th>
+                            <th>Provincia</th>
+                            <th>Tipo</th>
+                            <th>Edad</th>
+                            <th>Experiencia</th>
+                            <th>Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pappati : ${allPapPatis}">
+                            <td th:text="${pappati.person?.dni}"></td>
+                            <td th:text="${pappati.person?.name} + ' ' + ${pappati.person?.surname}"></td>
+                            <td th:text="${pappati.person?.province}"></td>
+                            <td><span class="status-badge badge-info" th:text="${pappati.papPati?.type}"></span></td>
+                            <td th:text="${pappati.person?.getAge()}"></td>
+                            <td th:text="${pappati.papPati?.experience}"></td>
+                            <td>
+                                <a class="btn btn-secondary" style="padding: 5px 15px; font-size: 12px;"
+                                   th:href="@{/Technician/selectPapPati/add/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${pappati.person.dni})}">
+                                    Añadir
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bottom-spacer"></div>
+        </div>
+    </main>
+
+</div>
+</body>
+</html>
