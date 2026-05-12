@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ca">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
     <meta charset="UTF-8" />
     <title>Perfil del Asistente Personal</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
 
 </head>
 <body>
 
-<main class="form-container">
+<div class="form-container" layout:fragment="content">
     <h1 class="title" style="font-size: 24px;">Perfil detallado del Asistente</h1>
     <p class="description">Revisa la información completa antes de iniciar una comunicación.</p>
 
@@ -97,7 +98,7 @@
         <a th:href="@{/Assistance_Request/papPatiSelection/{idAsReq} (idAsReq= ${idAsReq})}" class="btn btn-secondary">Volver al listado</a>
 
     </div>
-</main>
+</div>
 
 </body>
 </html>

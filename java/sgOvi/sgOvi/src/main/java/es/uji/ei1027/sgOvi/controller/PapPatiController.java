@@ -103,7 +103,7 @@ public class PapPatiController {
         return "Contracts/list";
     }
 
-    @RequestMapping("/apRequestList")
+    @RequestMapping("/APList")
     public String listRequests(Model model, HttpSession session) {
         Person user = (Person) session.getAttribute("user");
 

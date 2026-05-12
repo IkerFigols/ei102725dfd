@@ -3,10 +3,7 @@ package es.uji.ei1027.sgOvi.controller;
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.State;
-import es.uji.ei1027.sgOvi.service.AssistanceRequestService;
-import es.uji.ei1027.sgOvi.service.CodeGenerator;
-import es.uji.ei1027.sgOvi.service.ListPapPatiSelService;
-import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
+import es.uji.ei1027.sgOvi.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -109,19 +107,9 @@ public class AssistanceRequestController {
     }
 
 
-    @RequestMapping("/papPatiSelection/{idAsReq}")
-    public String getSelections(Model model, @PathVariable("idAsReq") String idAsReq, HttpSession session){
-        Assistance_Request assistanceRequest = assistanceReqDao.getAssistanceRequest(idAsReq);
-        Person person = (Person) session.getAttribute("user");
-        if(!assistanceRequest.getIdOviUser().equals(person.getDni()))
-            return "redirect:/Ovi_User/menuOviUser";
-
-        model.addAttribute("selections",assistanceRequestService.getSelectionsAP(idAsReq));
-        return "Assistance_Request/papPatiSelection";
-    }
     @RequestMapping(value = "/approveSelection/{idSelection}", method = RequestMethod.POST)
     public String approveSelection(@PathVariable("idSelection") String idSelection, @RequestParam("idAsReq") String idAsReq, @RequestParam("idPapPati") String idPapPati) {
-        // Aquí llamarías a tu servicio o DAO
+
         assistanceRequestService.updateStateSelection(idSelection, State.APPROVED.name());
         Assistance_Request ap = assistanceReqDao.getAssistanceRequest(idAsReq);
         ap.setState("CLOSED_WITH_CONTRACT");
@@ -130,6 +118,18 @@ public class AssistanceRequestController {
         assistanceRequestService.rejectOtherCandidates(idAsReq,idPapPati);
         // Redirigimos de vuelta a la lista para ver el cambio
         return "redirect:/Assistance_Request/apRequestList";
+    }
+    @RequestMapping("/papPatiSelection/{idAsReq}")
+    public String getSelections(Model model, @PathVariable("idAsReq") String idAsReq, HttpSession session){
+
+        Assistance_Request assistanceRequest = assistanceReqDao.getAssistanceRequest(idAsReq);
+        Person person = (Person) session.getAttribute("user");
+        if(!assistanceRequest.getIdOviUser().equals(person.getDni()))
+            return "redirect:/Ovi_User/menuOviUser";
+
+        ArrayList<PapPatiSelectionDTO> papPatiSelectionDTO =
+        model.addAttribute("selections",assistanceRequestService.getSelectionsAP(idAsReq));
+        return "Assistance_Request/papPatiSelection";
     }
 
     @RequestMapping(value="/rejectSelection/{idSelection}", method = RequestMethod.POST)

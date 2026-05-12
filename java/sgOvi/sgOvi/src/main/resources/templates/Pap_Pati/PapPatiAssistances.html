@@ -9,49 +9,46 @@
 </head>
 <body>
 
-    <div layout:fragment="content">
-        <main class="main-content">
-            <section class="form-container" style="max-width: 700px;">
-                <header class="app-header">
-                    <h1 class="title">Detalles de la Asistencia</h1>
-                </header>
+<div layout:fragment="content">
+    <section class="form-container">
+        <header class="app-header">
+            <h1 class="title">Detalles de la Asistencia</h1>
+            <p class="description">Información detallada sobre la asignación seleccionada.</p>
+        </header>
 
-                <div style="margin-top: 20px;">
-                    <div class="detail-row">
-                        <div class="detail-label">Solicitante</div>
-                        <div class="detail-value" th:text="${oviUserName}"></div>
-                    </div>
+        <div class="info-container">
+            <div class="detail-row">
+                <div class="detail-label">Solicitante</div>
+                <div class="detail-value" th:text="${oviUserName}"></div>
+            </div>
 
-                    <div class="detail-row">
-                        <div class="detail-label">Fecha de Inicio</div>
-                        <div class="detail-value" th:text="${assistance.date != null ? #temporals.format(assistance.date, 'dd/MM/yyyy') : '--/--/----'}"></div>
-                    </div>
+            <div class="detail-row">
+                <div class="detail-label">Fecha de Inicio</div>
+                <div class="detail-value" th:text="${assistance.date != null ? #temporals.format(assistance.date, 'dd/MM/yyyy') : '--/--/----'}"></div>
+            </div>
 
-                    <div class="detail-row">
-                        <div class="detail-label">Lugar</div>
-                        <div class="detail-value" th:text="${assistance.city + ' (' + assistance.province + ')'}"></div>
-                    </div>
+            <div class="detail-row">
+                <div class="detail-label">Ubicación (Provincia)</div>
+                <div class="detail-value" th:text="${assistance.province}"></div>
+            </div>
 
-                    <div class="detail-row" style="border-bottom: none;">
-                        <div class="detail-label">Descripción</div>
-                        <div class="detail-value" style="background: #f8fafc; padding: 15px; border-radius: 6px; margin-top: 10px;"
-                             th:text="${assistance.description}"></div>
-                    </div>
-                </div>
+            <div class="section-title">Descripción de la solicitud</div>
+            <div class="textarea-container">
+                <div class="textarea-read-only" th:text="${assistance.description}"></div>
+            </div>
+        </div>
 
-                <div style="margin-top: 40px; display: flex; gap: 15px;">
-                    <a th:if="${selection.state.name() == 'APPROVED'}"
-                       th:href="@{/Assistance_Request/communication/{idSelection}(idSelection=${selection.idSelection}, idAsReq=${assistance.idAsReq})}"
-                       class="btn btn-primary" style="flex: 1; text-align: center;">Chat</a>
+        <div class="button-group">
+            <a th:if="${selection.state.name() == 'APPROVED'}"
+               th:href="@{/Assistance_Request/communication/{idSelection}(idSelection=${selection.idSelection})}"
+               class="btn btn-primary">Chat</a>
 
-                    <button th:unless="${selection.state.name() == 'APPROVED'}"
-                            class="btn btn-secondary" style="flex: 1; opacity: 0.5;" disabled>Chat (No disponible)</button>
+            <a th:href="@{/Pap_Pati/APList}" class="btn btn-secondary">Volver al listado</a>
+        </div>
+    </section>
 
-                    <a th:href="@{/Pap_Pati/apRequestList}" class="btn btn-secondary" style="flex: 1; text-align: center;">Volver a la lista</a>
-                </div>
-            </section>
-        </main>
-    </div>
+    <div class="bottom-spacer"></div>
+</div>
 
 </body>
 </html>

@@ -1,6 +1,8 @@
 package es.uji.ei1027.sgOvi.dao;
 
+import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
+import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -91,6 +93,15 @@ public class PersonDao {
         }
         catch(EmptyResultDataAccessException e) {
             return new ArrayList<Person>();
+        }
+    }
+
+    public List<PersonPapPatiDTO> getPapPatiPersons(){
+        try {
+            return jdbcTemplate.query("SELECT * FROM Person JOIN Pap_Pati USING(dni)", new PersonPapPatiDTORowMapper());
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new ArrayList<PersonPapPatiDTO>();
         }
     }
 

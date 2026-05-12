@@ -13,13 +13,14 @@
       <h1 class="title" style="margin: 0;">Chat de Comunicación</h1>
 
       <a th:if="${session.rol == 'OVI_USER'}"
-         th:href="@{/Assistance_Request/apRequestList}"
+         th:href="@{/Assistance_Request/papPatiSelection/{idAsReq}
+          (idAsReq=${idAsReq})}"
          class="nav-btn nav-btn-outline">
         &larr; Volver al listado
       </a>
 
       <a th:if="${session.rol == 'PAP_PATI'}"
-         th:href="@{/Pap_Pati/apRequestList}"
+         th:href="@{/Pap_Pati/APList}"
          class="nav-btn nav-btn-outline">
         &larr; Volver al listado
       </a>

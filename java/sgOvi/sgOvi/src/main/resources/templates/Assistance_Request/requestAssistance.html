@@ -23,14 +23,14 @@
                 <label class="detail-label" for="tittle">Título de la solicitud:</label>
                 <input id="tittle" type="text" class="textarea-field-small" th:field="*{tittle}"
                        placeholder="Ej: Acompañamiento para gestiones médicas">
-                <div th:if="${#fields.hasErrors('tittle')}" th:errors="*{tittle}" class="status-badge status-rejected"></div>
+                <div th:if="${#fields.hasErrors('tittle')}" th:errors="*{tittle}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
             </div>
 
             <div class="textarea-container">
                 <label class="detail-label" for="description">Descripción detallada:</label>
                 <textarea id="description" class="textarea-field" th:field="*{description}"
                           placeholder="Describa detalladamente las tareas y necesidades..."></textarea>
-                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="status-badge status-rejected"></div>
+                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
             </div>
 
             <div class="section-title">2. Perfil del asistente</div>
@@ -38,7 +38,13 @@
             <div class="textarea-container">
                 <label class="detail-label" for="experience">Experiencia mínima (años):</label>
                 <input id="experience" type="number" class="textarea-field-small" th:field="*{experience}" placeholder="Ej: 2">
-                <div th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" class="status-badge status-rejected"></div>
+                <div th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="age">Edad mínima (años):</label>
+                <input id="age" type="number" class="textarea-field-small" th:field="*{age}" placeholder="Ej: 18">
+                <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
             </div>
 
             <div class="textarea-container" style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
@@ -51,17 +57,19 @@
             <div class="textarea-container">
                 <label class="detail-label" for="province">Provincia:</label>
                 <input id="province" type="text" class="textarea-field-small" th:field="*{province}" placeholder="Ej: Castellón">
-                <div th:if="${#fields.hasErrors('province')}" th:errors="*{province}" class="status-badge status-rejected"></div>
+                <div th:if="${#fields.hasErrors('province')}" th:errors="*{province}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
             </div>
 
             <div class="textarea-container">
-                <label class="detail-label" for="shiftPreference">Preferencia de turno:</label>
-                <select id="shiftPreference" th:field="*{shiftPreference}" class="textarea-field-small">
+                <select id="shiftPreference" name="shiftPreference" class="textarea-field-small" style="width: 200px;">
+                    <option value="" th:selected="${assistanceRequest.shiftPreference == null}" disabled>Seleccione un turno</option>
                     <option th:each="shift : ${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).values()}"
-                            th:value="${shift}"
-                            th:text="${shift.description}">Turno</option>
+                            th:value="${shift.name()}"
+                            th:text="${shift.getDescription()}"
+                            th:selected="${assistanceRequest.shiftPreference == shift}">
+                    </option>
                 </select>
-                <div th:if="${#fields.hasErrors('shiftPreference')}" th:errors="*{shiftPreference}" class="status-badge status-rejected"></div>
+                <div th:if="${#fields.hasErrors('shiftPreference')}" th:errors="*{shiftPreference}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
             </div>
 
             <div class="button-group">

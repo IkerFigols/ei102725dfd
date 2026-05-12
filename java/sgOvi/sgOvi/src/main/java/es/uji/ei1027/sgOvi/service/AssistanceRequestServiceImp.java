@@ -61,9 +61,16 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     }
 
     @Override
+    public String getPapPatisSelectionDTO() {
+        List<PersonPapPatiDTO> personPapPatiDTO = personDao.getPapPatiPersons();
+        
+    }
+
+    @Override
     public List<Communication> getComunicationsSelection(String idSelection) {
         return communicationDao.getCommunicationsSelectionOrdered(idSelection);
     }
+
 
     @Override
     public void addCommunication(Communication communication) {
