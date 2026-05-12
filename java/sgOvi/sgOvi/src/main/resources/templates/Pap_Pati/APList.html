@@ -10,36 +10,31 @@
 
 <div layout:fragment="content">
     <section class="form-container">
-
         <header class="app-header">
             <h1 class="title">Solicitudes de Asistencia</h1>
             <p class="description">Listado de servicios donde colaboras.</p>
         </header>
 
         <div class="table-responsive">
-            <table class="table" style="text-align: center; width: 100%;">
+            <table class="table-custom">
                 <thead>
                 <tr>
-                    <th style="text-align: center;">Fecha Inicio</th>
-                    <th style="text-align: center;">Usuario</th>
-                    <th style="text-align: center;">Estado</th>
-                    <th style="text-align: center;">Acción</th>
+                    <th>Fecha Inicio</th>
+                    <th>Usuario</th>
+                    <th>Estado</th>
+                    <th class="text-right">Acción</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="item : ${requests}">
-
-                    <td style="vertical-align: middle;" th:text="${item.assistanceRequest.date != null ? #temporals.format(item.assistanceRequest.date, 'dd/MM/yyyy') : '--/--/----'}"></td>
-
-                    <td style="vertical-align: middle;" th:text="${item.oviUserName}"></td>
-
-                    <td style="vertical-align: middle;">
+                    <td th:text="${item.assistanceRequest.date != null ? #temporals.format(item.assistanceRequest.date, 'dd/MM/yyyy') : '--/--/----'}"></td>
+                    <td th:text="${item.oviUserName}"></td>
+                    <td>
                         <span th:text="${item.selectionState == 'APPROVED' ? 'Aprobada' : (item.selectionState == 'PENDING' ? 'Pendiente' : 'Rechazada')}"
                               th:class="'status-badge ' + (${item.selectionState == 'APPROVED'} ? 'status-approved' : (${item.selectionState == 'PENDING'} ? 'status-pending' : 'status-rejected'))">
                         </span>
                     </td>
-
-                    <td style="vertical-align: middle;">
+                    <td class="text-right">
                         <form th:action="@{/Pap_Pati/papPatiAssistances}" method="post" style="margin: 0;">
                             <input type="hidden" name="idSelection" th:value="${item.idSelection}" />
                             <button type="submit" class="btn btn-primary btn-sm">Ver Detalles</button>
@@ -50,11 +45,11 @@
             </table>
         </div>
 
-        <footer class="register-footer" style="margin-top: 30px; text-align: center;">
-            <a th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">Volver al Menú</a>
+        <footer class="register-footer">
+            <a th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">← Volver al Menú</a>
         </footer>
-
     </section>
+    <div class="bottom-spacer"></div>
 </div>
 
 </body>
