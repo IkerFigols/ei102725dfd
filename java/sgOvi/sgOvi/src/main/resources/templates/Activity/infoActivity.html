@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
+<head>
+    <meta charset="UTF-8" />
+    <title>SgOvi - Detalle de Actividad</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="form-container">
+
+        <header class="app-header">
+            <h1 class="title" th:text="${activity.tittle}">Detalle de la Actividad</h1>
+            <p class="description">Información detallada de la actividad seleccionada.</p>
+        </header>
+
+        <div class="info-container">
+
+            <div class="info-group">
+                <span class="info-label">Tipo de Actividad</span>
+                <p class="info-value" th:text="${activity.type.getDescription()}"></p>
+            </div>
+
+            <div class="info-group">
+                <span class="info-label">Descripción</span>
+                <p class="info-value" th:text="${activity.description}"></p>
+            </div>
+
+            <div class="info-group">
+                <span class="info-label">Fecha y hora</span>
+                <p class="info-value" th:text="${#temporals.format(activity.date, 'dd/MM/yyyy HH:mm')}"></p>
+            </div>
+
+            <div class="info-group">
+                <span class="info-label">Ubicación</span>
+                <p class="info-value" th:text="${activity.address}"></p>
+            </div>
+
+            <div class="info-group">
+                <span class="info-label">Capacidad</span>
+                <p class="info-value"
+                   th:text="${activity.capacity != null and activity.capacity > 0 ? activity.capacity : 'Sin límite'}">
+                </p>
+            </div>
+
+            <div class="info-group">
+                <span class="info-label">Sponsor</span>
+                <p class="info-value" th:text="${activity.sponsor != null ? activity.sponsor : 'Sin sponsor asignado'}"></p>
+            </div>
+
+        </div>
+
+        <footer class="register-footer">
+            <div class="button-group">
+                <a th:href="@{/Activity/list}" class="btn btn-secondary">Mis actividades</a>
+                <a th:href="@{/Activity/listAll}" class="btn btn-primary">Todas las actividades</a>
+            </div>
+        </footer>
+
+    </section>
+
+    <div class="bottom-spacer"></div>
+</div>
+
+</body>
+</html>

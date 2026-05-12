@@ -13,53 +13,57 @@
 
     <header class="app-header">
       <h1 class="title">Mis Actividades</h1>
-      <p class="description">Listado de las actividades en las que estás inscrito.</p>
+      <p class="description">Gestione las actividades en las que participa.</p>
     </header>
 
-    <div class="table-responsive">
+    <div class="table-responsive" th:if="${activities != null and !activities.isEmpty()}">
       <table class="table-custom">
         <thead>
         <tr>
           <th>Título</th>
           <th>Tipo</th>
-          <th>Descripción</th>
           <th>Fecha</th>
-          <th>Capacidad</th>
-          <th>Sponsor</th>
+          <th class="text-right">Acción</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="activity: ${activities}">
           <td><strong th:text="${activity.tittle}"></strong></td>
-          <td th:text="${activity.type.getDescription()}"></td>
-          <td th:text="${activity.description}"></td>
+          <td>
+            <span th:text="${activity.type.getDescription()}"></span>
+          </td>
           <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
-          <td th:text="${activity.capacity}"></td>
-          <td th:text="${activity.sponsor}"></td>
+          <td class="text-right">
+            <a th:href="@{/Activity/infoActivity/{id}(id=${activity.idActivity})}"
+               class="btn btn-primary">
+              Ver actividad
+            </a>
+          </td>
         </tr>
         </tbody>
       </table>
     </div>
 
-    <div th:if="${activities == null or activities.isEmpty()}" class="description">
-      <p>Aún no te has inscrito en ninguna actividad.</p>
+    <div th:if="${activities == null or activities.isEmpty()}" class="no-data-container">
+      <p class="description">No tienes inscripciones activas en este momento.</p>
     </div>
 
     <footer class="register-footer">
       <div class="button-group">
-        <a th:href="@{/Activity/listAll}" class="btn btn-primary">Ver todas las actividades disponibles</a>
-
-        <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
-          Volver al Menú
-        </a>
-
-        <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
-          Volver al Menú
-        </a>
+        <div class="nav-back">
+          <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
+            ← Volver al Menú
+          </a>
+          <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
+            ← Volver al Menú
+          </a>
+        </div>
+        <a th:href="@{/Activity/listAll}" class="btn btn-primary">Explorar más actividades</a>
       </div>
     </footer>
 
   </section>
+  <div class="bottom-spacer"></div>
 </div>
 
 </body>
