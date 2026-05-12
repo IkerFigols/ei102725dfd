@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Selección de Voluntarios</title>
+</head>
+<body>
+
+<h1>Gestión de Candidatos</h1>
+
+<div>
+    <h2>Detalles de la Petición</h2>
+    <ul th:object="${request}">
+        <li><strong>ID Solicitud:</strong> <span th:text="*{assistanceRequest.idAsReq}"></span></li>
+        <li><strong>Usuario OVI:</strong> <span th:text="*{person.name}"></span></li>
+        <li><strong>Descripción:</strong> <span th:text="*{assistanceRequest.description}"></span></li>
+        <li><strong>Ciudad:</strong> <span th:text="*{person.province}"></span></li>
+        <li><strong>Experiencia mínima:</strong> <span th:text="*{assistanceRequest.experience}"></span></li>
+        <li><strong>Preferencia de edad:</strong> <span th:text="*{assistanceRequest.age}"></span></li>
+        <li><strong>Preferencia de turno:</strong> <span th:text="*{assistanceRequest.shiftPreference.name()}"></span></li>
+        <li><strong>Carné de conducir:</strong> <span th:text="*{assistanceRequest.drivingLicense}"></span></li>
+
+
+
+    </ul>
+</div>
+
+<hr>
+
+<div>
+    <h2>Candidatos Seleccionados actualmente</h2>
+
+    <p th:if="${#lists.isEmpty(seleccionados)}">No hay candidatos seleccionados.</p>
+
+    <table th:if="${not #lists.isEmpty(seleccionados)}" border="1">
+        <thead>
+        <tr>
+            <th>DNI</th>
+            <th>Nombre</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sel : ${seleccionados}">
+            <td th:text="${sel.dni}"></td>
+            <td>
+                <a th:href="@{/Technician/selectPapPati/remove/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${sel.dni})}">
+                    Quitar
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form th:action="@{/Technician/processSelection}" method="post" th:if="${not #lists.isEmpty(seleccionados)}">
+        <input type="hidden" name="idAsReq" th:value="${request.idAsReq}" />
+        <br>
+        <button type="submit">Confirmar y Guardar Selección</button>
+    </form>
+</div>
+
+<hr>
+
+<div>
+    <h2>Todos los Candidatos Disponibles</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>DNI</th>
+            <th>Nombre</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pappati : ${allPapPatis}">
+            <td th:text="${pappati.dni}"></td>
+            <td>
+                <a th:href="@{/Technician/selectPapPati/add/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${pappati.dni})}">
+                    Añadir a la lista
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<br>
+<a th:href="@{/Technician/assistanceRequestList}">Volver atrás</a>
+
+</body>
+</html>
