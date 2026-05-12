@@ -1,5 +1,9 @@
 package es.uji.ei1027.sgOvi;
 
+import es.uji.ei1027.sgOvi.service.PersonInstructorDTO;
+import es.uji.ei1027.sgOvi.service.PersonOviUserDTO;
+import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
+import es.uji.ei1027.sgOvi.service.PersonTechnicianDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -21,35 +25,59 @@ public class SecurityInterceptor implements HandlerInterceptor {
             return false;
         }
         String role =(String) session.getAttribute("rol");
+        String menuError= "";
+        switch (role) {
+            case ("OVI_USER") -> {
+                menuError="/Ovi_User/menuOviUser";
+            }
+            case ("PAP_PATI") -> {
+                menuError="/Pap_Pati/menuPapPati";
+            }
+            case ("TECHNICIAN") -> {
+                menuError="/Technician/menuTechnician";
+            }
+            case ("INSTRUCTOR") -> {
+                menuError="/Instructor/menuInstructor"; //no implementado
+            }
+        }
         if(uri.contains("/Ovi_User/list") || uri.contains("Person/"))
             return true;
 
         // Bloqueo para Technician entrando en OviUser y viceversa
         if (uri.contains("/Ovi_User/") && !role.equals("OVI_USER")) {
-            response.sendRedirect(request.getContextPath() + "/error/403");
+            response.sendRedirect(request.getContextPath() + menuError);
             return false;
         }
 
         if (uri.contains("/Technician/") && !role.equals("TECHNICIAN")) {
-            response.sendRedirect(request.getContextPath() + "/error/403");
+            response.sendRedirect(request.getContextPath() + menuError);
             return false;
         }
         if (uri.contains("/Pap_Pati/") && !role.equals("PAP_PATI")) {
-            response.sendRedirect(request.getContextPath() + "/error/403");
+            response.sendRedirect(request.getContextPath() + menuError);
             return false;
         }
         if (uri.contains("/Instructor/") && !role.equals("INSTRUCTOR")) {
-            response.sendRedirect(request.getContextPath() + "/error/403");
+            response.sendRedirect(request.getContextPath() + menuError);
             return false;
         }
-
-        // 3. ZONAS COMUNES (Assistance Request)
-        if (uri.contains("/Assistance_Request/")) {
-            if (role.equals("TECHNICIAN") || role.equals("OVI_USER") || role.equals("PAP_PATI")) {
-                return true;
-            }
+        if (uri.contains("/Contract") && role.equals("TECHNICIAN")) {
+            response.sendRedirect(request.getContextPath() + menuError);
+            return false;
         }
-
+        if (uri.contains("/Assistance_Request/")) {
+            if(uri.contains("/Assistance_Request/communication") && !role.equals("TECHNICIAN"))
+                return true;
+            if(uri.contains("/Assistance_Request/") && (role.equals("PAP_PATI") || role.equals("INSTRUCTOR"))){
+                response.sendRedirect(request.getContextPath() + menuError);
+                return false;
+            }
+            return true;
+        }
+        if(uri.contains("/Activity/") && role.equals("TECHNICIAN")){
+            response.sendRedirect(request.getContextPath() + menuError);
+            return false;
+        }
         return true;
     }
 }

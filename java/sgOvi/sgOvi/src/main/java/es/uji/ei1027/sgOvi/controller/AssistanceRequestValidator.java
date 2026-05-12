@@ -41,6 +41,14 @@ public class AssistanceRequestValidator implements Validator {
         if((req.getReason() == null || req.getReason().isBlank()) && req.getState().name().equals("REJECTED")){
             errors.rejectValue("reason", "required", "Es necesario incluir una razón de denegación");
         }
+
+        if(req.getAge() != null && req.getAge() < 0){
+            errors.rejectValue("age","required","La edad no puede ser negativa");
+        }
+        if(req.getExperience() != null && req.getExperience() < 0){
+            errors.rejectValue("experience","required","La experiencia no puede ser negativa");
+        }
     }
+
 }
 

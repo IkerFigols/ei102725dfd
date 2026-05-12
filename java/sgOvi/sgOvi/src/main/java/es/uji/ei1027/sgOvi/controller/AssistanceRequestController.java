@@ -109,6 +109,18 @@ public class AssistanceRequestController {
     }
 
 
+    @RequestMapping(value = "/approveSelection/{idSelection}", method = RequestMethod.POST)
+    public String approveSelection(@PathVariable("idSelection") String idSelection, @RequestParam("idAsReq") String idAsReq, @RequestParam("idPapPati") String idPapPati) {
+
+        assistanceRequestService.updateStateSelection(idSelection, State.APPROVED.name());
+        Assistance_Request ap = assistanceReqDao.getAssistanceRequest(idAsReq);
+        ap.setState("CLOSED_WITH_CONTRACT");
+        assistanceReqDao.updateAssistanceRequest(ap);
+        assistanceRequestService.generateContract(idSelection,ap);
+        assistanceRequestService.rejectOtherCandidates(idAsReq,idPapPati);
+        // Redirigimos de vuelta a la lista para ver el cambio
+        return "redirect:/Assistance_Request/apRequestList";
+    }
     @RequestMapping("/papPatiSelection/{idAsReq}")
     public String getSelections(Model model, @PathVariable("idAsReq") String idAsReq, HttpSession session){
         Assistance_Request assistanceRequest = assistanceReqDao.getAssistanceRequest(idAsReq);
@@ -118,18 +130,6 @@ public class AssistanceRequestController {
 
         model.addAttribute("selections",assistanceRequestService.getSelectionsAP(idAsReq));
         return "Assistance_Request/papPatiSelection";
-    }
-    @RequestMapping(value = "/approveSelection/{idSelection}", method = RequestMethod.POST)
-    public String approveSelection(@PathVariable("idSelection") String idSelection, @RequestParam("idAsReq") String idAsReq, @RequestParam("idPapPati") String idPapPati) {
-        // Aquí llamarías a tu servicio o DAO
-        assistanceRequestService.updateStateSelection(idSelection, State.APPROVED.name());
-        Assistance_Request ap = assistanceReqDao.getAssistanceRequest(idAsReq);
-        ap.setState("CLOSED_WITH_CONTRACT");
-        assistanceReqDao.updateAssistanceRequest(ap);
-        assistanceRequestService.generateContract(idSelection,ap);
-        assistanceRequestService.rejectOtherCandidates(idAsReq,idPapPati);
-        // Redirigimos de vuelta a la lista para ver el cambio
-        return "redirect:/Assistance_Request/apRequestList";
     }
 
     @RequestMapping(value="/rejectSelection/{idSelection}", method = RequestMethod.POST)
