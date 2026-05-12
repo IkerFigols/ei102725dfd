@@ -4,6 +4,7 @@ import es.uji.ei1027.sgOvi.model.enums.Gender;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Person {
     private String dni;
@@ -105,7 +106,9 @@ public class Person {
     public void setPassword(String password){this.password = password;}
     public void setCity(String city) { this.city = city; }
     public void setProvince(String province) { this.province = province;}
-
+    public int getAge() {
+        return (int) ChronoUnit.YEARS.between(this.getBirthdayDate(), LocalDate.now());
+    }
     @Override
     public String toString() {
         return "Person{" +

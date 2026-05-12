@@ -53,7 +53,7 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
 
     @Override
     public void updateStateSelection(String idSelection, String state) {
-         selectionDao.updateState(idSelection, state);
+        selectionDao.updateState(idSelection, state);
     }
 
     public String getDniAP(String idSelection){
@@ -61,9 +61,9 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     }
 
     @Override
-    public String getPapPatisSelectionDTO() {
-        List<PersonPapPatiDTO> personPapPatiDTO = personDao.getPapPatiPersons();
-        
+    public List<PapPatiSelectionDTO> getPapPatisSelectionDTO(String idAsReq) {
+        List<PapPatiSelectionDTO> papPatiSelectionDTOS = selectionDao.getPapSelByAP(idAsReq);
+        return papPatiSelectionDTOS;
     }
 
     @Override

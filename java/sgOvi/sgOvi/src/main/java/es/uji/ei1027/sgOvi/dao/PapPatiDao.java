@@ -148,4 +148,16 @@ public class PapPatiDao {
         }
     }
 
+    public List<PapPati> getAvailablePapPatis(){
+        try {
+            List<PapPati> papPatiList = jdbcTemplate.query(
+                    "SELECT * FROM Pap_Pati WHERE available=TRUE AND state='APPROVED'",
+                    new PapPatiRowMapper()
+            );
+            return papPatiList;
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
+
 }

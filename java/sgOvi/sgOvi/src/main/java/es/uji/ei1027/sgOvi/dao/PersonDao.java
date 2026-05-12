@@ -105,6 +105,14 @@ public class PersonDao {
         }
     }
 
+    public List<PersonPapPatiDTO> getAvailablePapPatiPersons(){
+        try {
+            return jdbcTemplate.query("SELECT * FROM Person JOIN Pap_Pati as pap USING(dni) WHERE pap.state='APPROVED' AND pap.available=TRUE", new PersonPapPatiDTORowMapper());
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new ArrayList<PersonPapPatiDTO>();
+        }
+    }
 
     public void encryptPersons(){
         BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();
