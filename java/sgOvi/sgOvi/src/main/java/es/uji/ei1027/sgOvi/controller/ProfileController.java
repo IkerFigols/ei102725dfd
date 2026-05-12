@@ -78,6 +78,8 @@ public class ProfileController {
             }
         }
         System.out.println("Estoy antes del binding");
+        System.out.println(dto.getPerson().toString());
+        System.out.println(dto.getPapPati().toString());
         if(bindingResult.hasErrors())
             return "profile";
         System.out.println("Pase el binding");

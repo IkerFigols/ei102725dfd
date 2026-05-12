@@ -25,10 +25,10 @@ public class OviUserValidator implements Validator {
         if(user.getAddress().trim().isEmpty()){
             errors.rejectValue("address", "required", "Es necesario añadir una dirección");
         }
-        if(!user.getState().name().equals("REJECTED") && (user.getReason() != null && !user.getReason().isEmpty())){
+        if(!user.getState().name().equals("REJECTED") && (user.getReason() != null && !user.getReason().isBlank())){
             errors.rejectValue("reason", "required", "Para un usuario ACEPTADO o PENDIENTE no hay razón");
         }
-        if(user.getState().name().equals("REJECTED") && (user.getReason() == null || user.getReason().isEmpty())){
+        if(user.getState().name().equals("REJECTED") && (user.getReason() == null || user.getReason().isBlank())){
             errors.rejectValue("reason", "required", "Es necesario incluir una razón de denegación");
         }
         if (user.getReason() != null && user.getReason().length() > 250){

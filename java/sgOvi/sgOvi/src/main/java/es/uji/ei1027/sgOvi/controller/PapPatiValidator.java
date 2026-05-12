@@ -42,13 +42,13 @@ public class PapPatiValidator implements Validator {
         if(papPati.getState().name().equals("REJECTED") && papPati.getAvailable()){
             errors.rejectValue("available", "invalid", "Un PAP/PATI rechazado no puede estar marcado como disponible" );
         }
-        if(!papPati.getState().name().equals("REJECTED") && !papPati.getReason().isEmpty()){
+        if(!papPati.getState().name().equals("REJECTED") && (papPati.getReason() != null && !papPati.getReason().isBlank())){
             errors.rejectValue("reason", "required", "Para un PAP/PATI ACEPTADO o PENDIENTE no hay razón");
         }
-        if(papPati.getState().name().equals("REJECTED") && papPati.getReason().isEmpty()){
+        if(papPati.getState().name().equals("REJECTED") && (papPati.getReason() == null || papPati.getReason().isBlank())){
             errors.rejectValue("reason", "required", "Es necesario incluir una razón de denegación");
         }
-        if (papPati.getReason().length() > 250){
+        if (papPati.getReason() != null && papPati.getReason().length() > 250){
             errors.rejectValue("reason", "length", "Reason no puede tener mas de 250 carácteres");
         }
 

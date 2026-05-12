@@ -97,7 +97,7 @@
             <div th:if="${session.rol == 'PAP_PATI'}">
                 <input type="hidden" th:field="*{papPati.dni}" />
                 <input type="hidden" name="papPati.state" th:value="*{papPati.state}"/>
-                <input type="hidden" th:field="*{papPati.reason}"/>
+                <input type="hidden" th:field="*{papPati.available}"/>
 
                 <div class="textarea-container">
                     <label class="detail-label" for="addressPap">Dirección:</label>
@@ -107,7 +107,7 @@
 
                 <div class="textarea-container">
                     <label class="detail-label" for="type">Tipo:</label>
-                    <select id="type" name="type" class="textarea-field-small">
+                    <select id="type" name="papPati.type" class="textarea-field-small">
                         <option value="PAP" th:selected="*{papPati.type.name() == 'PAP'}">PAP</option>
                         <option value="PATI" th:selected="*{papPati.type.name() == 'PATI'}">PATI</option>
                     </select>
