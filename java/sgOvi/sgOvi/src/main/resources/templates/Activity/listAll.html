@@ -13,33 +13,35 @@
 
         <header class="app-header">
             <h1 class="title">Actividades Disponibles</h1>
-            <p class="description">Explora todas las actividades programadas en las que puedes participar.</p>
+            <p class="description">
+                <span th:if="${session.rol == 'OVI_USER'}">Explora las jornadas de divulgación disponibles.</span>
+                <span th:if="${session.rol == 'PAP_PATI'}">Explora todas las actividades y cursos programados.</span>
+            </p>
         </header>
 
-        <div class="table-responsive">
+        <div class="table-responsive" th:if="${activities != null and !activities.isEmpty()}">
             <table class="table-custom">
                 <thead>
                 <tr>
                     <th>Título</th>
                     <th>Tipo</th>
-                    <th>Descripción</th>
                     <th>Fecha</th>
-                    <th>Capacidad</th>
-                    <th>Sponsor</th>
-                    <th>Acción</th>
+                    <th class="text-right">Acción</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="activity: ${activities}">
+                <tr th:each="activity: ${activities}"
+                    th:if="${session.rol == 'PAP_PATI' or (session.rol == 'OVI_USER' and activity.type.name() == 'DISSEMINATION')}">
+
                     <td><strong th:text="${activity.tittle}"></strong></td>
-                    <td th:text="${activity.type.getDescription()}"></td>
-                    <td th:text="${activity.description}"></td>
-                    <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
-                    <td th:text="${activity.capacity}"></td>
-                    <td th:text="${activity.sponsor}"></td>
                     <td>
-                        <a th:href="@{/Activity/signup/{id}(id=${activity.idActivity})}" class="btn btn-primary btn-sm">
-                            Inscribirme
+                        <span th:text="${activity.type.getDescription()}"></span>
+                    </td>
+                    <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
+                    <td class="text-right">
+                        <a th:href="@{/Activity/infoActivity/{id}(id=${activity.idActivity})}"
+                           class="btn btn-primary">
+                            Ver actividad
                         </a>
                     </td>
                 </tr>
@@ -47,21 +49,27 @@
             </table>
         </div>
 
+        <div th:if="${activities == null or activities.isEmpty()}" class="no-data-container">
+            <p class="description">No hay actividades disponibles para tu perfil en este momento.</p>
+        </div>
+
         <footer class="register-footer">
             <div class="button-group">
-                <a th:href="@{/Activity/list}" class="btn btn-primary">Ver mis actividades</a>
+                <a th:href="@{/Activity/list}" class="btn btn-secondary">Mis actividades</a>
 
-                <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
-                    Volver al Menú
-                </a>
-
-                <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
-                    Volver al Menú
-                </a>
+                <div class="nav-back">
+                    <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
+                        ← Volver al Menú
+                    </a>
+                    <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
+                        ← Volver al Menú
+                    </a>
+                </div>
             </div>
         </footer>
 
     </section>
+    <div class="bottom-spacer"></div>
 </div>
 
 </body>
