@@ -6,7 +6,7 @@ import es.uji.ei1027.sgOvi.dao.PersonDao;
 import es.uji.ei1027.sgOvi.model.Person;
 import es.uji.ei1027.sgOvi.model.OviUser;
 import es.uji.ei1027.sgOvi.model.PapPati;
-
+import es.uji.ei1027.sgOvi.model.enums.RolUser;
 import es.uji.ei1027.sgOvi.model.UserDetails;
 import es.uji.ei1027.sgOvi.service.LoginService;
 import jakarta.servlet.http.HttpSession;
@@ -56,13 +56,13 @@ public class LoginController {
         }
 
 
-        String etiqueta = loginService.userValidator(userDetails.getDni(), userDetails.getPassword());
+        RolUser etiqueta = RolUser.fromString(loginService.userValidator(userDetails.getDni(), userDetails.getPassword()));
         if (etiqueta == null) {
             bindingResult.rejectValue("password", "badpw", "Contraseña incorrecta");
             return "login";
         }
 
-        session.setAttribute("rol",etiqueta);
+        session.setAttribute("rol",etiqueta.name());
         session.setAttribute("user", person);
 
         if (session.getAttribute("nextURL") != null ) {
@@ -71,7 +71,7 @@ public class LoginController {
             return "redirect:" + nextURL;
         }
 
-        if(etiqueta.equals("OVI_USER")){
+        if(etiqueta.equals(RolUser.OVI_USER)){
             OviUser oviUser = oviUserDao.getOviUser(person.getDni());
             if (oviUser.getState().name().equals("PENDING")) {
                 bindingResult.rejectValue("dni","required","Tu solicitud sigue en revisión, el técnico no te ha aceptado todavia");
@@ -80,11 +80,8 @@ public class LoginController {
                 bindingResult.rejectValue("dni","required","Tu solicitud ha sido rechazada, Razon: "+oviUser.getReason());
             }
         }
-        //Para asegurarnos que es PAP_PATI
-        if (etiqueta.equalsIgnoreCase("PAP") || etiqueta.equalsIgnoreCase("PATI") || etiqueta.equalsIgnoreCase("PAP_PATI")) {
-            etiqueta = "PAP_PATI";
-        }
-        if(etiqueta.equals("PAP_PATI")){
+
+        if(etiqueta.equals(RolUser.PAP_PATI)){
             PapPati papPati = papPatiDao.getPapPati(person.getDni());
             if (papPati.getState().name().equals("PENDING")) {
                 bindingResult.rejectValue("dni","required","Tu solicitud sigue en revisión, el técnico no te ha aceptado todavia");
@@ -98,10 +95,10 @@ public class LoginController {
             return "login";
 
         return switch (etiqueta) {
-            case "OVI_USER"  -> "redirect:/Ovi_User/menuOviUser";
-            case "PAP_PATI"  -> "redirect:/Pap_Pati/menuPapPati";
-            case "TECHNICIAN" -> "redirect:/Technician/menuTechnician";
-            case "INSTRUCTOR"  -> "redirect:/Instructor/menuInstructor";
+            case OVI_USER -> "redirect:/Ovi_User/menuOviUser";
+            case PAP_PATI  -> "redirect:/Pap_Pati/menuPapPati";
+            case TECHNICIAN -> "redirect:/Technician/menuTechnician";
+            case INSTRUCTOR  -> "redirect:/Instructor/menuInstructor";
             default     -> "redirect:/";
         };
     }

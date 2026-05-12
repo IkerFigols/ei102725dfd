@@ -62,8 +62,10 @@
                     <td>
                         <span class="status-badge"
                               th:classappend="${assistanceRequest.state.name() == 'APPROVED' ? 'status-approved' :
-                                               (assistanceRequest.state.name() == 'PENDING' ? 'status-pending' :
-                                               (assistanceRequest.state.name() == 'REJECTED' ? 'status-rejected' : ''))}"
+                                                (assistanceRequest.state.name() == 'PENDING' ? 'status-pending' :
+                                                (assistanceRequest.state.name() == 'REJECTED' ? 'status-rejected' :
+
+                                                (assistanceRequest.state == 'CLOSED_WITH_CONTRACT' ? 'status-closed' : 'status-closed-done')))}"
                               th:text="${assistanceRequest.state.getDescription()}">
                         </span>
                     </td>
