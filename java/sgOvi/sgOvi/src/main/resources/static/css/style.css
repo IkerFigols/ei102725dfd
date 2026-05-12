@@ -247,6 +247,20 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
     width: 100%;
 }
 
+.menu-grid-centered {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.menu-grid-centered .btn {
+    width: fit-content;
+    min-width: 200px;
+    text-align: center;
+}
+
 /* ==========================================================================
    4. BOTONES Y ACCIONES
    ========================================================================== */
@@ -654,4 +668,3 @@ select.textarea-field-small { /* Ajuste específico para que el elemento select 
         gap: 10px;
     }
 }
-

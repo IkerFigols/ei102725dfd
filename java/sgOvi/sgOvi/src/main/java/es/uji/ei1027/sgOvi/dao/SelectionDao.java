@@ -1,6 +1,7 @@
 package es.uji.ei1027.sgOvi.dao;
 
 import es.uji.ei1027.sgOvi.model.Selection;
+import es.uji.ei1027.sgOvi.service.PapPatiSelectionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -104,6 +105,16 @@ public class SelectionDao {
                     "SELECT * FROM Selection WHERE idPap = ?",
                     new SelectionRowMapper(),
                     dniPap
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
+    public List<PapPatiSelectionDTO> getPapSelByAP(String idAsReq){
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM Selection AS s JOIN Pap_Pati AS pa ON (s.idPap = pa.dni) JOIN Person AS p USING(dni) WHERE s.idAsReq = ?",
+                    new PersonPapPatiSelDTORowMapper(), idAsReq
             );
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<>();

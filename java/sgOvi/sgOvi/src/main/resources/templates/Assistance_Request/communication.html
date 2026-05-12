@@ -11,19 +11,6 @@
   <div class="form-container">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <h1 class="title" style="margin: 0;">Chat de Comunicación</h1>
-
-      <a th:if="${session.rol == 'OVI_USER'}"
-         th:href="@{/Assistance_Request/papPatiSelection/{idAsReq}
-          (idAsReq=${idAsReq})}"
-         class="nav-btn nav-btn-outline">
-        &larr; Volver al listado
-      </a>
-
-      <a th:if="${session.rol == 'PAP_PATI'}"
-         th:href="@{/Pap_Pati/APList}"
-         class="nav-btn nav-btn-outline">
-        &larr; Volver al listado
-      </a>
     </div>
 
     <p class="description">Historial de mensajes para la selección: <strong th:text="${idSelection}"></strong></p>
@@ -59,6 +46,19 @@
         <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
 
     </form>
+    <div class="content-footer" style="margin-top: 30px;">
+      <a th:if="${session.rol == 'OVI_USER'}"
+         th:href="@{/Assistance_Request/papPatiSelection/{idAsReq}
+          (idAsReq=${idAsReq})}"
+         class="nav-btn nav-btn-outline">
+        &larr; Volver al listado
+      </a>
+      <a th:if="${session.rol == 'PAP_PATI'}"
+         th:href="@{/Pap_Pati/APList}"
+         class="nav-btn nav-btn-outline">
+        &larr; Volver al listado
+      </a>
+    </div>
   </div>
 </div>
 
