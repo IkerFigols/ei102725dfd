@@ -55,44 +55,6 @@ public class PapPatiController {
         return "Pap_Pati/menuPapPati";
     }
 
-    @RequestMapping(value="/changePreferences", method = RequestMethod.GET)
-    public String editPreferences(Model model, HttpSession session) {
-        Person user = (Person) session.getAttribute("user");
-
-        model.addAttribute("obj", papPatiDao.getPapPati(user.getDni()));
-        return "Pap_Pati/changePreferences";
-    }
-
-    @RequestMapping(value="/changePreferences", method = RequestMethod.POST)
-    public String processUpdatePreference(@ModelAttribute("obj") PapPati papPati,
-                                          BindingResult bindingResult,
-                                          Model model, // <-- Añade Model aquí
-                                          HttpSession session) {
-
-        Person user = (Person) session.getAttribute("user");
-        papPati.setDni(user.getDni());
-
-        PapPati originalPapPati = papPatiDao.getPapPati(user.getDni());
-
-        PapPatiPreferencesValidator prefValidator = new PapPatiPreferencesValidator(originalPapPati);
-        prefValidator.validate(papPati, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-
-            if (bindingResult.hasFieldErrors("shift")) {
-                model.addAttribute("errorShift", bindingResult.getFieldError("shift").getDefaultMessage());
-            }
-            if (bindingResult.hasFieldErrors("drivingLicense")) {
-                model.addAttribute("errorLicense", bindingResult.getFieldError("drivingLicense").getDefaultMessage());
-            }
-
-            model.addAttribute("obj", papPati);
-            return "Pap_Pati/changePreferences";
-        }
-
-        papPatiDao.updatePreferences(papPati);
-        return "redirect:/Pap_Pati/menuPapPati";
-    }
 
     @RequestMapping("/contracts")
     public String listContracts(HttpSession session, Model model) {
