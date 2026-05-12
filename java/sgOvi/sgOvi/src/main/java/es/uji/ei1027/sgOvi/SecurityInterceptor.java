@@ -13,12 +13,12 @@ public class SecurityInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
-        String uri = request.getRequestURI() + "?"+ request.getQueryString();
+        String uri = request.getRequestURI();
         if (session.getAttribute("user") == null) {
             if (uri.contains("/index")|| uri.isEmpty() || uri.equals("/") || uri.contains("/login") ||uri.contains("/css/") || uri.contains("/js/")) {
                 return true;
             }
-            session.setAttribute("nextURL", uri);
+            session.setAttribute("nextURL", uri+ "?"+ request.getQueryString());
             response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }

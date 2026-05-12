@@ -126,9 +126,8 @@ public class AssistanceRequestController {
         Person person = (Person) session.getAttribute("user");
         if(!assistanceRequest.getIdOviUser().equals(person.getDni()))
             return "redirect:/Ovi_User/menuOviUser";
-
-        ArrayList<PapPatiSelectionDTO> papPatiSelectionDTO =
-        model.addAttribute("selections",assistanceRequestService.getSelectionsAP(idAsReq));
+        List<PapPatiSelectionDTO> papPatiSelectionDTO = assistanceRequestService.getPapPatisSelectionDTO(idAsReq);
+        model.addAttribute("dtos", papPatiSelectionDTO);
         return "Assistance_Request/papPatiSelection";
     }
 
