@@ -19,6 +19,7 @@ public class ProfileController {
         Person person = (Person) session.getAttribute("user");
         String rol = (String) session.getAttribute("rol");
         PersonDTO dto;
+        System.out.println(session.getAttribute("nextURL"));
         switch (rol){
             case("OVI_USER") -> {
                 PersonOviUserDTO personOviUserDTO = new PersonOviUserDTO();
@@ -46,7 +47,14 @@ public class ProfileController {
                 model.addAttribute("dto",personInstructorDTO);
             }
         }
-        return "/profile";
+        String backUrl = (String) session.getAttribute("nextURL");
+
+        // Si no hay página previa guardada, enviamos al índice por seguridad
+        if (backUrl == null || backUrl.contains("/login")) {
+            backUrl = "/";
+        }
+        model.addAttribute("urlBefore", backUrl);
+        return "profile";
     }
 
 //implementar para actualizar resultadoa
