@@ -18,10 +18,14 @@ public class SecurityInterceptor implements HandlerInterceptor {
             if (uri.contains("/index")|| uri.isEmpty() || uri.equals("/") || uri.contains("/login") ||uri.contains("/css/") || uri.contains("/js/")) {
                 return true;
             }
-            session.setAttribute("nextURL", uri+ "?"+ request.getQueryString());
+            String query = request.getQueryString();
+            String fullURL = (query == null) ? uri : uri + "?" + query;
+            session.setAttribute("nextURL", fullURL);
             response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }
+
+
         String role =(String) session.getAttribute("rol");
         String menuError= "";
         switch (role) {
@@ -38,8 +42,6 @@ public class SecurityInterceptor implements HandlerInterceptor {
                 menuError="/Instructor/menuInstructor"; //no implementado
             }
         }
-        if(uri.contains("/Ovi_User/list") || uri.contains("Person/"))
-            return true;
 
         // Bloqueo para Technician entrando en OviUser y viceversa
         if (uri.contains("/Ovi_User/") && !role.equals("OVI_USER")) {
@@ -64,17 +66,27 @@ public class SecurityInterceptor implements HandlerInterceptor {
             return false;
         }
         if (uri.contains("/Assistance_Request/")) {
-            if(uri.contains("/Assistance_Request/communication") && !role.equals("TECHNICIAN"))
-                return true;
+            if(uri.contains("/Assistance_Request/communication") && (role.equals("PAP_PATI") || role.equals("INSTRUCTOR"))) {
+                response.sendRedirect(request.getContextPath() + menuError);
+                return false;
+            }
             if(uri.contains("/Assistance_Request/") && (role.equals("PAP_PATI") || role.equals("INSTRUCTOR"))){
                 response.sendRedirect(request.getContextPath() + menuError);
                 return false;
             }
-            return true;
         }
         if(uri.contains("/Activity/") && role.equals("TECHNICIAN")){
             response.sendRedirect(request.getContextPath() + menuError);
             return false;
+        }
+        if (!uri.contains("/profile") &&
+                !uri.contains("/css/") &&
+                !uri.contains("/js/") &&
+                !uri.contains("/images/")) {
+
+            String query = request.getQueryString();
+            String fullURL = (query == null) ? uri : uri + "?" + query;
+            session.setAttribute("nextURL", fullURL);
         }
         return true;
     }
