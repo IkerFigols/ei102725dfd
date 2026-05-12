@@ -106,6 +106,18 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
+.menu-container { /* Caja blanca con sombra para agrupar formularios y centrarlos */
+    background: var(--bg-white);
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
 
 .success-container { /* Contenedor específico para mensajes de confirmación de éxito */
     background: var(--bg-white);

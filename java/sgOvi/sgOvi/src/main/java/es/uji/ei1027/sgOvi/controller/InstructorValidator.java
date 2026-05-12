@@ -8,8 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 public class InstructorValidator implements Validator {
-    @Autowired
-    private InstructorDao instructorDao;
+
 
     @Override
     public boolean supports(Class<?> clazz) {

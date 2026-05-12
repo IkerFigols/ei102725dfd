@@ -3,7 +3,7 @@ package es.uji.ei1027.sgOvi.service;
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
 
-public class PersonPapPatiDTO implements PersonDTO {
+public class PersonPapPatiDTO  {
     Person person;
     PapPati papPati;
 

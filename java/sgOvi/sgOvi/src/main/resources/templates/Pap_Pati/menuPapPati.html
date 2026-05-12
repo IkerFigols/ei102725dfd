@@ -10,13 +10,13 @@
 <body>
 
 <div layout:fragment="content">
-    <section class="form-container">
+    <section class="menu-container">
         <header class="app-header">
             <h1 class="title">Panel del Asistente (PAP/PATI)</h1>
             <p class="description">Bienvenido a tu panel de gestión. Selecciona una opción para continuar.</p>
         </header>
 
-        <nav class="menu-grid-centered">
+        <nav class="menu-grid">
             <a th:href="@{/Activity/list}" class="btn btn-primary">Mis actividades</a>
             <a th:href="@{/Pap_Pati/APList}" class="btn btn-primary">Asistencias Personales</a>
             <a th:href="@{/Contracts/list}" class="btn btn-primary">Mis contratos</a>

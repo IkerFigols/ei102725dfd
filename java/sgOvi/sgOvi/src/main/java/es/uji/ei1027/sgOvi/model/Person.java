@@ -1,6 +1,7 @@
 package es.uji.ei1027.sgOvi.model;
 
 import es.uji.ei1027.sgOvi.model.enums.Gender;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -17,6 +18,9 @@ public class Person {
     private String province;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthdayDate;
+
+    private String pastPassword;
+    private String newPassword;
 
     private String preference; // CAMBIAR NOMBRE
     private boolean dataProtection;
@@ -57,6 +61,14 @@ public class Person {
     public boolean getDataProtection(){return dataProtection;}
 
     public String getPassword(){return password;}
+
+    public String getPastPassword() {
+        return pastPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
 
     public String getCity(){return city;}
 
@@ -100,6 +112,13 @@ public class Person {
 
     public void setBirthdayDate(LocalDate birthdayDate) {
         this.birthdayDate = birthdayDate;
+    }
+
+    public void setPastPassword(String pastPassword) {
+        this.pastPassword = pastPassword;
+    }
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
     public void setPassword(String password){this.password = password;}

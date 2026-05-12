@@ -1,9 +1,6 @@
 package es.uji.ei1027.sgOvi.service;
 
-import es.uji.ei1027.sgOvi.model.Instructor;
-import es.uji.ei1027.sgOvi.model.OviUser;
-import es.uji.ei1027.sgOvi.model.PapPati;
-import es.uji.ei1027.sgOvi.model.Technician;
+import es.uji.ei1027.sgOvi.model.*;
 
 public interface ProfileService {
     public PersonPapPatiDTO getPersonPapPatDTO();
@@ -14,4 +11,9 @@ public interface ProfileService {
     public PapPati getPapPati(String dni);
     public Technician getTechnician (String dni);
     public Instructor getInstructor(String dni);
+    public void updateOviUser(OviUser oviUser);
+    public void updatePapPati(PapPati papPati);
+    public void updateTechnician(Technician technician);
+    public void updateInstructor(Instructor instructor);
+    public void updatePerson(Person person);
 }

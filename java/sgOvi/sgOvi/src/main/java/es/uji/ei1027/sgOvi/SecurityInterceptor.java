@@ -18,9 +18,12 @@ public class SecurityInterceptor implements HandlerInterceptor {
             if (uri.contains("/index")|| uri.isEmpty() || uri.equals("/") || uri.contains("/login") ||uri.contains("/css/") || uri.contains("/js/")) {
                 return true;
             }
-            String query = request.getQueryString();
-            String fullURL = (query == null) ? uri : uri + "?" + query;
-            session.setAttribute("nextURL", fullURL);
+            if (!uri.contains("/profile") && !uri.contains("/css/") && !uri.contains("/js/") && !uri.contains("/images/")
+                    && !uri.contains("/error") && !uri.contains("/error") && !uri.equals("/") && !uri.isBlank()) {
+                String query = request.getQueryString();
+                String fullURL = (query == null) ? uri : uri + "?" + query;
+                session.setAttribute("nextURL", fullURL);
+            }
             response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }
@@ -82,8 +85,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
         if (!uri.contains("/profile") &&
                 !uri.contains("/css/") &&
                 !uri.contains("/js/") &&
-                !uri.contains("/images/")) {
-
+                !uri.contains("/images/") && !uri.contains("/error") && !uri.equals("/") && !uri.isBlank()) {
             String query = request.getQueryString();
             String fullURL = (query == null) ? uri : uri + "?" + query;
             session.setAttribute("nextURL", fullURL);

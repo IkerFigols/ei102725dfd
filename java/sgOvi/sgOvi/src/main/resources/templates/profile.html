@@ -15,11 +15,12 @@
 
         <form th:action="@{/profile}" th:object="${dto}" method="post">
 
-            <div class="textarea-container">
-                <label class="detail-label" for="dni">Dni:</label>
-                <input id="dni" type="text" th:field="*{person.dni}" class="textarea-field-small">
-                <div th:if="${#fields.hasErrors('person.dni')}" th:errors="*{person.dni}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
-            </div>
+            <input type="hidden" th:field="*{person.dni}">
+            <input type="hidden" th:field="*{person.password}">
+            <input type="hidden" th:field="*{person.city}">
+            <input type="hidden" th:field="*{person.province}">
+            <input type="hidden" th:field="*{person.dataProtection}">
+            <input type="hidden" th:field="*{person.preference}">
 
             <div class="textarea-container">
                 <label class="detail-label" for="name">Nombre completo:</label>
@@ -46,6 +47,19 @@
             </div>
 
             <div class="textarea-container">
+                <label class="detail-label" for="pastPassword">Contraseña anterior: </label>
+                <input id="pastPassword" type="text" th:field="*{person.pastPassword}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.pastPassword')}" th:errors="*{person.pastPassword}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="newPassword">Contraseña nueva: </label>
+                <input id="newPassword" type="text" th:field="*{person.newPassword}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.newPassword')}" th:errors="*{person.newPassword}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+
+            <div class="textarea-container">
                 <label for="birthdaydate" class="title" style="font-size: 14px;">Fecha de nacimiento:</label>
                 <input id="birthdaydate" type="date" th:field="*{person.birthdayDate}" class="textarea-field-small">
                 <div th:if="${#fields.hasErrors('person.birthdayDate')}" th:errors="*{person.birthdayDate}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
@@ -64,7 +78,7 @@
             <div th:if="${session.rol == 'OVI_USER'}">
                 <input type="hidden" th:field="*{oviUser.dni}" />
                 <input type="hidden" th:field="*{oviUser.birthdayDate}"/>
-
+                <input type="hidden" name="oviUser.state" th:value="*{oviUser.state}"/>
                 <div class="textarea-container">
                     <label for="address" class="title" style="font-size: 14px;">Dirección:</label>
                     <input id="address" type="text" th:field="*{oviUser.address}" class="textarea-field-small">
@@ -128,7 +142,7 @@
 
                 <div class="textarea-container" style="display: flex; align-items: center; gap: 10px; margin-bottom: 25px;">
                     <label class="detail-label" for="drivingLicense" style="width: auto; margin-bottom: 0;">Carné de Conducir:</label>
-                    <input type="checkbox" id="drivingLicense" name="papPati.drivingLicense" value="true" th:checked="*{papPati.drivingLicense}"/>
+                    <input type="checkbox" id="drivingLicense" th:field="*{papPati.drivingLicense}" />
                 </div>
             </div>
 

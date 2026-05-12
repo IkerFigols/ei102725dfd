@@ -1,10 +1,7 @@
 package es.uji.ei1027.sgOvi.service;
 
 import es.uji.ei1027.sgOvi.dao.*;
-import es.uji.ei1027.sgOvi.model.Instructor;
-import es.uji.ei1027.sgOvi.model.OviUser;
-import es.uji.ei1027.sgOvi.model.PapPati;
-import es.uji.ei1027.sgOvi.model.Technician;
+import es.uji.ei1027.sgOvi.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,4 +63,30 @@ public class profileServiceImp implements ProfileService{
     public Instructor getInstructor(String dni) {
         return instructorDao.getInstructor(dni);
     }
+
+    @Override
+    public void updateOviUser(OviUser oviUser) {
+        oviUserDao.updateOviUser(oviUser);
+    }
+
+    @Override
+    public void updatePapPati(PapPati papPati) {
+        papPatiDao.updatePapPati(papPati);
+    }
+
+    @Override
+    public void updateTechnician(Technician technician) {
+        technicianDao.updateTechnician(technician);
+    }
+
+    @Override
+    public void updateInstructor(Instructor instructor) {
+        instructorDao.updateInstructor(instructor);
+    }
+
+    @Override
+    public void updatePerson(Person person) {
+        personDao.updatePerson(person);
+    }
+
 }
