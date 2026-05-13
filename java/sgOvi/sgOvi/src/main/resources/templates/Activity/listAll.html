@@ -53,20 +53,17 @@
             <p class="description">No hay actividades disponibles para tu perfil en este momento.</p>
         </div>
 
-        <footer class="register-footer">
-            <div class="button-group">
-                <a th:href="@{/Activity/list}" class="btn btn-secondary">Mis actividades</a>
-
-                <div class="nav-back">
-                    <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
-                        ← Volver al Menú
-                    </a>
-                    <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
-                        ← Volver al Menú
-                    </a>
-                </div>
+        <div class="content-footer">
+            <a th:href="@{/Activity/list}" class="btn btn-secondary">Mis actividades</a>
+            <div class="nav-back">
+                <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
+                    ← Volver al Menú
+                </a>
+                <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
+                    ← Volver al Menú
+                </a>
             </div>
-        </footer>
+        </div>
 
     </section>
     <div class="bottom-spacer"></div>

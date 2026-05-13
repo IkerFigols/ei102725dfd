@@ -17,6 +17,13 @@
         </header>
 
         <div class="info-container">
+            <div class="section-title">DATOS DE LA SOLICITUD</div>
+
+            <div class="detail-row">
+                <div class="detail-label">Título</div>
+                <div class="detail-value" th:text="${assistance.tittle}"></div>
+            </div>
+
             <div class="detail-row">
                 <div class="detail-label">Solicitante</div>
                 <div class="detail-value" th:text="${oviUserName}"></div>
