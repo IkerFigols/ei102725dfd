@@ -21,17 +21,15 @@
 
                 <select th:field="*{stateSel}" th:onchange="this.form.submit()">
                     <option th:each="st : ${filter.stateList}"
-                            th:value="${st}"
-                            th:text="${st}"
-                            th:selected="${#strings.equals(st, filter.stateSel)}"> </option>
+                            th:value="${st.name()}"
+                            th:text="${st.getDescription()}">
+                    </option>
                 </select>
 
                 <select th:field="*{sortSel}" th:onchange="this.form.submit()">
-                    <option th:each="s : ${filter.sortList}"
-                            th:value="${s}"
-                            th:text="${s}"
-                            th:selected="${#strings.equals(s, filter.sortSel)}">
-                    </option>
+                    <option value="dateDesc">Fecha descendente</option>
+                    <option value="dateAsc">Fecha ascendente</option>
+                    <option value="tittle">Título (A-Z)</option>
                 </select>
             </form>
         </div>

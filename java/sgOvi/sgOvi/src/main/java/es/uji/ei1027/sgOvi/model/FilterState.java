@@ -1,17 +1,19 @@
 package es.uji.ei1027.sgOvi.model;
 
+import es.uji.ei1027.sgOvi.model.enums.State;
+
 import java.util.List;
 
 public class FilterState {
 
     private String stateSel;
-    private List<String> stateList;
+    private List<State> stateList;
 
-    public List<String> getStateList() { return stateList; }
+    public List<State> getStateList() { return stateList; }
 
     public void setStateSel(String selectedState) { this.stateSel = selectedState; }
 
-    public void setStateList(List<String> stateList) { this.stateList = stateList; }
+    public void setStateList(List<State> stateList) { this.stateList = stateList; }
 
     public String getStateSel() { return stateSel; }
 

@@ -56,8 +56,7 @@ public class AssistanceRequestController {
 
         FilterState filter = new FilterState();
         filter.setStateSel(state);
-        filter.setStateList(Arrays.asList("ALL", "PENDING", "APPROVED", "REJECTED", "CLOSED_WITH_CONTRACT", "CLOSED_WITH_CONTRACT_DONE"));
-
+        filter.setStateList(Arrays.asList(State.values()));
         filter.setSortSel(sort);
         filter.setSortList(Arrays.asList("dateDesc", "dateAsc", "tittle"));
 
