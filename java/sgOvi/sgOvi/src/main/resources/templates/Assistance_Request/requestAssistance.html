@@ -74,9 +74,12 @@
 
             <div class="button-group">
                 <a th:href="@{/Assistance_Request/apRequestList/ALL}" class="btn btn-secondary">Cancelar</a>
-                <button class="btn btn-primary" type="submit">Enviar Solicitud</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        onclick="return confirm('¿Seguro que deseas solicitar la asistencia ?');">
+                    Solcitiar Asistencia
+                </button>
             </div>
-
         </form>
     </div>
 </div>

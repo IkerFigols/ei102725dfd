@@ -31,33 +31,30 @@ public class ProfileController {
             case("OVI_USER") -> {
                 dto.setOviUser(profileService.getOviUser(person.getDni()));
                 dto.setPerson(person);
+                model.addAttribute("urlBefore","/Ovi_User/menuOviUser");
                 model.addAttribute("dto",dto);
             }
             case("PAP_PATI") ->{
 
                 dto.setPapPati(profileService.getPapPati(person.getDni()));
                 dto.setPerson(person);
+                model.addAttribute("urlBefore","/Pap_Pati/menuPapPati");
                 model.addAttribute("dto",dto);
             }
             case("TECHNICIAN") -> {
 
                 dto.setTechnician(profileService.getTechnician(person.getDni()));
                 dto.setPerson(person);
+                model.addAttribute("urlBefore","/Technician/menuTechnician");
                 model.addAttribute("dto",dto);
             }
             case("INSTRUCTOR") ->{
                 dto.setInstructor(profileService.getInstructor(person.getDni()));
                 dto.setPerson(person);
+                model.addAttribute("urlBefore","/Instructor/menuInstructor");
                 model.addAttribute("dto",dto);
             }
         }
-        String backUrl = (String) session.getAttribute("nextURL");
-
-        // Si no hay página previa guardada, enviamos al índice por seguridad
-        if (backUrl == null || backUrl.contains("/login")) {
-            backUrl = "/";
-        }
-        model.addAttribute("urlBefore", backUrl);
         return "profile";
     }
 

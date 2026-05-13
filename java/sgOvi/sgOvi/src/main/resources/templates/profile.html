@@ -92,8 +92,6 @@
                 </div>
             </div>
 
-
-
             <div th:if="${session.rol == 'PAP_PATI'}">
                 <input type="hidden" th:field="*{papPati.dni}" />
                 <input type="hidden" name="papPati.state" th:value="*{papPati.state}"/>
@@ -156,13 +154,15 @@
                 <div th:if="${#fields.hasErrors('instructor.expertise')}" th:errors="*{instructor.expertise}" class="error-text"></div>
             </div>
 
-            <div class="activities-actions">
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <div class="content-footer" style="margin-top: 30px;">
+                <a th:href="@{${urlBefore}}" class="btn btn-secondary">← Volver</a>
+                <button type="submit" class="btn btn-primary"
+                        th:data-dni="${dto.person.dni}"
+                        onclick="return confirm('¿Seguro que deseas guardar los cambios para el dni ' + this.getAttribute('data-dni') + '?');">
+                    Guardar cambios</button>
             </div>
+
         </form>
-        <div class="content-footer" style="margin-top: 30px;">
-            <a th:href="@{${urlBefore}}" class="btn btn-secondary">← Volver</a>
-        </div>
     </div>
 </div>
 

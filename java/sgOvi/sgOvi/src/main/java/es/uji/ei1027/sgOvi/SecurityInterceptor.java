@@ -1,5 +1,6 @@
 package es.uji.ei1027.sgOvi;
 
+import es.uji.ei1027.sgOvi.controller.exception.OviException;
 import es.uji.ei1027.sgOvi.service.PersonInstructorDTO;
 import es.uji.ei1027.sgOvi.service.PersonOviUserDTO;
 import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
@@ -19,7 +20,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
                 return true;
             }
             if (!uri.contains("/profile") && !uri.contains("/css/") && !uri.contains("/js/") && !uri.contains("/images/")
-                    && !uri.contains("/error") && !uri.contains("/error") && !uri.equals("/") && !uri.isBlank()) {
+                    && !uri.contains("/error") && !uri.equals("/") && !uri.isBlank()) {
                 String query = request.getQueryString();
                 String fullURL = (query == null) ? uri : uri + "?" + query;
                 session.setAttribute("nextURL", fullURL);
@@ -30,66 +31,38 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
 
         String role =(String) session.getAttribute("rol");
-        String menuError= "";
-        switch (role) {
-            case ("OVI_USER") -> {
-                menuError="/Ovi_User/menuOviUser";
-            }
-            case ("PAP_PATI") -> {
-                menuError="/Pap_Pati/menuPapPati";
-            }
-            case ("TECHNICIAN") -> {
-                menuError="/Technician/menuTechnician";
-            }
-            case ("INSTRUCTOR") -> {
-                menuError="/Instructor/menuInstructor"; //no implementado
-            }
-        }
+
+
 
         // Bloqueo para Technician entrando en OviUser y viceversa
         if (uri.contains("/Ovi_User/") && !role.equals("OVI_USER")) {
-            response.sendRedirect(request.getContextPath() + menuError);
-            return false;
+           throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
         }
 
         if (uri.contains("/Technician/") && !role.equals("TECHNICIAN")) {
-            response.sendRedirect(request.getContextPath() + menuError);
-            return false;
+            throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
         }
         if (uri.contains("/Pap_Pati/") && !role.equals("PAP_PATI")) {
-            response.sendRedirect(request.getContextPath() + menuError);
-            return false;
+            throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
         }
         if (uri.contains("/Instructor/") && !role.equals("INSTRUCTOR")) {
-            response.sendRedirect(request.getContextPath() + menuError);
-            return false;
+            throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
         }
         if (uri.contains("/Contract") && role.equals("TECHNICIAN")) {
-            response.sendRedirect(request.getContextPath() + menuError);
-            return false;
+            throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
         }
         if (uri.contains("/Assistance_Request/")) {
             if(uri.contains("/Assistance_Request/communication") && (role.equals("PAP_PATI") || role.equals("INSTRUCTOR"))) {
-                response.sendRedirect(request.getContextPath() + menuError);
-                return false;
+                throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
             }
             if(uri.contains("/Assistance_Request/") && (role.equals("PAP_PATI") || role.equals("INSTRUCTOR"))){
-                response.sendRedirect(request.getContextPath() + menuError);
-                return false;
+                throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
             }
         }
         if(uri.contains("/Activity/") && role.equals("TECHNICIAN")){
-            response.sendRedirect(request.getContextPath() + menuError);
-            return false;
+            throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
         }
-        if (!uri.contains("/profile") &&
-                !uri.contains("/css/") &&
-                !uri.contains("/js/") &&
-                !uri.contains("/images/") && !uri.contains("/error") && !uri.equals("/") && !uri.isBlank()) {
-            String query = request.getQueryString();
-            String fullURL = (query == null) ? uri : uri + "?" + query;
-            session.setAttribute("nextURL", fullURL);
-        }
+
         return true;
     }
 }
