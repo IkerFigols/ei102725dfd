@@ -7,19 +7,18 @@ import java.util.List;
 public class FilterState {
 
     private String stateSel;
-    private List<State> stateList;
+    private List<State> stateList = List.of(State.values());
+    private String sortSel;
+    private List<String> sortList;
+
+
 
     public List<State> getStateList() { return stateList; }
 
     public void setStateSel(String selectedState) { this.stateSel = selectedState; }
 
-    public void setStateList(List<State> stateList) { this.stateList = stateList; }
 
     public String getStateSel() { return stateSel; }
-
-    private String sortSel;
-
-    private List<String> sortList;
 
     public String getSortSel() { return sortSel; }
 

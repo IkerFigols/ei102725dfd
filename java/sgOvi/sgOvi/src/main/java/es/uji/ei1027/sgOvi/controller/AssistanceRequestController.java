@@ -39,7 +39,7 @@ public class AssistanceRequestController {
             return "apRequestList/ALL";
         }
 
-        return "redirect:/Assistance_Request/apRequestList/" + filter.getStateSel()
+        return "redirect:/Assistance_Request/apRequestList/" +filter.getStateSel()
                 + "?sort=" + filter.getSortSel();
     }
     @RequestMapping("/apRequestList/{state}")
@@ -56,7 +56,6 @@ public class AssistanceRequestController {
 
         FilterState filter = new FilterState();
         filter.setStateSel(state);
-        filter.setStateList(Arrays.asList(State.values()));
         filter.setSortSel(sort);
         filter.setSortList(Arrays.asList("dateDesc", "dateAsc", "tittle"));
 
@@ -64,9 +63,40 @@ public class AssistanceRequestController {
 
         return "Assistance_Request/apRequestList";
     }
+
+    @RequestMapping("/papPatiSelection/{idAsReq}/{state}")
+    public String getSelections(Model model, @PathVariable("idAsReq") String idAsReq,
+                                @PathVariable("state") String state,
+                                @RequestParam(required = false, defaultValue = "name") String sort,
+                                HttpSession session){
+
+        Assistance_Request assistanceRequest = assistanceReqDao.getAssistanceRequest(idAsReq);
+        Person person = (Person) session.getAttribute("user");
+        if(!assistanceRequest.getIdOviUser().equals(person.getDni()))
+            return "redirect:/Ovi_User/menuOviUser";
+
+        FilterState filterState = new FilterState();
+        filterState.setStateSel(state);
+        filterState.setSortSel(sort);
+        List<PapPatiSelectionDTO> papPatiSelectionDTO = assistanceRequestService.getPapPatisSelectionDTO(idAsReq, state, sort);
+        model.addAttribute("idAsReq",idAsReq);
+        model.addAttribute("dtos", papPatiSelectionDTO);
+        model.addAttribute("filter",filterState);
+        return "Assistance_Request/papPatiSelection";
+    }
+    @RequestMapping(value="/papPatiSelection/{idAsReq}", method = RequestMethod.POST)
+    public String papPatiSelectionPOST(@ModelAttribute("filter") FilterState filter, @PathVariable("idAsReq") String idAsReq,
+                                   BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "papPatiSelection/"+idAsReq+"/ALL";
+        }
+        return "redirect:/Assistance_Request/papPatiSelection/" + idAsReq + "/" + filter.getStateSel()
+                + "?sort=" + filter.getSortSel();
+    }
+
     @RequestMapping(value="/requestAssistance")
     public String addAssistanceRequest(Model model, HttpSession session) {
-
 
         Person person = (Person) session.getAttribute("user");
         Assistance_Request ap = new Assistance_Request();
@@ -141,17 +171,9 @@ public class AssistanceRequestController {
         // Redirigimos de vuelta a la lista para ver el cambio
         return "redirect:/Assistance_Request/apRequestList";
     }
-    @RequestMapping("/papPatiSelection/{idAsReq}")
-    public String getSelections(Model model, @PathVariable("idAsReq") String idAsReq, HttpSession session){
 
-        Assistance_Request assistanceRequest = assistanceReqDao.getAssistanceRequest(idAsReq);
-        Person person = (Person) session.getAttribute("user");
-        if(!assistanceRequest.getIdOviUser().equals(person.getDni()))
-            return "redirect:/Ovi_User/menuOviUser";
-        List<PapPatiSelectionDTO> papPatiSelectionDTO = assistanceRequestService.getPapPatisSelectionDTO(idAsReq);
-        model.addAttribute("dtos", papPatiSelectionDTO);
-        return "Assistance_Request/papPatiSelection";
-    }
+
+
 
     @RequestMapping(value="/rejectSelection/{idSelection}", method = RequestMethod.POST)
     public String rejectSelection(@PathVariable("idSelection") String idSelection,  @RequestParam("idAsReq") String idAsReq) {
