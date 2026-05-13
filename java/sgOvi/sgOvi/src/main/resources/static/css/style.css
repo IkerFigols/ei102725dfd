@@ -272,6 +272,21 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
     min-width: 200px;
     text-align: center;
 }
+/* Mensaje para listas vacías */
+.empty-list-container {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    padding: 40px; /* Sustituye el padding en línea */
+    text-align: center; /* Sustituye el text-align en línea */
+    margin-top: 20px;
+}
+
+.empty-list-text {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin: 0;
+}
 
 /* ==========================================================================
    4. BOTONES Y ACCIONES
