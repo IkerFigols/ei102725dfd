@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -30,15 +31,37 @@ public class AssistanceRequestController {
     @Autowired
     private ListPapPatiSelService listPapPatiSelService;
 
-    @RequestMapping("/apRequestList") // Usamos la ruta principal
-    public String listAssistanceRequests(HttpSession session, Model model,
-                                         @RequestParam(required = false) String state,
-                                         @RequestParam(required = false, defaultValue = "dateDesc") String sort) {
-        Person user = (Person) session.getAttribute("user");
+    @RequestMapping(value="/apRequestList", method = RequestMethod.POST)
+    public String listRequestsPOST(@ModelAttribute("filter") FilterState filter,
+                                   BindingResult bindingResult) {
 
-        model.addAttribute("selectedState", state);
-        model.addAttribute("selectedSort", sort);
-        model.addAttribute("assistanceRequests", assistanceReqDao.getAssistanceRequestsByOviUser(user.getDni(), state, sort));
+        if (bindingResult.hasErrors()) {
+            return "apRequestList/ALL";
+        }
+
+        return "redirect:/Assistance_Request/apRequestList/" + filter.getStateSel()
+                + "?sort=" + filter.getSortSel();
+    }
+    @RequestMapping("/apRequestList/{state}")
+    public String listAssistanceRequests(HttpSession session, Model model,
+                                         @PathVariable String state,
+                                         @RequestParam(required = false, defaultValue = "dateDesc") String sort) {
+
+        Person person = (Person) session.getAttribute("user");
+
+        String stateForDao = state.equals("ALL") ? null : state;
+
+        List<Assistance_Request> requests = assistanceReqDao.getAssistanceRequestsByOviUser(person.getDni(), stateForDao, sort);
+        model.addAttribute("assistanceRequests", requests);
+
+        FilterState filter = new FilterState();
+        filter.setStateSel(state);
+        filter.setStateList(Arrays.asList("ALL", "PENDING", "APPROVED", "REJECTED", "CLOSED_WITH_CONTRACT", "CLOSED_WITH_CONTRACT_DONE"));
+
+        filter.setSortSel(sort);
+        filter.setSortList(Arrays.asList("dateDesc", "dateAsc", "tittle"));
+
+        model.addAttribute("filter", filter);
 
         return "Assistance_Request/apRequestList";
     }
