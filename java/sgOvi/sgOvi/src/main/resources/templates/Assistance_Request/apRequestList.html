@@ -16,22 +16,28 @@
             <p class="description">Consulte el estado de sus peticiones y gestione sus asistentes.</p>
         </header>
 
-        <div class="info-card" style="margin-bottom: 25px; background-color: var(--bg-light);">
-            <form th:action="@{/Assistance_Request/apRequestList}" th:object="${filter}" method="post">
+        <div class="info-card-container" style="border: none; padding: 0;"> <form th:action="@{/Assistance_Request/apRequestList}" th:object="${filter}" method="post" class="filter-bar">
 
-                <select th:field="*{stateSel}" th:onchange="this.form.submit()">
+            <div class="filter-group">
+                <label for="filter-state">Filtrar por estado:</label>
+                <select id="filter-state" th:field="*{stateSel}" th:onchange="this.form.submit()" class="filter-select">
                     <option th:each="st : ${filter.stateList}"
                             th:value="${st.name()}"
                             th:text="${st.getDescription()}">
                     </option>
                 </select>
+            </div>
 
-                <select th:field="*{sortSel}" th:onchange="this.form.submit()">
+            <div class="filter-group">
+                <label for="filter-order">Ordenar por:</label>
+                <select id="filter-order" th:field="*{sortSel}" th:onchange="this.form.submit()" class="filter-select">
                     <option value="dateDesc">Fecha descendente</option>
                     <option value="dateAsc">Fecha ascendente</option>
                     <option value="tittle">Título (A-Z)</option>
                 </select>
-            </form>
+            </div>
+
+        </form>
         </div>
 
         <div class="table-responsive" th:if="${!assistanceRequests.isEmpty()}">
