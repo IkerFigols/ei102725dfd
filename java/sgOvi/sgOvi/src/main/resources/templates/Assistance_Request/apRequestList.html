@@ -16,34 +16,28 @@
             <p class="description">Consulte el estado de sus peticiones y gestione sus asistentes.</p>
         </header>
 
-        <div class="info-card" style="margin-bottom: 25px; background-color: var(--bg-light);">
-            <form th:action="@{/Assistance_Request/apRequestList}" method="get" style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end;">
+        <div class="info-card-container" style="border: none; padding: 0;"> <form th:action="@{/Assistance_Request/apRequestList}" th:object="${filter}" method="post" class="filter-bar">
 
-                <div style="display: flex; flex-direction: column; gap: 5px;">
-                    <label for ="filter-state"class="detail-label" style="margin-bottom: 0;">Filtrar por estado:</label>
-                    <select id="filter-state" name="state" class="textarea-field-small" style="width: 200px;">
-                        <option value="">Todos los estados</option>
-                        <option value="PENDING" th:selected="${selectedState == 'PENDING'}">Pendiente</option>
-                        <option value="APPROVED" th:selected="${selectedState == 'APPROVED'}">Aprobado</option>
-                        <option value="REJECTED" th:selected="${selectedState == 'REJECTED'}">Rechazado</option>
-                    </select>
-                </div>
+            <div class="filter-group">
+                <label for="filter-state">Filtrar por estado:</label>
+                <select id="filter-state" th:field="*{stateSel}" th:onchange="this.form.submit()" class="filter-select">
+                    <option th:each="st : ${filter.stateList}"
+                            th:value="${st.name()}"
+                            th:text="${st.getDescription()}">
+                    </option>
+                </select>
+            </div>
 
-                <div style="display: flex; flex-direction: column; gap: 5px;">
-                    <label for="filter-order" class="detail-label" style="margin-bottom: 0;">Ordenar por:</label>
-                    <select id="filter-order" name="sort" class="textarea-field-small" style="width: 200px;">
-                        <option value="dateDesc" th:selected="${selectedSort == 'dateDesc' or selectedSort == null}">Fecha (Más antiguas)</option>
-                        <option value="dateAsc" th:selected="${selectedSort == 'dateAsc'}">Fecha (Más recientes)</option>
-                        <option value="state" th:selected="${selectedSort == 'state'}">Estado</option>
-                        <option value="tittle" th:selected="${selectedSort == 'tittle'}">Título (A-Z)</option>
-                    </select>
-                </div>
+            <div class="filter-group">
+                <label for="filter-order">Ordenar por:</label>
+                <select id="filter-order" th:field="*{sortSel}" th:onchange="this.form.submit()" class="filter-select">
+                    <option value="dateDesc">Fecha descendente</option>
+                    <option value="dateAsc">Fecha ascendente</option>
+                    <option value="tittle">Título (A-Z)</option>
+                </select>
+            </div>
 
-                <div style="display: flex; gap: 10px;">
-                    <button type="submit" class="btn btn-primary">Aplicar cambios</button>
-                    <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">Limpiar</a>
-                </div>
-            </form>
+        </form>
         </div>
 
         <div class="table-responsive" th:if="${!assistanceRequests.isEmpty()}">
