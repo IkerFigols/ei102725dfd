@@ -65,6 +65,7 @@ public class ContractController {
         }
 
         model.addAttribute("contracts", contractListWithNames);
+        model.addAttribute("pdf", "pdfs/contrato_tipo.pdf");
         return "Contracts/list";
     }
 }

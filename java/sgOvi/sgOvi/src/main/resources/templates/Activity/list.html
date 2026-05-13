@@ -48,19 +48,17 @@
       <p class="description">No tienes inscripciones activas en este momento.</p>
     </div>
 
-    <footer class="register-footer">
-      <div class="button-group">
-        <div class="nav-back">
-          <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
-            ← Volver al Menú
-          </a>
-          <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
-            ← Volver al Menú
-          </a>
-        </div>
-        <a th:href="@{/Activity/listAll}" class="btn btn-primary">Explorar más actividades</a>
+    <div class="content-footer">
+      <div class="nav-back">
+        <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
+          ← Volver al Menú
+        </a>
+        <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
+          ← Volver al Menú
+        </a>
       </div>
-    </footer>
+      <a th:href="@{/Activity/listAll}" class="btn btn-primary">Explorar más actividades</a>
+    </div>
 
   </section>
   <div class="bottom-spacer"></div>
