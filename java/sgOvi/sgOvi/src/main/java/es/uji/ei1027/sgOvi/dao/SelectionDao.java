@@ -1,6 +1,8 @@
 package es.uji.ei1027.sgOvi.dao;
 
+import es.uji.ei1027.sgOvi.model.Assistance_Request;
 import es.uji.ei1027.sgOvi.model.Selection;
+import es.uji.ei1027.sgOvi.service.AssistanceRequestSelectionDTO;
 import es.uji.ei1027.sgOvi.service.PapPatiSelectionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -119,5 +121,44 @@ public class SelectionDao {
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<>();
         }
+    }
+    public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state, String sort) {
+        String sql = "SELECT s.*, ar.tittle, ar.data as request_date, p.name as ovi_name " +
+                "FROM Selection s " +
+                "JOIN Assistance_Request ar ON s.idAsReq = ar.idAsReq " +
+                "JOIN Person p ON ar.idOviUser = p.dni " +
+                "WHERE s.idPap = ?";
+
+        List<Object> params = new ArrayList<>();
+        params.add(idPapPati);
+
+        if (state != null && !state.equals("ALL")) {
+            sql += " AND s.state = ?";
+            params.add(state);
+        }
+
+        if ("tittle".equals(sort)) {
+            sql += " ORDER BY ar.tittle ASC";
+        } else if ("dateAsc".equals(sort)) {
+            sql += " ORDER BY ar.data ASC";
+        } else {
+            sql += " ORDER BY ar.data DESC";
+        }
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            AssistanceRequestSelectionDTO dto = new AssistanceRequestSelectionDTO();
+            dto.setIdSelection(rs.getString("idSelection"));
+            dto.setSelectionState(rs.getString("state"));
+            dto.setSelectionDate(rs.getDate("date").toLocalDate());
+
+            Assistance_Request ar = new Assistance_Request();
+            ar.setIdAsReq(rs.getString("idAsReq"));
+            ar.setTittle(rs.getString("tittle"));
+            ar.setDate(rs.getDate("request_date").toLocalDate());
+            dto.setAssistanceRequest(ar);
+
+            dto.setOviUserName(rs.getString("ovi_name"));
+            return dto;
+        }, params.toArray());
     }
 }

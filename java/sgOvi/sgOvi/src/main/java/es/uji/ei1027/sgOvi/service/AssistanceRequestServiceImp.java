@@ -136,4 +136,8 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
             default:         return 4;
         }
     }
+    @Override
+    public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state, String sort) {
+        return selectionDao.getRequestsByPapPatiFiltered(idPapPati, state, sort);
+    }
 }

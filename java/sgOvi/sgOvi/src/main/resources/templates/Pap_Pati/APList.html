@@ -15,24 +15,51 @@
             <p class="description">Listado de servicios donde colaboras.</p>
         </header>
 
+        <div class="info-card" style="margin-bottom: 25px; background-color: var(--bg-light); padding: 15px; border-radius: 8px;">
+            <form th:action="@{/Pap_Pati/APList}" method="get" style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end;">
+
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <label class="detail-label" style="margin-bottom: 0;">Filtrar por estado:</label>
+                    <select name="state" class="textarea-field-small" style="width: 200px;" onchange="this.form.submit()">
+                        <option th:each="st : ${filter.stateList}"
+                                th:value="${st}"
+                                th:text="${st.getDescription()}"
+                                th:selected="${st.name() == filter.stateSel}">
+                        </option>
+                    </select>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <label class="detail-label" style="margin-bottom: 0;">Ordenar por:</label>
+                    <select name="sort" class="textarea-field-small" style="width: 220px;" onchange="this.form.submit()">
+                        <option value="dateDesc" th:selected="${filter.sortSel == 'dateDesc'}">Fecha (Más reciente)</option>
+                        <option value="dateAsc" th:selected="${filter.sortSel == 'dateAsc'}">Fecha (Más antigua)</option>
+                        <option value="tittle" th:selected="${filter.sortSel == 'tittle'}">Título (A-Z)</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
         <div class="table-responsive">
             <table class="table-custom">
                 <thead>
                 <tr>
-                    <th>Fecha Inicio</th>
-                    <th>Usuario</th>
+                    <th>Título</th> <th>Fecha Inicio</th>
+                    <th>Usuario OVI</th>
                     <th>Estado</th>
                     <th class="text-right">Acción</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="item : ${requests}">
+                    <td th:text="${item.assistanceRequest.tittle}" style="font-weight: bold; color: var(--primary-blue);"></td>
+
                     <td th:text="${item.assistanceRequest.date != null ? #temporals.format(item.assistanceRequest.date, 'dd/MM/yyyy') : '--/--/----'}"></td>
                     <td th:text="${item.oviUserName}"></td>
                     <td>
-                        <span th:text="${item.selectionState == 'APPROVED' ? 'Aprobada' : (item.selectionState == 'PENDING' ? 'Pendiente' : 'Rechazada')}"
-                              th:class="'status-badge ' + (${item.selectionState == 'APPROVED'} ? 'status-approved' : (${item.selectionState == 'PENDING'} ? 'status-pending' : 'status-rejected'))">
-                        </span>
+                <span th:text="${item.selectionState == 'APPROVED' ? 'Aprobada' : (item.selectionState == 'PENDING' ? 'Pendiente' : 'Rechazada')}"
+                      th:class="'status-badge ' + (${item.selectionState == 'APPROVED'} ? 'status-approved' : (${item.selectionState == 'PENDING'} ? 'status-pending' : 'status-rejected'))">
+                </span>
                     </td>
                     <td class="text-right">
                         <form th:action="@{/Pap_Pati/papPatiAssistances}" method="post" style="margin: 0;">

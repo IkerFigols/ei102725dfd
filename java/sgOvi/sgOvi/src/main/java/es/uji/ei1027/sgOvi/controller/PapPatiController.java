@@ -3,10 +3,9 @@ package es.uji.ei1027.sgOvi.controller;
 import es.uji.ei1027.sgOvi.dao.PapPatiDao;
 import es.uji.ei1027.sgOvi.dao.PersonDao;
 import es.uji.ei1027.sgOvi.dao.SelectionDao;
-import es.uji.ei1027.sgOvi.model.PapPati;
-import es.uji.ei1027.sgOvi.model.Person;
-import es.uji.ei1027.sgOvi.model.Selection;
+import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.RolUser;
+import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.AssistanceRequestSelectionDTO;
 import es.uji.ei1027.sgOvi.service.AssistanceRequestService;
 import es.uji.ei1027.sgOvi.service.ResourcesByDni;
@@ -19,8 +18,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
-import es.uji.ei1027.sgOvi.model.Assistance_Request;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -66,14 +66,26 @@ public class PapPatiController {
     }
 
     @RequestMapping("/APList")
-    public String listRequests(Model model, HttpSession session) {
+    public String listRequests(Model model, HttpSession session,
+                               @RequestParam(required = false, defaultValue = "ALL") String state,
+                               @RequestParam(required = false, defaultValue = "dateDesc") String sort) {
         Person user = (Person) session.getAttribute("user");
 
         List<AssistanceRequestSelectionDTO> requests =
-                assistanceRequestService.getRequestsByPapPati(user.getDni());
+                assistanceRequestService.getRequestsByPapPatiFiltered(user.getDni(), state, sort);
 
         model.addAttribute("requests", requests);
+
+        // Objeto para mantener el estado de los filtros en la vista
+        FilterState filter = new FilterState();
+        filter.setStateSel(state);
+        filter.setSortSel(sort);
+        // Usamos los nombres técnicos para los values
+        filter.setStateList(Arrays.asList(State.values()));
+
+        model.addAttribute("filter", filter);
         model.addAttribute("userType", RolUser.PAP_PATI.name());
+
         return "Pap_Pati/APList";
     }
 
