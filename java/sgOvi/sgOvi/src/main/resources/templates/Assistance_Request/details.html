@@ -78,7 +78,7 @@
     </div>
 
     <div class="button-group">
-      <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">← Volver al listado</a>
+      <a th:href="@{/Assistance_Request/apRequestList/ALL}" class="btn btn-secondary">← Volver al listado</a>
 
       <a th:if="${assistanceRequest.state.name() == 'PENDING'}"
          th:href="@{/Assistance_Request/update/{idAsReq}(idAsReq=${assistanceRequest.idAsReq})}"

@@ -72,7 +72,7 @@
       </div>
 
       <div class="button-group" style="margin-top: 30px;">
-        <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">Cancelar</a>
+        <a th:href="@{/Assistance_Request/apRequestList/ALL}" class="btn btn-secondary">Cancelar</a>
         <button type="submit" class="btn btn-primary"
                 th:data-idOviUser="${assistanceRequest.idOviUser}"
                 onclick="return confirm('¿Seguro que deseas actualizar los cambios de la solicitud para el dni ' + this.getAttribute('data-idOviUser') + '?');"

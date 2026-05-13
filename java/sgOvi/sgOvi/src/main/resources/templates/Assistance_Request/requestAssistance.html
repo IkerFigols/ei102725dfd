@@ -60,7 +60,10 @@
                 <div th:if="${#fields.hasErrors('province')}" th:errors="*{province}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
             </div>
 
+            <div class="section-title">4. Preferencia de Turno</div>
+
             <div class="textarea-container">
+                <label class="detail-label" for="shiftPreference">Preferiencia de turno:</label>
                 <select id="shiftPreference" name="shiftPreference" class="textarea-field-small" style="width: 200px;">
                     <option value="" th:selected="${assistanceRequest.shiftPreference == null}" disabled>Seleccione un turno</option>
                     <option th:each="shift : ${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).values()}"
@@ -77,7 +80,7 @@
                 <button type="submit"
                         class="btn btn-primary"
                         onclick="return confirm('¿Seguro que deseas solicitar la asistencia ?');">
-                    Solcitiar Asistencia
+                    Solicitar Asistencia
                 </button>
             </div>
         </form>

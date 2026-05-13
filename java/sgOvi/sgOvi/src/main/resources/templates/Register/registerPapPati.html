@@ -80,7 +80,9 @@
             </fieldset>
 
             <div style="text-align: center; margin-top: 30px;">
-                <button type="submit" class="btn btn-primary" style="width: 250px;">Completar Registro</button>
+                <button type="submit" class="btn btn-primary" style="width: 250px;"
+                        th:data-dni="${pappati.dni}"
+                        onclick="return confirm('¿Seguro que deseas completar el registro de Asistente Personal con el dni: ' + this.getAttribute('data-dni') + '?');">Completar Registro</button>
             </div>
         </form>
     </section>

@@ -56,11 +56,10 @@
                     <td th:text="${dto.person.surname}"></td>
                     <td th:text="${dto.person.city}"></td>
                     <td>
-                            <span th:class="'badge ' +
-                                (${dto.selection.state.name() == 'APPROVED'} ? 'badge-success' :
-                                (${dto.selection.state.name() == 'REJECTED'} ? 'badge-info' : 'badge-warning'))"
-                                  th:text="${dto.selection.state.getDescription()}">
-                            </span>
+                        <span class="status-badge" th:classappend="${dto.selection.state.name() == 'APPROVED' ? 'status-approved' :
+                                                (dto.selection.state.name() == 'PENDING' ? 'status-pending' : 'status-rejected' )}"
+                                                th:text="${dto.selection.state.getDescription()}">
+                        </span>
                     </td>
                     <td>
                         <div class="actions-group" style="justify-content: center;">
