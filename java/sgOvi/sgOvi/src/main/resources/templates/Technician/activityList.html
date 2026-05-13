@@ -41,7 +41,9 @@
                                 Editar
                             </a>
                             <a class="btn btn-primary"
-                               th:href="@{/Technician/activityList/delete/{idActivity}(idActivity=${activity.getIdActivity})}">
+                               th:href="@{/Technician/activityList/delete/{idActivity}(idActivity=${activity.getIdActivity})}"
+                               th:data-tittle="${activity.tittle}"
+                               onclick="return confirm('¿Seguro que deseas eliminar la actividad: ' + this.getAttribute('data-tittle') + '?');">
                                 Borrar
                             </a>
                         </div>
@@ -58,6 +60,5 @@
 
     </div>
 </main>
-
 </body>
 </html>

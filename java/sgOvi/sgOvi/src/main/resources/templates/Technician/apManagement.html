@@ -106,7 +106,10 @@ layout:decorate="~{Fragments/base}">
         <button type="submit" th:formaction="@{/Technician/apManagement/accept}" class="btn btn-primary">
           Aceptar Solicitud
         </button>
-        <button type="submit" th:formaction="@{/Technician/apManagement/reject}" class="btn assistanceRequest-btn-danger">
+        <button type="submit"
+                th:formaction="@{/Technician/apManagement/reject}"
+                class="btn assistanceRequest-btn-danger"
+                onclick="return confirm('¿Seguro que deseas denegar esta solicitud de asistencia?')">
           Denegar Solicitud
         </button>
       </div>

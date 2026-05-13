@@ -28,7 +28,12 @@
             </div>
 
             <div class="activities-actions">
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        th:data-dni="${instructor.dni}"
+                        onclick="return confirm('¿Seguro que deseas guardar los cambios para el instructor con dni ' + this.getAttribute('data-dni') + '?');">
+                    Guardar cambios
+                </button>
             </div>
 
         </form>
