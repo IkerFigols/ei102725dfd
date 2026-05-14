@@ -11,11 +11,11 @@ public interface AssistanceRequestService {
     public PapPati getPapPati(String dni);
     public void updateStateSelection(String idSelection, String state);
     public String getDniAP(String idSelection);
-    public List<PapPatiSelectionDTO> getPapPatisSelectionDTO(String idAsReq, String state, String sorte);
+    public List<PapPatiSelectionDTO> getPapPatisSelectionDTO(String idAsReq, String state);
     public List<Communication> getComunicationsSelection(String idSelection);
     public void addCommunication (Communication communication);
     public void generateContract(String idSelection, Assistance_Request ap);
     public void rejectOtherCandidates(String idAsReq,String idPapPati);
     public List<AssistanceRequestSelectionDTO> getRequestsByPapPati(String idPapPati);
-    public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state, String sort);
+    public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state);
 }

@@ -61,8 +61,8 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     }
 
     @Override
-    public List<PapPatiSelectionDTO> getPapPatisSelectionDTO(String idAsReq, String state, String sort) {
-        List<PapPatiSelectionDTO> papPatiSelectionDTOS = selectionDao.getPapSelByAP(idAsReq, state, sort);
+    public List<PapPatiSelectionDTO> getPapPatisSelectionDTO(String idAsReq, String state) {
+        List<PapPatiSelectionDTO> papPatiSelectionDTOS = selectionDao.getPapSelByAP(idAsReq, state);
         return papPatiSelectionDTOS;
     }
 
@@ -137,7 +137,7 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
         }
     }
     @Override
-    public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state, String sort) {
-        return selectionDao.getRequestsByPapPatiFiltered(idPapPati, state, sort);
+    public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state) {
+        return selectionDao.getRequestsByPapPatiFiltered(idPapPati, state);
     }
 }

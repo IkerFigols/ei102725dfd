@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Comparator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,6 +50,25 @@ public class PapPatiController {
     public void setPapPatiDao(PapPatiDao papPatiDao) {
         this.papPatiDao = papPatiDao;
     }
+    //Método para la ordenación
+    private List<AssistanceRequestSelectionDTO> sortRequests(List<AssistanceRequestSelectionDTO> requests, String sort) {
+        if (sort == null) return requests;
+        switch (sort) {
+            case "dateAsc":
+                requests.sort(Comparator.comparing(AssistanceRequestSelectionDTO::getSelectionDate,
+                        Comparator.nullsLast(Comparator.naturalOrder())));
+                break;
+            case "dateDesc":
+                requests.sort(Comparator.comparing(AssistanceRequestSelectionDTO::getSelectionDate,
+                        Comparator.nullsLast(Comparator.reverseOrder())));
+                break;
+            case "titleAsc":
+                requests.sort(Comparator.comparing(dto -> dto.getAssistanceRequest().getTittle(),
+                        String.CASE_INSENSITIVE_ORDER));
+                break;
+        }
+        return requests;
+    }
 
     @RequestMapping("/menuPapPati")
     public String menu(HttpSession session) {
@@ -66,24 +86,24 @@ public class PapPatiController {
     }
 
     @RequestMapping("/APList")
-    public String listRequests(Model model, HttpSession session,
-                               @RequestParam(required = false, defaultValue = "ALL") String state,
-                               @RequestParam(required = false, defaultValue = "dateDesc") String sort) {
-        Person user = (Person) session.getAttribute("user");
+    public String listRequests(HttpSession session, Model model,
+                               @RequestParam(value = "state", required = false, defaultValue = "ALL") String state,
+                               @RequestParam(value = "sort", required = false, defaultValue = "dateDesc") String sort) {
 
-        List<AssistanceRequestSelectionDTO> requests =
-                assistanceRequestService.getRequestsByPapPatiFiltered(user.getDni(), state, sort);
+        Person user = (Person) session.getAttribute("user");
+        if (user == null) return "redirect:/login";
+
+        List<AssistanceRequestSelectionDTO> requests = assistanceRequestService.getRequestsByPapPatiFiltered(user.getDni(), state);
+
+        requests = sortRequests(requests, sort);
 
         model.addAttribute("requests", requests);
 
-        // Objeto para mantener el estado de los filtros en la vista
         FilterState filter = new FilterState();
         filter.setStateSel(state);
         filter.setSortSel(sort);
-        // Usamos los nombres técnicos para los values
-
         model.addAttribute("filter", filter);
-        model.addAttribute("userType", RolUser.PAP_PATI.name());
+        model.addAttribute("userType", "PAP_PATI");
 
         return "Pap_Pati/APList";
     }

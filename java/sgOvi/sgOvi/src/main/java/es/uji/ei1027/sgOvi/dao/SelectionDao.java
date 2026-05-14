@@ -112,17 +112,11 @@ public class SelectionDao {
             return new ArrayList<>();
         }
     }
-    public List<PapPatiSelectionDTO> getPapSelByAP(String idAsReq, String state, String sort){
+    public List<PapPatiSelectionDTO> getPapSelByAP(String idAsReq, String state){
         try {
             String sql ="SELECT * FROM Selection AS s JOIN Pap_Pati AS pa ON (s.idPap = pa.dni) JOIN Person AS p USING(dni) WHERE s.idAsReq = ? ";
             if (!state.equals("ALL"))
                 sql += "AND s.state = '"+ state+"' ";
-
-            switch (sort){
-                case "name" -> {sql += "ORDER BY p.name";}
-                case "city" -> {sql += "ORDER BY p.city";}
-                case "surname" -> {sql += "ORDER BY p.surname DESC";}
-            }
 
             return jdbcTemplate.query(
                     sql,
@@ -132,7 +126,7 @@ public class SelectionDao {
             return new ArrayList<>();
         }
     }
-    public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state, String sort) {
+    public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state) {
         String sql = "SELECT s.*, ar.tittle, ar.data as request_date, p.name as ovi_name " +
                 "FROM Selection s " +
                 "JOIN Assistance_Request ar ON s.idAsReq = ar.idAsReq " +
@@ -145,14 +139,6 @@ public class SelectionDao {
         if (state != null && !state.equals("ALL")) {
             sql += " AND s.state = ?";
             params.add(state);
-        }
-
-        if ("tittle".equals(sort)) {
-            sql += " ORDER BY ar.tittle ASC";
-        } else if ("dateAsc".equals(sort)) {
-            sql += " ORDER BY ar.data ASC";
-        } else {
-            sql += " ORDER BY ar.data DESC";
         }
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> {

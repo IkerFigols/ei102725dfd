@@ -17,12 +17,12 @@
         <p class="description">A continuación se muestran los asistentes personales asignados a tu solicitud por el equipo técnico.</p>
 
         <div class="info-card-container" style="border: none; padding: 0;">
-            <form th:action="@{/Assistance_Request/papPatiSelection/{idAsReq} (idAsReq= ${idAsReq})}" th:object="${filter}" method="post" class="filter-bar">
+            <form th:action="@{/Assistance_Request/papPatiSelection/{idAsReq} (idAsReq= ${idAsReq})}" th:object="${filter}" method="get" class="filter-bar">
                 <div class="filter-group">
                     <label for="filter-state">Filtrar por estado:</label>
                     <select id="filter-state" th:field="*{stateSel}" th:onchange="this.form.submit()" class="filter-select">
                         <option value="PENDING">Pendiente</option>
-                        <option value="APPROVED">Aprovado</option>
+                        <option value="APPROVED">Aprobado</option>
                         <option value="REJECTED">Rechazado</option>
                         <option value="ALL">Todos</option>
                     </select>
@@ -104,7 +104,7 @@
         </div>
 
         <div class="content-footer" style="margin-top: 30px;">
-            <a th:href="@{/Assistance_Request/apRequestList/ALL}" class="btn btn-secondary">← Volver al Menú</a>
+            <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">← Volver al Menú</a>
         </div>
     </div>
 </div>
