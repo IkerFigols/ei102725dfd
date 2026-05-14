@@ -91,39 +91,6 @@ public class ActivityDao {
         }
     }
 
-    public List<Activity> getActivities(String typeSel, String sortSel) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM Activity");
-        List<Object> params = new ArrayList<>();
-
-        if (typeSel != null && !typeSel.equals("ALL") && !typeSel.equals("ANY")) {
-            sql.append(" WHERE activityType = ?");
-            params.add(typeSel);
-        }
-
-        if (sortSel != null) {
-            switch (sortSel) {
-                case "dataAsc":
-                    sql.append(" ORDER BY date ASC");
-                    break;
-                case "dataDesc":
-                    sql.append(" ORDER BY date DESC");
-                    break;
-                case "nombreAsc":
-                    sql.append(" ORDER BY tittle ASC");
-                    break;
-                case "id":
-                    sql.append(" ORDER BY idActivity");
-                    break;
-            }
-        }
-
-        try {
-            return jdbcTemplate.query(sql.toString(), new ActivityRowMapper(), params.toArray());
-        } catch (EmptyResultDataAccessException e) {
-            return new ArrayList<>();
-        }
-    }
-
     //Este bloque en principio solo se usa para generar los códigos mas eficientemente
     public String getMaxId(){
         try {

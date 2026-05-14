@@ -15,5 +15,4 @@ public class OviControllerAdvice {
         mav.addObject("message", ex.getMessage());
         return mav;
     }
-
 }

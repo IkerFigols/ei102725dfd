@@ -100,37 +100,6 @@ public class AssistanceReqDao {
         }
     }
 
-    public List<Assistance_Request> getAssistanceRequests(String stateSel, String sortSel) {
-
-        StringBuilder sql = new StringBuilder("SELECT * FROM Assistance_Request");
-        List<Object> params = new ArrayList<>();
-
-        if (stateSel != null && !stateSel.equals("ALL")) {
-            sql.append(" WHERE state = ?");
-            params.add(stateSel);
-        }
-
-        if (sortSel != null) {
-            switch (sortSel) {
-                case "fechaAsc":
-                    sql.append(" ORDER BY data ASC");
-                    break;
-                case "fecDesc":
-                    sql.append(" ORDER BY data DESC");
-                    break;
-                case "id":
-                    sql.append(" ORDER BY idAsReq");
-                    break;
-            }
-        }
-        try {
-            return jdbcTemplate.query(sql.toString(), new AssistanceReqRowMapper(), params.toArray());
-        }
-        catch(EmptyResultDataAccessException e) {
-            return new ArrayList<Assistance_Request>();
-        }
-    }
-
     //Este bloque en principio solo se usa para generar los códigos mas eficientemente
     public String getMaxId(){
         try {

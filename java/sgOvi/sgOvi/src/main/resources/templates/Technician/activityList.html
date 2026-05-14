@@ -29,8 +29,8 @@
                 <label for="sortSel">Ordenar por</label>
                 <select th:field="*{sortSel}" id="sortSel" class="filter-select" onchange="this.form.submit()">
                     <option value="id">ID Actividad</option>
-                    <option value="dataAsc">Fecha (Más antiguas)</option>
-                    <option value="dataDesc">Fecha (Más recientes)</option>
+                    <option value="dataAsc">Fecha (Mas lejanas primero)</option>
+                    <option value="dataDesc">Fecha (Más próximas primero)</option>
                     <option value="nombreAsc">Nombre (A-Z)</option>
                 </select>
             </div>
@@ -52,8 +52,7 @@
                     <td th:text="${activity.idActivity}"></td>
                     <td>
                         <span th:text="${activity.type.getDescription()}"
-                              th:class="${'status-badge' +
-                                     (activity.type.name() == 'DISSEMINATION' ? 'status-approved' : 'status-pending')}">
+                              th:class="${'status-badge ' + (activity.type.name() == 'DISSEMINATION' ? 'status-approved' : 'status-pending')}">
                     </span>
                     </td>
                     <td th:text="${activity.tittle}"></td>

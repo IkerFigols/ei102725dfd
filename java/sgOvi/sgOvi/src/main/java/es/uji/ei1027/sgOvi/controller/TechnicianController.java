@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -140,6 +141,29 @@ public class TechnicianController {
         return "Technician/instructorList";
     }
 
+    private List<Assistance_Request> filterAndSortAssistanceRequests(List<Assistance_Request> requests, String state, String sort) {
+        // Filtrado por Estado
+        if (state != null && !state.equals("ANY") && !state.equals("ALL")) {
+            requests.removeIf(r -> !r.getState().name().equals(state));
+        }
+
+        // Ordenación
+        if (sort != null) {
+            switch (sort) {
+                case "fechaAsc":
+                    requests.sort(Comparator.comparing(Assistance_Request::getDate));
+                    break;
+                case "fecDesc":
+                    requests.sort(Comparator.comparing(Assistance_Request::getDate).reversed());
+                    break;
+                case "id":
+                    requests.sort(Comparator.comparing(Assistance_Request::getIdAsReq));
+                    break;
+            }
+        }
+        return requests;
+    }
+
     @RequestMapping(value = "/assistanceRequestList", method = RequestMethod.POST)
     public String listAssistanceRequestPOST(@ModelAttribute("filter") FilterState filter){
         return "redirect:/Technician/assistanceRequestList/" + filter.getStateSel()
@@ -148,12 +172,16 @@ public class TechnicianController {
 
     @RequestMapping({"/assistanceRequestList", "/assistanceRequestList/{state}"})
     public String assistanceRequestList(Model model,
-                               @PathVariable(required = false) String state,
-                               @RequestParam(required = false, defaultValue = "fechaAsc") String sort) {
+                                        @PathVariable(required = false) String state,
+                                        @RequestParam(required = false, defaultValue = "fechaAsc") String sort) {
+
         String stateUrl = (state == null) ? "ANY" : state;
 
-        List<Assistance_Request> assistanceRequests = assistanceReqDao.getAssistanceRequests(stateUrl, sort);
-        model.addAttribute("assistanceRequests", assistanceRequests);
+        List<Assistance_Request> requests = assistanceReqDao.getAssistanceRequests();
+
+        requests = filterAndSortAssistanceRequests(requests, stateUrl, sort);
+
+        model.addAttribute("assistanceRequests", requests);
 
         FilterState filter = new FilterState();
         filter.setStateSel(stateUrl);
@@ -171,6 +199,30 @@ public class TechnicianController {
         return "Technician/assistanceRequestList";
     }
 
+    private List<Activity> filterAndSortActivities(List<Activity> activities, String type, String sort) {
+        if (type != null && !type.equals("ALL") && !type.equals("ANY")) {
+            activities.removeIf(a -> !a.getType().name().equals(type));
+        }
+        if (sort != null) {
+            switch (sort) {
+                case "dataDesc":
+                    activities.sort(Comparator.comparing(Activity::getDate));
+                    break;
+                case "dataAsc":
+                    activities.sort(Comparator.comparing(Activity::getDate).reversed());
+                    break;
+                case "nombreAsc":
+                    activities.sort(Comparator.comparing(Activity::getTittle, String.CASE_INSENSITIVE_ORDER));
+                    break;
+                case "id":
+                default:
+                    activities.sort(Comparator.comparing(Activity::getIdActivity));
+                    break;
+            }
+        }
+        return activities;
+    }
+
     @RequestMapping(value="/activityList", method = RequestMethod.POST)
     public String listActivitiesPOST(@ModelAttribute("filter") FilterActivity filter) {
         return "redirect:/Technician/activityList/" + filter.getTypeSel() + "?sort=" + filter.getSortSel();
@@ -183,12 +235,14 @@ public class TechnicianController {
 
         String typeUrl = (type == null) ? "ALL" : type;
 
-        // Llamada al DAO con los nuevos parámetros
-        model.addAttribute("activities", activityDao.getActivities(typeUrl, sort));
+        List<Activity> activities = activityDao.getActivities();
+
+        activities = filterAndSortActivities(activities, typeUrl, sort);
+
+        model.addAttribute("activities", activities);
 
         FilterActivity filter = new FilterActivity();
         filter.setTypeSel(typeUrl);
-        // Cargamos los tipos del Enum ActivityType
         filter.setTypeList(Arrays.asList(ActivityType.values()));
         filter.setSortSel(sort);
 
@@ -196,7 +250,6 @@ public class TechnicianController {
 
         return "Technician/activityList";
     }
-
 
     @RequestMapping(value="/userManagement/{dni}", method = RequestMethod.GET)
     public String editOviUser(Model model, @PathVariable String dni) {
@@ -390,7 +443,6 @@ public class TechnicianController {
         List<String> seleccionadosDni = (List<String>) session.getAttribute("seleccionados");
 
         if (seleccionadosDni == null || seleccionadosDni.isEmpty()) {
-            // Aquí podrías redirigir de vuelta con un error: "Debes seleccionar al menos uno"
             return "redirect:/Technician/selectPapPati/" + idAsReq;
         }
 
@@ -405,7 +457,6 @@ public class TechnicianController {
             selectionDao.addSelection(selection);
         }
 
-        // Limpiamos la sesión para que la próxima solicitud empiece de cero
         session.removeAttribute("seleccionados");
 
         return "redirect:/Technician/assistanceRequestList";

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -43,16 +44,18 @@ public class ListByNameImp implements ListByName{
         if (sortSel != null) {
             switch (sortSel) {
                 case "nameAsc":
-                    listaDTOs.sort((a, b) -> a.getPerson().getName().compareToIgnoreCase(b.getPerson().getName()));
+                    listaDTOs.sort(Comparator.comparing(personOviUserDTO -> { return personOviUserDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
                     break;
                 case "nameDesc":
-                    listaDTOs.sort((a, b) -> b.getPerson().getName().compareToIgnoreCase(a.getPerson().getName()));
+                    listaDTOs.sort(Comparator.comparing(personOviUserDTO -> { return personOviUserDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
+                    listaDTOs = listaDTOs.reversed();
                     break;
                 case "dni":
-                    listaDTOs.sort((a, b) -> a.getPerson().getDni().compareTo(b.getPerson().getDni()));
+                    listaDTOs.sort(Comparator.comparing(personOviUserDTO -> { return personOviUserDTO.getPerson().getDni();},String.CASE_INSENSITIVE_ORDER));
                     break;
             }
         }
+
 
         return listaDTOs;
     }
@@ -75,13 +78,14 @@ public class ListByNameImp implements ListByName{
         if (sortSel != null) {
             switch (sortSel) {
                 case "nameAsc":
-                    listaDTOs.sort((a, b) -> a.getPerson().getName().compareToIgnoreCase(b.getPerson().getName()));
+                    listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
                     break;
                 case "nameDesc":
-                    listaDTOs.sort((a, b) -> b.getPerson().getName().compareToIgnoreCase(a.getPerson().getName()));
+                    listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
+                    listaDTOs.reversed();
                     break;
                 case "dni":
-                    listaDTOs.sort((a, b) -> a.getPerson().getDni().compareTo(b.getPerson().getDni()));
+                    listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getDni();},String.CASE_INSENSITIVE_ORDER));
                     break;
             }
         }
@@ -104,13 +108,14 @@ public class ListByNameImp implements ListByName{
         if (sortSel != null) {
             switch (sortSel) {
                 case "nameAsc":
-                    listaDTOs.sort((a, b) -> a.getPerson().getName().compareToIgnoreCase(b.getPerson().getName()));
+                    listaDTOs.sort(Comparator.comparing(personInstructorDTO ->  { return personInstructorDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
                     break;
                 case "nameDesc":
-                    listaDTOs.sort((a, b) -> b.getPerson().getName().compareToIgnoreCase(a.getPerson().getName()));
+                    listaDTOs.sort(Comparator.comparing(personInstructorDTO ->  { return personInstructorDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
+                    listaDTOs = listaDTOs.reversed();
                     break;
                 case "dni":
-                    listaDTOs.sort((a, b) -> a.getPerson().getDni().compareTo(b.getPerson().getDni()));
+                    listaDTOs.sort(Comparator.comparing(personInstructorDTO ->  { return personInstructorDTO.getPerson().getDni();},String.CASE_INSENSITIVE_ORDER));
                     break;
             }
         }
