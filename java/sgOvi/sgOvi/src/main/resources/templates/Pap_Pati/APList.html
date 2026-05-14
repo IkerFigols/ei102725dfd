@@ -35,7 +35,7 @@
                     <select name="sort" class="filter-select" onchange="this.form.submit()">
                         <option value="dateDesc" th:selected="${filter.sortSel == 'dateDesc'}">Fecha (Más reciente)</option>
                         <option value="dateAsc" th:selected="${filter.sortSel == 'dateAsc'}">Fecha (Más antigua)</option>
-                        <option value="tittle" th:selected="${filter.sortSel == 'tittle'}">Título (A-Z)</option>
+                        <option value="titleAsc" th:selected="${filter.sortSel == 'titleAsc'}">Título (A-Z)</option>
                     </select>
                 </div>
             </form>
