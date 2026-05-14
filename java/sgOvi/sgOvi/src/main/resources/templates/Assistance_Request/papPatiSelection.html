@@ -16,6 +16,29 @@
 
         <p class="description">A continuación se muestran los asistentes personales asignados a tu solicitud por el equipo técnico.</p>
 
+        <div class="info-card-container" style="border: none; padding: 0;">
+            <form th:action="@{/Assistance_Request/papPatiSelection/{idAsReq} (idAsReq= ${idAsReq})}" th:object="${filter}" method="post" class="filter-bar">
+                <div class="filter-group">
+                    <label for="filter-state">Filtrar por estado:</label>
+                    <select id="filter-state" th:field="*{stateSel}" th:onchange="this.form.submit()" class="filter-select">
+                        <option value="PENDING">Pendiente</option>
+                        <option value="APPROVED">Aprovado</option>
+                        <option value="REJECTED">Rechazado</option>
+                        <option value="ALL">Todos</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-order">Ordenar por:</label>
+                    <select id="filter-order" th:field="*{sortSel}" th:onchange="this.form.submit()" class="filter-select">
+                        <option value="name">Nombre (A-Z)</option>
+                        <option value="surname">Apellido (A-Z)</option>
+                        <option value="city">Ciudad (A-Z)</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
         <div class="table-responsive" th:if="${!dtos.isEmpty()}">
             <table class="table-custom">
                 <thead>
@@ -31,13 +54,12 @@
                 <tr th:each="dto: ${dtos}">
                     <td th:text="${dto.person.name}"></td>
                     <td th:text="${dto.person.surname}"></td>
-                    <td th:text="${dto.person.city}"</td>
+                    <td th:text="${dto.person.city}"></td>
                     <td>
-                            <span th:class="'badge ' +
-                                (${dto.selection.state.name() == 'APPROVED'} ? 'badge-success' :
-                                (${dto.selection.state.name() == 'REJECTED'} ? 'badge-info' : 'badge-warning'))"
-                                  th:text="${dto.selection.state.getDescription()}">
-                            </span>
+                        <span class="status-badge" th:classappend="${dto.selection.state.name() == 'APPROVED' ? 'status-approved' :
+                                                (dto.selection.state.name() == 'PENDING' ? 'status-pending' : 'status-rejected' )}"
+                                                th:text="${dto.selection.state.getDescription()}">
+                        </span>
                     </td>
                     <td>
                         <div class="actions-group" style="justify-content: center;">
@@ -54,7 +76,9 @@
                             <form th:action="@{/Assistance_Request/approveSelection/{idSelection}(idSelection=${dto.selection.idSelection}, idAsReq=${dto.selection.idAsReq}, idPapPati= ${dto.selection.idPapPati})}" method="post" style="display:inline;">
                                 <button type="submit" class="btn-logout"
                                         style="border-color: #166534; color: #166534; background: transparent; cursor: pointer;"
-                                        th:disabled="${dto.selection.state.name() == 'APPROVED'}">
+                                        th:disabled="${dto.selection.state.name() == 'APPROVED'}"
+                                        th:data-name="${dto.person.name}"
+                                        onclick="return confirm('¿Seguro que elegirás al Asistente Person con nombre: ' + this.getAttribute('data-name') + '? Los otros candidatos serán rechazados automáticamente');">
                                     Aprobar
                                 </button>
                             </form>
@@ -73,13 +97,14 @@
             </table>
         </div>
 
-        <div th:if="${dtos.isEmpty()}" class="success-container" style="box-shadow: none; border: 1px dashed var(--border-gray);">
-            <h2 class="title" style="font-size: 18px;">Sin candidatos todavía</h2>
-            <p class="success-message">El técnico no te ha asignado ningún candidato todavía. Por favor, vuelve a consultar más tarde.</p>
-            <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-primary">Volver</a>
+        <div th:if="${#lists.isEmpty(dtos)}" class="empty-list-container">
+            <p class="empty-list-text">
+                No dispones de selecciones todavia.
+            </p>
         </div>
+
         <div class="content-footer" style="margin-top: 30px;">
-            <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">← Volver al Menú</a>
+            <a th:href="@{/Assistance_Request/apRequestList/ALL}" class="btn btn-secondary">← Volver al Menú</a>
         </div>
     </div>
 </div>

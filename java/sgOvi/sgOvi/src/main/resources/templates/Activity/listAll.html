@@ -19,10 +19,21 @@
             </p>
         </header>
 
+        <form th:action="@{/Activity/listAll}" method="get" class="filter-bar" th:if="${activities != null and !activities.isEmpty()}">
+            <div class="filter-group">
+                <label for="sort">Ordenar por:</label>
+                <select name="sort" id="sort" class="filter-select" onchange="this.form.submit()">
+                    <option value="dateDesc" th:selected="${currentSort == 'dateDesc'}">Fecha (Más recientes primero)</option>
+                    <option value="dateAsc" th:selected="${currentSort == 'dateAsc'}">Fecha (Más antiguas primero)</option>
+                    <option value="titleAsc" th:selected="${currentSort == 'titleAsc'}">Título (A - Z)</option>
+                </select>
+            </div>
+        </form>
+
         <div class="table-responsive" th:if="${activities != null and !activities.isEmpty()}">
             <table class="table-custom">
                 <thead>
-                <tr>
+                <tr style="text-align: center">
                     <th>Título</th>
                     <th>Tipo</th>
                     <th>Fecha</th>
@@ -40,8 +51,9 @@
                     <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
                     <td class="text-right">
                         <a th:href="@{/Activity/infoActivity/{id}(id=${activity.idActivity})}"
+                           title="Ver actividad"
                            class="btn btn-primary">
-                            Ver actividad
+                            Detalles <i class="fi fi-rr-eye"></i>
                         </a>
                     </td>
                 </tr>
@@ -53,20 +65,19 @@
             <p class="description">No hay actividades disponibles para tu perfil en este momento.</p>
         </div>
 
-        <footer class="register-footer">
-            <div class="button-group">
-                <a th:href="@{/Activity/list}" class="btn btn-secondary">Mis actividades</a>
-
-                <div class="nav-back">
-                    <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
-                        ← Volver al Menú
-                    </a>
-                    <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
-                        ← Volver al Menú
-                    </a>
-                </div>
+        <div class="content-footer">
+            <div class="nav-back">
+                <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
+                    ← Volver al Menú
+                </a>
+                <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
+                    ← Volver al Menú
+                </a>
             </div>
-        </footer>
+            <a th:href="@{/Activity/list}"
+               class="btn btn-primary">
+                Mis actividades</a>
+        </div>
 
     </section>
     <div class="bottom-spacer"></div>

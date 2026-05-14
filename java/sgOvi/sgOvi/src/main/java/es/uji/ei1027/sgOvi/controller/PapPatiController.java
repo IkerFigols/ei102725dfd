@@ -81,7 +81,6 @@ public class PapPatiController {
         filter.setStateSel(state);
         filter.setSortSel(sort);
         // Usamos los nombres técnicos para los values
-        filter.setStateList(Arrays.asList(State.values()));
 
         model.addAttribute("filter", filter);
         model.addAttribute("userType", RolUser.PAP_PATI.name());

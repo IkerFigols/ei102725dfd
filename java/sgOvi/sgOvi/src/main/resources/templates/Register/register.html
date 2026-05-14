@@ -106,7 +106,10 @@
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
-                <button type="submit" class="btn btn-primary" style="width: 200px;">Registrarse</button>
+                <button type="submit" class="btn btn-primary" style="width: 200px;"
+                        th:data-dni="${person.dni}"
+                        onclick="return confirm('¿Seguro que deseas registrarte con el dni ' + this.getAttribute('data-dni') + '?');"
+                >Registrarse</button>
                 <p style="margin-top: 15px; font-size: 13px;">¿Ya tienes cuenta? <a th:href="@{/login}" style="color: var(--primary-blue); font-weight: bold;">Inicia sesión</a></p>
             </div>
         </form>

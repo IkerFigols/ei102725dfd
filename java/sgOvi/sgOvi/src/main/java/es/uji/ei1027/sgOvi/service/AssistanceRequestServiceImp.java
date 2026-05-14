@@ -61,8 +61,8 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     }
 
     @Override
-    public List<PapPatiSelectionDTO> getPapPatisSelectionDTO(String idAsReq) {
-        List<PapPatiSelectionDTO> papPatiSelectionDTOS = selectionDao.getPapSelByAP(idAsReq);
+    public List<PapPatiSelectionDTO> getPapPatisSelectionDTO(String idAsReq, String state, String sort) {
+        List<PapPatiSelectionDTO> papPatiSelectionDTOS = selectionDao.getPapSelByAP(idAsReq, state, sort);
         return papPatiSelectionDTOS;
     }
 

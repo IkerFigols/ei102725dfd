@@ -272,6 +272,21 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
     min-width: 200px;
     text-align: center;
 }
+/* Mensaje para listas vacías */
+.empty-list-container {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    padding: 40px; /* Sustituye el padding en línea */
+    text-align: center; /* Sustituye el text-align en línea */
+    margin-top: 20px;
+}
+
+.empty-list-text {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin: 0;
+}
 
 /* ==========================================================================
    4. BOTONES Y ACCIONES
@@ -304,6 +319,21 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
 }
 
 .btn-secondary:hover { background-color: var(--bg-hover); }
+
+/*Botones con iconos*/
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.bton-icon i {
+    /*Para que el icono sea mas grande que el texto*/
+    font-size: 1.1em;
+}
+
+
 
 .nav-btn { /* Botón de navegación destacado para la barra superior */
     display: inline-block;
@@ -730,4 +760,32 @@ select.textarea-field-small { /* Ajuste específico para que el elemento select 
 .filter-select:focus {
     outline: none;
     border-color: var(--primary-blue);
+}
+
+
+/* ==========================================================================
+   13. Pagina error
+   ========================================================================== */
+
+
+.error-container {
+    background: var(--bg-white);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid var(--danger-red); /* Identificador visual de error */
+}
+
+.error-title {
+    color: var(--danger-red);
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: bold;
 }
