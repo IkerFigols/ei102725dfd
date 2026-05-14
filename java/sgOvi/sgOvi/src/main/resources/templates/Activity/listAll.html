@@ -67,11 +67,15 @@
 
         <div class="content-footer">
             <div class="nav-back">
-                <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">
-                    ← Volver al Menú
+                <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}"
+                   class="btn btn-secondary btn-icon"
+                   title="Volver al menú">
+                    Menú<i class="fi fi-rr-home"></i>
                 </a>
-                <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary">
-                    ← Volver al Menú
+                <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}"
+                   class="btn btn-secondary btn-icon"
+                   title="Volver al menú">
+                    Menú<i class="fi fi-rr-home"></i>
                 </a>
             </div>
             <a th:href="@{/Activity/list}"
