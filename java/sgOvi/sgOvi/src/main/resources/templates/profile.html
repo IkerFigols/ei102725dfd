@@ -156,10 +156,12 @@
 
             <div class="content-footer" style="margin-top: 30px;">
                 <a th:href="@{${urlBefore}}" class="btn btn-secondary">← Volver</a>
-                <button type="submit" class="btn btn-primary"
+                <button type="submit" class="btn btn-primary btn-icon"
                         th:data-dni="${dto.person.dni}"
+                        title="Guardar cambios"
                         onclick="return confirm('¿Seguro que deseas guardar los cambios para el dni ' + this.getAttribute('data-dni') + '?');">
-                    Guardar cambios</button>
+                    Guardar<i class="fi fi-rr-disk"></i>
+                </button>
             </div>
 
         </form>
