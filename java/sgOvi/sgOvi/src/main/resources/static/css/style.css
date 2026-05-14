@@ -320,6 +320,21 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
 
 .btn-secondary:hover { background-color: var(--bg-hover); }
 
+/*Botones con iconos*/
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.bton-icon i {
+    /*Para que el icono sea mas grande que el texto*/
+    font-size: 1.1em;
+}
+
+
+
 .nav-btn { /* Botón de navegación destacado para la barra superior */
     display: inline-block;
     padding: 8px 16px;

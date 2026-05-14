@@ -16,6 +16,17 @@
       <p class="description">Gestione las actividades en las que participa.</p>
     </header>
 
+    <form th:action="@{/Activity/list}" method="get" class="filter-bar" th:if="${activities != null and !activities.isEmpty()}">
+      <div class="filter-group">
+        <label for="sort">Ordenar por:</label>
+        <select name="sort" id="sort" class="filter-select" onchange="this.form.submit()">
+          <option value="dateDesc" th:selected="${currentSort == 'dateDesc'}">Fecha (Más recientes primero)</option>
+          <option value="dateAsc" th:selected="${currentSort == 'dateAsc'}">Fecha (Más antiguas primero)</option>
+          <option value="titleAsc" th:selected="${currentSort == 'titleAsc'}">Título (A - Z)</option>
+        </select>
+      </div>
+    </form>
+
     <div class="table-responsive" th:if="${activities != null and !activities.isEmpty()}">
       <table class="table-custom">
         <thead>
