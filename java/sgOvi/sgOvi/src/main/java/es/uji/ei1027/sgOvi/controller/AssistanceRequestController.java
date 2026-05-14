@@ -171,7 +171,7 @@ public class AssistanceRequestController {
             return "Assistance_Request/update";
 
         assistanceReqDao.updateAssistanceRequest(assistanceRequest);
-        return "redirect:/Assistance_Request/apRequestList/ALL";
+        return "redirect:/Assistance_Request/apRequestList";
     }
 
     @RequestMapping(value="/request_confirmation")
@@ -192,7 +192,7 @@ public class AssistanceRequestController {
         assistanceRequestService.generateContract(idSelection,ap);
         assistanceRequestService.rejectOtherCandidates(idAsReq,idPapPati);
         // Redirigimos de vuelta a la lista para ver el cambio
-        return "redirect:/Assistance_Request/apRequestList/ALL";
+        return "redirect:/Assistance_Request/apRequestList";
     }
 
 
@@ -201,7 +201,7 @@ public class AssistanceRequestController {
     @RequestMapping(value="/rejectSelection/{idSelection}", method = RequestMethod.POST)
     public String rejectSelection(@PathVariable("idSelection") String idSelection,  @RequestParam("idAsReq") String idAsReq) {
         assistanceRequestService.updateStateSelection(idSelection, State.REJECTED.name());
-        return "redirect:/Assistance_Request/papPatiSelection/"+idAsReq+"/ALL";
+        return "redirect:/Assistance_Request/papPatiSelection/"+idAsReq;
     }
 
     @RequestMapping(value="/papPatiInfo/{idPapPati}")
