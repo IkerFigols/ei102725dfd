@@ -33,7 +33,7 @@
         <div class="table-responsive" th:if="${activities != null and !activities.isEmpty()}">
             <table class="table-custom">
                 <thead>
-                <tr>
+                <tr style="text-align: center">
                     <th>Título</th>
                     <th>Tipo</th>
                     <th>Fecha</th>
@@ -51,8 +51,9 @@
                     <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
                     <td class="text-right">
                         <a th:href="@{/Activity/infoActivity/{id}(id=${activity.idActivity})}"
+                           title="Ver actividad"
                            class="btn btn-primary">
-                            Ver actividad
+                            Detalles <i class="fi fi-rr-eye"></i>
                         </a>
                     </td>
                 </tr>
@@ -73,7 +74,9 @@
                     ← Volver al Menú
                 </a>
             </div>
-            <a th:href="@{/Activity/list}" class="btn btn-primary">Mis actividades</a>
+            <a th:href="@{/Activity/list}"
+               class="btn btn-primary">
+                Mis actividades</a>
         </div>
 
     </section>

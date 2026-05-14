@@ -44,7 +44,7 @@
         <div class="table-responsive" th:if="${not #lists.isEmpty(requests)}">
             <table class="table-custom">
                 <thead>
-                <tr>
+                <tr style="text-align: center">
                     <th>Título</th>
                     <th>Fecha Inicio</th>
                     <th>Usuario OVI</th>
@@ -64,9 +64,11 @@
                         </span>
                     </td>
                     <td class="text-right">
-                        <form th:action="@{/Pap_Pati/papPatiAssistances}" method="post">
+                        <form th:action="@{/Pap_Pati/papPatiAssistances}" method="post" title="ver detalles">
                             <input type="hidden" name="idSelection" th:value="${item.idSelection}" />
-                            <button type="submit" class="btn btn-primary btn-sm">Ver Detalles</button>
+                            <button type="submit" class="btn btn-primary btn-sm btn-icon">
+                                Detalles<i class="fi fi-rr-eye"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
