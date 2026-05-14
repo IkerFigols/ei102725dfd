@@ -155,7 +155,10 @@
             </div>
 
             <div class="content-footer" style="margin-top: 30px;">
-                <a th:href="@{${urlBefore}}" class="btn btn-secondary">← Volver</a>
+                <a th:href="@{${urlBefore}}" class="btn btn-secondary  btn-icon"
+                   title="Volver al menú">
+                    Menú<i class="fi fi-rr-home"></i>
+                </a>
                 <button type="submit" class="btn btn-primary btn-icon"
                         th:data-dni="${dto.person.dni}"
                         title="Guardar cambios"
