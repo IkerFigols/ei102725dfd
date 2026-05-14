@@ -12,7 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -33,8 +36,26 @@ public class ContractController {
         this.personDao = personDao;
     }
 
+    private List<ContractDTO> sortContracts(List<ContractDTO> contracts, String sort) {
+        if (sort == null) return contracts;
+        switch (sort) {
+            case "dateAsc":
+                // Ordena por fecha más antigua primero
+                contracts.sort(Comparator.comparing(dto -> dto.getContract().getStartDate(),
+                        Comparator.nullsLast(Comparator.naturalOrder())));
+                break;
+            case "dateDesc":
+                // Ordena por fecha más reciente primero
+                contracts.sort(Comparator.comparing((ContractDTO dto) -> dto.getContract().getStartDate(),
+                        Comparator.nullsLast(Comparator.reverseOrder())));
+                break;
+        }
+        return contracts;
+    }
+
     @RequestMapping("/list")
-    public String listContracts(Model model, HttpSession session) {
+    public String listContracts(Model model, HttpSession session,
+                                @RequestParam(value="sort", defaultValue = "dateDesc") String sort) {
         Person user = (Person) session.getAttribute("user");
         String rol = (String) session.getAttribute("rol");
 
@@ -64,7 +85,11 @@ public class ContractController {
             contractListWithNames.add(new ContractDTO(c, name));
         }
 
+        contractListWithNames = sortContracts(contractListWithNames, sort);
+
         model.addAttribute("contracts", contractListWithNames);
+        model.addAttribute("currentSort", sort);
+
         return "Contracts/list";
     }
 }
