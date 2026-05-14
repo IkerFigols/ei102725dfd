@@ -11,7 +11,7 @@ public interface AssistanceRequestService {
     public PapPati getPapPati(String dni);
     public void updateStateSelection(String idSelection, String state);
     public String getDniAP(String idSelection);
-    public List<PapPatiSelectionDTO> getPapPatisSelectionDTO(String idAsReq, String state, String sorte);
+    public List<PapPatiSelectionDTO> getPapPatisSelectionDTO(String idAsReq, String state);
     public List<Communication> getComunicationsSelection(String idSelection);
     public void addCommunication (Communication communication);
     public void generateContract(String idSelection, Assistance_Request ap);

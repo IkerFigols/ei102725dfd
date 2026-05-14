@@ -112,17 +112,11 @@ public class SelectionDao {
             return new ArrayList<>();
         }
     }
-    public List<PapPatiSelectionDTO> getPapSelByAP(String idAsReq, String state, String sort){
+    public List<PapPatiSelectionDTO> getPapSelByAP(String idAsReq, String state){
         try {
             String sql ="SELECT * FROM Selection AS s JOIN Pap_Pati AS pa ON (s.idPap = pa.dni) JOIN Person AS p USING(dni) WHERE s.idAsReq = ? ";
             if (!state.equals("ALL"))
                 sql += "AND s.state = '"+ state+"' ";
-
-            switch (sort){
-                case "name" -> {sql += "ORDER BY p.name";}
-                case "city" -> {sql += "ORDER BY p.city";}
-                case "surname" -> {sql += "ORDER BY p.surname DESC";}
-            }
 
             return jdbcTemplate.query(
                     sql,

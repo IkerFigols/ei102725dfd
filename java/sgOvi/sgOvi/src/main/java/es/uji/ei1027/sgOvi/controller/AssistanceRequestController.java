@@ -5,6 +5,7 @@ import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.*;
+import es.uji.ei1027.sgOvi.service.PapPatiSelectionDTO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -32,44 +34,43 @@ public class AssistanceRequestController {
     @Autowired
     private ListPapPatiSelService listPapPatiSelService;
 
-    @RequestMapping(value="/apRequestList", method = RequestMethod.POST)
-    public String listRequestsPOST(@ModelAttribute("filter") FilterState filter,
-                                   BindingResult bindingResult) {
 
-        if (bindingResult.hasErrors()) {
-            return "apRequestList/ALL";
+    private List<Assistance_Request> sortAssistance(List<Assistance_Request> assistanceRequests, String sort) {
+        if (sort == null) return assistanceRequests;
+        switch (sort) {
+            case "dateAsc":
+                assistanceRequests.sort(Comparator.comparing(Assistance_Request::getDate));
+                break;
+            case "dateDesc":
+                assistanceRequests.sort(Comparator.comparing(Assistance_Request::getDate).reversed());
+                break;
+            case "titleAsc":
+                assistanceRequests.sort(Comparator.comparing(Assistance_Request::getTittle, String.CASE_INSENSITIVE_ORDER));
+                break;
         }
-
-        return "redirect:/Assistance_Request/apRequestList/" +filter.getStateSel()
-                + "?sort=" + filter.getSortSel();
+        return assistanceRequests;
     }
-    @RequestMapping("/apRequestList/{state}")
-    public String listAssistanceRequests(HttpSession session, Model model,
-                                         @PathVariable String state,
-                                         @RequestParam(required = false, defaultValue = "dateDesc") String sort) {
-
-        Person person = (Person) session.getAttribute("user");
-
-        String stateForDao = state.equals("ALL") ? null : state;
-
-        List<Assistance_Request> requests = assistanceReqDao.getAssistanceRequestsByOviUser(person.getDni(), stateForDao, sort);
-
-        model.addAttribute("assistanceRequests", requests);
-
-        FilterState filter = new FilterState();
-        filter.setStateSel(state);
-        filter.setSortSel(sort);
-        filter.setSortList(Arrays.asList("dateDesc", "dateAsc", "tittle"));
-
-        model.addAttribute("filter", filter);
-
-        return "Assistance_Request/apRequestList";
+    private List<PapPatiSelectionDTO> sortSelection(List<PapPatiSelectionDTO> papPatiSelectionDTOS, String sort) {
+        if (sort == null) return papPatiSelectionDTOS;
+        switch (sort) {
+            case "name":
+                papPatiSelectionDTOS.sort(Comparator.comparing(papPatiSelectionDTO -> { return papPatiSelectionDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
+                break;
+            case "city":
+                papPatiSelectionDTOS.sort(Comparator.comparing(papPatiSelectionDTO -> { return papPatiSelectionDTO.getPerson().getCity();},String.CASE_INSENSITIVE_ORDER));
+                break;
+            case "surname":
+                papPatiSelectionDTOS.sort(Comparator.comparing(papPatiSelectionDTO -> { return papPatiSelectionDTO.getPerson().getSurname();},String.CASE_INSENSITIVE_ORDER));
+                break;
+        }
+        return papPatiSelectionDTOS;
     }
 
-    @RequestMapping("/papPatiSelection/{idAsReq}/{state}")
+
+    @RequestMapping("/papPatiSelection/{idAsReq}")
     public String getSelections(Model model, @PathVariable("idAsReq") String idAsReq,
-                                @PathVariable("state") String state,
-                                @RequestParam(required = false, defaultValue = "name") String sort,
+                                @RequestParam(value = "stateSel",required = false, defaultValue = "ALL") String state,
+                                @RequestParam(value ="sortSel",required = false, defaultValue = "name") String sort,
                                 HttpSession session){
 
         Assistance_Request assistanceRequest = assistanceReqDao.getAssistanceRequest(idAsReq);
@@ -82,21 +83,31 @@ public class AssistanceRequestController {
         FilterState filterState = new FilterState();
         filterState.setStateSel(state);
         filterState.setSortSel(sort);
-        List<PapPatiSelectionDTO> papPatiSelectionDTO = assistanceRequestService.getPapPatisSelectionDTO(idAsReq, state, sort);
+        List<PapPatiSelectionDTO> papPatiSelectionDTO = assistanceRequestService.getPapPatisSelectionDTO(idAsReq, state);
+
         model.addAttribute("idAsReq",idAsReq);
-        model.addAttribute("dtos", papPatiSelectionDTO);
+        model.addAttribute("dtos", sortSelection(papPatiSelectionDTO,sort));
         model.addAttribute("filter",filterState);
         return "Assistance_Request/papPatiSelection";
     }
-    @RequestMapping(value="/papPatiSelection/{idAsReq}", method = RequestMethod.POST)
-    public String papPatiSelectionPOST(@ModelAttribute("filter") FilterState filter, @PathVariable("idAsReq") String idAsReq,
-                                   BindingResult bindingResult) {
 
-        if (bindingResult.hasErrors()) {
-            return "papPatiSelection/"+idAsReq+"/ALL";
-        }
-        return "redirect:/Assistance_Request/papPatiSelection/" + idAsReq + "/" + filter.getStateSel()
-                + "?sort=" + filter.getSortSel();
+    @RequestMapping("/apRequestList")
+    public String listAssistanceRequests(HttpSession session, Model model,
+                                         @RequestParam(value = "stateSel", required = false, defaultValue = "ALL") String state,
+                                         @RequestParam( value= "sortSel", required = false, defaultValue = "dateDesc") String sort) {
+
+
+        Person person = (Person) session.getAttribute("user");
+        String stateForDao = state.equals("ALL") ? null : state;
+        List<Assistance_Request> requests = assistanceReqDao.getAssistanceRequestsByOviUser(person.getDni(), stateForDao);
+        model.addAttribute("assistanceRequests", sortAssistance(requests, sort));
+        FilterState filter = new FilterState();
+        filter.setStateSel(state);
+        filter.setSortSel(sort);
+        filter.setSortList(Arrays.asList("dateDesc", "dateAsc", "tittle"));
+        model.addAttribute("filter", filter);
+
+        return "Assistance_Request/apRequestList";
     }
 
     @RequestMapping(value="/requestAssistance")

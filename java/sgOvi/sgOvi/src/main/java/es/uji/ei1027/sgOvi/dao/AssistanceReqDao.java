@@ -111,7 +111,7 @@ public class AssistanceReqDao {
         }
     }
 
-    public List<Assistance_Request> getAssistanceRequestsByOviUser(String dni, String state, String sort) {
+    public List<Assistance_Request> getAssistanceRequestsByOviUser(String dni, String state) {
 
         String sql = "SELECT * FROM Assistance_Request WHERE idOviUser = ?";
         List<Object> params = new ArrayList<>();
@@ -120,16 +120,6 @@ public class AssistanceReqDao {
         if (state != null && !state.isEmpty()) {
             sql += " AND state = ?";
             params.add(state);
-        }
-
-        if ("state".equals(sort)) {
-            sql += " ORDER BY state ASC";
-        } else if ("tittle".equals(sort)) {
-            sql += " ORDER BY tittle ASC";
-        } else if ("dateAsc".equals(sort)) {
-            sql += " ORDER BY data ASC";
-        } else {
-            sql += " ORDER BY data DESC";
         }
 
         return jdbcTemplate.query(sql, new AssistanceReqRowMapper(), params.toArray());
