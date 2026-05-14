@@ -10,8 +10,34 @@
 <body class="main-content">
 
 <div class="page-container" layout:fragment="content">
-    <h1 class="title">Lista de Asistentes</h1>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1 class="title">Lista de Asistentes</h1>
+        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+    </div>
     <p class="description">Panel de control para la gestión de usuarios PAP/PATI y supervisión de sus estados de disponibilidad.</p>
+
+    <form th:action="@{/Technician/papPatiList}" th:object="${filter}" method="post" class="filter-bar">
+
+        <div class="filter-group">
+            <label for="stateSel">Filtrar por Estado</label>
+            <select th:field="*{stateSel}" id="stateSel" class="filter-select" onchange="this.form.submit()">
+                <option value="ALL">Todos los estados</option>
+                <option th:each="st : ${filter.stateList}"
+                        th:value="${st.name()}"
+                        th:text="${st.getDescription()}"> </option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="sortSel">Ordenar por</label>
+            <select th:field="*{sortSel}" id="sortSel" class="filter-select" onchange="this.form.submit()">
+                <option value="nameAsc">Nombre (A-Z)</option>
+                <option value="nameDesc">Nombre (Z-A)</option>
+                <option value="dni">DNI</option>
+            </select>
+        </div>
+
+    </form>
 
     <div class="table-responsive">
         <table class="table-custom">
@@ -28,16 +54,21 @@
             </thead>
             <tbody>
             <tr th:each="papPati: ${papPatis}">
-                <td th:text="${papPati.value[0]}"></td>
-                <td th:text="${papPati.value[1]}"></td>
-                <td th:text="${papPati.key}"></td>
-                <td th:text="${papPati.value[2]}"></td>
-                <td th:text="${papPati.value[3]}"></td>
-                <td th:text="${papPati.value[4]}"></td>
+                <td th:text="${papPati.person.name}"></td>
+                <td th:text="${papPati.person.surname}"></td>
+                <td th:text="${papPati.person.dni}"></td>
+                <td th:text="${papPati.papPati.type}"></td>
+                <td th:text="${papPati.papPati.available ? 'Disponible' : 'No disponible'}"></td>
+                <td>
+                    <span th:text="${papPati.papPati.state.getDescription()}"
+                          th:class="${papPati.papPati.state.name() == 'APPROVED' ? 'status-badge status-approved' :
+                                     (papPati.papPati.state.name() == 'PENDING' ? 'status-badge status-pending' : 'status-badge status-rejected')}">
+                    </span>
+                </td>
                 <td>
                     <div class="actions-group" style="justify-content: center;">
                         <a class="btn btn-primary"
-                           th:href="@{/Technician/papPatiManagement/{dni}(dni=${papPati.key})}">
+                           th:href="@{/Technician/papPatiManagement/{dni}(dni=${papPati.person.dni})}">
                             Editar
                         </a>
                     </div>
@@ -47,12 +78,11 @@
         </table>
     </div>
 
-    <div class="content-footer">
-        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+    <div th:if="${#lists.isEmpty(papPatis)}" style="text-align: center; padding: 40px;">
+        <p class="description">No hay asistentes que coincidan con los criterios de búsqueda.</p>
     </div>
 
     <div class="bottom-spacer"></div>
 </div>
-
 </body>
 </html>

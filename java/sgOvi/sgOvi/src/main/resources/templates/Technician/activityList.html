@@ -14,7 +14,27 @@
 
         <h1 class="title">Lista de Actividades</h1>
         <p class="description">Gestione las actividades del sistema desde este panel centralizado.</p>
+        <form th:action="@{/Technician/activityList}" th:object="${filter}" method="post" class="filter-bar">
+            <div class="filter-group">
+                <label for="typeSel">Tipo de Actividad</label>
+                <select th:field="*{typeSel}" id="typeSel" class="filter-select" onchange="this.form.submit()">
+                    <option value="ALL">Todos los tipos</option>
+                    <option th:each="type : ${filter.typeList}"
+                            th:value="${type.name()}"
+                            th:text="${type.description}"></option>
+                </select>
+            </div>
 
+            <div class="filter-group">
+                <label for="sortSel">Ordenar por</label>
+                <select th:field="*{sortSel}" id="sortSel" class="filter-select" onchange="this.form.submit()">
+                    <option value="id">ID Actividad</option>
+                    <option value="dataAsc">Fecha (Más antiguas)</option>
+                    <option value="dataDesc">Fecha (Más recientes)</option>
+                    <option value="nombreAsc">Nombre (A-Z)</option>
+                </select>
+            </div>
+        </form>
         <div class="table-responsive">
             <table class="table-custom">
                 <thead>
@@ -30,7 +50,12 @@
                 <tbody>
                 <tr th:each="activity: ${activities}">
                     <td th:text="${activity.idActivity}"></td>
-                    <td th:text="${activity.type}"></td>
+                    <td>
+                        <span th:text="${activity.type.getDescription()}"
+                              th:class="${'status-badge' +
+                                     (activity.type.name() == 'DISSEMINATION' ? 'status-approved' : 'status-pending')}">
+                    </span>
+                    </td>
                     <td th:text="${activity.tittle}"></td>
                     <td th:text="${activity.date}"></td>
                     <td th:text="${activity.address}"></td>
@@ -55,7 +80,7 @@
 
         <div class="content-footer">
             <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
-            <a href="addActivity" class="btn btn-primary">Añadir Nueva Actividad</a>
+            <a href="/Technician/addActivity" class="btn btn-primary">Añadir Nueva Actividad</a>
         </div>
 
     </div>

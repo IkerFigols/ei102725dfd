@@ -10,8 +10,37 @@
 <body class="main-content">
 
 <div class="page-container" layout:fragment="content">
-    <h1 class="title">Lista de Ovi Users</h1>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1 class="title">Lista de Ovi Users</h1>
+        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+    </div>
+
     <p class="description">Administre las cuentas de usuario y supervise su estado actual en el sistema.</p>
+
+    <form th:action="@{/Technician/userList}" th:object="${filter}" method="post" class="filter-bar">
+
+        <div class="filter-group">
+            <label for="stateSel">Estado</label>
+            <select th:field="*{stateSel}" id="stateSel" class="filter-select" onchange="this.form.submit()">
+                <option value="ALL">Todos los estados</option>
+                <option th:each="st : ${filter.stateList}"
+                        th:value="${st.name()}"
+                        th:text="${st.getDescription()}">
+                </option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="sortSel">Ordenar por</label>
+            <select th:field="*{sortSel}" id="sortSel" class="filter-select" onchange="this.form.submit()">
+                <option value="nameAsc">Nombre (A-Z)</option>
+                <option value="nameDesc">Nombre (Z-A)</option>
+                <option value="dni">DNI</option>
+            </select>
+        </div>
+
+    </form>
 
     <div class="table-responsive">
         <table class="table-custom">
@@ -26,19 +55,19 @@
             </thead>
             <tbody>
             <tr th:each="user: ${users}">
-                <td th:text="${user.value[0]}"></td>
-                <td th:text="${user.value[1]}"></td>
-                <td th:text="${user.key}"></td>
+                <td th:text="${user.person.name}"></td>
+                <td th:text="${user.person.surname}"></td>
+                <td th:text="${user.person.dni}"></td>
                 <td>
-                            <span th:text="${user.value[2]}"
-                                  th:class="${user.value[2] == 'APPROVED' ? 'status-badge status-approved' :
-                                             (user.value[2] == 'PENDING' ? 'status-badge status-pending' : 'status-badge status-rejected')}">
-                            </span>
+                    <span th:text="${user.oviUser.state.getDescription()}"
+                          th:class="${user.oviUser.state.name() == 'APPROVED' ? 'status-badge status-approved' :
+                                     (user.oviUser.state.name() == 'PENDING' ? 'status-badge status-pending' : 'status-badge status-rejected')}">
+                    </span>
                 </td>
                 <td>
                     <div class="actions-group" style="justify-content: center;">
                         <a class="btn btn-primary"
-                           th:href="@{/Technician/userManagement/{dni}(dni=${user.key})}">
+                           th:href="@{/Technician/userManagement/{dni}(dni=${user.person.dni})}">
                             Editar
                         </a>
                     </div>
@@ -48,8 +77,8 @@
         </table>
     </div>
 
-    <div class="content-footer">
-        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+    <div th:if="${#lists.isEmpty(users)}" style="text-align: center; padding: 40px;">
+        <p class="description">No se han encontrado usuarios con los filtros seleccionados.</p>
     </div>
 
     <div class="bottom-spacer"></div>

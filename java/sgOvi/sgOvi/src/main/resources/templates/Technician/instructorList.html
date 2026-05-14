@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{Fragments/base}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
 <head>
     <title>Gestionar Instructores</title>
     <meta charset="UTF-8" />
@@ -10,8 +10,24 @@ layout:decorate="~{Fragments/base}">
 <body class="main-content">
 
 <div class="page-container" layout:fragment="content">
-    <h1 class="title">Lista de Instructores</h1>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1 class="title">Lista de Instructores</h1>
+        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+    </div>
+
     <p class="description">Panel de gestión para la administración y edición de los instructores registrados en el sistema.</p>
+
+    <form th:action="@{/Technician/instructorList}" th:object="${filter}" method="post" class="filter-bar">
+        <div class="filter-group">
+            <label for="sortSel">Ordenar la lista por</label>
+            <select th:field="*{sortSel}" id="sortSel" class="filter-select" onchange="this.form.submit()">
+                <option value="nameAsc">Nombre (A-Z)</option>
+                <option value="nameDesc">Nombre (Z-A)</option>
+                <option value="dni">DNI</option>
+            </select>
+        </div>
+    </form>
 
     <div class="table-responsive">
         <table class="table-custom">
@@ -26,14 +42,14 @@ layout:decorate="~{Fragments/base}">
             </thead>
             <tbody>
             <tr th:each="instructor: ${instructors}">
-                <td th:text="${instructor.value[0]}"></td>
-                <td th:text="${instructor.value[1]}"></td>
-                <td th:text="${instructor.key}"></td>
-                <td th:text="${instructor.value[2]}"></td>
+                <td th:text="${instructor.person.name}"></td>
+                <td th:text="${instructor.person.surname}"></td>
+                <td th:text="${instructor.person.dni}"></td>
+                <td th:text="${instructor.instructor.expertise}"></td>
                 <td>
                     <div class="actions-group" style="justify-content: center;">
                         <a class="btn btn-primary"
-                           th:href="@{/Technician/instructorManagement/{dni}(dni=${instructor.key})}">
+                           th:href="@{/Technician/instructorManagement/{dni}(dni=${instructor.person.dni})}">
                             Editar
                         </a>
                     </div>
@@ -43,8 +59,7 @@ layout:decorate="~{Fragments/base}">
         </table>
     </div>
 
-    <div class="content-footer">
-        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+    <div class="content-footer" style="justify-content: flex-end;">
         <a href="addInstructor" class="btn btn-primary">Añadir Instructor</a>
     </div>
 

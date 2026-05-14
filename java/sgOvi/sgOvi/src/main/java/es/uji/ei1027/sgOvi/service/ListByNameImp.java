@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ListByNameImp implements ListByName{
@@ -22,60 +20,102 @@ public class ListByNameImp implements ListByName{
     PapPatiDao papPatiDao;
 
     @Autowired
-    AssistanceReqDao assistanceReqDao;
-
-    @Autowired
     InstructorDao instructorDao;
 
     //El mapa es tal que: Map<dni, List<nombre, estado>
     @Override
-    public Map<String, List<String>> personUserList() {
-        Map<String, List<String>> mapa = new HashMap<>();
+    public List<PersonOviUserDTO> personUserList(String stateSel, String sortSel) {
+
+        List<PersonOviUserDTO> listaDTOs = new ArrayList<>();
         List<OviUser> listaUser = oviUserDao.getOviUsers();
         for(OviUser user : listaUser){
-            List<String> parametros = new ArrayList<>();
-            parametros.add(personDao.getPerson(user.getDni()).getName());
-            parametros.add(personDao.getPerson(user.getDni()).getSurname());
-            parametros.add(user.getState().name());
-            mapa.put(user.getDni(), parametros);
+            PersonOviUserDTO personOviUserDTO = new PersonOviUserDTO();
+            personOviUserDTO.setPerson(personDao.getPerson(user.getDni()));
+            personOviUserDTO.setOviUser(user);
+            listaDTOs.add(personOviUserDTO);
         }
-        return mapa;
+
+        //filtrado
+        if (stateSel != null && !stateSel.equals("ALL")) {
+            listaDTOs.removeIf(dto -> !dto.getOviUser().getState().name().equals(stateSel));
+        }
+
+        if (sortSel != null) {
+            switch (sortSel) {
+                case "nameAsc":
+                    listaDTOs.sort((a, b) -> a.getPerson().getName().compareToIgnoreCase(b.getPerson().getName()));
+                    break;
+                case "nameDesc":
+                    listaDTOs.sort((a, b) -> b.getPerson().getName().compareToIgnoreCase(a.getPerson().getName()));
+                    break;
+                case "dni":
+                    listaDTOs.sort((a, b) -> a.getPerson().getDni().compareTo(b.getPerson().getDni()));
+                    break;
+            }
+        }
+
+        return listaDTOs;
     }
 
-    public Map<String, List<String>> personPapPatiList() {
-        Map<String, List<String>> mapa = new HashMap<>();
+    public List<PersonPapPatiDTO> personPapPatiList(String stateSel, String sortSel) {
+
+        List<PersonPapPatiDTO> listaDTOs = new ArrayList<>();
         List<PapPati> listaPapPati = papPatiDao.getPapPatis();
         for(PapPati papPati : listaPapPati){
-            List<String> parametros = new ArrayList<>();
-            parametros.add(personDao.getPerson(papPati.getDni()).getName());
-            parametros.add(personDao.getPerson(papPati.getDni()).getSurname());
-            parametros.add(papPati.getType().name());
-            String available = "No disponible";
-            if(papPati.getAvailable())
-                available = "Disponible";
-            parametros.add(available);
-            parametros.add(papPati.getState().getDescription());
-            mapa.put(papPati.getDni(), parametros);
+            PersonPapPatiDTO personPapPatiDTO = new PersonPapPatiDTO();
+            personPapPatiDTO.setPapPati(papPati);
+            personPapPatiDTO.setPerson(personDao.getPerson(papPati.getDni()));
+            listaDTOs.add(personPapPatiDTO);
         }
-        return mapa;
+        //filtrado
+        if (stateSel != null && !stateSel.equals("ALL")) {
+            listaDTOs.removeIf(dto -> !dto.getPapPati().getState().name().equals(stateSel));
+        }
+
+        if (sortSel != null) {
+            switch (sortSel) {
+                case "nameAsc":
+                    listaDTOs.sort((a, b) -> a.getPerson().getName().compareToIgnoreCase(b.getPerson().getName()));
+                    break;
+                case "nameDesc":
+                    listaDTOs.sort((a, b) -> b.getPerson().getName().compareToIgnoreCase(a.getPerson().getName()));
+                    break;
+                case "dni":
+                    listaDTOs.sort((a, b) -> a.getPerson().getDni().compareTo(b.getPerson().getDni()));
+                    break;
+            }
+        }
+
+        return listaDTOs;
     }
 
     @Override
-    public Map<String, List<String>> personInstructorList() {
-        Map<String, List<String>> mapa = new HashMap<>();
+    public List<PersonInstructorDTO> personInstructorList(String sortSel) {
+        List<PersonInstructorDTO> listaDTOs = new ArrayList<>();
         List<Instructor> listaInstructor = instructorDao.getInstructors();
         for(Instructor instructor : listaInstructor){
-            List<String> parametros = new ArrayList<>();
-            parametros.add(personDao.getPerson(instructor.getDni()).getName());
-            parametros.add(personDao.getPerson(instructor.getDni()).getSurname());
-            String especialidad = instructor.getExpertise();
-            if(instructor.getExpertise() == null) {
-                especialidad = "N/A";
-            }
-            parametros.add(especialidad);
-            mapa.put(instructor.getDni(), parametros);
+            PersonInstructorDTO personInstructorDTO = new PersonInstructorDTO();
+            personInstructorDTO.setInstructor(instructor);
+            personInstructorDTO.setPerson(personDao.getPerson(instructor.getDni()));
+            listaDTOs.add(personInstructorDTO);
         }
-        return mapa;
+
+        //Sort
+        if (sortSel != null) {
+            switch (sortSel) {
+                case "nameAsc":
+                    listaDTOs.sort((a, b) -> a.getPerson().getName().compareToIgnoreCase(b.getPerson().getName()));
+                    break;
+                case "nameDesc":
+                    listaDTOs.sort((a, b) -> b.getPerson().getName().compareToIgnoreCase(a.getPerson().getName()));
+                    break;
+                case "dni":
+                    listaDTOs.sort((a, b) -> a.getPerson().getDni().compareTo(b.getPerson().getDni()));
+                    break;
+            }
+        }
+
+        return listaDTOs;
     }
 
 }

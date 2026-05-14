@@ -7,13 +7,39 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="main-content" >
+<body class="main-content">
 <div class="page-container" layout:fragment="content">
-    <h1 class="title">Lista solicitudes de asistencia</h1>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1 class="title">Lista solicitudes de asistencia</h1>
+        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+    </div>
+
     <p class="description">Gestión y revisión de las peticiones de soporte técnico.</p>
 
-    <div class="table-responsive">
+    <form th:action="@{/Technician/assistanceRequestList}" th:object="${filter}" method="post" class="filter-bar">
 
+        <div class="filter-group">
+            <label for="stateSel">Estado</label>
+            <select th:field="*{stateSel}" id="stateSel" class="filter-select" onchange="this.form.submit()">
+                <option value="ALL">Todos los estados</option>
+                <option th:each="st : ${filter.stateList}"
+                        th:value="${st.name()}"
+                        th:text="${st.getDescription()}"></option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="sortSel">Ordenar por</label>
+            <select th:field="*{sortSel}" id="sortSel" class="filter-select" onchange="this.form.submit()">
+                <option value="id">ID Solicitud</option>
+                <option value="fechaAsc">Fecha (Antiguas primero)</option>
+                <option value="fecDesc">Fecha (Recientes primero)</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="table-responsive">
         <table class="table-custom">
             <thead>
             <tr>
@@ -21,39 +47,40 @@
                 <th>Fecha</th>
                 <th>Motivo</th>
                 <th>Estado</th>
-                <th>Acciones</th>
+                <th style="text-align: center;">Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="request: ${requests}">
+            <tr th:each="request: ${assistanceRequests}">
                 <td th:text="${request.idAsReq}"></td>
                 <td th:text="${request.date}"></td>
                 <td th:text="${request.tittle}"></td>
                 <td>
-                            <span class="status-badge"
-                                  th:classappend="${request.state.name == 'PENDING' ? 'status-pending' :
-                                                   (request.state.name == 'APPROVED' ? 'status-approved' :
-                                                   (request.state.name == 'REJECTED' ? 'status-rejected' :
-                                                   (request.state.name == 'CLOSED_WITH_CONTRACT' ? 'status-closed' :
-                                                   'status-closed-done')))}"
-                                  th:text="${request.state}">
-                            </span>
+                    <span th:text="${request.state.getDescription()}"
+                          th:class="${'status-badge ' +
+                                     (request.state.name() == 'APPROVED' ? 'status-approved' :
+                                     (request.state.name() == 'PENDING' ? 'status-pending' :
+                                     (request.state.name() == 'REJECTED' ? 'status-rejected' : 'status-closed')))}">
+                    </span>
                 </td>
                 <td>
-                    <a class="btn btn-primary"
-                       th:href="@{/Technician/apManagement/{idAsReq}(idAsReq=${request.idAsReq})}">
-                        Editar
-                    </a>
+                    <div class="actions-group" style="justify-content: center;">
+                        <a class="btn btn-primary"
+                           th:href="@{/Technician/apManagement/{idAsReq}(idAsReq=${request.idAsReq})}">
+                            Editar
+                        </a>
+                    </div>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <div class="content-footer">
-        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al inicio</a>
+
+    <div th:if="${#lists.isEmpty(assistanceRequests)}" style="text-align: center; padding: 40px;">
+        <p class="description">No se han encontrado solicitudes con estos filtros.</p>
     </div>
+
+    <div class="bottom-spacer"></div>
 </div>
-
-
 </body>
 </html>

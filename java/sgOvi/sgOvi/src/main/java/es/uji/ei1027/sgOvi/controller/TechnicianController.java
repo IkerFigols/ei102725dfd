@@ -2,6 +2,7 @@ package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.dao.*;
 import es.uji.ei1027.sgOvi.model.*;
+import es.uji.ei1027.sgOvi.model.enums.ActivityType;
 import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.*;
 import jakarta.servlet.http.HttpSession;
@@ -55,53 +56,147 @@ public class TechnicianController {
         return "Technician/menuTechnician";
     }
 
-    @RequestMapping("/userList")
-    public String listOviUsers(Model model) {
-        model.addAttribute("users", lbn.personUserList());
-        return "Technician/userList";
+    // 1. Método POST para procesar el formulario de filtros
+    @RequestMapping(value="/userList", method = RequestMethod.POST)
+    public String listOviUsersPOST(@ModelAttribute("filter") FilterState filter) {
+        // Redirigimos a la URL con el estado y el parámetro de ordenación
+        return "redirect:/Technician/userList/" + filter.getStateSel()
+                + "?sort=" + filter.getSortSel();
     }
 
-    @RequestMapping("/papPatiList")
-    public String listPapPati(Model model) {
-        model.addAttribute("papPatis", lbn.personPapPatiList());
+    @RequestMapping({"/userList", "/userList/{state}"})
+    public String listOviUsers(Model model,
+                               @PathVariable(required = false) String state,
+                               @RequestParam(required = false, defaultValue = "nameAsc") String sort) {
+
+        // Si no hay estado en la URL, por defecto es "ALL"
+        String stateUrl = (state == null) ? "ALL" : state;
+
+        // Llamamos a tu servicio LBN (asegúrate de que acepte estos dos Strings)
+        List<PersonOviUserDTO> users = lbn.personUserList(stateUrl, sort);
+        model.addAttribute("users", users);
+
+        // Creamos el objeto FilterState para que los selectores mantengan el valor marcado
+        FilterState filter = new FilterState();
+        filter.setStateSel(stateUrl);
+        ArrayList<State> lista = new ArrayList<>();
+        lista.add(State.PENDING);
+        lista.add(State.APPROVED);  //Solo estos tres porque para personas no hay cerrado
+        lista.add(State.REJECTED);
+        filter.setStateList(lista);
+        filter.setSortSel(sort);
+
+        model.addAttribute("filter", filter);
+
+        return "Technician/userList";
+    }
+    @RequestMapping(value = "/papPatiList", method = RequestMethod.POST)
+    public String listPapPatiPOST(@ModelAttribute("filter") FilterState filter) {
+        return "redirect:/Technician/papPatiList/" + filter.getStateSel()
+                + "?sort=" + filter.getSortSel();
+    }
+
+    @RequestMapping({"/papPatiList", "/papPatiList/{state}"})
+    public String listPapPatis(Model model,
+                               @PathVariable(required = false) String state,
+                               @RequestParam(required = false, defaultValue = "nameAsc") String sort) {
+
+        String stateUrl = (state == null) ? "ALL" : state;
+
+        List<PersonPapPatiDTO> papPatis = lbn.personPapPatiList(stateUrl, sort);
+        model.addAttribute("papPatis", papPatis);
+
+        FilterState filter = new FilterState();
+        filter.setStateSel(stateUrl);
+        ArrayList<State> lista = new ArrayList<>();
+        lista.add(State.PENDING);
+        lista.add(State.APPROVED);
+        lista.add(State.REJECTED);
+        filter.setStateList(lista);
+        filter.setSortSel(sort);
+
+        model.addAttribute("filter", filter);
+
         return "Technician/papPatiList";
     }
 
-    @RequestMapping("/instructorList")
-    public String listInstructor(Model model) {
-        model.addAttribute("instructors", lbn.personInstructorList());
+    @RequestMapping(value= "/instructorList", method = RequestMethod.POST)
+    public String listInstructorPOST(@ModelAttribute("filter") FilterState filter) {
+        return "redirect:/Technician/instructorList"
+                + "?sort=" + filter.getSortSel();
+    }
+
+    @RequestMapping({"/instructorList"})
+    public String listInstructors(Model model,
+                               @RequestParam(required = false, defaultValue = "nameAsc") String sort) {
+
+        List<PersonInstructorDTO> listaInstructors = lbn.personInstructorList(sort);
+        model.addAttribute("instructors", listaInstructors);
+
+        FilterState filter = new FilterState();
+        filter.setSortSel(sort);
+
+        model.addAttribute("filter", filter);
         return "Technician/instructorList";
     }
 
-    @RequestMapping("/assistanceRequestList")
-    public String listAssistanceRequest(Model model) {
-        model.addAttribute("requests", assistanceReqDao.getAssistanceRequests());
+    @RequestMapping(value = "/assistanceRequestList", method = RequestMethod.POST)
+    public String listAssistanceRequestPOST(@ModelAttribute("filter") FilterState filter){
+        return "redirect:/Technician/assistanceRequestList/" + filter.getStateSel()
+                + "?sort=" + filter.getSortSel();
+    }
+
+    @RequestMapping({"/assistanceRequestList", "/assistanceRequestList/{state}"})
+    public String assistanceRequestList(Model model,
+                               @PathVariable(required = false) String state,
+                               @RequestParam(required = false, defaultValue = "fechaAsc") String sort) {
+        String stateUrl = (state == null) ? "ANY" : state;
+
+        List<Assistance_Request> assistanceRequests = assistanceReqDao.getAssistanceRequests(stateUrl, sort);
+        model.addAttribute("assistanceRequests", assistanceRequests);
+
+        FilterState filter = new FilterState();
+        filter.setStateSel(stateUrl);
+        ArrayList<State> lista = new ArrayList<>();
+        lista.add(State.PENDING);
+        lista.add(State.APPROVED);
+        lista.add(State.REJECTED);
+        lista.add(State.CLOSED_WITH_CONTRACT_DONE);
+        lista.add(State.CLOSED_WITH_CONTRACT);
+        filter.setStateList(lista);
+        filter.setSortSel(sort);
+
+        model.addAttribute("filter", filter);
+
         return "Technician/assistanceRequestList";
     }
 
-    @PostMapping("/listFilter")
-    public String filterRequests(@RequestParam(name = "stateFilter", required = false) String stateFilter, Model model) {
-
-        List<Assistance_Request> filteredRequests;
-/*
-        if (stateFilter != null && !stateFilter.isEmpty()) {
-            filteredRequests = service.findByStateName(stateFilter);
-        } else {
-            filteredRequests = service.findAll();
-        }
-
-        model.addAttribute("requests", filteredRequests);
-        // IMPORTANTE: Devolvemos el valor para que el HTML sepa cuál marcar como 'selected'
-        model.addAttribute("selectedState", stateFilter);
-*/
-        return "nombre_de_tu_plantilla";
+    @RequestMapping(value="/activityList", method = RequestMethod.POST)
+    public String listActivitiesPOST(@ModelAttribute("filter") FilterActivity filter) {
+        return "redirect:/Technician/activityList/" + filter.getTypeSel() + "?sort=" + filter.getSortSel();
     }
 
-    @RequestMapping("/activityList")
-    public String listActivity(Model model) {
-        model.addAttribute("activities", activityDao.getActivities());
+    @RequestMapping({"/activityList", "/activityList/{type}"})
+    public String listActivities(Model model,
+                                 @PathVariable(required = false) String type,
+                                 @RequestParam(required = false, defaultValue = "id") String sort) {
+
+        String typeUrl = (type == null) ? "ALL" : type;
+
+        // Llamada al DAO con los nuevos parámetros
+        model.addAttribute("activities", activityDao.getActivities(typeUrl, sort));
+
+        FilterActivity filter = new FilterActivity();
+        filter.setTypeSel(typeUrl);
+        // Cargamos los tipos del Enum ActivityType
+        filter.setTypeList(Arrays.asList(ActivityType.values()));
+        filter.setSortSel(sort);
+
+        model.addAttribute("filter", filter);
+
         return "Technician/activityList";
     }
+
 
     @RequestMapping(value="/userManagement/{dni}", method = RequestMethod.GET)
     public String editOviUser(Model model, @PathVariable String dni) {
