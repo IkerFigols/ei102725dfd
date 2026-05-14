@@ -16,10 +16,22 @@
             <p class="description">Listado de contratos vigentes y finalizados.</p>
         </header>
 
+        <div class="filter-container">
+            <form th:action="@{/Contracts/list}" method="get" class="filter-form">
+                <div class="filter-group">
+                    <label for="sortOrder">Ordenar por Fecha de Inicio:</label>
+                    <select name="sort" id="sortOrder" class="filter-select" onchange="this.form.submit()">
+                        <option value="dateDesc" th:selected="${currentSort == 'dateDesc'}">Más recientes primero</option>
+                        <option value="dateAsc" th:selected="${currentSort == 'dateAsc'}">Más antiguos primero</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
         <div class="table-responsive" th:if="${contracts != null and !contracts.isEmpty()}">
             <table class="table-custom">
                 <thead>
-                <tr>
+                <tr style="text-align: center">
                     <th>Contrato con</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
@@ -34,10 +46,10 @@
                     <td th:text="${dto.contract.endDate != null ? #temporals.format(dto.contract.endDate, 'dd/MM/yyyy') : 'Vigente'}"></td>
                     <td th:text="${dto.contract.salary != null ? dto.contract.salary + '€' : '-'}"></td>
                     <td class="text-right">
-                        <a th:href="@{/pdfs/contrato_tipo.pdf}"
+                        <a th:href="@{/pdfs/contrato_tipo.pdf}" title="Ver documento"
                            target="_blank"
                            class="btn btn-primary btn-sm btn-icon">
-                            Ver Doc<i class ="bi bi-file-earmark-pdf"></i>
+                            Documento<i class ="fi fi-rr-document"></i>
                         </a>
                     </td>
                 </tr>
