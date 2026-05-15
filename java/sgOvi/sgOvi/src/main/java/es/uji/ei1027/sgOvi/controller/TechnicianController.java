@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -51,6 +53,12 @@ public class TechnicianController {
     private AssistanceRequestValidator assistanceRequestValidator = new AssistanceRequestValidator();
     private ActivityValidator activityValidator = new ActivityValidator();
     private RequestPersonUserDTO requestPersonUserDTO = new RequestPersonUserDTO();
+
+
+    @RequestMapping("/actionConfirmation")
+    public String mostrarConfirmacion() {
+        return "Technician/actionConfirmation";
+    }
 
     @RequestMapping("/menuTechnician")
     public String menuTechnician(Model model) {
@@ -261,7 +269,7 @@ public class TechnicianController {
 
     @RequestMapping(value="/userManagement/update", method = RequestMethod.POST)
     public String processUpdateSubmitUser(@ModelAttribute ("user") OviUser user,
-                                          BindingResult bindingResult
+                                          BindingResult bindingResult, RedirectAttributes flash
     ) {
         if(personDao.getPerson(user.getDni()).getBirthdayDate().isAfter(LocalDate.now().minusYears(18)) && (user.getLegalGuardian() == null || user.getLegalGuardian().isBlank())){
             bindingResult.rejectValue("legalGuardian", "required", "Los menores de 18 años deben tener un tutor legal");
@@ -276,8 +284,9 @@ public class TechnicianController {
             user.setLegalGuardian(null);
 
         oviUserDao.updateOviUser(user);
-
-        return "redirect:/Technician/userList";
+        flash.addFlashAttribute("lista","userList");
+        flash.addFlashAttribute("mensaje","El usuario ha sido actualizado correctamente");
+        return "redirect:/Technician/actionConfirmation";
     }
 
     @RequestMapping(value="/papPatiManagement/{dni}", method = RequestMethod.GET)
@@ -290,7 +299,7 @@ public class TechnicianController {
 
     @RequestMapping(value="/papPatiManagement/update", method = RequestMethod.POST)
     public String processUpdateSubmitPapPati( @ModelAttribute ("papPati") PapPati papPati,
-                                              BindingResult bindingResult
+                                              BindingResult bindingResult, RedirectAttributes flash
     ) {
 
         papPatiValidator.validate(papPati,bindingResult);
@@ -301,7 +310,9 @@ public class TechnicianController {
             papPati.setReason(null);
         papPatiDao.updatePapPati(papPati);
 
-        return "redirect:/Technician/papPatiList";
+        flash.addFlashAttribute("lista","papPatiList");
+        flash.addFlashAttribute("mensaje","El asistente personal ha sido actualizado correctamente");
+        return "redirect:/Technician/actionConfirmation";
     }
 
     @RequestMapping(value="/instructorManagement/{dni}", method = RequestMethod.GET)
@@ -314,7 +325,7 @@ public class TechnicianController {
 
     @RequestMapping(value="/instructorManagement/update", method = RequestMethod.POST)
     public String processUpdateSubmitInstructor(@ModelAttribute ("instructor") Instructor instructor,
-                                                BindingResult bindingResult
+                                                BindingResult bindingResult, RedirectAttributes flash
     ) {
         instructorValidator.validate(instructor, bindingResult);
         if(bindingResult.hasErrors()){
@@ -322,7 +333,9 @@ public class TechnicianController {
         }
         instructorDao.updateInstructor(instructor);
 
-        return "redirect:/Technician/instructorList";
+        flash.addFlashAttribute("lista","instructorList");
+        flash.addFlashAttribute("mensaje","El instructor ha sido actualizado correctamente");
+        return "redirect:/Technician/actionConfirmation";
     }
     @RequestMapping(value="/addInstructor")
     public String addInstructor(Model model) {
@@ -331,7 +344,7 @@ public class TechnicianController {
     }
     @RequestMapping(value="/addInstructor", method=RequestMethod.POST)
     public String processAddInstructor(@ModelAttribute("personInstructor") PersonInstructorDTO pidto,
-                                       BindingResult bindingResult) {
+                                       BindingResult bindingResult, RedirectAttributes flash) {
 
         personDtoValidator.validate(pidto, bindingResult);
         if(personDao.getPerson(pidto.getPerson().getDni()) != null){
@@ -348,7 +361,9 @@ public class TechnicianController {
         instructor.setDni(person.getDni());
         instructorDao.addInstructor(instructor);
 
-        return "redirect:instructorList";
+        flash.addFlashAttribute("lista","instructorList");
+        flash.addFlashAttribute("mensaje","El instructor ha sido creado correctamente");
+        return "redirect:/Technician/actionConfirmation";
     }
 
     @RequestMapping(value="/apManagement/{idAsReq}", method = RequestMethod.GET)
@@ -438,7 +453,7 @@ public class TechnicianController {
     }
 
     @PostMapping("/processSelection")
-    public String processSelection(@RequestParam("idAsReq") String idAsReq, HttpSession session) {
+    public String processSelection(@RequestParam("idAsReq") String idAsReq, HttpSession session, RedirectAttributes flash) {
 
         List<String> seleccionadosDni = (List<String>) session.getAttribute("seleccionados");
 
@@ -459,11 +474,13 @@ public class TechnicianController {
 
         session.removeAttribute("seleccionados");
 
-        return "redirect:/Technician/assistanceRequestList";
+        flash.addFlashAttribute("lista","assistanceRequestList");
+        flash.addFlashAttribute("mensaje","Se han enviado los candidatos correctamente");
+        return "redirect:/Technician/actionConfirmation";
     }
     @PostMapping("/apManagement/reject")
     public String rejectRequest(@ModelAttribute("assistanceRequest") Assistance_Request request,
-                                BindingResult bindingResult) {
+                                BindingResult bindingResult, RedirectAttributes flash) {
 
         request.setState(State.REJECTED.name());
         assistanceRequestValidator.validate(request, bindingResult);
@@ -472,7 +489,9 @@ public class TechnicianController {
             return "Technician/apManagement";
         }
         assistanceReqDao.updateAssistanceRequest(request);
-        return "redirect:/Technician/assistanceRequestList";
+        flash.addFlashAttribute("lista","assistanceRequestList");
+        flash.addFlashAttribute("mensaje","Se ha rechazado la asistencia correctamente");
+        return "redirect:/Technician/actionConfirmation";
     }
 
 
@@ -483,7 +502,7 @@ public class TechnicianController {
     }
     @RequestMapping(value="/addActivity", method=RequestMethod.POST)
     public String processAddActivity(@ModelAttribute("activity") Activity activity,
-                                     BindingResult bindingResult) {
+                                     BindingResult bindingResult, RedirectAttributes flash) {
 
         if(instructorDao.getInstructor(activity.getIdInstructor()) == null){
             bindingResult.rejectValue("idInstructor", "nonExistent", "El instructor especificado no existe en la base de datos");
@@ -494,8 +513,10 @@ public class TechnicianController {
 
         activity.setIdActivity(cg.generateCode("ACT"));
         activityDao.addActivity(activity);
+        flash.addFlashAttribute("lista","activityList");
+        flash.addFlashAttribute("mensaje","La actividad ha sido creada correctamente");
+        return "redirect:/Technician/actionConfirmation";
 
-        return "redirect:activityList";
     }
 
     @RequestMapping(value="/activityManagement/{idActivity}", method = RequestMethod.GET)
@@ -508,7 +529,7 @@ public class TechnicianController {
 
     @RequestMapping(value="/activityManagement/update", method = RequestMethod.POST)
     public String processUpdateSubmitActivity(  @ModelAttribute ("activity") Activity activity,
-                                                BindingResult bindingResult
+                                                BindingResult bindingResult, RedirectAttributes flash
     ) {
         if(instructorDao.getInstructor(activity.getIdInstructor()) == null){
             bindingResult.rejectValue("idInstructor", "nonExistent", "El instructor especificado no existe en la base de datos");
@@ -517,8 +538,10 @@ public class TechnicianController {
         if(bindingResult.hasErrors())
             return "Technician/activityManagement";
         activityDao.updateActivity(activity);
+        flash.addFlashAttribute("lista","activityList");
+        flash.addFlashAttribute("mensaje","La actividad ha sido actualizado correctamente");
+        return "redirect:/Technician/actionConfirmation";
 
-        return "redirect:/Technician/activityList";
     }
 
     @RequestMapping(value="/activityList/delete/{idActivity}")
