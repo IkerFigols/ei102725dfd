@@ -7,7 +7,7 @@ import java.util.List;
 public class FilterState {
 
     private String stateSel;
-    private List<State> stateList;
+    private List<State> stateList = List.of(State.values());
 
     public List<State> getStateList() { return stateList; }
 
