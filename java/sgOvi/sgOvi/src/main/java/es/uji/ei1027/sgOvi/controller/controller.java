@@ -17,18 +17,17 @@ public class controller {
     @Autowired
     PersonDao personDao;
 
-    // CORRECCIÓN: Añadido @ModelAttribute y asegurado el orden
+
     @RequestMapping(value="/si", method=RequestMethod.POST)
     public String registrarPersonas(@ModelAttribute("person") Person person,
                                     BindingResult bindingResult,
                                     Model model) {
 
-        // Es obligatorio que BindingResult esté justo después del @ModelAttribute
         if (bindingResult.hasErrors()) {
             return "si";
         }
 
-        personDao.encryptPersons();// O tu lógica de guardado
+        personDao.encryptPersons();
         System.out.println("se ha realizado el cambio");
         return "redirect:/";
     }

@@ -8,6 +8,9 @@ public class FilterState {
 
     private String stateSel;
     private List<State> stateList = List.of(State.values());
+    private String sortSel;
+    private List<String> sortList;
+
 
     public List<State> getStateList() { return stateList; }
 
@@ -16,10 +19,6 @@ public class FilterState {
     public void setStateList(List<State> stateList) { this.stateList = stateList; }
 
     public String getStateSel() { return stateSel; }
-
-    private String sortSel;
-
-    private List<String> sortList;
 
     public String getSortSel() { return sortSel; }
 
