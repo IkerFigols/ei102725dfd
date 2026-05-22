@@ -71,6 +71,10 @@
                            th:href="@{/Technician/papPatiManagement/{dni}(dni=${papPati.person.dni})}">
                             Editar
                         </a>
+                        <a class="btn btn-primary"
+                           th:href="@{/Technician/contractPersonList/{dni}(dni=${papPati.person.dni}, urlPast='papPatiList')}">
+                            Contratos
+                        </a>
                     </div>
                 </td>
             </tr>

@@ -102,6 +102,14 @@ public class ActivityDao {
             return null;
         }
     }
+    public List<Activity> getInstructorActivities(String idInstructor){
+        try {
+            return jdbcTemplate.query("SELECT * FROM Activity WHERE idInstructor = ?", new ActivityRowMapper(), idInstructor);
+        }
+        catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
     public List<Activity> getUserActivities(String dni) {
         try {
             return jdbcTemplate.query(

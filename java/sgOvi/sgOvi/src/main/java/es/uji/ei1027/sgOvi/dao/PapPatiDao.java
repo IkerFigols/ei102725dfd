@@ -2,6 +2,7 @@ package es.uji.ei1027.sgOvi.dao;
 
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.enums.ShiftType;
+import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -148,6 +149,14 @@ public class PapPatiDao {
         }
     }
 
+    public List<PersonPapPatiDTO> getPapPatiTrainingActivities(String idActivity){
+        try{
+            return jdbcTemplate.query("SELECT p.*, pap.* FROM Person AS p JOIN Pap_Pati AS pap USING(dni) JOIN Attendance AS at ON (pap.dni = at.idPapPati) WHERE at.idActivity = ?",new PersonPapPatiDTORowMapper(),idActivity);
+        }
+        catch (EmptyResultDataAccessException e){
+            return new ArrayList<>();
+        }
+    }
     public List<PapPati> getAvailablePapPatis(){
         try {
             List<PapPati> papPatiList = jdbcTemplate.query(

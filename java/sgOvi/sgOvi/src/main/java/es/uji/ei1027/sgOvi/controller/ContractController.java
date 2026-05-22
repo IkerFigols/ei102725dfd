@@ -57,10 +57,8 @@ public class ContractController {
     public String listContracts(Model model, HttpSession session,
                                 @RequestParam(value="sort", defaultValue = "dateDesc") String sort) {
         Person user = (Person) session.getAttribute("user");
+        /*
         String rol = (String) session.getAttribute("rol");
-
-        if (user == null) return "redirect:/login";
-
         List<Contract> contracts = contractDao.getContractsByPerson(user.getDni());
         List<ContractDTO> contractListWithNames = new ArrayList<>();
 
@@ -86,8 +84,8 @@ public class ContractController {
         }
 
         contractListWithNames = sortContracts(contractListWithNames, sort);
-
-        model.addAttribute("contracts", contractListWithNames);
+        */
+        model.addAttribute("contracts", sortContracts(contractDao.getContractsByPerson2(user.getDni()),sort));
         model.addAttribute("currentSort", sort);
 
         return "Contracts/list";

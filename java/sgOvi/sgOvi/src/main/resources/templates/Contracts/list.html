@@ -72,6 +72,11 @@
                title="Volver al menú">
                 Menú<i class="fi fi-rr-home"></i>
             </a>
+            <a th:if="${session.rol == 'TECHNICIAN'}" th:href="@{/Technician/{urlPast} (urlPast=${urlPast})}"
+               class="btn btn-secondary btn-icon"
+               title="Volver al menú">
+                Menú<i class="fi fi-rr-home"></i>
+            </a>
         </div>
 
     </section>

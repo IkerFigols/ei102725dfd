@@ -11,7 +11,7 @@ public class ActivityValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return false;
+        return Activity.class.equals(clazz);
     }
 
     @Override

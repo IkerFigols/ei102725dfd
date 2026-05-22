@@ -1,5 +1,6 @@
 package es.uji.ei1027.sgOvi.controller;
 
+import es.uji.ei1027.sgOvi.controller.exception.OviException;
 import es.uji.ei1027.sgOvi.dao.*;
 import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.ActivityType;
@@ -45,6 +46,10 @@ public class TechnicianController {
     private ListPapPatiSelService listPapPatiSelService;
     @Autowired
     private SelectionDao selectionDao;
+    @Autowired
+    private AttendanceDao attendanceDao;
+    @Autowired
+    private ContractDao contractDao;
 
     private OviUserValidator ouv = new OviUserValidator();
     private PapPatiValidator papPatiValidator = new PapPatiValidator();
@@ -65,10 +70,10 @@ public class TechnicianController {
         return "Technician/menuTechnician";
     }
 
-    // 1. Método POST para procesar el formulario de filtros
+
     @RequestMapping(value="/userList", method = RequestMethod.POST)
     public String listOviUsersPOST(@ModelAttribute("filter") FilterState filter) {
-        // Redirigimos a la URL con el estado y el parámetro de ordenación
+
         return "redirect:/Technician/userList/" + filter.getStateSel()
                 + "?sort=" + filter.getSortSel();
     }
@@ -283,9 +288,18 @@ public class TechnicianController {
         if (user.getLegalGuardian().isBlank())
             user.setLegalGuardian(null);
 
-        oviUserDao.updateOviUser(user);
         flash.addFlashAttribute("lista","userList");
-        flash.addFlashAttribute("mensaje","El usuario ha sido actualizado correctamente");
+        if(oviUserDao.getOviUser(user.getDni()).getState().name().equals(user.getState().name())){
+            flash.addFlashAttribute("mensaje", "El usuario se ha actualizado correctamente");
+        }
+        else{
+            if(user.getState().name().equals("APPROVED"))
+                flash.addFlashAttribute("mensaje", "El usuario ha sido aceptado. Se ha enviado un correo a la dirección: "+ personDao.getPerson(user.getDni()).getEmail()+ " para notificar al usuario de la resolución de su solicitud");
+            else
+                flash.addFlashAttribute("mensaje", "El usuario ha sido rechazado. Se ha enviado un correo a la dirección: "+ personDao.getPerson(user.getDni()).getEmail()+ " para notificar al usuario de la resolución de su solicitud");
+
+        }
+        oviUserDao.updateOviUser(user);
         return "redirect:/Technician/actionConfirmation";
     }
 
@@ -308,10 +322,20 @@ public class TechnicianController {
         }
         if(papPati.getReason().isBlank())
             papPati.setReason(null);
-        papPatiDao.updatePapPati(papPati);
 
         flash.addFlashAttribute("lista","papPatiList");
-        flash.addFlashAttribute("mensaje","El asistente personal ha sido actualizado correctamente");
+        if(papPatiDao.getPapPati(papPati.getDni()).getState().name().equals(papPati.getState().name())){
+            flash.addFlashAttribute("mensaje", "El asistente personal se ha actualizado correctamente");
+        }
+        else{
+            if(papPati.getState().name().equals("APPROVED"))
+                flash.addFlashAttribute("mensaje", "El asistente ha sido aceptado. Se ha enviado un correo a la dirección: "+ personDao.getPerson(papPati.getDni()).getEmail()+ " para notificar al usuario de la resolución de su solicitud");
+            else
+                flash.addFlashAttribute("mensaje", "El asistente ha sido rechazado. Se ha enviado un correo a la dirección: "+ personDao.getPerson(papPati.getDni()).getEmail()+ " para notificar al usuario de la resolución de su solicitud");
+
+        }
+        papPatiDao.updatePapPati(papPati);
+
         return "redirect:/Technician/actionConfirmation";
     }
 
@@ -321,6 +345,21 @@ public class TechnicianController {
 
         model.addAttribute("instructor", instructor);
         return "Technician/instructorManagement";
+    }
+
+    @RequestMapping(value="/instructorList/delete/{idInstructor}")
+    public String deleteInstructor(@PathVariable String idInstructor){
+        if(personDao.getPerson(idInstructor) != null){
+            if(activityDao.getInstructorActivities(idInstructor).isEmpty()) {
+                instructorDao.deleteInstructor(idInstructor);
+                personDao.deletePerson(idInstructor);
+            }
+            else
+                throw new OviException("No se ha podido eliminar al instructor ya que tiene actividades pendientes","Acción no completada");
+        }
+        else
+            throw new OviException("No se ha encontrado al instructor", "Usuario no encontrado");
+        return "redirect:/Technician/instructorList";
     }
 
     @RequestMapping(value="/instructorManagement/update", method = RequestMethod.POST)
@@ -369,7 +408,9 @@ public class TechnicianController {
     @RequestMapping(value="/apManagement/{idAsReq}", method = RequestMethod.GET)
     public String editAssistanceRequest(Model model, @PathVariable String idAsReq) {
         Assistance_Request apReq = assistanceReqDao.getAssistanceRequest(idAsReq);
-
+        if(apReq.getState().equals(State.CLOSED_WITH_CONTRACT)){
+            model.addAttribute("dto",contractDao.getContractByAP(idAsReq));
+        }
         model.addAttribute("assistanceRequest", apReq);
         return "Technician/apManagement";
     }
@@ -437,8 +478,17 @@ public class TechnicianController {
     @RequestMapping("/selectPapPati/add/{idAsReq}/{dni}")
     public String addCandidate(@PathVariable String idAsReq, @PathVariable String dni, HttpSession session) {
         List<String> seleccionados = (List<String>) session.getAttribute("seleccionados");
-        if (seleccionados != null && !seleccionados.contains(dni)) {
+        List<String> recomendados = (List<String>) session.getAttribute("recomendados");
+        List<String> allPapPatis = (List<String>) session.getAttribute("allPapPatis");
+         if (seleccionados != null && !seleccionados.contains(dni)) {
             seleccionados.add(dni);
+
+            if(recomendados != null && allPapPatis != null) {
+                if (recomendados.contains(dni))
+                    recomendados.remove(dni);
+                if (allPapPatis.contains(dni))
+                    allPapPatis.remove(dni);
+            }
         }
         return "redirect:/Technician/selectPapPati/" + idAsReq;
     }
@@ -544,9 +594,58 @@ public class TechnicianController {
 
     }
 
+    @RequestMapping(value="/activityList/participants/{idActivity}")
+    public String getParticipants(@PathVariable String idActivity, Model model,
+                                  @RequestParam(value = "sortSel", required = false, defaultValue = "nameAsc") String sortSel){
+        if(activityDao.getActivity(idActivity) != null){
+            FilterState filterState = new FilterState();
+            filterState.setSortSel(sortSel);
+            System.out.println(papPatiDao.getPapPatiTrainingActivities(idActivity));
+            model.addAttribute("participantes",lbn.personPapPatiList(papPatiDao.getPapPatiTrainingActivities(idActivity),sortSel));
+            model.addAttribute("idActivity", idActivity);
+            model.addAttribute("filter",filterState);
+        }
+        else{
+            throw new OviException("La actividad "+ idActivity+" no fue encontrada", "Actividad no encontrad");
+        }
+        return "/Technician/participants";
+    }
     @RequestMapping(value="/activityList/delete/{idActivity}")
     public String processDeleteActivity(@PathVariable String idActivity) {
         activityDao.deleteActivity(idActivity);
         return "redirect:/Technician/activityList";
+    }
+
+
+    private List<ContractDTO> sortContracts(List<ContractDTO> contracts, String sort) {
+        if (sort == null) return contracts;
+        switch (sort) {
+            case "dateAsc":
+                // Ordena por fecha más antigua primero
+                contracts.sort(Comparator.comparing(dto -> dto.getContract().getStartDate(),
+                        Comparator.nullsLast(Comparator.naturalOrder())));
+                break;
+            case "dateDesc":
+                // Ordena por fecha más reciente primero
+                contracts.sort(Comparator.comparing((ContractDTO dto) -> dto.getContract().getStartDate(),
+                        Comparator.nullsLast(Comparator.reverseOrder())));
+                break;
+        }
+        return contracts;
+    }
+    @RequestMapping("/contractPersonList/{dni}")
+    public String getContracts(@PathVariable String dni, Model model,
+                               @RequestParam(value="sort",required = false, defaultValue = "dateDesc") String sort,
+                               @RequestParam(value="urlPast") String urlPast) {
+        if (personDao.getPerson(dni) != null){
+            model.addAttribute("contracts",sortContracts(contractDao.getContractsByPerson2(dni),sort));
+            model.addAttribute("currentSort", sort);
+            model.addAttribute("urlPast",urlPast);
+            model.addAttribute("dni",dni);
+            model.addAttribute("name",personDao.getPerson(dni).getName());
+        }
+        else
+            throw new OviException("No existe el usuario con dni: "+dni, "Usuario no enontrado");
+        return "/Technician/contractPersonList";
     }
 }

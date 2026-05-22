@@ -92,6 +92,24 @@ public class ListByNameImp implements ListByName{
 
         return listaDTOs;
     }
+    @Override
+    public List<PersonPapPatiDTO> personPapPatiList(List<PersonPapPatiDTO> listaDTOs, String sortSel){
+        if (sortSel != null) {
+            switch (sortSel) {
+                case "nameAsc":
+                    listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
+                    break;
+                case "nameDesc":
+                    listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
+                    listaDTOs.reversed();
+                    break;
+                case "dni":
+                    listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getDni();},String.CASE_INSENSITIVE_ORDER));
+                    break;
+            }
+        }
+        return listaDTOs;
+    }
 
     @Override
     public List<PersonInstructorDTO> personInstructorList(String sortSel) {
