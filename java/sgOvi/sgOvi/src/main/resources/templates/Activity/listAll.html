@@ -19,6 +19,12 @@
             </p>
         </header>
 
+        <div th:if="${param.status != null and param.status[0] == 'success'}" style="text-align: center; margin-bottom: 25px;">
+            <span class="status-badge status-approved" style="display: inline-block; padding: 10px 20px; font-size: 15px;">
+                ¡Te has inscrito en la actividad correctamente!
+            </span>
+        </div>
+
         <form th:action="@{/Activity/listAll}" method="get" class="filter-bar" th:if="${activities != null and !activities.isEmpty()}">
             <div class="filter-group">
                 <label for="sort">Ordenar por:</label>
@@ -50,11 +56,21 @@
                     </td>
                     <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
                     <td class="text-right">
-                        <a th:href="@{/Activity/infoActivity/{id}(id=${activity.idActivity})}"
-                           title="Ver actividad"
-                           class="btn btn-primary">
-                            Detalles <i class="fi fi-rr-eye"></i>
-                        </a>
+                        <div class="actions-group">
+
+                            <a th:href="@{/Activity/infoActivity/{id}(id=${activity.idActivity})}"
+                               title="Ver actividad"
+                               class="btn btn-primary btn-icon">
+                                Detalles <i class="fi fi-rr-eye"></i>
+                            </a>
+
+                            <a th:href="@{/Activity/inscription/{id}(id=${activity.idActivity})}"
+                               title="Inscribirse en la actividad"
+                               class="btn btn-secondary btn-icon">
+                                Inscribirme <i class="fi fi-rr-pencil"></i>
+                            </a>
+
+                        </div>
                     </td>
                 </tr>
                 </tbody>
