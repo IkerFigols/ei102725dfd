@@ -102,6 +102,7 @@ public class PapPatiController {
         FilterState filter = new FilterState();
         filter.setStateSel(state);
         filter.setSortSel(sort);
+
         model.addAttribute("filter", filter);
         model.addAttribute("userType", "PAP_PATI");
 

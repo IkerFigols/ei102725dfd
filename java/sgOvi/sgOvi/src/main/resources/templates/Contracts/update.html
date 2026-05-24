@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
+<head>
+    <meta charset="UTF-8" />
+    <title>SgOvi - Modificar Contrato</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="form-container">
+        <header class="app-header">
+            <h1 class="title">Modificar Contrato</h1>
+            <p class="description">Actualice las condiciones del contrato seleccionado.</p>
+        </header>
+
+        <form th:action="@{/Contracts/update}" th:object="${contract}" method="post">
+
+            <input type="hidden" th:field="*{idContract}" />
+            <input type="hidden" th:field="*{document}" />
+            <input type="hidden" th:field="*{idSelection}" />
+
+            <div class="textarea-container">
+                <label for="startDate" class="detail-label">Fecha de Inicio:</label>
+                <input id="startDate" type="date" th:field="*{startDate}" class="filter-select" />
+                <span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error-msg"></span>
+            </div>
+
+            <div class="textarea-container">
+                <label for="endDate" class="detail-label">Fecha de Fin:</label>
+                <input id="endDate" type="date" th:field="*{endDate}" class="filter-select" />
+                <span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="error-msg"></span>
+            </div>
+
+            <div class="textarea-container">
+                <label for="salary" class="detail-label">Salario (€):</label>
+                <input id="salary" type="number" step="0.01" th:field="*{salary}" class="filter-select" />
+                <span th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}" class="error-msg"></span>
+            </div>
+
+            <div class="textarea-container">
+                <label for="schedule" class="detail-label">Horario laboral:</label>
+                <select id="schedule" th:field="*{schedule}" class="filter-select">
+                    <option th:each="shift : ${T(es.uji.ei1027.sgOvi.model.enums.ShiftType).values()}"
+                            th:value="${shift.name()}"
+                            th:text="${shift.getDescription()}">
+                    </option>
+                </select>
+                <span th:if="${#fields.hasErrors('schedule')}" th:errors="*{schedule}" class="error-msg"></span>
+            </div>
+
+            <div class="content-footer">
+                <div class="nav-back">
+                    <a th:href="@{/Contracts/list}" class="btn btn-secondary">Cancelar</a>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Actualizar contrato
+                </button>
+            </div>
+        </form>
+    </section>
+    <div class="bottom-spacer"></div>
+</div>
+
+</body>
+</html>

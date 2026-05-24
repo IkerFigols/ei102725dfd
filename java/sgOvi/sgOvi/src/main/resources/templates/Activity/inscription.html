@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Fragments/base}">
+<head>
+    <meta charset="UTF-8" />
+    <title>SgOvi - Confirmar Inscripción</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="main-content">
+
+<div class="page-container" layout:fragment="content">
+    <div class="form-container">
+        <header class="app-header">
+            <h1 class="title">Confirmación de Inscripción</h1>
+            <p class="description">¿Estás seguro de que deseas inscribirte en la siguiente actividad programada?</p>
+        </header>
+
+        <div class="details-grid">
+            <div class="detail-card full-width">
+                <span class="detail-label">Título de la actividad:</span>
+                <div class="detail-value" th:text="${activity.tittle}"></div>
+            </div>
+
+            <div class="detail-card full-width">
+                <span class="detail-label">Descripción:</span>
+                <div class="detail-value" th:text="${activity.description}"></div>
+            </div>
+
+            <div class="detail-card">
+                <span class="detail-label">Fecha del evento:</span>
+                <div class="detail-value" th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></div>
+            </div>
+
+            <div class="detail-card">
+                <span class="detail-label">Aforo máximo:</span>
+                <div class="detail-value" th:text="${activity.capacity != null ? activity.capacity : 'Sin límite'}"></div>
+            </div>
+        </div>
+
+        <form th:action="@{/Activity/inscription}" method="post">
+            <input type="hidden" name="idActivity" th:value="${activity.idActivity}" />
+
+            <div class="content-footer">
+                <div class="nav-back">
+                    <a th:href="@{/Activity/listAll}" class="btn btn-secondary">Cancelar y volver</a>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Aceptar inscripción
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="bottom-spacer"></div>
+</div>
+
+</body>
+</html>

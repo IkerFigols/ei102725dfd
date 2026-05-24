@@ -16,6 +16,12 @@
             <p class="description">Listado de contratos vigentes y finalizados.</p>
         </header>
 
+        <div th:if="${param.status != null and param.status[0] == 'success_update'}" style="text-align: center; margin-bottom: 25px;">
+            <span class="status-badge status-approved" style="display: inline-block; padding: 10px 20px; font-size: 15px;">
+                ¡Contrato actualizado correctamente!
+            </span>
+        </div>
+
         <div class="filter-container">
             <form th:action="@{/Contracts/list}" method="get" class="filter-form">
                 <div class="filter-group">
@@ -46,11 +52,19 @@
                     <td th:text="${dto.contract.endDate != null ? #temporals.format(dto.contract.endDate, 'dd/MM/yyyy') : 'Vigente'}"></td>
                     <td th:text="${dto.contract.salary != null ? dto.contract.salary + '€' : '-'}"></td>
                     <td class="text-right">
-                        <a th:href="@{/pdfs/contrato_tipo.pdf}" title="Ver documento"
-                           target="_blank"
-                           class="btn btn-primary btn-sm btn-icon">
-                            Documento<i class ="fi fi-rr-document"></i>
-                        </a>
+                        <div class="actions-group">
+                            <a th:if="${session.rol == 'OVI_USER' and dto.contract != null}"
+                               th:href="@{/Contracts/update/{id}(id=${dto.contract.idContract})}"
+                               class="btn btn-secondary btn-icon" title="Modificar contrato">
+                                Modificar<i class="fi fi-rr-edit"></i>
+                            </a>
+                            <a th:if="${dto.contract?.document != null}"
+                               th:href="@{/pdfs/contrato_tipo.pdf}" title="Ver documento"
+                               target="_blank"
+                               class="btn btn-primary btn-icon">
+                                Documento<i class ="fi fi-rr-document"></i>
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -62,21 +76,20 @@
         </div>
 
         <div class="content-footer">
-            <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}"
-               class="btn btn-secondary btn-icon"
-               title="Volver al menú">
-                Menú<i class="fi fi-rr-home"></i>
-            </a>
-            <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}"
-               class="btn btn-secondary btn-icon"
-               title="Volver al menú">
-                Menú<i class="fi fi-rr-home"></i>
-            </a>
-            <a th:if="${session.rol == 'TECHNICIAN'}" th:href="@{/Technician/{urlPast} (urlPast=${urlPast})}"
-               class="btn btn-secondary btn-icon"
-               title="Volver al menú">
-                Menú<i class="fi fi-rr-home"></i>
-            </a>
+            <div class="nav-back">
+                <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}"
+                   class="btn btn-secondary btn-icon" title="Volver al menú">
+                    Menú<i class="fi fi-rr-home"></i>
+                </a>
+                <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}"
+                   class="btn btn-secondary btn-icon" title="Volver al menú">
+                    Menú<i class="fi fi-rr-home"></i>
+                </a>
+                <a th:if="${session.rol == 'TECHNICIAN'}" th:href="@{/Technician/{urlPast} (urlPast=${urlPast})}"
+                   class="btn btn-secondary btn-icon" title="Volver al menú">
+                    Menú<i class="fi fi-rr-home"></i>
+                </a>
+            </div>
         </div>
 
     </section>

@@ -87,4 +87,17 @@ public class AttendanceDao {
             return null;
         }
     }
+    public void deleteAttendanceByUserAndActivity(String idActivity, String dni, String role) {
+        if ("OVI_USER".equals(role)) {
+            jdbcTemplate.update(
+                    "DELETE FROM Attendance WHERE idActivity = ? AND idOviUser = ?",
+                    idActivity, dni
+            );
+        } else if ("PAP_PATI".equals(role)) {
+            jdbcTemplate.update(
+                    "DELETE FROM Attendance WHERE idActivity = ? AND idPapPati = ?",
+                    idActivity, dni
+            );
+        }
+    }
 }

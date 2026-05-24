@@ -16,6 +16,12 @@
       <p class="description">Gestione las actividades en las que participa.</p>
     </header>
 
+    <div th:if="${param.status != null and param.status[0] == 'success_unsub'}" style="text-align: center; margin-bottom: 25px;">
+        <span class="status-badge status-approved" style="display: inline-block; padding: 10px 20px; font-size: 15px;">
+            ¡Te has dado de baja de la actividad correctamente!
+        </span>
+    </div>
+
     <form th:action="@{/Activity/list}" method="get" class="filter-bar" th:if="${activities != null and !activities.isEmpty()}">
       <div class="filter-group">
         <label for="sort">Ordenar por:</label>
@@ -45,10 +51,16 @@
           </td>
           <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
           <td class="text-right">
-            <a th:href="@{/Activity/infoActivity/{id}(id=${activity.idActivity})}"
-               class="btn btn-primary" title="Ver actividad">
-              Detalles <i class="fi fi-rr-eye"></i>
-            </a>
+            <div class="actions-group">
+              <a th:href="@{/Activity/infoActivity/{id}(id=${activity.idActivity})}"
+                 class="btn btn-primary btn-icon" title="Ver actividad">
+                Detalles <i class="fi fi-rr-eye"></i>
+              </a>
+              <a th:href="@{/Activity/unsubscription/{id}(id=${activity.idActivity})}"
+                 class="btn btn-secondary btn-icon" title="Darse de baja">
+                Baja <i class="fi fi-rr-cross-small"></i>
+              </a>
+            </div>
           </td>
         </tr>
         </tbody>
