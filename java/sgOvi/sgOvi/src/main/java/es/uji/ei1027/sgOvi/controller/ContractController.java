@@ -77,6 +77,7 @@ public class ContractController {
             throw new OviException("No tienes permiso para acceder a la gestión de contratos.", "Acceso no autorizado");
         }
 
+
         Contract contract = new Contract();
         contract.setIdSelection(idSelection);
 
@@ -103,6 +104,7 @@ public class ContractController {
             model.addAttribute("idAsReq", idAsReq);
             return "Contracts/add";
         }
+
 
         contract.setIdContract(codeGenerator.generateCode("CON"));
         contract.setDocument(generateDocumentName(contract.getIdSelection()));
