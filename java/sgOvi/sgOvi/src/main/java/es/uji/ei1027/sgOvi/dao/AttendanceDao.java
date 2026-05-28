@@ -68,6 +68,13 @@ public class AttendanceDao {
             return new ArrayList<Attendance>();
         }
     }
+    public List<Attendance> getAttendancesByActivity(String idActivity) {
+        try {
+            return jdbcTemplate.query("SELECT * FROM Attendance WHERE idActivity=?", new AttendanceRowMapper(), idActivity);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
 
     //Este bloque en principio solo se usa para generar los códigos mas eficientemente
     public String getMaxId(){
@@ -78,6 +85,19 @@ public class AttendanceDao {
             );
         } catch (EmptyResultDataAccessException e) {
             return null;
+        }
+    }
+    public void deleteAttendanceByUserAndActivity(String idActivity, String dni, String role) {
+        if ("OVI_USER".equals(role)) {
+            jdbcTemplate.update(
+                    "DELETE FROM Attendance WHERE idActivity = ? AND idOviUser = ?",
+                    idActivity, dni
+            );
+        } else if ("PAP_PATI".equals(role)) {
+            jdbcTemplate.update(
+                    "DELETE FROM Attendance WHERE idActivity = ? AND idPapPati = ?",
+                    idActivity, dni
+            );
         }
     }
 }

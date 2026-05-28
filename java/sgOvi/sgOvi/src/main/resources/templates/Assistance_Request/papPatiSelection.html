@@ -16,6 +16,12 @@
 
         <p class="description">A continuación se muestran los asistentes personales asignados a tu solicitud por el equipo técnico.</p>
 
+        <div th:if="${param.status != null and param.status[0] == 'success_add'}" class="menu-grid-centered textarea-container">
+            <span class="status-badge status-approved">
+                ¡Contrato añadido correctamente!
+            </span>
+        </div>
+
         <div class="info-card-container" style="border: none; padding: 0;">
             <form th:action="@{/Assistance_Request/papPatiSelection/{idAsReq} (idAsReq= ${idAsReq})}" th:object="${filter}" method="get" class="filter-bar">
                 <div class="filter-group">
@@ -90,6 +96,14 @@
                                     Rechazar
                                 </button>
                             </form>
+                            <div class="actions-group">
+                                <th:block th:if="${dto.selection.state.name() == 'APPROVED'}">
+                                    <a th:href="@{/Contracts/add/{idSelection}(idSelection=${dto.selection.idSelection})}"
+                                       class="btn btn-primary">
+                                        Añadir Contrato <i class="fi fi-rr-document"></i>
+                                    </a>
+                                </th:block>
+                            </div>
                         </div>
                     </td>
                 </tr>

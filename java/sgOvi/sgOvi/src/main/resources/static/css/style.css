@@ -254,7 +254,7 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
     justify-content: center;
 }
 .page-container {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     width: 100%;
 }

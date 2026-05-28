@@ -12,7 +12,7 @@ public class InstructorValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return false;
+        return Instructor.class.equals(clazz);
     }
 
     @Override

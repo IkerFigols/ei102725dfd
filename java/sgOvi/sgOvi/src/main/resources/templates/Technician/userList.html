@@ -70,6 +70,10 @@
                            th:href="@{/Technician/userManagement/{dni}(dni=${user.person.dni})}">
                             Editar
                         </a>
+                        <a class="btn btn-primary"
+                           th:href="@{/Technician/contractPersonList/{dni}(dni=${user.person.dni}, urlPast='userList')}">
+                            Contratos
+                        </a>
                     </div>
                 </td>
             </tr>

@@ -189,7 +189,7 @@ public class AssistanceRequestController {
             throw new OviException("La solicitud de asistencia personal con id: "+ idAsReq +" no existe","Solicitud no encontrada");
         ap.setState("CLOSED_WITH_CONTRACT");
         assistanceReqDao.updateAssistanceRequest(ap);
-        assistanceRequestService.generateContract(idSelection,ap);
+        //assistanceRequestService.generateContract(idSelection,ap);
         assistanceRequestService.rejectOtherCandidates(idAsReq,idPapPati);
         // Redirigimos de vuelta a la lista para ver el cambio
         return "redirect:/Assistance_Request/apRequestList";

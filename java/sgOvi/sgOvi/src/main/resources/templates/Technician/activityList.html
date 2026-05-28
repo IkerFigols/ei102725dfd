@@ -59,16 +59,21 @@
                     <td th:text="${activity.date}"></td>
                     <td th:text="${activity.address}"></td>
                     <td>
-                        <div class="actions-group" style="justify-content: center;">
+                        <div class="actions-group" style="justify-content: left;">
                             <a class="btn btn-primary"
                                th:href="@{/Technician/activityManagement/{idActivity}(idActivity=${activity.getIdActivity})}">
                                 Editar
                             </a>
+
                             <a class="btn btn-primary"
                                th:href="@{/Technician/activityList/delete/{idActivity}(idActivity=${activity.getIdActivity})}"
                                th:data-tittle="${activity.tittle}"
                                onclick="return confirm('¿Seguro que deseas eliminar la actividad: ' + this.getAttribute('data-tittle') + '?');">
                                 Borrar
+                            </a>
+                            <a class="btn btn-primary"
+                               th:if="${activity.getType.name().equals('TRAINING')}"
+                               th:href="@{/Technician/activityList/participants/{idActivity}(idActivity=${activity.getIdActivity})} ">Participantes
                             </a>
                         </div>
                     </td>
@@ -76,7 +81,9 @@
                 </tbody>
             </table>
         </div>
-
+        <div th:if="${#lists.isEmpty(activities)}" style="text-align: center; padding: 40px;">
+            <p class="description">No se han encontrado actividades con los filtros de búsqueda.</p>
+        </div>
         <div class="content-footer">
             <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
             <a href="/Technician/addActivity" class="btn btn-primary">Añadir Nueva Actividad</a>

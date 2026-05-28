@@ -52,7 +52,15 @@
                            th:href="@{/Technician/instructorManagement/{dni}(dni=${instructor.person.dni})}">
                             Editar
                         </a>
+
+                        <a class="btn btn-primary"
+                           th:data-name="${instructor.person.dni}"
+                           onclick="return confirm('¿Seguro que quieres eliminar el instructor: ' + this.getAttribute('data-name') + '? Esta acción no se puede deshacer');"
+                           th:href="@{/Technician/instructorList/delete/{idInstructor}(idInstructor=${instructor.person.dni})}">
+                            Eliminar
+                        </a>
                     </div>
+
                 </td>
             </tr>
             </tbody>

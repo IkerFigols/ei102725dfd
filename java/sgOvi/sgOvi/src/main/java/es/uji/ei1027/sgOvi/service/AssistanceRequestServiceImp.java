@@ -77,7 +77,7 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
         communicationDao.addCommunication(communication);
     }
 
-    @Override
+    /*@Override
     public void generateContract(String idSelection, Assistance_Request ap) {
         // simulación de contrato con dos meses de duración
         Contract contract = new Contract();
@@ -92,6 +92,7 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
         contract.setSalary(1000);
         contractDao.addContract(contract);
     }
+    */
 
     @Override
     public void rejectOtherCandidates(String idAsReq, String idPapPati) {
