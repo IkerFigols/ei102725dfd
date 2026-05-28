@@ -1,6 +1,8 @@
-package es.uji.ei1027.sgOvi.service;
+package es.uji.ei1027.sgOvi.service.Services;
 
 import es.uji.ei1027.sgOvi.model.*;
+import es.uji.ei1027.sgOvi.service.DTOs.AssistanceRequestSelectionDTO;
+import es.uji.ei1027.sgOvi.service.DTOs.PapPatiSelectionDTO;
 
 
 import java.util.List;

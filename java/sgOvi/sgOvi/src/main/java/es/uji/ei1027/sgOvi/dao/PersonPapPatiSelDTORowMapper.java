@@ -3,8 +3,7 @@ package es.uji.ei1027.sgOvi.dao;
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
 import es.uji.ei1027.sgOvi.model.Selection;
-import es.uji.ei1027.sgOvi.service.PapPatiSelectionDTO;
-import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
+import es.uji.ei1027.sgOvi.service.DTOs.PapPatiSelectionDTO;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

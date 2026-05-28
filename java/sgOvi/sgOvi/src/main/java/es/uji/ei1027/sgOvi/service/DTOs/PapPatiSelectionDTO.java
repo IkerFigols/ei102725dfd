@@ -1,6 +1,5 @@
-package es.uji.ei1027.sgOvi.service;
+package es.uji.ei1027.sgOvi.service.DTOs;
 
-import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Selection;
 
 public class PapPatiSelectionDTO extends PersonPapPatiDTO {

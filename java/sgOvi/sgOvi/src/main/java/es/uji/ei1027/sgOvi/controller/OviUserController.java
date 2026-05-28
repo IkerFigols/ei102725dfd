@@ -3,7 +3,7 @@ package es.uji.ei1027.sgOvi.controller;
 import es.uji.ei1027.sgOvi.dao.OviUserDao;
 import es.uji.ei1027.sgOvi.model.OviUser;
 import es.uji.ei1027.sgOvi.model.Person;
-import es.uji.ei1027.sgOvi.service.ResourcesByDni;
+import es.uji.ei1027.sgOvi.service.Services.ResourcesByDni;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

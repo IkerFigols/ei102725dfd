@@ -5,23 +5,19 @@ import es.uji.ei1027.sgOvi.dao.PersonDao;
 import es.uji.ei1027.sgOvi.dao.SelectionDao;
 import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.RolUser;
-import es.uji.ei1027.sgOvi.model.enums.State;
-import es.uji.ei1027.sgOvi.service.AssistanceRequestSelectionDTO;
-import es.uji.ei1027.sgOvi.service.AssistanceRequestService;
-import es.uji.ei1027.sgOvi.service.ResourcesByDni;
+import es.uji.ei1027.sgOvi.service.DTOs.AssistanceRequestSelectionDTO;
+import es.uji.ei1027.sgOvi.service.Services.AssistanceRequestService;
+import es.uji.ei1027.sgOvi.service.Services.ResourcesByDni;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Comparator;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller

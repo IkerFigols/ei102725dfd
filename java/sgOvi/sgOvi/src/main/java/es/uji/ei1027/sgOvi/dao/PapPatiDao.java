@@ -2,7 +2,7 @@ package es.uji.ei1027.sgOvi.dao;
 
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.enums.ShiftType;
-import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
+import es.uji.ei1027.sgOvi.service.DTOs.PersonPapPatiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

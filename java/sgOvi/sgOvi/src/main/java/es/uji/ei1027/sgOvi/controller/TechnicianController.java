@@ -5,7 +5,10 @@ import es.uji.ei1027.sgOvi.dao.*;
 import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.ActivityType;
 import es.uji.ei1027.sgOvi.model.enums.State;
-import es.uji.ei1027.sgOvi.service.*;
+import es.uji.ei1027.sgOvi.service.DTOs.*;
+import es.uji.ei1027.sgOvi.service.Services.CodeGenerator;
+import es.uji.ei1027.sgOvi.service.Services.ListByName;
+import es.uji.ei1027.sgOvi.service.Services.ListPapPatiSelService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -47,8 +48,6 @@ public class TechnicianController {
     @Autowired
     private SelectionDao selectionDao;
     @Autowired
-    private AttendanceDao attendanceDao;
-    @Autowired
     private ContractDao contractDao;
 
     private OviUserValidator ouv = new OviUserValidator();
@@ -57,8 +56,6 @@ public class TechnicianController {
     private PersonDtoValidator personDtoValidator = new PersonDtoValidator();
     private AssistanceRequestValidator assistanceRequestValidator = new AssistanceRequestValidator();
     private ActivityValidator activityValidator = new ActivityValidator();
-    private RequestPersonUserDTO requestPersonUserDTO = new RequestPersonUserDTO();
-
 
     @RequestMapping("/actionConfirmation")
     public String mostrarConfirmacion() {
@@ -469,9 +466,9 @@ public class TechnicianController {
         requestDTO.setPerson(personDao.getPerson(ar.getIdOviUser()));
 
         model.addAttribute("request", requestDTO);
-        model.addAttribute("seleccionados", listaFinalSeleccionados); // Lista definitiva
-        model.addAttribute("recomendados", recomendados);           // Sugerencias
-        model.addAttribute("allPapPatis", todosLosPapPatis);               // El resto
+        model.addAttribute("seleccionados", listaFinalSeleccionados);       // Lista definitiva
+        model.addAttribute("recomendados", recomendados);                   // Sugerencias
+        model.addAttribute("allPapPatis", todosLosPapPatis);                // El resto
 
         return "Technician/selectPapPati";
     }

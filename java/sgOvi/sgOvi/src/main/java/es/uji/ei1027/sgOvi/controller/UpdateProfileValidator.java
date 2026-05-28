@@ -1,7 +1,6 @@
 package es.uji.ei1027.sgOvi.controller;
 
-import es.uji.ei1027.sgOvi.service.PersonDTO;
-import org.springframework.stereotype.Component;
+import es.uji.ei1027.sgOvi.service.DTOs.PersonDTO;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

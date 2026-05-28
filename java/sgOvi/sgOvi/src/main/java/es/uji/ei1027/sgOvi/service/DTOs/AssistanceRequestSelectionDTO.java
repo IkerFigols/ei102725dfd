@@ -1,4 +1,4 @@
-package es.uji.ei1027.sgOvi.service;
+package es.uji.ei1027.sgOvi.service.DTOs;
 
 import es.uji.ei1027.sgOvi.model.Assistance_Request;
 

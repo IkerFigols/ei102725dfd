@@ -1,12 +1,12 @@
-package es.uji.ei1027.sgOvi.service;
+package es.uji.ei1027.sgOvi.service.Services;
 
 import es.uji.ei1027.sgOvi.dao.*;
 import es.uji.ei1027.sgOvi.model.*;
+import es.uji.ei1027.sgOvi.service.DTOs.AssistanceRequestSelectionDTO;
+import es.uji.ei1027.sgOvi.service.DTOs.PapPatiSelectionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

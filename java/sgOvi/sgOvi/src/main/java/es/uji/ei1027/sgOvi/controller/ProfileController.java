@@ -1,8 +1,8 @@
 package es.uji.ei1027.sgOvi.controller;
-import es.uji.ei1027.sgOvi.service.*;
+import es.uji.ei1027.sgOvi.service.DTOs.PersonDTO;
+import es.uji.ei1027.sgOvi.service.Services.ProfileService;
 import jakarta.servlet.http.HttpSession;
 import org.jasypt.util.password.BasicPasswordEncryptor;
-import org.springframework.beans.BeanInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import es.uji.ei1027.sgOvi.model.Person;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.SequencedSet;
 
 @Controller
 public class ProfileController {

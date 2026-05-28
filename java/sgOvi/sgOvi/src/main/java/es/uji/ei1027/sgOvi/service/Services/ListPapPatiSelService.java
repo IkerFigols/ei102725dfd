@@ -1,6 +1,7 @@
-package es.uji.ei1027.sgOvi.service;
+package es.uji.ei1027.sgOvi.service.Services;
 
 import es.uji.ei1027.sgOvi.model.PapPati;
+import es.uji.ei1027.sgOvi.service.DTOs.PersonPapPatiDTO;
 
 import java.util.ArrayList;
 import java.util.List;

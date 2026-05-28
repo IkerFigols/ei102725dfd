@@ -1,10 +1,6 @@
 package es.uji.ei1027.sgOvi;
 
 import es.uji.ei1027.sgOvi.controller.exception.OviException;
-import es.uji.ei1027.sgOvi.service.PersonInstructorDTO;
-import es.uji.ei1027.sgOvi.service.PersonOviUserDTO;
-import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
-import es.uji.ei1027.sgOvi.service.PersonTechnicianDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
