@@ -2,6 +2,7 @@ package es.uji.ei1027.sgOvi.service.Services;
 
 import es.uji.ei1027.sgOvi.dao.*;
 import es.uji.ei1027.sgOvi.model.*;
+import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.DTOs.AssistanceRequestSelectionDTO;
 import es.uji.ei1027.sgOvi.service.DTOs.PapPatiSelectionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,6 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
 
     @Autowired
     CommunicationDao communicationDao;
-
-    @Autowired
-    ContractDao contractDao;
 
     @Autowired
     CodeGenerator codeGenerator;
@@ -71,10 +69,34 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
         return communicationDao.getCommunicationsSelectionOrdered(idSelection);
     }
 
-
     @Override
     public void addCommunication(Communication communication) {
         communicationDao.addCommunication(communication);
+    }
+
+    @Override
+    public Assistance_Request getAssistanceRequest(String idAsReq) {
+        return assistanceReqDao.getAssistanceRequest(idAsReq);
+    }
+
+    @Override
+    public void deleteAssistanceRequest(String idAsReq) {
+        assistanceReqDao.deleteAssistanceRequest(idAsReq);
+    }
+
+    @Override
+    public void updateAssistanceRequest(Assistance_Request assistanceRequest) {
+        assistanceReqDao.updateAssistanceRequest(assistanceRequest);
+    }
+
+    @Override
+    public void addAssistanceRequest(Assistance_Request assistanceRequest) {
+        assistanceReqDao.addAssistanceRequest(assistanceRequest);
+    }
+
+    @Override
+    public List<Assistance_Request> getAssistanceRequestsByOviUser(String dni, State state) {
+        return assistanceReqDao.getAssistanceRequestsByOviUser(dni,state.name());
     }
 
     /*@Override
@@ -140,5 +162,30 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     @Override
     public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state) {
         return selectionDao.getRequestsByPapPatiFiltered(idPapPati, state);
+    }
+
+    @Override
+    public Selection getSelection(String idSelection) {
+        return selectionDao.getSelection(idSelection);
+    }
+
+    @Override
+    public void addSelection(Selection selection) {
+        selectionDao.addSelection(selection);
+    }
+
+    @Override
+    public void deleteSelection(String idSelection) {
+        selectionDao.deleteSelection(idSelection);
+    }
+
+    @Override
+    public void updateSelection(Selection selection) {
+        selectionDao.updateSelection(selection);
+    }
+
+    @Override
+    public void deleteCommunication(String idCommunication) {
+        communicationDao.deleteCommunication(idCommunication);
     }
 }

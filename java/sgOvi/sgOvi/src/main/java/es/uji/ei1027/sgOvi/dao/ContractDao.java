@@ -97,18 +97,8 @@ public class ContractDao {
             return new ArrayList<Contract>();
         }
     }
-    public List<Contract> getContractsByPerson(String dni) {
-        String sql = "SELECT c.* FROM Contract c " +
-                "JOIN Selection s ON c.idSelection = s.idSelection " +
-                "LEFT JOIN Assistance_Request ar ON s.idAsReq = ar.idAsReq " +
-                "WHERE ar.idOviUser = ? OR s.idPap = ?";
-        try {
-            return jdbcTemplate.query(sql, new ContractRowMapper(), dni, dni);
-        } catch (EmptyResultDataAccessException e) {
-            return new ArrayList<>();
-        }
-    }
-    public List<ContractDTO> getContractsByPerson2(String dni) {
+
+    public List<ContractDTO> getContractsByPerson(String dni) {
         String sql = "SELECT c.*, pUser.name AS nameUser, pPap.name AS namePap, NULL AS dni " +
                 "FROM Contract c " +
                 "JOIN Selection s ON c.idSelection = s.idSelection " +

@@ -39,16 +39,6 @@ public class profileServiceImp implements ProfileService{
     }
 
     @Override
-    public PersonInstructorDTO getPersonInstructorDTO() {
-        return null;
-    }
-
-    @Override
-    public PersonTechnicianDTO getPersonTechnicianDTO() {
-        return null;
-    }
-
-    @Override
     public OviUser getOviUser(String dni) {
         return oviUserDao.getOviUser(dni);
     }
@@ -58,15 +48,7 @@ public class profileServiceImp implements ProfileService{
         return papPatiDao.getPapPati(dni);
     }
 
-    @Override
-    public Technician getTechnician(String dni) {
-        return technicianDao.getTechnician(dni);
-    }
 
-    @Override
-    public Instructor getInstructor(String dni) {
-        return instructorDao.getInstructor(dni);
-    }
 
     @Override
     public void updateOviUser(OviUser oviUser) {
@@ -78,15 +60,6 @@ public class profileServiceImp implements ProfileService{
         papPatiDao.updatePapPati(papPati);
     }
 
-    @Override
-    public void updateTechnician(Technician technician) {
-        technicianDao.updateTechnician(technician);
-    }
-
-    @Override
-    public void updateInstructor(Instructor instructor) {
-        instructorDao.updateInstructor(instructor);
-    }
 
     @Override
     public void updatePerson(Person person) {

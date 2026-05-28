@@ -1,6 +1,7 @@
 package es.uji.ei1027.sgOvi.service.Services;
 
 import es.uji.ei1027.sgOvi.model.*;
+import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.DTOs.AssistanceRequestSelectionDTO;
 import es.uji.ei1027.sgOvi.service.DTOs.PapPatiSelectionDTO;
 
@@ -15,9 +16,19 @@ public interface AssistanceRequestService {
     public String getDniAP(String idSelection);
     public List<PapPatiSelectionDTO> getPapPatisSelectionDTO(String idAsReq, String state);
     public List<Communication> getComunicationsSelection(String idSelection);
-    public void addCommunication (Communication communication);
     // public void generateContract(String idSelection, Assistance_Request ap);
     public void rejectOtherCandidates(String idAsReq,String idPapPati);
     public List<AssistanceRequestSelectionDTO> getRequestsByPapPati(String idPapPati);
     public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state);
+    public Selection getSelection(String idSelection);
+    public void addSelection(Selection selection);
+    public void deleteSelection(String idSelection);
+    public void updateSelection(Selection selection);
+    public void deleteCommunication(String idCommunication);
+    public void addCommunication (Communication communication);
+    public Assistance_Request getAssistanceRequest(String idAsReq);
+    public void deleteAssistanceRequest(String idAsReq);
+    public void updateAssistanceRequest(Assistance_Request assistanceRequest);
+    public void addAssistanceRequest(Assistance_Request assistanceRequest);
+    public List<Assistance_Request> getAssistanceRequestsByOviUser(String dni, State state);
 }

@@ -24,8 +24,10 @@ import java.util.List;
 @RequestMapping("/Pap_Pati")
 public class PapPatiController {
 
+
+
     @Autowired
-    private PapPatiDao papPatiDao;
+    private PapPatiDao papPatiService;
 
     @Autowired
     private SelectionDao selectionDao;
@@ -42,10 +44,6 @@ public class PapPatiController {
     @Autowired
     private AssistanceReqDao assistanceReqDao;
 
-    @Autowired
-    public void setPapPatiDao(PapPatiDao papPatiDao) {
-        this.papPatiDao = papPatiDao;
-    }
     //Método para la ordenación
     private List<AssistanceRequestSelectionDTO> sortRequests(List<AssistanceRequestSelectionDTO> requests, String sort) {
         if (sort == null) return requests;

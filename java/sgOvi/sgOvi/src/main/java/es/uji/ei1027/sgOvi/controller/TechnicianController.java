@@ -635,7 +635,7 @@ public class TechnicianController {
                                @RequestParam(value="sort",required = false, defaultValue = "dateDesc") String sort,
                                @RequestParam(value="urlPast") String urlPast) {
         if (personDao.getPerson(dni) != null){
-            model.addAttribute("contracts",sortContracts(contractDao.getContractsByPerson2(dni),sort));
+            model.addAttribute("contracts",sortContracts(contractDao.getContractsByPerson(dni),sort));
             model.addAttribute("currentSort", sort);
             model.addAttribute("urlPast",urlPast);
             model.addAttribute("dni",dni);

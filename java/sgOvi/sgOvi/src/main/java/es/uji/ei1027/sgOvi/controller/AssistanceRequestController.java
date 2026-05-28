@@ -24,8 +24,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/Assistance_Request")
 public class AssistanceRequestController {
-    @Autowired
-    private AssistanceReqDao assistanceReqDao;
 
     @Autowired
     private AssistanceRequestService assistanceRequestService;
@@ -46,7 +44,7 @@ public class AssistanceRequestController {
             case "dateDesc":
                 assistanceRequests.sort(Comparator.comparing(Assistance_Request::getDate).reversed());
                 break;
-            case "titleAsc":
+            case "tittle":
                 assistanceRequests.sort(Comparator.comparing(Assistance_Request::getTittle, String.CASE_INSENSITIVE_ORDER));
                 break;
         }
@@ -75,7 +73,7 @@ public class AssistanceRequestController {
                                 @RequestParam(value ="sortSel",required = false, defaultValue = "name") String sort,
                                 HttpSession session){
 
-        Assistance_Request assistanceRequest = assistanceReqDao.getAssistanceRequest(idAsReq);
+        Assistance_Request assistanceRequest = assistanceRequestService.getAssistanceRequest(idAsReq);
         Person person = (Person) session.getAttribute("user");
         if (assistanceRequest == null)
             throw new OviException("La solicitud de asistencia personal con id: "+ idAsReq+" no existe", "Solicitud no encontrada");
@@ -97,11 +95,9 @@ public class AssistanceRequestController {
     public String listAssistanceRequests(HttpSession session, Model model,
                                          @RequestParam(value = "stateSel", required = false, defaultValue = "ALL") String state,
                                          @RequestParam( value= "sortSel", required = false, defaultValue = "dateDesc") String sort) {
-
-
         Person person = (Person) session.getAttribute("user");
-        String stateForDao = state.equals("ALL") ? null : state;
-        List<Assistance_Request> requests = assistanceReqDao.getAssistanceRequestsByOviUser(person.getDni(), stateForDao);
+        State stateForDao = State.fromString(state);
+        List<Assistance_Request> requests = assistanceRequestService.getAssistanceRequestsByOviUser(person.getDni(), stateForDao);
         model.addAttribute("assistanceRequests", sortAssistance(requests, sort));
         FilterState filter = new FilterState();
         filter.setStateSel(state);
@@ -126,14 +122,14 @@ public class AssistanceRequestController {
     @RequestMapping(value="/details/{idAsReq}")
     public String getApDetails(@PathVariable("idAsReq") String idAsReq, HttpSession session, Model model){
         Person person =(Person) session.getAttribute("user");
-        Assistance_Request assistanceRequest = assistanceReqDao.getAssistanceRequest(idAsReq);
+        Assistance_Request assistanceRequest = assistanceRequestService.getAssistanceRequest(idAsReq);
         if(assistanceRequest == null)
             throw new OviException("La solicitud de asistencia personal con id: "+ idAsReq+" no existe", "Solicitud no encontrada");
 
-        if(!person.getDni().equals(assistanceReqDao.getAssistanceRequest(idAsReq).getIdOviUser()))
+        if(!person.getDni().equals(assistanceRequestService.getAssistanceRequest(idAsReq).getIdOviUser()))
             throw new OviException("Esta solicitud de asistencia personal no es tuya", "Acceso no autorizado");
 
-        model.addAttribute("assistanceRequest",assistanceReqDao.getAssistanceRequest(idAsReq));
+        model.addAttribute("assistanceRequest",assistanceRequestService.getAssistanceRequest(idAsReq));
         return "Assistance_Request/details";
     }
     @RequestMapping(value="/requestAssistance", method= RequestMethod.POST)
@@ -150,13 +146,13 @@ public class AssistanceRequestController {
             return "Assistance_Request/requestAssistance";
         }
 
-        assistanceReqDao.addAssistanceRequest(request);
+        assistanceRequestService.addAssistanceRequest(request);
         return "redirect:request_confirmation";
     }
 
     @RequestMapping(value="/update/{idAsReq}")
     public String getUpdateAp(Model model, @PathVariable("idAsReq") String idAsReq, HttpSession session){
-        Assistance_Request ap = assistanceReqDao.getAssistanceRequest(idAsReq);
+        Assistance_Request ap = assistanceRequestService.getAssistanceRequest(idAsReq);
         if(ap == null)
             throw new OviException("La solicitud de asistencia personal con id: "+ idAsReq +" no existe","Solicitud no encontrada");
         Person person = (Person) session.getAttribute("user");
@@ -172,7 +168,7 @@ public class AssistanceRequestController {
         if (bindingResult.hasErrors())
             return "Assistance_Request/update";
 
-        assistanceReqDao.updateAssistanceRequest(assistanceRequest);
+        assistanceRequestService.updateAssistanceRequest(assistanceRequest);
         return "redirect:/Assistance_Request/apRequestList";
     }
 
@@ -186,16 +182,11 @@ public class AssistanceRequestController {
     public String approveSelection(@PathVariable("idSelection") String idSelection, @RequestParam("idAsReq") String idAsReq, @RequestParam("idPapPati") String idPapPati) {
 
         assistanceRequestService.updateStateSelection(idSelection, State.APPROVED.name());
-        Assistance_Request ap = assistanceReqDao.getAssistanceRequest(idAsReq);
+        Assistance_Request ap = assistanceRequestService.getAssistanceRequest(idAsReq);
         if (ap == null)
             throw new OviException("La solicitud de asistencia personal con id: "+ idAsReq +" no existe","Solicitud no encontrada");
-        //assistanceRequestService.generateContract(idSelection,ap);
-        //assistanceRequestService.rejectOtherCandidates(idAsReq,idPapPati);
-        // Redirigimos de vuelta a la lista para ver el cambio
         return "redirect:/Assistance_Request/papPatiSelection/"+idAsReq;
     }
-
-
 
 
     @RequestMapping(value="/rejectSelection/{idSelection}", method = RequestMethod.POST)

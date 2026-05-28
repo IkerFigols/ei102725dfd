@@ -1,8 +1,6 @@
 package es.uji.ei1027.sgOvi.model.enums;
 
 public enum StaffType {
-
-
     PAP,
     PATI;
 

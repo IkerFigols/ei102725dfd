@@ -4,8 +4,11 @@ import es.uji.ei1027.sgOvi.controller.exception.OviException;
 import es.uji.ei1027.sgOvi.dao.ContractDao;
 import es.uji.ei1027.sgOvi.dao.SelectionDao;
 import es.uji.ei1027.sgOvi.model.*;
+import es.uji.ei1027.sgOvi.model.enums.State;
+import es.uji.ei1027.sgOvi.service.Services.AssistanceRequestService;
 import es.uji.ei1027.sgOvi.service.Services.CodeGenerator;
 import es.uji.ei1027.sgOvi.service.DTOs.ContractDTO;
+import es.uji.ei1027.sgOvi.service.Services.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,19 +25,15 @@ import java.util.List;
 public class ContractController {
 
     @Autowired
-    private ContractDao contractDao;
+    private ContractService contractService;
+
+    @Autowired
+    private AssistanceRequestService assistanceRequestService;
 
     @Autowired
     private CodeGenerator codeGenerator;
 
-    @Autowired
-    private SelectionDao selectionDao;
 
-    @Autowired
-    public void setDaos(ContractDao contractDao, SelectionDao selectionDao) {
-        this.contractDao = contractDao;
-        this.selectionDao = selectionDao;
-    }
 
     private List<ContractDTO> sortContracts(List<ContractDTO> contracts, String sort) {
         if (sort == null) return contracts;
@@ -57,7 +56,7 @@ public class ContractController {
     public String listContracts(Model model, HttpSession session,
                                 @RequestParam(value="sort", defaultValue = "dateDesc") String sort) {
         Person user = (Person) session.getAttribute("user");
-        model.addAttribute("contracts", sortContracts(contractDao.getContractsByPerson2(user.getDni()),sort));
+        model.addAttribute("contracts", sortContracts(contractService.listContractPerson(user.getDni()),sort));
         model.addAttribute("currentSort", sort);
 
         return "Contracts/list";
@@ -78,7 +77,7 @@ public class ContractController {
         Contract contract = new Contract();
         contract.setIdSelection(idSelection);
 
-        Selection selection = selectionDao.getSelection(idSelection);
+        Selection selection = assistanceRequestService.getSelection(idSelection);
         model.addAttribute("idAsReq", selection.getIdAsReq());
         model.addAttribute("contract", contract);
         return "Contracts/add";
@@ -94,27 +93,26 @@ public class ContractController {
         ContractValidator contractValidator = new ContractValidator();
         contractValidator.validate(contract, bindingResult);
 
-        Selection selection = selectionDao.getSelection(idSelection);
+        Selection selection = assistanceRequestService.getSelection(idSelection);
         String idAsReq = selection.getIdAsReq();
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("idAsReq", idAsReq);
             return "Contracts/add";
         }
 
-
         contract.setIdContract(codeGenerator.generateCode("CON"));
         contract.setDocument(generateDocumentName(contract.getIdSelection()));
-        contractDao.addContract(contract);
+        contractService.updateStateAp(idAsReq, State.CLOSED_WITH_CONTRACT);
+        contractService.addContract(contract);
 
-        return "redirect:/Assistance_Request/papPatiSelection/" + idAsReq + "?status=success_add";
+        return "redirect:/Assistance_Request/apRequestList";
     }
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
     public String editContract(Model model, @PathVariable String id, HttpSession session) {
         if (!"OVI_USER".equals(session.getAttribute("rol"))) {
             return "redirect:/Contracts/list";
         }
-        model.addAttribute("contract", contractDao.getContract(id));
+        model.addAttribute("contract", contractService.getContract(id));
         return "Contracts/update";
     }
     @RequestMapping(value="/update", method = RequestMethod.POST)
@@ -128,7 +126,7 @@ public class ContractController {
             return "Contracts/update";
         }
         //Comprobar que se cambia algún atributo
-        Contract contractOriginal = contractDao.getContract(contract.getIdContract());
+        Contract contractOriginal = contractService.getContract(contract.getIdContract());
 
         if (contractOriginal.getStartDate().equals(contract.getStartDate()) &&
                 contractOriginal.getEndDate().equals(contract.getEndDate()) &&
@@ -142,7 +140,7 @@ public class ContractController {
         }
         contract.setDocument(generateDocumentName(contract.getIdSelection()));
 
-        contractDao.updateContract(contract);
+        contractService.updateContract(contract);
         return "redirect:/Contracts/list?status=success_update";
     }
 

@@ -39,19 +39,6 @@ public class ProfileController {
                 model.addAttribute("urlBefore","/Pap_Pati/menuPapPati");
                 model.addAttribute("dto",dto);
             }
-            case("TECHNICIAN") -> {
-
-                dto.setTechnician(profileService.getTechnician(person.getDni()));
-                dto.setPerson(person);
-                model.addAttribute("urlBefore","/Technician/menuTechnician");
-                model.addAttribute("dto",dto);
-            }
-            case("INSTRUCTOR") ->{
-                dto.setInstructor(profileService.getInstructor(person.getDni()));
-                dto.setPerson(person);
-                model.addAttribute("urlBefore","/Instructor/menuInstructor");
-                model.addAttribute("dto",dto);
-            }
         }
         return "profile";
     }
@@ -93,13 +80,6 @@ public class ProfileController {
             case ("PAP_PATI") -> {
                 profileService.updatePapPati(dto.getPapPati());
             }
-            case ("TECHNICIAN") -> {
-                profileService.updateTechnician(dto.getTechnician());
-            }
-            case ("INSTRUCTOR") -> {
-                profileService.updateInstructor(dto.getInstructor());
-            }
-
         }
         session.setAttribute("user", dto.getPerson());
         return "redirect:/profile";

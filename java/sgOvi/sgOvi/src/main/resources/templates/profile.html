@@ -143,17 +143,6 @@
                     <input type="checkbox" id="drivingLicense" th:field="*{papPati.drivingLicense}" />
                 </div>
             </div>
-
-            <div th:if="${session.rol == 'INSTRUCTOR'}">
-                <input type="hidden" th:field="*{instructor.dni}" />
-
-                <div class="textarea-container">
-                    <label class="detail-label" for="expertise" style="width: auto; margin-bottom: 0;">Especialidades: </label>
-                    <input type="text" id="expertise" th:field="*{instructor.expertise}"/>
-                </div>
-                <div th:if="${#fields.hasErrors('instructor.expertise')}" th:errors="*{instructor.expertise}" class="error-text"></div>
-            </div>
-
             <div class="content-footer" style="margin-top: 30px;">
                 <a th:href="@{${urlBefore}}" class="btn btn-secondary  btn-icon"
                    title="Volver al menú">

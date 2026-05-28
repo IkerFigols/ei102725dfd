@@ -1,6 +1,7 @@
 package es.uji.ei1027.sgOvi.dao;
 
 import es.uji.ei1027.sgOvi.model.Assistance_Request;
+import es.uji.ei1027.sgOvi.model.enums.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -118,7 +119,7 @@ public class AssistanceReqDao {
         List<Object> params = new ArrayList<>();
         params.add(dni);
 
-        if (state != null && !state.isEmpty()) {
+        if (!state.equals(State.ALL.name())) {
             sql += " AND state = ?";
             params.add(state);
         }

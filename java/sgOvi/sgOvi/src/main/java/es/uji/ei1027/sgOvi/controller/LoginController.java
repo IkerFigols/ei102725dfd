@@ -9,6 +9,7 @@ import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.enums.RolUser;
 import es.uji.ei1027.sgOvi.model.UserDetails;
 import es.uji.ei1027.sgOvi.service.Services.LoginService;
+import es.uji.ei1027.sgOvi.service.Services.OviUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +27,10 @@ public class LoginController {
     private LoginService loginService;
 
     @Autowired
-    private PersonDao personDao;
+    private OviUserService oviUserService;
 
     @Autowired
-    private OviUserDao oviUserDao;
+    private PersonDao personDao;
 
     @Autowired
     private PapPatiDao papPatiDao;
@@ -72,7 +73,7 @@ public class LoginController {
         }
 
         if(etiqueta.equals(RolUser.OVI_USER)){
-            OviUser oviUser = oviUserDao.getOviUser(person.getDni());
+            OviUser oviUser = oviUserService.getOviUser(person.getDni());
             if (oviUser.getState().name().equals("PENDING")) {
                 bindingResult.rejectValue("dni","required","Tu solicitud sigue en revisión, el técnico no te ha aceptado todavia");
             }
