@@ -31,7 +31,7 @@ public class ContractDao {
                 contract.getIdSelection()
         );
     }
-    
+
     public void updateContract(Contract contract){
         jdbcTemplate.update(
                 "UPDATE Contract SET startDate=?, endDate=?, document=?, salary=?, schedule=?, idSelection=? WHERE idContract=?",
