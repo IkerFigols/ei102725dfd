@@ -3,7 +3,7 @@ CREATE TABLE Attendance (
 	idOviUser			VARCHAR(9),
 	idPapPati			VARCHAR(9),
 	idActivity			VARCHAR(9) NOT NULL,
-	attend              BOOLEAN,        --Por defecto, en el controlador ha de ser false
+	attend              BOOLEAN NOT NULL,        --Por defecto, en el controlador ha de ser false
 
 	--Clave Primaria
 	
