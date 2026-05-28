@@ -1,8 +1,7 @@
 package es.uji.ei1027.sgOvi.dao;
 
 import es.uji.ei1027.sgOvi.model.Contract;
-import es.uji.ei1027.sgOvi.model.PapPati;
-import es.uji.ei1027.sgOvi.service.ContractDTO;
+import es.uji.ei1027.sgOvi.service.DTOs.ContractDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

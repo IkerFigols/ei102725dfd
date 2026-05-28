@@ -2,7 +2,7 @@ package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.model.Instructor;
 import es.uji.ei1027.sgOvi.model.Person;
-import es.uji.ei1027.sgOvi.service.PersonInstructorDTO; // Asegúrate de importar tu DTO
+import es.uji.ei1027.sgOvi.service.DTOs.PersonInstructorDTO; // Asegúrate de importar tu DTO
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

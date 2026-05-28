@@ -1,11 +1,8 @@
-package es.uji.ei1027.sgOvi.service;
+package es.uji.ei1027.sgOvi.service.Services;
 
 import es.uji.ei1027.sgOvi.dao.*;
-import es.uji.ei1027.sgOvi.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 @Service
 public class CodeGenerator {

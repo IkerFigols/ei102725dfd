@@ -1,13 +1,11 @@
 package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.controller.exception.OviException;
-import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import es.uji.ei1027.sgOvi.dao.ContractDao;
-import es.uji.ei1027.sgOvi.dao.PersonDao;
 import es.uji.ei1027.sgOvi.dao.SelectionDao;
 import es.uji.ei1027.sgOvi.model.*;
-import es.uji.ei1027.sgOvi.service.CodeGenerator;
-import es.uji.ei1027.sgOvi.service.ContractDTO;
+import es.uji.ei1027.sgOvi.service.Services.CodeGenerator;
+import es.uji.ei1027.sgOvi.service.DTOs.ContractDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 

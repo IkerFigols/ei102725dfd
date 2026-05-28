@@ -2,8 +2,8 @@ package es.uji.ei1027.sgOvi.dao;
 
 import es.uji.ei1027.sgOvi.model.Assistance_Request;
 import es.uji.ei1027.sgOvi.model.Selection;
-import es.uji.ei1027.sgOvi.service.AssistanceRequestSelectionDTO;
-import es.uji.ei1027.sgOvi.service.PapPatiSelectionDTO;
+import es.uji.ei1027.sgOvi.service.DTOs.AssistanceRequestSelectionDTO;
+import es.uji.ei1027.sgOvi.service.DTOs.PapPatiSelectionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;

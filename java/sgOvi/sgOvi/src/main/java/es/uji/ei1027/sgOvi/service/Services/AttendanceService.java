@@ -1,4 +1,4 @@
-package es.uji.ei1027.sgOvi.service;
+package es.uji.ei1027.sgOvi.service.Services;
 
 public interface AttendanceService {
     public void registerUserToActivity (String idActivity, String dni, String rol);

@@ -1,8 +1,7 @@
 package es.uji.ei1027.sgOvi.dao;
 
-import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.Person;
-import es.uji.ei1027.sgOvi.service.PersonPapPatiDTO;
+import es.uji.ei1027.sgOvi.service.DTOs.PersonPapPatiDTO;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;

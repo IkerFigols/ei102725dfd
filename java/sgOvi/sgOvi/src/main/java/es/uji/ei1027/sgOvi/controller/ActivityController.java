@@ -4,7 +4,7 @@ import es.uji.ei1027.sgOvi.controller.exception.OviException;
 import es.uji.ei1027.sgOvi.dao.ActivityDao;
 import es.uji.ei1027.sgOvi.model.Activity;
 import es.uji.ei1027.sgOvi.model.Person;
-import es.uji.ei1027.sgOvi.service.AttendanceService;
+import es.uji.ei1027.sgOvi.service.Services.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package es.uji.ei1027.sgOvi.service;
+package es.uji.ei1027.sgOvi.service.Services;
 
 import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import es.uji.ei1027.sgOvi.dao.PapPatiDao;
@@ -6,11 +6,10 @@ import es.uji.ei1027.sgOvi.dao.PersonDao;
 import es.uji.ei1027.sgOvi.model.Assistance_Request;
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.enums.ShiftType;
+import es.uji.ei1027.sgOvi.service.DTOs.PersonPapPatiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 @Service

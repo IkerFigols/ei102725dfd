@@ -8,7 +8,7 @@ import es.uji.ei1027.sgOvi.model.OviUser;
 import es.uji.ei1027.sgOvi.model.PapPati;
 import es.uji.ei1027.sgOvi.model.enums.RolUser;
 import es.uji.ei1027.sgOvi.model.UserDetails;
-import es.uji.ei1027.sgOvi.service.LoginService;
+import es.uji.ei1027.sgOvi.service.Services.LoginService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
