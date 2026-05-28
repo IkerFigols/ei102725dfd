@@ -4,6 +4,7 @@ import es.uji.ei1027.sgOvi.controller.exception.OviException;
 import es.uji.ei1027.sgOvi.dao.ActivityDao;
 import es.uji.ei1027.sgOvi.model.Activity;
 import es.uji.ei1027.sgOvi.model.Person;
+import es.uji.ei1027.sgOvi.model.enums.RolUser;
 import es.uji.ei1027.sgOvi.service.Services.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -119,10 +120,12 @@ public class ActivityController {
     public String processUnsubscription(@RequestParam("idActivity") String idActivity,
                                         HttpSession session) {
         Person user = (Person) session.getAttribute("user");
-        String rol = (String) session.getAttribute("rol");
+
+        //NO se si esto funciona, se estaba usando una string en vez del enum
+        RolUser role = RolUser.fromString ((String) session.getAttribute("rol"));
 
         try {
-            attendanceService.unregisterUserFromActivity(idActivity, user.getDni(), rol);
+            attendanceService.unregisterUserFromActivity(idActivity, user.getDni(), role);
             return "redirect:/Activity/list?status=success_unsub";
         } catch (OviException e) {
             throw e;

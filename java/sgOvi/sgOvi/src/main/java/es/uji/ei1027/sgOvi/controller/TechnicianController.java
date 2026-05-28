@@ -6,9 +6,7 @@ import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.ActivityType;
 import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.DTOs.*;
-import es.uji.ei1027.sgOvi.service.Services.CodeGenerator;
-import es.uji.ei1027.sgOvi.service.Services.ListByName;
-import es.uji.ei1027.sgOvi.service.Services.ListPapPatiSelService;
+import es.uji.ei1027.sgOvi.service.Services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +24,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/Technician")
 public class TechnicianController {
+    //AQUI METER SERVICIOS NUEVOS
+    @Autowired
+    private PapPatiService papPatiService;
+    @Autowired
+    private ActivityAttendanceService activityAttendanceService;
+    @Autowired
+    private InstructorService instructorService;
+
 
     @Autowired
     private OviUserDao oviUserDao;
@@ -33,10 +39,6 @@ public class TechnicianController {
     private ListByName lbn;
     @Autowired
     private AssistanceReqDao assistanceReqDao;
-    @Autowired
-    private PapPatiDao papPatiDao;
-    @Autowired
-    private ActivityDao activityDao;
     @Autowired
     private InstructorDao instructorDao;
     @Autowired
@@ -114,7 +116,7 @@ public class TechnicianController {
 
         String stateUrl = (state == null) ? "ALL" : state;
 
-        List<PersonPapPatiDTO> papPatis = lbn.personPapPatiList(stateUrl, sort);
+        List<PersonPapPatiDTO> papPatis = papPatiService.listByName(stateUrl, sort);
         model.addAttribute("papPatis", papPatis);
 
         FilterState filter = new FilterState();
@@ -141,7 +143,7 @@ public class TechnicianController {
     public String listInstructors(Model model,
                                @RequestParam(required = false, defaultValue = "nameAsc") String sort) {
 
-        List<PersonInstructorDTO> listaInstructors = lbn.personInstructorList(sort);
+        List<PersonInstructorDTO> listaInstructors = instructorService.listByName(sort);
         model.addAttribute("instructors", listaInstructors);
 
         FilterState filter = new FilterState();
@@ -245,7 +247,7 @@ public class TechnicianController {
 
         String typeUrl = (type == null) ? "ALL" : type;
 
-        List<Activity> activities = activityDao.getActivities();
+        List<Activity> activities = activityAttendanceService.getActivities();
 
         activities = filterAndSortActivities(activities, typeUrl, sort);
 
@@ -302,7 +304,7 @@ public class TechnicianController {
 
     @RequestMapping(value="/papPatiManagement/{dni}", method = RequestMethod.GET)
     public String editPapPati(Model model, @PathVariable String dni) {
-        PapPati papPati = papPatiDao.getPapPati(dni);
+        PapPati papPati = papPatiService.getPapPati(dni);
 
         model.addAttribute("papPati", papPati);
         return "Technician/papPatiManagement";
@@ -321,7 +323,7 @@ public class TechnicianController {
             papPati.setReason(null);
 
         flash.addFlashAttribute("lista","papPatiList");
-        if(papPatiDao.getPapPati(papPati.getDni()).getState().name().equals(papPati.getState().name())){
+        if(papPatiService.getPapPati(papPati.getDni()).getState().name().equals(papPati.getState().name())){
             flash.addFlashAttribute("mensaje", "El asistente personal se ha actualizado correctamente");
         }
         else{
@@ -331,7 +333,7 @@ public class TechnicianController {
                 flash.addFlashAttribute("mensaje", "El asistente ha sido rechazado. Se ha enviado un correo a la dirección: "+ personDao.getPerson(papPati.getDni()).getEmail()+ " para notificar al usuario de la resolución de su solicitud");
 
         }
-        papPatiDao.updatePapPati(papPati);
+        papPatiService.updatePapPati(papPati);
 
         return "redirect:/Technician/actionConfirmation";
     }
@@ -347,7 +349,7 @@ public class TechnicianController {
     @RequestMapping(value="/instructorList/delete/{idInstructor}")
     public String deleteInstructor(@PathVariable String idInstructor){
         if(personDao.getPerson(idInstructor) != null){
-            if(activityDao.getInstructorActivities(idInstructor).isEmpty()) {
+            if(activityAttendanceService.getInstructorActivities(idInstructor).isEmpty()) {
                 instructorDao.deleteInstructor(idInstructor);
                 personDao.deletePerson(idInstructor);
             }
@@ -454,7 +456,7 @@ public class TechnicianController {
         List<PersonPapPatiDTO> listaFinalSeleccionados = new ArrayList<>();
         for (String dni : seleccionadosDni) {
             PersonPapPatiDTO ppdto = new PersonPapPatiDTO();
-            ppdto.setPapPati(papPatiDao.getPapPati(dni));
+            ppdto.setPapPati(papPatiService.getPapPati(dni));
             ppdto.setPerson(personDao.getPerson(dni));
             listaFinalSeleccionados.add(ppdto);
         }
@@ -559,7 +561,7 @@ public class TechnicianController {
             return "Technician/addActivity";
 
         activity.setIdActivity(cg.generateCode("ACT"));
-        activityDao.addActivity(activity);
+        activityAttendanceService.addActivity(activity);
         flash.addFlashAttribute("lista","activityList");
         flash.addFlashAttribute("mensaje","La actividad ha sido creada correctamente");
         return "redirect:/Technician/actionConfirmation";
@@ -568,7 +570,7 @@ public class TechnicianController {
 
     @RequestMapping(value="/activityManagement/{idActivity}", method = RequestMethod.GET)
     public String editActivity(Model model, @PathVariable String idActivity) {
-        Activity activity = activityDao.getActivity(idActivity);
+        Activity activity = activityAttendanceService.getActivity(idActivity);
 
         model.addAttribute("activity", activity);
         return "Technician/activityManagement";
@@ -584,7 +586,7 @@ public class TechnicianController {
         activityValidator.validate(activity, bindingResult);
         if(bindingResult.hasErrors())
             return "Technician/activityManagement";
-        activityDao.updateActivity(activity);
+        activityAttendanceService.updateActivity(activity);
         flash.addFlashAttribute("lista","activityList");
         flash.addFlashAttribute("mensaje","La actividad ha sido actualizado correctamente");
         return "redirect:/Technician/actionConfirmation";
@@ -594,11 +596,11 @@ public class TechnicianController {
     @RequestMapping(value="/activityList/participants/{idActivity}")
     public String getParticipants(@PathVariable String idActivity, Model model,
                                   @RequestParam(value = "sortSel", required = false, defaultValue = "nameAsc") String sortSel){
-        if(activityDao.getActivity(idActivity) != null){
+        if(activityAttendanceService.getActivity(idActivity) != null){
             FilterState filterState = new FilterState();
             filterState.setSortSel(sortSel);
-            System.out.println(papPatiDao.getPapPatiTrainingActivities(idActivity));
-            model.addAttribute("participantes",lbn.personPapPatiList(papPatiDao.getPapPatiTrainingActivities(idActivity),sortSel));
+            System.out.println(papPatiService.getPapPatiTrainingActivities(idActivity));
+            model.addAttribute("participantes",papPatiService.orderList(papPatiService.getPapPatiTrainingActivities(idActivity),sortSel));
             model.addAttribute("idActivity", idActivity);
             model.addAttribute("filter",filterState);
         }
@@ -609,7 +611,7 @@ public class TechnicianController {
     }
     @RequestMapping(value="/activityList/delete/{idActivity}")
     public String processDeleteActivity(@PathVariable String idActivity) {
-        activityDao.deleteActivity(idActivity);
+        activityAttendanceService.deleteActivity(idActivity);
         return "redirect:/Technician/activityList";
     }
 

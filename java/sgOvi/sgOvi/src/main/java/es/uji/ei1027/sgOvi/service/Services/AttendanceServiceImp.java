@@ -5,6 +5,7 @@ import es.uji.ei1027.sgOvi.dao.AttendanceDao;
 import es.uji.ei1027.sgOvi.model.Activity;
 import es.uji.ei1027.sgOvi.model.Attendance;
 import es.uji.ei1027.sgOvi.controller.exception.OviException;
+import es.uji.ei1027.sgOvi.model.enums.RolUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -58,8 +59,9 @@ public class AttendanceServiceImp implements AttendanceService {
         }
         attendanceDao.addAttendance(attendance);
     }
+
     @Override
-    public void unregisterUserFromActivity(String idActivity, String dni, String role) {
+    public void unregisterUserFromActivity(String idActivity, String dni, RolUser role) {
         attendanceDao.deleteAttendanceByUserAndActivity(idActivity, dni, role);
     }
 }

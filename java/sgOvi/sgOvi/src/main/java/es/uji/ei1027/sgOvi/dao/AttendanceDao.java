@@ -1,6 +1,7 @@
 package es.uji.ei1027.sgOvi.dao;
 
 import es.uji.ei1027.sgOvi.model.Attendance;
+import es.uji.ei1027.sgOvi.model.enums.RolUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -87,13 +88,13 @@ public class AttendanceDao {
             return null;
         }
     }
-    public void deleteAttendanceByUserAndActivity(String idActivity, String dni, String role) {
-        if ("OVI_USER".equals(role)) {
+    public void deleteAttendanceByUserAndActivity(String idActivity, String dni, RolUser role) {
+        if ("OVI_USER".equals(role.name())) {
             jdbcTemplate.update(
                     "DELETE FROM Attendance WHERE idActivity = ? AND idOviUser = ?",
                     idActivity, dni
             );
-        } else if ("PAP_PATI".equals(role)) {
+        } else if ("PAP_PATI".equals(role.name())) {
             jdbcTemplate.update(
                     "DELETE FROM Attendance WHERE idActivity = ? AND idPapPati = ?",
                     idActivity, dni
