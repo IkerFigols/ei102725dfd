@@ -9,8 +9,8 @@
 </head>
 <body class="main-content">
 
-<div class="page-container" layout:fragment="content">
-    <div class="form-container">
+<div layout:fragment="content">
+    <div class="page-container">
         <header class="app-header">
             <h1 class="title">Confirmación de Inscripción</h1>
             <p class="description">¿Estás seguro de que deseas inscribirte en la siguiente actividad programada?</p>
@@ -43,10 +43,10 @@
 
             <div class="content-footer">
                 <div class="nav-back">
-                    <a th:href="@{/Activity/listAll}" class="btn btn-secondary">Cancelar y volver</a>
+                    <a th:href="@{/Activity/listAll}" class="btn btn-secondary btn-icon" title="Volver al listado de actividades"> <i class="fi fi-rr-arrow-left"> </i>  Cancelar y volver </a>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                    Aceptar inscripción
+                <button type="submit" class="btn btn-secondary btn-icon" title="Confirmar la inscripción">
+                    Aceptar inscripción <i class="fi fi-rr-check"></i>
                 </button>
             </div>
         </form>

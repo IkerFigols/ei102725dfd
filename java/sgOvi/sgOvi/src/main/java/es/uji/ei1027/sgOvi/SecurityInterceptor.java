@@ -28,9 +28,9 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
         String role =(String) session.getAttribute("rol");
 
+        if(uri.contains("/Register"))
+            throw new OviException("No se puede acceder al registro una vez ya estas registrado", "Acceso no autorizado");
 
-
-        // Bloqueo para Technician entrando en OviUser y viceversa
         if (uri.contains("/Ovi_User/") && !role.equals("OVI_USER")) {
            throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
         }
@@ -48,10 +48,10 @@ public class SecurityInterceptor implements HandlerInterceptor {
             throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
         }
         if (uri.contains("/Assistance_Request/")) {
-            if(uri.contains("/Assistance_Request/communication") && (role.equals("PAP_PATI") || role.equals("INSTRUCTOR"))) {
-                throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
+            if(uri.contains("/Assistance_Request/communication") && (role.equals("PAP_PATI"))){
+                return true;
             }
-            if(uri.contains("/Assistance_Request/") && (role.equals("PAP_PATI") || role.equals("INSTRUCTOR"))){
+            if(uri.contains("/Assistance_Request/") && (!role.equals("OVI_USER"))){
                 throw new OviException("Estas intentando acceder a zonas que no debes", "Acceso no autorizado");
             }
         }

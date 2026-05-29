@@ -31,7 +31,6 @@ public class SgOviConfiguration implements WebMvcConfigurer {
                         "/index*",
                         "/login*",
                         "/Activity*/someActivities*",
-                        "/Register/**",
                         "/Person/**",
                         "/auth/**",
                         "/css/**",

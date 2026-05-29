@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-    <section class="form-container">
+    <section class="page-container">
         <header class="app-header">
             <h1 class="title">Añadir Nuevo Contrato</h1>
             <p class="description">Rellene los datos para dar de alta un nuevo contrato.</p>
@@ -51,10 +51,11 @@
 
             <div class="content-footer">
                 <div class="nav-back">
-                    <a th:href="@{/Assistance_Request/papPatiSelection/{id}(id=${idAsReq})}" class="btn btn-secondary">Cancelar</a>
+                    <a th:href="@{/Assistance_Request/papPatiSelection/{id}(id=${idAsReq})}" class="btn btn-secondary btn-icon" title="Volver al listado de selecciones"> <i class="fi fi-rr-arrow-left"></i> Cancelar y Volver</a>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                    Guardar contrato
+                <button type="submit" class="btn btn-secondary btn-icon" title="Crear el contrato"
+                        onclick="return confirm('¿Seguro que quieres crear el contrato? Todas las selecciones anteriores serán rechazadas automáticamente">>
+                    Crear contrato <i class="fi fi-rr-add-document"></i>
                 </button>
             </div>
         </form>

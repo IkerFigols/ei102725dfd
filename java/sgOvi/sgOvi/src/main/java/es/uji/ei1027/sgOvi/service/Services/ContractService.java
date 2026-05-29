@@ -14,6 +14,7 @@ public interface ContractService {
 
     public void updateStateAp(String idAsReq, State state);
     public List<ContractDTO> listContractPerson(String dni);
-    public ContractDTO listContractByAp(String idAsReq);
+    public ContractDTO getContractByAp(String idAsReq);
+    public List<ContractDTO> sortContracts(List<ContractDTO> contracts, String sort);
 
 }

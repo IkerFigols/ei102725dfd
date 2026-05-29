@@ -7,10 +7,10 @@
   <meta charset="UTF-8" />
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="main-content">
+<body>
 
-<div class="page-container" layout:fragment="content">
-  <div class="form-container">
+<div layout:fragment="content">
+  <div class="page-container">
     <h1 class="title">Editar Ovi User</h1>
     <p class="description">Actualice la información de contacto y el estado de validación del usuario en el sistema.</p>
 
@@ -49,24 +49,19 @@
         <input type="text" id="reason" name="reason" th:value="*{reason}" class="textarea-field-small" placeholder="Indique el motivo del cambio de estado" />
         <div th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}" class="error-text"></div>
       </div>
-
-      <div class="activities-actions">
+      <div class="content-footer">
+        <a th:href="@{/Technician/userList}" class="btn btn-secondary btn-icon" title="Volver al listado de usuarios OVI"><i class="fi fi-rr-arrow-left"></i> Volver al listado</a>
         <button type="submit"
-                class="btn btn-primary"
+                class="btn btn-secondary btn-icon" title="Actualiar usuario OVI"
                 th:data-dni="${user.dni}"
                 onclick="return confirm('¿Seguro que deseas guardar los cambios para el dni ' + this.getAttribute('data-dni') + '?');">
-          Guardar cambios
+          Actualizar Usuario OVI <i class="fi fi-rr-edit"></i>
         </button>
       </div>
-
     </form>
 
-    <div class="content-footer">
-      <a th:href="@{/Technician/userList}" class="btn btn-secondary">Volver a la lista</a>
-    </div>
   </div>
 
-  <div class="bottom-spacer"></div>
 </div>
 
 </body>

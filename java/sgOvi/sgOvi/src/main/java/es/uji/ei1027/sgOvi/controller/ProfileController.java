@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import es.uji.ei1027.sgOvi.model.Person;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProfileController {
@@ -45,7 +46,7 @@ public class ProfileController {
 
 
     @RequestMapping(value="/profile", method = RequestMethod.POST)
-    public String proccessProfile(@ModelAttribute("dto") PersonDTO dto, BindingResult bindingResult, HttpSession session){
+    public String proccessProfile(@ModelAttribute("dto") PersonDTO dto, BindingResult bindingResult, HttpSession session, RedirectAttributes flash){
         UpdateProfileValidator validator = new UpdateProfileValidator();
         validator.validate(dto,bindingResult);
         BasicPasswordEncryptor basicPasswordEncryptor = new BasicPasswordEncryptor();
@@ -59,21 +60,15 @@ public class ProfileController {
                 bindingResult.rejectValue("person.pastPassword", "required", "Contraseña incorrecta");
             }
         }
-        System.out.println("Estoy antes del binding");
-        System.out.println(dto.getPerson().toString());
-        System.out.println(dto.getPapPati().toString());
         if(bindingResult.hasErrors())
             return "profile";
-        System.out.println("Pase el binding");
+
         String rol = (String) session.getAttribute("rol");
-        System.out.println("----VOY A ACTUALIZAR----");
-        System.out.println(dto.getPerson().toString());
+
         profileService.updatePerson(dto.getPerson());
 
         switch (rol) {
             case ("OVI_USER") -> {
-                System.out.println("----PASE POR OVI USER----");
-                System.out.println(dto.getOviUser().toString());
                 profileService.updateOviUser(dto.getOviUser());
             }
 
@@ -82,7 +77,9 @@ public class ProfileController {
             }
         }
         session.setAttribute("user", dto.getPerson());
-        return "redirect:/profile";
+        flash.addFlashAttribute("lista","/profile");
+        flash.addFlashAttribute("mensaje", "Se han actualizado los datos del perfil correctamente");
+        return "redirect:/actionConfirmation";
     }
 
 }

@@ -7,13 +7,12 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="main-content">
+<body>
 
 <div class="page-container" layout:fragment="content">
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 class="title">Lista de Instructores</h1>
-        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
     </div>
 
     <p class="description">Panel de gestión para la administración y edición de los instructores registrados en el sistema.</p>
@@ -29,7 +28,7 @@
         </div>
     </form>
 
-    <div class="table-responsive">
+    <div class="table-responsive" th:if="${!instructors.isEmpty()}">
         <table class="table-custom">
             <thead>
             <tr>
@@ -47,17 +46,17 @@
                 <td th:text="${instructor.person.dni}"></td>
                 <td th:text="${instructor.instructor.expertise}"></td>
                 <td>
-                    <div class="actions-group" style="justify-content: center;">
-                        <a class="btn btn-primary"
+                    <div class="actions-group-centered">
+                        <a class="btn btn-primary btn-icon" title="Editar instructor"
                            th:href="@{/Technician/instructorManagement/{dni}(dni=${instructor.person.dni})}">
-                            Editar
+                            Editar <i class="fi fi-rr-edit"></i>
                         </a>
 
-                        <a class="btn btn-primary"
+                        <a class="btn btn-primary btn-icon" title="Eliminar instructor"
                            th:data-name="${instructor.person.dni}"
                            onclick="return confirm('¿Seguro que quieres eliminar el instructor: ' + this.getAttribute('data-name') + '? Esta acción no se puede deshacer');"
                            th:href="@{/Technician/instructorList/delete/{idInstructor}(idInstructor=${instructor.person.dni})}">
-                            Eliminar
+                            Eliminar <i class="fi fi-rr-cross"></i>
                         </a>
                     </div>
 
@@ -66,9 +65,15 @@
             </tbody>
         </table>
     </div>
-
-    <div class="content-footer" style="justify-content: flex-end;">
-        <a href="addInstructor" class="btn btn-primary">Añadir Instructor</a>
+    <div th:if="${#lists.isEmpty(instructors)}" class="empty-list-container">
+        <p class="empty-list-text">
+            No hay instructores disponibles.
+        </p>
+    </div>
+    <div class="content-footer" >
+        <a href="/Technician/menuTechnician" class="btn btn-secondary btn-icon" title="Volver al menú del técnico">Volver al menú <i class="fi fi-rr-home"></i> </a>
+        <a href="addInstructor" class="btn btn-secondary btn-icon" title="Añadir un instructor">Añadir Instructor <i class="fi fi-rr-plus"></i>
+        </a>
     </div>
 
     <div class="bottom-spacer"></div>

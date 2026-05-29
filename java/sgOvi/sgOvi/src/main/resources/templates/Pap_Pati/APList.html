@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-    <section class="form-container">
+    <section class="page-container">
 
         <header class="app-header">
             <h1 class="title">Solicitudes de Asistencia</h1>
@@ -64,12 +64,7 @@
                         </span>
                     </td>
                     <td class="text-right">
-                        <form th:action="@{/Pap_Pati/papPatiAssistances}" method="post" title="ver detalles">
-                            <input type="hidden" name="idSelection" th:value="${item.idSelection}" />
-                            <button type="submit" class="btn btn-primary btn-sm btn-icon">
-                                Detalles<i class="fi fi-rr-eye"></i>
-                            </button>
-                        </form>
+                        <a th:href="@{/Pap_Pati/papPatiAssistances/{idAsReq} (idAsReq=${item.assistanceRequest.idAsReq}, idSelection=${item.idSelection})}" class="btn btn-primary btn-icon" title="Ver los detalles de la asistencia personal"> Detalles <i class="fi fi-rr-eye"></i></a>
                     </td>
                 </tr>
                 </tbody>
@@ -84,7 +79,7 @@
         <div class="content-footer">
             <a th:href="@{/Pap_Pati/menuPapPati}" class="btn btn-secondary btn-icon"
             title="Volver al menú">
-                Menú<i class="fi fi-rr-home"></i>
+                Volver al Menú<i class="fi fi-rr-home"></i>
             </a>
         </div>
     </section>

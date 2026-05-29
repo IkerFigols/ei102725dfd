@@ -10,15 +10,8 @@
 <body>
 
 <div class="page-container" layout:fragment="content">
-
-    <main class="main-content">
-        <div class="page-container">
-
             <div class="button-group" style="margin-bottom: 20px;">
                 <h1 class="title" style="margin: 0;">Gestión de Candidatos</h1>
-                <a th:href="@{/Technician/assistanceRequestList}" class="btn btn-secondary">
-                    &larr; Volver a Gestión
-                </a>
             </div>
             <p class="description">Asigna voluntarios a la solicitud de asistencia actual comparando perfiles y recomendaciones.</p>
 
@@ -85,9 +78,9 @@
                             <td th:text="${sel.person?.getAge()}"></td>
                             <td th:text="${sel.papPati?.experience}"></td>
                             <td>
-                                <a class="btn-logout" style="text-decoration: none;"
+                                <a class="btn btn-danger btn-icon" title="Eliminar asistente de la lista"
                                    th:href="@{/Technician/selectPapPati/remove/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${sel.person.dni})}">
-                                    Quitar
+                                    Eliminar <i class="fi fi-rr-cross"></i>
                                 </a>
                             </td>
                         </tr>
@@ -99,7 +92,7 @@
                     <p class="academic-text">Al confirmar, se enviará una notificación a los voluntarios seleccionados.</p>
                     <form th:action="@{/Technician/processSelection}" method="post">
                         <input type="hidden" name="idAsReq" th:value="${request.assistanceRequest.idAsReq}" />
-                        <button type="submit" class="btn btn-primary">Confirmar y Guardar Selección</button>
+                        <button type="submit" class="btn btn-primary btn-icon">Confirmar y Guardar Selección <i class="fi fi-rr-check"></i> </button>
                     </form>
                 </div>
             </div>
@@ -128,9 +121,9 @@
                             <td th:text="${rec.person?.getAge()}"></td>
                             <td th:text="${rec.papPati?.experience}"></td>
                             <td>
-                                <a class="btn btn-secondary" style="padding: 5px 15px; font-size: 12px;"
+                                <a class="btn btn-primary btn-icon" style="padding: 5px 15px; font-size: 12px;" title="Añadir asistente de las recomendaciones"
                                    th:href="@{/Technician/selectPapPati/add/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${rec.person.dni})}">
-                                    Añadir
+                                    Añadir <i class="fi fi-rr-plus"></i>
                                 </a>
                             </td>
                         </tr>
@@ -166,9 +159,9 @@
                             <td th:text="${pappati.person?.getAge()}"></td>
                             <td th:text="${pappati.papPati?.experience}"></td>
                             <td>
-                                <a class="btn btn-secondary" style="padding: 5px 15px; font-size: 12px;"
+                                <a class="btn btn-primary btn-icon" style="padding: 5px 15px; font-size: 12px;" title="Añadir asistente de la lista total de asistentes"
                                    th:href="@{/Technician/selectPapPati/add/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${pappati.person.dni})}">
-                                    Añadir
+                                    Añadir <i class="fi fi-rr-plus"></i>
                                 </a>
                             </td>
                         </tr>
@@ -176,11 +169,6 @@
                     </table>
                 </div>
             </div>
-
-            <div class="bottom-spacer"></div>
-        </div>
-    </main>
-
 </div>
 </body>
 </html>

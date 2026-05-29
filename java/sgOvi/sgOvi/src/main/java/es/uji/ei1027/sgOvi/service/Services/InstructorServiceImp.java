@@ -5,11 +5,12 @@ import es.uji.ei1027.sgOvi.dao.PersonDao;
 import es.uji.ei1027.sgOvi.model.Instructor;
 import es.uji.ei1027.sgOvi.service.DTOs.PersonInstructorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
+@Service
 public class InstructorServiceImp implements InstructorService{
 
     @Autowired

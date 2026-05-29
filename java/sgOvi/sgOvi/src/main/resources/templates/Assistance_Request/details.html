@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-  <div class="form-container">
+  <div class="page-container">
     <h1 class="title" th:text="${assistanceRequest.tittle}">Título de la Solicitud</h1>
     <p class="description">Consulte los detalles específicos de su petición de asistencia personal.</p>
 
@@ -78,11 +78,11 @@
     </div>
 
     <div class="button-group">
-      <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">← Volver al listado</a>
+      <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary btn-icon" title="Volver al listado de asistencias"> <i class="fi fi-rr-arrow-left"></i> Volver al listado</a>
 
       <a th:if="${assistanceRequest.state.name() == 'PENDING'}"
          th:href="@{/Assistance_Request/update/{idAsReq}(idAsReq=${assistanceRequest.idAsReq})}"
-         class="btn btn-primary">Editar Solicitud</a>
+         class="btn btn-secondary btn-icon" title="Editar la solicitud">Editar Solicitud <i class="fi fi-rr-edit"></i></a>
     </div>
   </div>
 </div>

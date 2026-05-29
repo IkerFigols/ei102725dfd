@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-    <section class="form-container">
+    <section class="page-container">
 
         <header class="app-header">
             <h1 class="title">Actividades Disponibles</h1>
@@ -18,13 +18,6 @@
                 <span th:if="${session.rol == 'PAP_PATI'}">Explora todas las actividades y cursos programados.</span>
             </p>
         </header>
-
-        <div th:if="${param.status != null and param.status[0] == 'success'}" style="text-align: center; margin-bottom: 25px;">
-            <span class="status-badge status-approved" style="display: inline-block; padding: 10px 20px; font-size: 15px;">
-                ¡Te has inscrito en la actividad correctamente!
-            </span>
-        </div>
-
         <form th:action="@{/Activity/listAll}" method="get" class="filter-bar" th:if="${activities != null and !activities.isEmpty()}">
             <div class="filter-group">
                 <label for="sort">Ordenar por:</label>
@@ -77,8 +70,8 @@
             </table>
         </div>
 
-        <div th:if="${activities == null or activities.isEmpty()}" class="no-data-container">
-            <p class="description">No hay actividades disponibles para tu perfil en este momento.</p>
+        <div th:if="${activities == null or activities.isEmpty()}" class="empty-list-container">
+            <p class="empty-list-text">No hay actividades disponibles para tu perfil en este momento.</p>
         </div>
 
         <div class="content-footer">
@@ -95,7 +88,7 @@
                 </a>
             </div>
             <a th:href="@{/Activity/list}"
-               class="btn btn-primary">
+               class="btn btn-secondary" title="Ver mis actividades">
                 Mis actividades</a>
         </div>
 

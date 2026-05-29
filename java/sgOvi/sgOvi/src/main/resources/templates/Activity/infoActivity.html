@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-    <div class="form-container">
+    <div class="page-container">
 
         <h1 class="title" th:text="${activity.tittle}">Título de la Actividad</h1>
         <p class="description">Consulte la información completa de la actividad seleccionada.</p>
@@ -52,13 +52,10 @@
         </div>
 
         <div class="button-group">
-            <a th:href="@{/Activity/list}" class="btn btn-secondary">Mis actividades</a>
-            <a th:href="@{/Activity/listAll}" class="btn btn-primary">Todas las actividades</a>
+            <a th:href="@{/Activity/list}" class="btn btn-secondary btn-icon" title="Ver mis actividades"> <i class="fi fi-rr-arrow-left"></i> Volver a mis actividades</a>
         </div>
 
     </div>
-
-    <div class="bottom-spacer"></div>
 </div>
 
 </body>

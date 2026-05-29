@@ -5,30 +5,27 @@
     <title>SgOvi - Error</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="icon" type="image/png" th:href="@{/images/logo_ovi.png}">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+
 </head>
 <body>
 <div th:replace="~{Fragments/general_fragment :: navbar-simple}"></div>
-<main class="main-content">
     <div class="page-container">
 
         <div class="error-container">
             <h1 class="error-title" th:text="${errorName}">Error de Aplicación</h1>
 
             <p class="success-message" th:text="${message}">
-                Lo sentimos, la acción solicitada no se ha podido completar.
             </p>
-
             <div class="error-divider"></div>
-
             <div class="activities-actions">
-                <a th:href="@{/}" class="btn btn-primary">
-                    <span style="margin-right: 8px;">←</span> Volver al inicio
+                <a th:href="@{/}" class="btn btn-primary btn-icon">
+                    <i class="fi fi-rr-arrow-left"></i> Volver al inicio
                 </a>
             </div>
         </div>
 
     </div>
-</main>
 <div th:replace="~{Fragments/general_fragment :: footer-simple}"></div>
 </body>
 </html>

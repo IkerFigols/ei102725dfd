@@ -1,20 +1,20 @@
 package es.uji.ei1027.sgOvi.controller;
 
 import es.uji.ei1027.sgOvi.controller.exception.OviException;
-import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import es.uji.ei1027.sgOvi.model.*;
+import es.uji.ei1027.sgOvi.model.enums.RolUser;
 import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.DTOs.PapPatiSelectionDTO;
 import es.uji.ei1027.sgOvi.service.DTOs.PersonPapPatiDTO;
 import es.uji.ei1027.sgOvi.service.Services.AssistanceRequestService;
 import es.uji.ei1027.sgOvi.service.Services.CodeGenerator;
-import es.uji.ei1027.sgOvi.service.Services.ListPapPatiSelService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -30,42 +30,6 @@ public class AssistanceRequestController {
 
     @Autowired
     private CodeGenerator codeGenerator;
-
-    @Autowired
-    private ListPapPatiSelService listPapPatiSelService;
-
-
-    private List<Assistance_Request> sortAssistance(List<Assistance_Request> assistanceRequests, String sort) {
-        if (sort == null) return assistanceRequests;
-        switch (sort) {
-            case "dateAsc":
-                assistanceRequests.sort(Comparator.comparing(Assistance_Request::getDate));
-                break;
-            case "dateDesc":
-                assistanceRequests.sort(Comparator.comparing(Assistance_Request::getDate).reversed());
-                break;
-            case "tittle":
-                assistanceRequests.sort(Comparator.comparing(Assistance_Request::getTittle, String.CASE_INSENSITIVE_ORDER));
-                break;
-        }
-        return assistanceRequests;
-    }
-    private List<PapPatiSelectionDTO> sortSelection(List<PapPatiSelectionDTO> papPatiSelectionDTOS, String sort) {
-        if (sort == null) return papPatiSelectionDTOS;
-        switch (sort) {
-            case "name":
-                papPatiSelectionDTOS.sort(Comparator.comparing(papPatiSelectionDTO -> { return papPatiSelectionDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
-                break;
-            case "city":
-                papPatiSelectionDTOS.sort(Comparator.comparing(papPatiSelectionDTO -> { return papPatiSelectionDTO.getPerson().getCity();},String.CASE_INSENSITIVE_ORDER));
-                break;
-            case "surname":
-                papPatiSelectionDTOS.sort(Comparator.comparing(papPatiSelectionDTO -> { return papPatiSelectionDTO.getPerson().getSurname();},String.CASE_INSENSITIVE_ORDER));
-                break;
-        }
-        return papPatiSelectionDTOS;
-    }
-
 
     @RequestMapping("/papPatiSelection/{idAsReq}")
     public String getSelections(Model model, @PathVariable("idAsReq") String idAsReq,
@@ -86,7 +50,7 @@ public class AssistanceRequestController {
         List<PapPatiSelectionDTO> papPatiSelectionDTO = assistanceRequestService.getPapPatisSelectionDTO(idAsReq, state);
 
         model.addAttribute("idAsReq",idAsReq);
-        model.addAttribute("dtos", sortSelection(papPatiSelectionDTO,sort));
+        model.addAttribute("dtos", assistanceRequestService.sortSelection(papPatiSelectionDTO,sort));
         model.addAttribute("filter",filterState);
         return "Assistance_Request/papPatiSelection";
     }
@@ -98,7 +62,7 @@ public class AssistanceRequestController {
         Person person = (Person) session.getAttribute("user");
         State stateForDao = State.fromString(state);
         List<Assistance_Request> requests = assistanceRequestService.getAssistanceRequestsByOviUser(person.getDni(), stateForDao);
-        model.addAttribute("assistanceRequests", sortAssistance(requests, sort));
+        model.addAttribute("assistanceRequests", assistanceRequestService.sortAssistance(requests, sort));
         FilterState filter = new FilterState();
         filter.setStateSel(state);
         filter.setSortSel(sort);
@@ -134,7 +98,7 @@ public class AssistanceRequestController {
     }
     @RequestMapping(value="/requestAssistance", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("assistanceRequest") Assistance_Request request,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult, RedirectAttributes flash) {
 
         AssistanceRequestValidator requestValidator = new AssistanceRequestValidator();
         request.setDate(LocalDate.now());
@@ -145,9 +109,31 @@ public class AssistanceRequestController {
         if (bindingResult.hasErrors()) {
             return "Assistance_Request/requestAssistance";
         }
-
+        flash.addFlashAttribute("lista","/Assistance_Request/apRequestList");
+        flash.addFlashAttribute("mensaje","La solicitud se ha registrado correctamente. La resolución de la misma se le enviará a su correo electrónico.");
         assistanceRequestService.addAssistanceRequest(request);
-        return "redirect:request_confirmation";
+        return "redirect:/actionConfirmation";
+    }
+
+    @RequestMapping(value="/delete/{idAsReq}")
+    public String deleteAp(@PathVariable("idAsReq") String idAsReq, HttpSession session, RedirectAttributes flash){
+
+        Person person = (Person) session.getAttribute("user");
+
+        if(assistanceRequestService.getAssistanceRequest(idAsReq) == null)
+            throw new OviException("No se puede eliminar una solicitud de asistencia que no existe", "Solicitud no encontrada");
+        if(assistanceRequestService.getAssistanceRequest(idAsReq).getIdOviUser().equals(person.getDni())){
+            if(assistanceRequestService.getAssistanceRequest(idAsReq).getState().equals(State.PENDING))
+                assistanceRequestService.deleteAssistanceRequest(idAsReq);
+            else
+                throw new OviException("No se ha podido eliminar la solicitud de asistencia ya que la solicitud esta en un estado diferente de pendiente","Error al eliminar la solicitud");
+        }
+        else
+            throw new OviException("No puedes eliminar una solicitud de asistencia que no te pertenece","Error al eliminar la solicitud");
+
+        flash.addFlashAttribute("lista","/Assistance_Request/apRequestList");
+        flash.addFlashAttribute("mensaje","La solicitud ha sido eliminada correctamente");
+        return "redirect:/actionConfirmation";
     }
 
     @RequestMapping(value="/update/{idAsReq}")
@@ -158,39 +144,45 @@ public class AssistanceRequestController {
         Person person = (Person) session.getAttribute("user");
         if(!ap.getIdOviUser().equals(person.getDni()))
             throw new OviException("Esta solicitud de asistencia personal no es tuya", "Acceso no autorizado");
+        if(!ap.getState().equals(State.PENDING))
+            throw new OviException("No se puede actualizar una asistencia personal que ya no esta en estado pendiente","Acción no completada");
         model.addAttribute("assistanceRequest",ap);
         return "Assistance_Request/update";
     }
     @RequestMapping(value="/update", method = RequestMethod.POST)
-    public String getUpdateAp(@ModelAttribute("assistanceRequest") Assistance_Request assistanceRequest, BindingResult bindingResult){
+    public String getUpdateAp(@ModelAttribute("assistanceRequest") Assistance_Request assistanceRequest, BindingResult bindingResult,
+                              RedirectAttributes flash){
         AssistanceRequestValidator assistanceRequestValidator = new AssistanceRequestValidator();
         assistanceRequestValidator.validate(assistanceRequest, bindingResult);
         if (bindingResult.hasErrors())
             return "Assistance_Request/update";
-
+        flash.addFlashAttribute("lista","/Assistance_Request/apRequestList");
+        flash.addFlashAttribute("mensaje","La solicitud ha sido actualizada correctamente");
         assistanceRequestService.updateAssistanceRequest(assistanceRequest);
-        return "redirect:/Assistance_Request/apRequestList";
+        return "redirect:/actionConfirmation";
     }
-
-    @RequestMapping(value="/request_confirmation")
-    public String showConfirmationPage() {
-        return "Assistance_Request/request_confirmation";
-    }
-
 
     @RequestMapping(value = "/approveSelection/{idSelection}", method = RequestMethod.POST)
     public String approveSelection(@PathVariable("idSelection") String idSelection, @RequestParam("idAsReq") String idAsReq, @RequestParam("idPapPati") String idPapPati) {
+        Selection selection = assistanceRequestService.getSelection(idSelection);
+
+        Assistance_Request ap = assistanceRequestService.getAssistanceRequest(idAsReq);
+        if (ap == null) {
+            throw new OviException("La solicitud de asistencia personal con id: "+ idAsReq +" no existe","Solicitud no encontrada");
+        }
+        if(selection == null)
+            throw new OviException("La selección no existe","Selección no econtrada");
 
         assistanceRequestService.updateStateSelection(idSelection, State.APPROVED.name());
-        Assistance_Request ap = assistanceRequestService.getAssistanceRequest(idAsReq);
-        if (ap == null)
-            throw new OviException("La solicitud de asistencia personal con id: "+ idAsReq +" no existe","Solicitud no encontrada");
         return "redirect:/Assistance_Request/papPatiSelection/"+idAsReq;
     }
 
 
     @RequestMapping(value="/rejectSelection/{idSelection}", method = RequestMethod.POST)
     public String rejectSelection(@PathVariable("idSelection") String idSelection,  @RequestParam("idAsReq") String idAsReq) {
+        Assistance_Request ap = assistanceRequestService.getAssistanceRequest(idAsReq);
+        if (ap == null)
+            throw new OviException("La solicitud de asistencia personal con id: "+ idAsReq +" no existe","Solicitud no encontrada");
         assistanceRequestService.updateStateSelection(idSelection, State.REJECTED.name());
         return "redirect:/Assistance_Request/papPatiSelection/"+idAsReq;
     }
@@ -215,15 +207,30 @@ public class AssistanceRequestController {
     }
 
     @RequestMapping(value = "/communication/{idSelection}")
-    public String getCommunicationSelection(Model model, @PathVariable("idSelection") String idSelection, @RequestParam("idAsReq")  String idAsReq){
+    public String getCommunicationSelection(Model model, @PathVariable("idSelection") String idSelection, @RequestParam("idAsReq")  String idAsReq, HttpSession session){
+        Assistance_Request ap = assistanceRequestService.getAssistanceRequest(idAsReq);
+        Selection selection = assistanceRequestService.getSelection(idSelection);
+        Person user = (Person) session.getAttribute("user");
+        if (ap == null) {
+            throw new OviException("La solicitud de asistencia personal con id: "+ idAsReq +" no existe","Solicitud no encontrada");
+        }
+        if(selection == null)
+            throw new OviException("La selección no existe","Selección no econtrada");
+
+        if(!ap.getIdOviUser().equals(user.getDni()) && !selection.getIdPapPati().equals(user.getDni()))
+            throw new OviException("No puedes acceder a este chat ya que no es tuya","Acceso no autorizado");
+
+        String rol = (String) session.getAttribute("rol");
+        if(rol.equals(RolUser.OVI_USER.name()))
+            model.addAttribute("nameP",assistanceRequestService.getPerson(selection.getIdPapPati()).getName());
+        else
+            model.addAttribute("nameP",assistanceRequestService.getPerson(ap.getIdOviUser()).getName());
         model.addAttribute("communications",assistanceRequestService.getComunicationsSelection(idSelection));
         model.addAttribute("idSelection",idSelection);
         Communication communication = new Communication();
         communication.setIdSelection(idSelection);
         model.addAttribute("idAsReq",idAsReq);
         model.addAttribute("comunication", communication);
-
-
         return "Assistance_Request/communication";
     }
     @RequestMapping(value = "/communication/add", method = RequestMethod.POST)

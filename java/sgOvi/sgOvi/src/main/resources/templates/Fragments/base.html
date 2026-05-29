@@ -28,7 +28,7 @@
                 <span class="user-name">Hola, <strong th:text="${session.user.getName()}">Usuario</strong></span>
 
 
-                <a th:href="@{/logout}" class="btn-logout">Salir</a>
+                <a th:href="@{/logout}" class="btn-logout btn-icon" title="Cerrar sesión">Salir <i class="fi fi-rr-exit"></i></a>
             </div>
 
             <div class="login-info" th:if="${session.user == null}">
@@ -37,6 +37,8 @@
         </div>
     </div>
 </nav>
+<div class="bottom-spacer"></div>
+
 
 <main class="main-content">
     <div layout:fragment="content">

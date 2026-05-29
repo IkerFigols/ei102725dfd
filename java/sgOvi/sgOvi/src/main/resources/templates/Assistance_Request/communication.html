@@ -8,12 +8,16 @@
 <body>
 
 <div layout:fragment="content">
-  <div class="form-container">
+  <div class="page-container">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <h1 class="title" style="margin: 0;">Chat de Comunicación</h1>
     </div>
 
-    <p class="description">Historial de mensajes para la selección: <strong th:text="${idSelection}"></strong></p>
+    <div>
+
+    </div>
+    <p th:if="${session.rol == 'OVI_USER'}" class="description"> Historial de mensajes con el asistente personal: <strong th:text="${nameP}"></strong></p>
+    <p th:if="${session.rol == 'PAP_PATI'}" class="description"> Historial de mensajes con el usuario OVI: <strong th:text="${nameP}"></strong></p>
 
     <div class="chat-viewport">
       <div th:each="msg : ${communications}"
@@ -25,8 +29,8 @@
         <div th:text="${msg.information}"></div>
       </div>
 
-      <div th:if="${#lists.isEmpty(communications)}" class="description" style="text-align: center; padding: 20px;">
-        No hay mensajes previos en esta conversación.
+      <div th:if="${#lists.isEmpty(communications)}" class="empty-list-container" >
+        <p class="empty-list-text">No hay mensajes previos en esta conversación.</p>
       </div>
     </div>
 
@@ -43,20 +47,20 @@
                   required></textarea>
       </div>
 
-        <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+        <button type="submit" class="btn btn-primary btn-icon">Enviar Mensaje <i class="fi fi-rr-paper-plane"></i></button>
 
     </form>
     <div class="content-footer" style="margin-top: 30px;">
       <a th:if="${session.rol == 'OVI_USER'}"
          th:href="@{/Assistance_Request/papPatiSelection/{idAsReq}
           (idAsReq=${idAsReq})}"
-         class="nav-btn nav-btn-outline">
-        &larr; Volver al listado
+         class="btn btn-secondary btn-icon" title="Volver al listado de selecciones">
+        <i class="fi fi-rr-arrow-left"></i> Volver al listado
       </a>
       <a th:if="${session.rol == 'PAP_PATI'}"
-         th:href="@{/Pap_Pati/APList/ALL}"
-         class="nav-btn nav-btn-outline">
-        &larr; Volver al listado
+         th:href="@{/Pap_Pati/papPatiAssistances/{idAsReq} (idAsReq=${idAsReq}, idSelection=${idSelection})}"
+         class="btn btn-secondary btn-icon" title="Volver a los detalles de la asistencia">
+        <i class="fi fi-rr-arrow-left"></i> Volver al listado
       </a>
     </div>
   </div>

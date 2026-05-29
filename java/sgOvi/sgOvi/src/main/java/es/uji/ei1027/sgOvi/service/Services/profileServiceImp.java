@@ -49,7 +49,6 @@ public class profileServiceImp implements ProfileService{
     }
 
 
-
     @Override
     public void updateOviUser(OviUser oviUser) {
         oviUserDao.updateOviUser(oviUser);

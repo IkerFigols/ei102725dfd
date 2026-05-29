@@ -2,13 +2,16 @@ package es.uji.ei1027.sgOvi.service.Services;
 
 import es.uji.ei1027.sgOvi.dao.*;
 import es.uji.ei1027.sgOvi.model.*;
+import es.uji.ei1027.sgOvi.model.enums.ShiftType;
 import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.DTOs.AssistanceRequestSelectionDTO;
 import es.uji.ei1027.sgOvi.service.DTOs.PapPatiSelectionDTO;
+import es.uji.ei1027.sgOvi.service.DTOs.PersonPapPatiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -99,6 +102,34 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
         return assistanceReqDao.getAssistanceRequestsByOviUser(dni,state.name());
     }
 
+    @Override
+    public List<Assistance_Request> getAssistanceRequests() {
+        return assistanceReqDao.getAssistanceRequests();
+    }
+
+    @Override
+    public ArrayList<PersonPapPatiDTO> listCompatiblePapPati(String idAsReq) {
+        Assistance_Request asReq = assistanceReqDao.getAssistanceRequest(idAsReq);
+        //DESCOMENTAR LA LINEA DE ABAJO CUANDO SEPAMOS SEGURO SI UN PATI PUEDE ASISTIR A UN ADULTO --> Recoedar volver a añadir el type a la consulta a la bbdd
+        //String type = ChronoUnit.YEARS.between(personDao.getPerson(asReq.getIdOviUser()).getBirthdayDate(), LocalDate.now()) >= 18 ? "PAP" : "PATI";
+        Boolean drivingLicense = asReq.getDrivingLicense();
+        String province = asReq.getProvince();
+        ShiftType shiftType = asReq.getShiftPreference();
+        int minAge = asReq.getAge();
+        int minExperience = asReq.getExperience();
+
+        ArrayList<PapPati> compatiblePapPatis = papPatiDao.findCompatiblePapPatis(drivingLicense, shiftType,  province, minAge, minExperience);
+        System.out.println("Hay " + compatiblePapPatis.size() + " coincidencias");
+        ArrayList<PersonPapPatiDTO> listaDtos = new ArrayList<>();
+        for (PapPati papPati : compatiblePapPatis){
+            PersonPapPatiDTO pppdto = new PersonPapPatiDTO();
+            pppdto.setPerson(personDao.getPerson(papPati.getDni()));
+            pppdto.setPapPati(papPati);
+            listaDtos.add(pppdto);
+        }
+        return listaDtos;
+    }
+
     /*@Override
     public void generateContract(String idSelection, Assistance_Request ap) {
         // simulación de contrato con dos meses de duración
@@ -187,5 +218,36 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     @Override
     public void deleteCommunication(String idCommunication) {
         communicationDao.deleteCommunication(idCommunication);
+    }
+
+    public List<Assistance_Request> sortAssistance(List<Assistance_Request> assistanceRequests, String sort) {
+        if (sort == null) return assistanceRequests;
+        switch (sort) {
+            case "dateAsc":
+                assistanceRequests.sort(Comparator.comparing(Assistance_Request::getDate));
+                break;
+            case "dateDesc":
+                assistanceRequests.sort(Comparator.comparing(Assistance_Request::getDate).reversed());
+                break;
+            case "tittle":
+                assistanceRequests.sort(Comparator.comparing(Assistance_Request::getTittle, String.CASE_INSENSITIVE_ORDER));
+                break;
+        }
+        return assistanceRequests;
+    }
+    public List<PapPatiSelectionDTO> sortSelection(List<PapPatiSelectionDTO> papPatiSelectionDTOS, String sort) {
+        if (sort == null) return papPatiSelectionDTOS;
+        switch (sort) {
+            case "name":
+                papPatiSelectionDTOS.sort(Comparator.comparing(papPatiSelectionDTO -> { return papPatiSelectionDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
+                break;
+            case "city":
+                papPatiSelectionDTOS.sort(Comparator.comparing(papPatiSelectionDTO -> { return papPatiSelectionDTO.getPerson().getCity();},String.CASE_INSENSITIVE_ORDER));
+                break;
+            case "surname":
+                papPatiSelectionDTOS.sort(Comparator.comparing(papPatiSelectionDTO -> { return papPatiSelectionDTO.getPerson().getSurname();},String.CASE_INSENSITIVE_ORDER));
+                break;
+        }
+        return papPatiSelectionDTOS;
     }
 }

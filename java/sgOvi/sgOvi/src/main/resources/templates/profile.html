@@ -7,9 +7,8 @@
     <title>Perfil</title>
 </head>
 <body>
-
 <div layout:fragment="content">
-    <div class="form-container">
+    <div class="page-container">
         <h1 class="title"> Tus datos personales </h1>
         <p class="description">Si deseas modificar algún, simplemente cambia los datos y pulsa el botón actualizar.</p>
 
@@ -146,13 +145,13 @@
             <div class="content-footer" style="margin-top: 30px;">
                 <a th:href="@{${urlBefore}}" class="btn btn-secondary  btn-icon"
                    title="Volver al menú">
-                    Menú<i class="fi fi-rr-home"></i>
+                    Volver al Menú<i class="fi fi-rr-home"></i>
                 </a>
-                <button type="submit" class="btn btn-primary btn-icon"
+                <button type="submit" class="btn btn-secondary btn-icon"
                         th:data-dni="${dto.person.dni}"
-                        title="Guardar cambios"
+                        title="Actualizar perfil"
                         onclick="return confirm('¿Seguro que deseas guardar los cambios para el dni ' + this.getAttribute('data-dni') + '?');">
-                    Guardar<i class="fi fi-rr-disk"></i>
+                    Actualizar Perfil<i class="fi fi-rr-disk"></i>
                 </button>
             </div>
 

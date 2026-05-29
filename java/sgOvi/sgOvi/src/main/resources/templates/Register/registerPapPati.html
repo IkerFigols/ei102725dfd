@@ -10,7 +10,7 @@
 <div th:replace="~{Fragments/general_fragment :: navbar-simple}"></div>
 
 <main class="main-content">
-    <section class="form-container" style="max-width: 700px;">
+    <section class="page-container" style="max-width: 700px;">
         <header class="app-header">
             <h1 class="title">Perfil de Asistente Personal</h1>
             <p class="description">Completa tu perfil profesional para empezar a trabajar con nosotros.</p>
@@ -80,9 +80,9 @@
             </fieldset>
 
             <div style="text-align: center; margin-top: 30px;">
-                <button type="submit" class="btn btn-primary" style="width: 250px;"
+                <button type="submit" class="btn btn-primary btn-icon" style="width: 250px;" title="Finalizar registro"
                         th:data-dni="${pappati.dni}"
-                        onclick="return confirm('¿Seguro que deseas completar el registro de Asistente Personal con el dni: ' + this.getAttribute('data-dni') + '?');">Completar Registro</button>
+                        onclick="return confirm('¿Seguro que deseas completar el registro de Asistente Personal con el dni: ' + this.getAttribute('data-dni') + '?');" >Finalizar Registro <i class="fi fi-rr-clipboard-list"></i></button>
             </div>
         </form>
     </section>

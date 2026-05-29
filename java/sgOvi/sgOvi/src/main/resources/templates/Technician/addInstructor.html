@@ -8,9 +8,9 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
-<body class="main-content">
-<main class="page-container" layout:fragment="content">
-    <div class="form-container">
+<body>
+<div  layout:fragment="content">
+    <div class="page-container">
         <h1 class="title">Nuevo Instructor/a</h1>
         <p class="description">Complete los datos personales y profesionales para registrar un nuevo instructor en la plataforma.</p>
 
@@ -88,15 +88,13 @@
                 <div th:if="${#fields.hasErrors('instructor.expertise')}" th:errors="*{instructor.expertise}" class="error-text"></div>
             </div>
 
-            <div class="activities-actions">
-                <button type="submit" class="btn btn-primary">Añadir instructor</button>
+            <div class="content-footer">
+                <a th:href="@{/Technician/instructorList}" class="btn btn-secondary btn-icon" title="Volver al listado de instructores"> <i class="fi fi-rr-arrow-left"></i> Volver a la lista</a>
+                <button type="submit" class="btn btn-secondary btn-icon " title="Añadir nuevo instructor">Añadir instructor <i class="fi fi-rr-plus"></i> </button>
             </div>
         </form>
 
-        <div class="content-footer">
-            <a th:href="@{/Technician/instructorList}" class="btn btn-secondary">Volver a la lista</a>
-        </div>
     </div>
-</main>
+</div>
 </body>
 </html>

@@ -7,10 +7,10 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="main-content">
+<body>
 
-<div class="page-container" layout:fragment="content">
-    <div class="form-container">
+<div layout:fragment="content">
+    <div class="page-container">
         <h1 class="title">Editar PAP/PATI</h1>
         <p class="description">Modifique los datos del asistente y actualice su estado de validación en el sistema.</p>
 
@@ -90,24 +90,19 @@
                 <div th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}" class="error-text"></div>
             </div>
 
-            <div class="activities-actions">
+            <div class="content-footer">
+                <a th:href="@{/Technician/papPatiList}" class="btn btn-secondary btn-icon" title="Volver al listado de asistentes personales"><i class="fi fi-rr-arrow-left"></i> Volver al listado</a>
                 <button type="submit"
-                        class="btn btn-primary"
+                        class="btn btn-secondary btn-icon" title="Actualizar asistente personal"
                         th:data-dni="${papPati.dni}"
                         th:data-type="${papPati.type.name()}"
                         onclick="return confirm('¿Seguro que deseas guardar los cambios para el ' + this.getAttribute('data-type') + ' con dni ' + this.getAttribute('data-dni') + '?');">
-                        Guardar cambios
+                        Actualizar Asistente <i class="fi fi-rr-edit"></i>
                 </button>
             </div>
-
         </form>
-
-        <div class="content-footer">
-            <a th:href="@{/Technician/papPatiList}" class="btn btn-secondary">Volver a la lista</a>
-        </div>
     </div>
 
-    <div class="bottom-spacer"></div>
 </div>
 
 </body>

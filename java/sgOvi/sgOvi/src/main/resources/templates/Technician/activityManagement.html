@@ -7,10 +7,10 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="main-content">
+<body>
 
-<div class="page-container" layout:fragment="content">
-    <div class="form-container">
+<div layout:fragment="content">
+    <div class="page-container">
         <h1 class="title">Editar PAP/PATI</h1>
         <p class="description">Modifique los campos necesarios para actualizar la información de la actividad.</p>
 
@@ -70,16 +70,13 @@
                 <input type="text" id="idInstructor" name="idInstructor" th:field="*{idInstructor}" class="textarea-field-small" required/>
                 <div th:if="${#fields.hasErrors('idInstructor')}" th:errors="*{idInstructor}" class="error-text"></div>
             </div>
-
-            <div class="activities-actions">
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <div class="content-footer">
+                <a th:href="@{/Technician/activityList}" class="btn btn-secondary btn-icon" title="Volver al listado de actividades"> <i class="fi fi-rr-arrow-left"></i>Volver al listado</a>
+                <button type="submit" class="btn btn-secondary btn-icon" title="Actualizar la actividad">Actualizar actividad <i class="fi fi-rr-edit"></i> </button>
             </div>
-
         </form>
 
-        <div class="content-footer">
-            <a th:href="@{/Technician/activityList}" class="btn btn-secondary">Volver a la lista</a>
-        </div>
+
     </div>
 </div>
 

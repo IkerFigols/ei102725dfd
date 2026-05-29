@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-    <section class="form-container">
+    <section class="page-container">
         <header class="app-header">
             <h1 class="title">Confirmación de Baja</h1>
             <p class="description">¿Estás seguro de que deseas darte de baja de la siguiente actividad en la que estás inscrito?</p>
@@ -42,10 +42,10 @@
 
             <div class="content-footer">
                 <div class="nav-back">
-                    <a th:href="@{/Activity/list}" class="btn btn-secondary">Cancelar y volver</a>
+                    <a th:href="@{/Activity/list}" class="btn btn-secondary btn-icon" title="Volver al listado de mis actividades"> <i class="fi fi-rr-arrow-left"></i>Cancelar y volver</a>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                    Darse de baja
+                <button type="submit" class="btn btn-secondary btn-icon" title="Darse de baja">
+                     Darse de baja <i class="fi fi-rr-cross"></i>
                 </button>
             </div>
         </form>

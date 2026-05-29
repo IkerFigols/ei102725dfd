@@ -36,4 +36,10 @@ public class MenuController {
             }
         }
     }
+
+    @RequestMapping("/actionConfirmation")
+    public String mostrarConfirmacion() {
+        return "actionConfirmation";
+    }
+
 }

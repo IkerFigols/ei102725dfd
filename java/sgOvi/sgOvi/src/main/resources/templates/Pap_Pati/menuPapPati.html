@@ -17,18 +17,18 @@
         </header>
 
         <nav class="menu-grid">
-            <a th:href="@{/Activity/list}" class="btn btn-primary">Mis actividades</a>
-            <a th:href="@{/Pap_Pati/APList}" class="btn btn-primary">Asistencias Personales</a>
-            <a th:href="@{/Contracts/list}" class="btn btn-primary">Mis contratos</a>
-            <a th:href="@{/profile}" class="btn btn-primary">Cambiar datos personales</a>
+            <a th:href="@{/Activity/list}" class="btn btn-primary" title="Ver las actividades a las que me he inscrito">Mis actividades</a>
+            <a th:href="@{/Pap_Pati/APList}" class="btn btn-primary" title="Ver las actividades personales asociadas">Asistencias Personales</a>
+            <a th:href="@{/Contracts/list}" class="btn btn-primary" title="Ver mis contratos asociados">Mis contratos</a>
+            <a th:href="@{/profile}" class="btn btn-primary" title="Actualizar mis datos personales">Cambiar datos personales</a>
         </nav>
 
         <div class="content-footer">
-            <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
-            <a th:href="@{/logout}" class="btn btn-secondary">Cerrar sesión</a>
+            <a th:href="@{/}" class="btn btn-secondary btn-icon" title="Volver al inicio"> <i class="fi fi-rr-arrow-left"></i> Inicio</a>
+            <a th:href="@{/logout}" class="btn btn-secondary btn-icon" title="Cerrar sesión">Cerrar sesión <i class="fi fi-rr-exit"></i></a>
         </div>
     </section>
-    <div class="bottom-spacer"></div>
+
 </div>
 
 </body>

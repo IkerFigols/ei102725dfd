@@ -10,7 +10,7 @@
 <div th:replace="~{Fragments/general_fragment :: navbar-simple}"></div>
 
 <main class="main-content">
-    <section class="form-container" style="max-width: 550px;">
+    <section class="page-container" style="max-width: 550px;">
         <header class="app-header">
             <h1 class="title">Datos de Usuario OVI</h1>
             <p class="description">Por favor, completa la información adicional para tu perfil de usuario.</p>
@@ -37,10 +37,10 @@
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
-                <button type="submit" class="btn btn-primary" style="width: 200px;"
+                <button type="submit" class="btn btn-primary btn-icon" style="width: 200px;" title="Finalizar registro"
                         th:data-dni="${oviuser.dni}"
                         onclick="return confirm('¿Seguro que deseas completar el registro de Usuario OVI con el dni: ' + this.getAttribute('data-dni') + '?');"
-                >Finalizar Registro</button>
+                >Finalizar Registro <i class="fi fi-rr-clipboard-list"></i></button>
             </div>
         </form>
     </section>

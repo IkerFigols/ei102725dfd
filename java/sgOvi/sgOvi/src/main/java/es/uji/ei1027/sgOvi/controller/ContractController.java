@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Comparator;
 import java.util.List;
@@ -34,29 +35,11 @@ public class ContractController {
     private CodeGenerator codeGenerator;
 
 
-
-    private List<ContractDTO> sortContracts(List<ContractDTO> contracts, String sort) {
-        if (sort == null) return contracts;
-        switch (sort) {
-            case "dateAsc":
-                // Ordena por fecha más antigua primero
-                contracts.sort(Comparator.comparing(dto -> dto.getContract().getStartDate(),
-                        Comparator.nullsLast(Comparator.naturalOrder())));
-                break;
-            case "dateDesc":
-                // Ordena por fecha más reciente primero
-                contracts.sort(Comparator.comparing((ContractDTO dto) -> dto.getContract().getStartDate(),
-                        Comparator.nullsLast(Comparator.reverseOrder())));
-                break;
-        }
-        return contracts;
-    }
-
     @RequestMapping("/list")
     public String listContracts(Model model, HttpSession session,
                                 @RequestParam(value="sort", defaultValue = "dateDesc") String sort) {
         Person user = (Person) session.getAttribute("user");
-        model.addAttribute("contracts", sortContracts(contractService.listContractPerson(user.getDni()),sort));
+        model.addAttribute("contracts", contractService.sortContracts(contractService.listContractPerson(user.getDni()),sort));
         model.addAttribute("currentSort", sort);
 
         return "Contracts/list";
@@ -69,15 +52,20 @@ public class ContractController {
     }
     @RequestMapping(value="/add/{idSelection}", method=RequestMethod.GET)
     public String addContract(Model model, @PathVariable String idSelection, HttpSession session) {
-        if (!"OVI_USER".equals(session.getAttribute("rol"))) {
-            throw new OviException("No tienes permiso para acceder a la gestión de contratos.", "Acceso no autorizado");
+        Person user = (Person) session.getAttribute("user");
+        Selection selection = assistanceRequestService.getSelection(idSelection);
+        if(selection == null) {
+            throw new OviException("No existe la selección","Selección no encontrada");
         }
+        Assistance_Request ap = assistanceRequestService.getAssistanceRequest(selection.getIdAsReq());
+        if(ap == null)
+            throw new OviException("No existe la solicitud", "Solicitud no encontrada");
 
+        if(!ap.getIdOviUser().equals(user.getDni()))
+            throw new OviException("No puedes crear este contrato ya que no te pertenece", "Accceso no autorizado");
 
         Contract contract = new Contract();
         contract.setIdSelection(idSelection);
-
-        Selection selection = assistanceRequestService.getSelection(idSelection);
         model.addAttribute("idAsReq", selection.getIdAsReq());
         model.addAttribute("contract", contract);
         return "Contracts/add";
@@ -86,7 +74,7 @@ public class ContractController {
     public String processAddSubmit(@PathVariable String idSelection,
                                    @ModelAttribute("contract") Contract contract,
                                    Model model,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult, RedirectAttributes flash) {
 
         contract.setIdSelection(idSelection);
 
@@ -99,25 +87,30 @@ public class ContractController {
             model.addAttribute("idAsReq", idAsReq);
             return "Contracts/add";
         }
-
-        contract.setIdContract(codeGenerator.generateCode("CON"));
+        String idContract =codeGenerator.generateCode("CON");
+        contract.setIdContract(idContract);
         contract.setDocument(generateDocumentName(contract.getIdSelection()));
         contractService.updateStateAp(idAsReq, State.CLOSED_WITH_CONTRACT);
+        assistanceRequestService.rejectOtherCandidates(idAsReq, selection.getIdPapPati());
         contractService.addContract(contract);
 
-        return "redirect:/Assistance_Request/apRequestList";
+        flash.addFlashAttribute("lista","/Assistance_Request/apRequestList");
+        flash.addFlashAttribute("mensaje","Se ha creado el contrato correctamente");
+        return "redirect:/actionConfirmation";
     }
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
     public String editContract(Model model, @PathVariable String id, HttpSession session) {
-        if (!"OVI_USER".equals(session.getAttribute("rol"))) {
-            return "redirect:/Contracts/list";
-        }
+        if(contractService.getContract(id) == null)
+            throw new OviException("El contrato no existe","Contrato no encontrado");
+        Person user = (Person) session.getAttribute("user");
+        if(!user.equals(assistanceRequestService.getAssistanceRequest(assistanceRequestService.getSelection(contractService.getContract(id).getIdSelection()).getIdAsReq()).getIdOviUser()))
+            throw new OviException("No puedes actualizar un contrato que no te pertenece","Acceso no autorizado");
         model.addAttribute("contract", contractService.getContract(id));
         return "Contracts/update";
     }
     @RequestMapping(value="/update", method = RequestMethod.POST)
     public String processUpdateSubmit(@ModelAttribute("contract") Contract contract,
-                                      BindingResult bindingResult) {
+                                      BindingResult bindingResult, RedirectAttributes flash) {
 
         ContractValidator contractValidator = new ContractValidator();
         contractValidator.validate(contract, bindingResult);
@@ -125,7 +118,6 @@ public class ContractController {
         if (bindingResult.hasErrors()) {
             return "Contracts/update";
         }
-        //Comprobar que se cambia algún atributo
         Contract contractOriginal = contractService.getContract(contract.getIdContract());
 
         if (contractOriginal.getStartDate().equals(contract.getStartDate()) &&
@@ -139,9 +131,10 @@ public class ContractController {
             return "Contracts/update";
         }
         contract.setDocument(generateDocumentName(contract.getIdSelection()));
-
         contractService.updateContract(contract);
-        return "redirect:/Contracts/list?status=success_update";
+        flash.addFlashAttribute("lista","/Assistance_Request/apRequestList");
+        flash.addFlashAttribute("mensaje","Se ha actualizado el contrato correctamente");
+        return "redirect:/actionConfirmation";
     }
 
 }

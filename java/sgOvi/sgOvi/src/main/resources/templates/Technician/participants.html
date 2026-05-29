@@ -7,52 +7,50 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="main-content">
-
-<div class="page-container" layout:fragment="content">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 class="title"> Lista de participantes</h1>
-        <a href="/Technician/activityList" class="btn btn-secondary">Volver al Listado</a>
-    </div>
-    <p class="description" th:text="'Lista de Asistentes Personales que participan en la actividad de formación: '+ ${idActivity}">.</p>
-
-    <form th:action="@{/Technician/activityList/participants/{idActivity} (idActivity=${idActivity})}" th:object="${filter}" method="get" class="filter-bar">
-        <div class="filter-group">
-            <label for="sortSel">Ordenar por: </label>
-            <select th:field="*{sortSel}" id="sortSel" class="filter-select" onchange="this.form.submit()">
-                <option value="nameAsc">Nombre (A-Z)</option>
-                <option value="nameDesc">Nombre (Z-A)</option>
-                <option value="dni">DNI</option>
-            </select>
+<body>
+    <div class="page-container" layout:fragment="content">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1 class="title"> Lista de participantes</h1>
         </div>
+        <p class="description" th:text="'Lista de Asistentes Personales que participan en la actividad de formación: '+ ${idActivity}">.</p>
 
-    </form>
-    <div class="table-responsive">
-        <table class="table-custom">
-            <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>DNI</th>
-                <th>Tipo</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="papPati: ${participantes}">
-                <td th:text="${papPati.person.name}"></td>
-                <td th:text="${papPati.person.surname}"></td>
-                <td th:text="${papPati.person.dni}"></td>
-                <td th:text="${papPati.papPati.type}"></td>
-            </tr>
-            </tbody>
-        </table>
+        <form th:action="@{/Technician/activityList/participants/{idActivity} (idActivity=${idActivity})}" th:object="${filter}" method="get" class="filter-bar">
+            <div class="filter-group">
+                <label for="sortSel">Ordenar por: </label>
+                <select th:field="*{sortSel}" id="sortSel" class="filter-select" onchange="this.form.submit()">
+                    <option value="nameAsc">Nombre (A-Z)</option>
+                    <option value="nameDesc">Nombre (Z-A)</option>
+                    <option value="dni">DNI</option>
+                </select>
+            </div>
+
+        </form>
+        <div class="table-responsive" th:if="${!participantes.isEmpty()}">
+            <table class="table-custom">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Tipo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="papPati: ${participantes}">
+                    <td th:text="${papPati.person.name}"></td>
+                    <td th:text="${papPati.person.surname}"></td>
+                    <td th:text="${papPati.person.dni}"></td>
+                    <td th:text="${papPati.papPati.type}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${#lists.isEmpty(participantes)}" class="empty-list-container">
+            <p class="empty-list-text">No hay asistentes que coincidan con los criterios de búsqueda en la actividad.</p>
+        </div>
+        <div class="content-footer">
+            <a href="/Technician/activityList" class="btn btn-secondary btn-icon" title="Volver al listado de actividades"><i class="fi fi-rr-arrow-left"></i> Volver al Listado</a>
+        </div>
     </div>
-
-
-    <div class="bottom-spacer"></div>
-</div>
-<div th:if="${#lists.isEmpty(participantes)}" style="text-align: center; padding: 40px;">
-    <p class="description">No hay asistentes que coincidan con los criterios de búsqueda en la actividad.</p>
-</div>
 </body>
 </html>

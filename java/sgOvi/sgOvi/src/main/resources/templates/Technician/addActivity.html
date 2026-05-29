@@ -8,9 +8,9 @@
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
-<body class="main-content" layout:fragment="content">
-<main class="page-container">
-  <div class="form-container">
+<body >
+<div  layout:fragment="content">
+  <div class="page-container">
     <h1 class="title">Nueva Actividad</h1>
     <p class="description">Rellene los siguientes campos para dar de alta una nueva actividad en el sistema.</p>
 
@@ -66,16 +66,14 @@
         <div th:if="${#fields.hasErrors('idInstructor')}" th:errors="*{idInstructor}" class="error-text"></div>
       </div>
 
-      <div class="activities-actions">
-        <button type="submit" class="btn btn-primary">Crear Actividad</button>
+      <div class="content-footer">
+        <a th:href="@{/Technician/activityList}" class="btn btn-secondary btn-icon" title="Volver al listado de actividades"><i class="fi fi-rr-arrow-left"></i> Volver a la lista</a>
+        <button type="submit" class="btn btn-secondary btn-icon" title="Crear actividad">Crear Actividad <i class="fi fi-rr-plus"></i> </button>
       </div>
-
     </form>
 
-    <div class="content-footer">
-      <a th:href="@{/Technician/activityList}" class="btn btn-secondary">Volver a la lista</a>
-    </div>
+
   </div>
-</main>
+</div>
 </body>
 </html>

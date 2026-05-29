@@ -31,26 +31,17 @@ public class TechnicianController {
     private ActivityAttendanceService activityAttendanceService;
     @Autowired
     private InstructorService instructorService;
-
-
     @Autowired
-    private OviUserDao oviUserDao;
+    private OviUserService oviUserService;
     @Autowired
-    private ListByName lbn;
+    private AssistanceRequestService assistanceRequestService;
     @Autowired
-    private AssistanceReqDao assistanceReqDao;
-    @Autowired
-    private InstructorDao instructorDao;
+    private ContractService contractService;
     @Autowired
     private PersonDao personDao;
     @Autowired
     private CodeGenerator cg;
-    @Autowired
-    private ListPapPatiSelService listPapPatiSelService;
-    @Autowired
-    private SelectionDao selectionDao;
-    @Autowired
-    private ContractDao contractDao;
+
 
     private OviUserValidator ouv = new OviUserValidator();
     private PapPatiValidator papPatiValidator = new PapPatiValidator();
@@ -58,11 +49,6 @@ public class TechnicianController {
     private PersonDtoValidator personDtoValidator = new PersonDtoValidator();
     private AssistanceRequestValidator assistanceRequestValidator = new AssistanceRequestValidator();
     private ActivityValidator activityValidator = new ActivityValidator();
-
-    @RequestMapping("/actionConfirmation")
-    public String mostrarConfirmacion() {
-        return "Technician/actionConfirmation";
-    }
 
     @RequestMapping("/menuTechnician")
     public String menuTechnician(Model model) {
@@ -85,8 +71,8 @@ public class TechnicianController {
         // Si no hay estado en la URL, por defecto es "ALL"
         String stateUrl = (state == null) ? "ALL" : state;
 
-        // Llamamos a tu servicio LBN (asegúrate de que acepte estos dos Strings)
-        List<PersonOviUserDTO> users = lbn.personUserList(stateUrl, sort);
+
+        List<PersonOviUserDTO> users = oviUserService.getPersonUserList(stateUrl, sort);
         model.addAttribute("users", users);
 
         // Creamos el objeto FilterState para que los selectores mantengan el valor marcado
@@ -189,7 +175,7 @@ public class TechnicianController {
 
         String stateUrl = (state == null) ? "ANY" : state;
 
-        List<Assistance_Request> requests = assistanceReqDao.getAssistanceRequests();
+        List<Assistance_Request> requests = assistanceRequestService.getAssistanceRequests();
 
         requests = filterAndSortAssistanceRequests(requests, stateUrl, sort);
 
@@ -265,8 +251,9 @@ public class TechnicianController {
 
     @RequestMapping(value="/userManagement/{dni}", method = RequestMethod.GET)
     public String editOviUser(Model model, @PathVariable String dni) {
-        OviUser user = oviUserDao.getOviUser(dni);
-
+        OviUser user = oviUserService.getOviUser(dni);
+        if(user == null)
+            throw new OviException("El usuario OVI con dni: "+dni+" no existe", "Usuario no encontrado");
         model.addAttribute("user", user);
         return "Technician/userManagement";
     }
@@ -287,8 +274,8 @@ public class TechnicianController {
         if (user.getLegalGuardian().isBlank())
             user.setLegalGuardian(null);
 
-        flash.addFlashAttribute("lista","userList");
-        if(oviUserDao.getOviUser(user.getDni()).getState().name().equals(user.getState().name())){
+        flash.addFlashAttribute("lista","/Technician/userList");
+        if(oviUserService.getOviUser(user.getDni()).getState().name().equals(user.getState().name())){
             flash.addFlashAttribute("mensaje", "El usuario se ha actualizado correctamente");
         }
         else{
@@ -298,14 +285,16 @@ public class TechnicianController {
                 flash.addFlashAttribute("mensaje", "El usuario ha sido rechazado. Se ha enviado un correo a la dirección: "+ personDao.getPerson(user.getDni()).getEmail()+ " para notificar al usuario de la resolución de su solicitud");
 
         }
-        oviUserDao.updateOviUser(user);
-        return "redirect:/Technician/actionConfirmation";
+        oviUserService.updateOviUser(user);
+        return "redirect:/actionConfirmation";
     }
 
     @RequestMapping(value="/papPatiManagement/{dni}", method = RequestMethod.GET)
     public String editPapPati(Model model, @PathVariable String dni) {
-        PapPati papPati = papPatiService.getPapPati(dni);
 
+        PapPati papPati = papPatiService.getPapPati(dni);
+        if(papPati == null)
+            throw new OviException("El asistente personal con dni: " +dni+" no existe","Asistente Personal no encontrado");
         model.addAttribute("papPati", papPati);
         return "Technician/papPatiManagement";
     }
@@ -322,7 +311,7 @@ public class TechnicianController {
         if(papPati.getReason().isBlank())
             papPati.setReason(null);
 
-        flash.addFlashAttribute("lista","papPatiList");
+        flash.addFlashAttribute("lista","/Technician/papPatiList");
         if(papPatiService.getPapPati(papPati.getDni()).getState().name().equals(papPati.getState().name())){
             flash.addFlashAttribute("mensaje", "El asistente personal se ha actualizado correctamente");
         }
@@ -335,13 +324,14 @@ public class TechnicianController {
         }
         papPatiService.updatePapPati(papPati);
 
-        return "redirect:/Technician/actionConfirmation";
+        return "redirect:/actionConfirmation";
     }
 
     @RequestMapping(value="/instructorManagement/{dni}", method = RequestMethod.GET)
     public String editInstructor(Model model, @PathVariable String dni) {
-        Instructor instructor = instructorDao.getInstructor(dni);
-
+        Instructor instructor = instructorService.getInstructor(dni);
+        if(instructor == null)
+            throw new OviException("El instructor con dni: " +dni+" no existe","Instructor no encontrado");
         model.addAttribute("instructor", instructor);
         return "Technician/instructorManagement";
     }
@@ -350,7 +340,7 @@ public class TechnicianController {
     public String deleteInstructor(@PathVariable String idInstructor){
         if(personDao.getPerson(idInstructor) != null){
             if(activityAttendanceService.getInstructorActivities(idInstructor).isEmpty()) {
-                instructorDao.deleteInstructor(idInstructor);
+                instructorService.deleteInstructor(idInstructor);
                 personDao.deletePerson(idInstructor);
             }
             else
@@ -369,11 +359,11 @@ public class TechnicianController {
         if(bindingResult.hasErrors()){
             return "Technician/instructorManagement";
         }
-        instructorDao.updateInstructor(instructor);
+        instructorService.updateInstructor(instructor);
 
-        flash.addFlashAttribute("lista","instructorList");
+        flash.addFlashAttribute("lista","/Technician/instructorList");
         flash.addFlashAttribute("mensaje","El instructor ha sido actualizado correctamente");
-        return "redirect:/Technician/actionConfirmation";
+        return "redirect:/actionConfirmation";
     }
     @RequestMapping(value="/addInstructor")
     public String addInstructor(Model model) {
@@ -397,18 +387,20 @@ public class TechnicianController {
         personDao.addPerson(person);
         Instructor instructor = pidto.getInstructor();
         instructor.setDni(person.getDni());
-        instructorDao.addInstructor(instructor);
+        instructorService.addInstructor(instructor);
 
-        flash.addFlashAttribute("lista","instructorList");
+        flash.addFlashAttribute("lista","/Technician/instructorList");
         flash.addFlashAttribute("mensaje","El instructor ha sido creado correctamente");
-        return "redirect:/Technician/actionConfirmation";
+        return "redirect:/actionConfirmation";
     }
 
     @RequestMapping(value="/apManagement/{idAsReq}", method = RequestMethod.GET)
     public String editAssistanceRequest(Model model, @PathVariable String idAsReq) {
-        Assistance_Request apReq = assistanceReqDao.getAssistanceRequest(idAsReq);
+        Assistance_Request apReq = assistanceRequestService.getAssistanceRequest(idAsReq);
+        if (apReq == null)
+            throw new OviException("La solicitud de asistencia personal no existe", "Solicitud no encontrada");
         if(apReq.getState().equals(State.CLOSED_WITH_CONTRACT)){
-            model.addAttribute("dto",contractDao.getContractByAP(idAsReq));
+            model.addAttribute("dto",contractService.getContractByAp(idAsReq));
         }
         model.addAttribute("assistanceRequest", apReq);
         return "Technician/apManagement";
@@ -420,7 +412,7 @@ public class TechnicianController {
     ) {
         if(assistanceRequest.getReason().isBlank())
             assistanceRequest.setReason(null);
-        assistanceReqDao.updateAssistanceRequest(assistanceRequest);
+        assistanceRequestService.updateAssistanceRequest(assistanceRequest);
 
         return "redirect:/Technician/assistanceRequestList";
     }
@@ -438,13 +430,13 @@ public class TechnicianController {
         }
         if(request.getReason().isBlank())
             request.setReason(null);
-        assistanceReqDao.updateAssistanceRequest(request);
+        assistanceRequestService.updateAssistanceRequest(request);
         return "redirect:/Technician/selectPapPati/" + request.getIdAsReq();
     }
     @RequestMapping(value="/selectPapPati/{idAsReq}", method = RequestMethod.GET)
     public String selectPapPati(Model model, @PathVariable String idAsReq, HttpSession session) {
 
-        ArrayList<PersonPapPatiDTO> recomendados = listPapPatiSelService.listCompatiblePapPati(idAsReq);
+        ArrayList<PersonPapPatiDTO> recomendados = assistanceRequestService.listCompatiblePapPati(idAsReq);
         List<PersonPapPatiDTO> todosLosPapPatis = personDao.getPapPatiPersons();
         List<String> seleccionadosDni = (List<String>) session.getAttribute("seleccionados");
 
@@ -462,9 +454,9 @@ public class TechnicianController {
         }
 
         RequestPersonUserDTO requestDTO = new RequestPersonUserDTO();
-        Assistance_Request ar = assistanceReqDao.getAssistanceRequest(idAsReq);
+        Assistance_Request ar = assistanceRequestService.getAssistanceRequest(idAsReq);
         requestDTO.setAssistanceRequest(ar);
-        requestDTO.setOviUser(oviUserDao.getOviUser(ar.getIdOviUser()));
+        requestDTO.setOviUser(oviUserService.getOviUser(ar.getIdOviUser()));
         requestDTO.setPerson(personDao.getPerson(ar.getIdOviUser()));
 
         model.addAttribute("request", requestDTO);
@@ -518,14 +510,14 @@ public class TechnicianController {
             selection.setIdPapPati(dni);
             selection.setIdAsReq(idAsReq);
 
-            selectionDao.addSelection(selection);
+            assistanceRequestService.addSelection(selection);
         }
 
         session.removeAttribute("seleccionados");
 
-        flash.addFlashAttribute("lista","assistanceRequestList");
+        flash.addFlashAttribute("lista","/Technician/assistanceRequestList");
         flash.addFlashAttribute("mensaje","Se han enviado los candidatos correctamente");
-        return "redirect:/Technician/actionConfirmation";
+        return "redirect:/actionConfirmation";
     }
     @PostMapping("/apManagement/reject")
     public String rejectRequest(@ModelAttribute("assistanceRequest") Assistance_Request request,
@@ -537,10 +529,10 @@ public class TechnicianController {
             request.setState(State.PENDING.name());
             return "Technician/apManagement";
         }
-        assistanceReqDao.updateAssistanceRequest(request);
-        flash.addFlashAttribute("lista","assistanceRequestList");
+        assistanceRequestService.updateAssistanceRequest(request);
+        flash.addFlashAttribute("lista","/Technician/assistanceRequestList");
         flash.addFlashAttribute("mensaje","Se ha rechazado la asistencia correctamente");
-        return "redirect:/Technician/actionConfirmation";
+        return "redirect:/actionConfirmation";
     }
 
 
@@ -553,7 +545,7 @@ public class TechnicianController {
     public String processAddActivity(@ModelAttribute("activity") Activity activity,
                                      BindingResult bindingResult, RedirectAttributes flash) {
 
-        if(instructorDao.getInstructor(activity.getIdInstructor()) == null){
+        if(instructorService.getInstructor(activity.getIdInstructor()) == null){
             bindingResult.rejectValue("idInstructor", "nonExistent", "El instructor especificado no existe en la base de datos");
         }
         activityValidator.validate(activity, bindingResult);
@@ -562,16 +554,17 @@ public class TechnicianController {
 
         activity.setIdActivity(cg.generateCode("ACT"));
         activityAttendanceService.addActivity(activity);
-        flash.addFlashAttribute("lista","activityList");
+        flash.addFlashAttribute("lista","/Technician/activityList");
         flash.addFlashAttribute("mensaje","La actividad ha sido creada correctamente");
-        return "redirect:/Technician/actionConfirmation";
+        return "redirect:/actionConfirmation";
 
     }
 
     @RequestMapping(value="/activityManagement/{idActivity}", method = RequestMethod.GET)
     public String editActivity(Model model, @PathVariable String idActivity) {
         Activity activity = activityAttendanceService.getActivity(idActivity);
-
+        if(activity == null)
+            throw new OviException("La acitivdad con id: " +idActivity+" no existe","Actividad no encontrado");
         model.addAttribute("activity", activity);
         return "Technician/activityManagement";
     }
@@ -580,16 +573,16 @@ public class TechnicianController {
     public String processUpdateSubmitActivity(  @ModelAttribute ("activity") Activity activity,
                                                 BindingResult bindingResult, RedirectAttributes flash
     ) {
-        if(instructorDao.getInstructor(activity.getIdInstructor()) == null){
+        if(instructorService.getInstructor(activity.getIdInstructor()) == null){
             bindingResult.rejectValue("idInstructor", "nonExistent", "El instructor especificado no existe en la base de datos");
         }
         activityValidator.validate(activity, bindingResult);
         if(bindingResult.hasErrors())
             return "Technician/activityManagement";
         activityAttendanceService.updateActivity(activity);
-        flash.addFlashAttribute("lista","activityList");
+        flash.addFlashAttribute("lista","/Technician/activityList");
         flash.addFlashAttribute("mensaje","La actividad ha sido actualizado correctamente");
-        return "redirect:/Technician/actionConfirmation";
+        return "redirect:/actionConfirmation";
 
     }
 
@@ -614,33 +607,19 @@ public class TechnicianController {
         activityAttendanceService.deleteActivity(idActivity);
         return "redirect:/Technician/activityList";
     }
-
-
-    private List<ContractDTO> sortContracts(List<ContractDTO> contracts, String sort) {
-        if (sort == null) return contracts;
-        switch (sort) {
-            case "dateAsc":
-                // Ordena por fecha más antigua primero
-                contracts.sort(Comparator.comparing(dto -> dto.getContract().getStartDate(),
-                        Comparator.nullsLast(Comparator.naturalOrder())));
-                break;
-            case "dateDesc":
-                // Ordena por fecha más reciente primero
-                contracts.sort(Comparator.comparing((ContractDTO dto) -> dto.getContract().getStartDate(),
-                        Comparator.nullsLast(Comparator.reverseOrder())));
-                break;
-        }
-        return contracts;
-    }
     @RequestMapping("/contractPersonList/{dni}")
     public String getContracts(@PathVariable String dni, Model model,
                                @RequestParam(value="sort",required = false, defaultValue = "dateDesc") String sort,
                                @RequestParam(value="urlPast") String urlPast) {
         if (personDao.getPerson(dni) != null){
-            model.addAttribute("contracts",sortContracts(contractDao.getContractsByPerson(dni),sort));
+            model.addAttribute("contracts",contractService.sortContracts(contractService.listContractPerson(dni),sort));
             model.addAttribute("currentSort", sort);
             model.addAttribute("urlPast",urlPast);
             model.addAttribute("dni",dni);
+            if(oviUserService.getOviUser(dni) != null)
+                model.addAttribute("rol", "OVI_USER");
+            else
+                model.addAttribute("rol","PAP_PATI");
             model.addAttribute("name",personDao.getPerson(dni).getName());
         }
         else

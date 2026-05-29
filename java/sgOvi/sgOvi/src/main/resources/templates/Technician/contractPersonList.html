@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-  <section class="form-container">
+  <section class="page-container">
 
     <header class="app-header">
       <h1 class="title">Lista de Contratos Asociados</h1>
@@ -41,7 +41,11 @@
         </thead>
         <tbody>
         <tr th:each="dto : ${contracts}">
-          <td><strong th:text="${dto.otherPersonName}"></strong></td>
+          <td>
+            <strong th:if="${rol == 'OVI_USER'}" th:text="${dto.namePapPati}"></strong>
+
+            <strong th:if="${rol == 'PAP_PATI'}" th:text="${dto.nameOviUser}"></strong>
+          </td>
           <td th:text="${dto.contract.startDate != null ? #temporals.format(dto.contract.startDate, 'dd/MM/yyyy') : '--/--/----'}"></td>
           <td th:text="${dto.contract.endDate != null ? #temporals.format(dto.contract.endDate, 'dd/MM/yyyy') : 'Vigente'}"></td>
           <td th:text="${dto.contract.salary != null ? dto.contract.salary + '€' : '-'}"></td>
@@ -57,15 +61,15 @@
       </table>
     </div>
 
-    <div th:if="${contracts == null or contracts.isEmpty()}" class="no-data-container">
-      <p class="description">No tienes contratos registrados en este momento.</p>
+    <div th:if="${contracts == null or contracts.isEmpty()}" class="empty-list-container">
+      <p class="empty-list-text">No tienes contratos registrados en este momento.</p>
     </div>
 
     <div class="content-footer">
       <a th:if="${session.rol == 'TECHNICIAN'}" th:href="@{/Technician/{urlPast} (urlPast=${urlPast})}"
          class="btn btn-secondary btn-icon"
-         title="Volver al menú">
-        Menú<i class="fi fi-rr-home"></i>
+         title="Volver al listado">
+        <i class="fi fi-rr-arrow-left"></i> Volver al listado
       </a>
     </div>
 

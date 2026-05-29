@@ -8,7 +8,7 @@
 <body>
 
 <div layout:fragment="content">
-    <div class="form-container" style="max-width: 1000px;">
+    <div class="page-container" style="max-width: 1000px;">
 
         <div class="button-group" style="margin-bottom: 20px;">
             <h1 class="title" style="margin: 0;">Mis candidatos para asistencia personal</h1>
@@ -64,40 +64,41 @@
                     <td>
                         <div class="actions-group" style="justify-content: center;">
                             <a th:href="@{/Assistance_Request/papPatiInfo/{idPapPati}(idPapPati=${dto.selection.idPapPati}, idAsReq= ${dto.selection.idAsReq})}"
-                               class="btn-logout" style="border-color: var(--primary-blue); color: var(--primary-blue); text-decoration: none; padding: 4px 8px;">
-                                ℹ️ Info
+                               class="btn btn-primary btn-icon" title="Ver los detalles del asistente personal">
+                                Detalles <i class="fi fi-rr-eye"></i>
                             </a>
 
                             <a th:href="@{/Assistance_Request/communication/{idSelection} (idSelection= ${dto.selection.idSelection}, idAsReq= ${dto.selection.idAsReq})}"
-                               class="btn-logout" style="border-color: #0369a1; color: #0369a1; text-decoration: none; padding: 4px 8px;">
-                                💬 Chat
+                               class="btn btn-primary btn-icon" title="Comunicarse con el asistente"> Chat <i class="fi fi-rr-comment-alt-dots"></i>
                             </a>
+                            <th:block th:if="${dto.selection.state.name() == 'APPROVED'}">
+                                <a th:href="@{/Contracts/add/{idSelection}(idSelection=${dto.selection.idSelection})}"
+                                   class="btn btn-primary btn-icon" title="Crear un contrato">
+                                    Añadir Contrato <i class="fi fi-rr-add-document"></i>
+                                </a>
+                            </th:block>
+
 
                             <form th:action="@{/Assistance_Request/approveSelection/{idSelection}(idSelection=${dto.selection.idSelection}, idAsReq=${dto.selection.idAsReq}, idPapPati= ${dto.selection.idPapPati})}" method="post" style="display:inline;">
-                                <button type="submit" class="btn-logout"
-                                        style="border-color: #166534; color: #166534; background: transparent; cursor: pointer;"
+                                <button type="submit" class="btn btn-approved btn-icon"
+                                        title="Aprobar Candidato"
                                         th:disabled="${dto.selection.state.name() == 'APPROVED'}"
                                         th:data-name="${dto.person.name}"
-                                        onclick="return confirm('¿Seguro que elegirás al Asistente Person con nombre: ' + this.getAttribute('data-name') + '? Los otros candidatos serán rechazados automáticamente');">
-                                    Aprobar
+                                        onclick="return confirm('¿Seguro que elegirás al Asistente Person con nombre: ' + this.getAttribute('data-name')">
+                                    Aprobar <i class="fi fi-rr-check"></i>
                                 </button>
                             </form>
 
                             <form th:action="@{/Assistance_Request/rejectSelection/{idSelection}(idSelection=${dto.selection.idSelection}, idAsReq=${dto.selection.idAsReq})}" method="post" style="display:inline;">
-                                <button type="submit" class="btn-logout"
-                                        style="cursor: pointer;"
-                                        th:disabled="${dto.selection.state.name() == 'REJECTED'}">
-                                    Rechazar
+                                <button type="submit" class="btn btn-danger btn-icon"
+                                        title="Rechazar Candidato"
+                                        th:disabled="${dto.selection.state.name() == 'REJECTED'}"
+                                        th:data-name="${dto.person.name}"
+                                        onclick="return confirm('¿Seguro que rechazarás al Asistente Person con nombre: ' + this.getAttribute('data-name')">>
+                                    Rechazar <i class="fi fi-rr-cross"></i>
                                 </button>
                             </form>
-                            <div class="actions-group">
-                                <th:block th:if="${dto.selection.state.name() == 'APPROVED'}">
-                                    <a th:href="@{/Contracts/add/{idSelection}(idSelection=${dto.selection.idSelection})}"
-                                       class="btn btn-primary">
-                                        Añadir Contrato <i class="fi fi-rr-document"></i>
-                                    </a>
-                                </th:block>
-                            </div>
+
                         </div>
                     </td>
                 </tr>
@@ -112,7 +113,7 @@
         </div>
 
         <div class="content-footer" style="margin-top: 30px;">
-            <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">← Volver al Menú</a>
+            <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary btn-icon" title="Volver al listado"> <i class="fi fi-rr-arrow-left"></i> Volver al Listado</a>
         </div>
     </div>
 </div>

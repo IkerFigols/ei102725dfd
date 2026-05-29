@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-  <div class="form-container">
+  <div class="page-container">
     <h1 class="title">Actualizar datos de la solicitud</h1>
     <p class="description">Modifica los campos necesarios para actualizar tu solicitud de asistencia personal.</p>
 
@@ -72,11 +72,12 @@
       </div>
 
       <div class="button-group" style="margin-top: 30px;">
-        <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">Cancelar</a>
-        <button type="submit" class="btn btn-primary"
+        <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary btn-icon" title="Volver al listado de asistencias"> <i class="fi fi-rr-arrow-left"></i> Cancelar y Volver</a>
+        <button type="submit" class="btn btn-secondary btn-icon"
+                title="Actualizar solicitud"
                 th:data-idOviUser="${assistanceRequest.idOviUser}"
                 onclick="return confirm('¿Seguro que deseas actualizar los cambios de la solicitud para el dni ' + this.getAttribute('data-idOviUser') + '?');"
-        >Actualizar Solicitud</button>
+        >Actualizar Solicitud <i class="fi fi-rr-edit"></i> </button>
       </div>
     </form>
   </div>

@@ -1,20 +1,19 @@
 package es.uji.ei1027.sgOvi.controller;
 
-import es.uji.ei1027.sgOvi.dao.PapPatiDao;
-import es.uji.ei1027.sgOvi.dao.PersonDao;
-import es.uji.ei1027.sgOvi.dao.SelectionDao;
+import es.uji.ei1027.sgOvi.controller.exception.OviException;
 import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.RolUser;
 import es.uji.ei1027.sgOvi.service.DTOs.AssistanceRequestSelectionDTO;
 import es.uji.ei1027.sgOvi.service.Services.AssistanceRequestService;
-import es.uji.ei1027.sgOvi.service.Services.ResourcesByDni;
+import es.uji.ei1027.sgOvi.service.Services.ContractService;
+import es.uji.ei1027.sgOvi.service.Services.PapPatiService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import es.uji.ei1027.sgOvi.dao.AssistanceReqDao;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Comparator;
 
@@ -27,22 +26,13 @@ public class PapPatiController {
 
 
     @Autowired
-    private PapPatiDao papPatiService;
-
-    @Autowired
-    private SelectionDao selectionDao;
-
-    @Autowired
-    private PersonDao personDao;
-
-    @Autowired
-    private ResourcesByDni resourcesByDni;
+    private PapPatiService papPatiService;
 
     @Autowired
     private AssistanceRequestService assistanceRequestService;
 
     @Autowired
-    private AssistanceReqDao assistanceReqDao;
+    private ContractService contractService;
 
     //Método para la ordenación
     private List<AssistanceRequestSelectionDTO> sortRequests(List<AssistanceRequestSelectionDTO> requests, String sort) {
@@ -73,8 +63,7 @@ public class PapPatiController {
     @RequestMapping("/contracts")
     public String listContracts(HttpSession session, Model model) {
         Person user = (Person) session.getAttribute("user");
-        model.addAttribute("contracts", resourcesByDni.getContractsByDni(user.getDni()));
-
+        model.addAttribute("contracts", contractService.listContractPerson(user.getDni()));
         model.addAttribute("userType", RolUser.PAP_PATI.name());
         return "Contracts/list";
     }
@@ -102,27 +91,18 @@ public class PapPatiController {
 
         return "Pap_Pati/APList";
     }
-
-    @RequestMapping("/messages")
-    public String listMessages(jakarta.servlet.http.HttpServletRequest request, Model model) {
-        String idSelection = request.getParameter("idSelection");
-
-        model.addAttribute("communications", assistanceRequestService.getComunicationsSelection(idSelection));
-        model.addAttribute("idSelection", idSelection);
-
-        return "Pap_Pati/messages";
-    }
-    @RequestMapping(value = "/papPatiAssistances", method = RequestMethod.POST)
-    public String viewAssistanceDetails(String idSelection, Model model) {
-
-        Selection selection = selectionDao.getSelection(idSelection);
-
-        Assistance_Request assistance = assistanceReqDao.getAssistanceRequest(selection.getIdAsReq());
-
-
-        Person oviUser = personDao.getPerson(assistance.getIdOviUser());
-
-
+    @RequestMapping("/papPatiAssistances/{idAsReq}")
+    public String viewAssistanceDetails(@PathVariable String idAsReq, @RequestParam("idSelection") String idSelection, Model model, HttpSession session) {
+        Selection selection = assistanceRequestService.getSelection(idSelection);
+        if(selection == null)
+            throw new OviException("La selección no existe","Selección no encontrada");
+        Assistance_Request assistance = assistanceRequestService.getAssistanceRequest(idAsReq);
+        if(assistance == null)
+            throw new OviException("La solicitud de asistencia personal no existe", "Solicitud de Asistencia personal no encontrada");
+        Person oviUser = papPatiService.getPerson(assistance.getIdOviUser());
+        Person user = (Person) session.getAttribute("user");
+        if(!selection.getIdPapPati().equals(user.getDni()))
+            throw new OviException("No estas asociado a esta solicitud", "Acceso no autorizado") ;
         model.addAttribute("assistance", assistance);
         model.addAttribute("selection", selection);
         model.addAttribute("oviUserName", (oviUser != null) ? oviUser.getName() : "--------------");

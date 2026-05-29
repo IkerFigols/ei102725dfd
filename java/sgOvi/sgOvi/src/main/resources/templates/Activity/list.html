@@ -9,20 +9,14 @@
 <body>
 
 <div layout:fragment="content">
-  <section class="form-container">
+  <section class="page-container">
 
     <header class="app-header">
       <h1 class="title">Mis Actividades</h1>
       <p class="description">Gestione las actividades en las que participa.</p>
     </header>
 
-    <div th:if="${param.status != null and param.status[0] == 'success_unsub'}" style="text-align: center; margin-bottom: 25px;">
-        <span class="status-badge status-approved" style="display: inline-block; padding: 10px 20px; font-size: 15px;">
-            ¡Te has dado de baja de la actividad correctamente!
-        </span>
-    </div>
-
-    <form th:action="@{/Activity/list}" method="get" class="filter-bar" th:if="${activities != null and !activities.isEmpty()}">
+    <form th:action="@{/Activity/list}" method="get" class="filter-bar" >
       <div class="filter-group">
         <label for="sort">Ordenar por:</label>
         <select name="sort" id="sort" class="filter-select" onchange="this.form.submit()">
@@ -40,7 +34,7 @@
           <th>Título</th>
           <th>Tipo</th>
           <th>Fecha</th>
-          <th class="text-right">Acción</th>
+          <th style="text-align: center;">Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -50,15 +44,15 @@
             <span th:text="${activity.type.getDescription()}"></span>
           </td>
           <td th:text="${#temporals.format(activity.date, 'dd/MM/yyyy')}"></td>
-          <td class="text-right">
-            <div class="actions-group">
+          <td>
+            <div class="actions-group-centered">
               <a th:href="@{/Activity/infoActivity/{id}(id=${activity.idActivity})}"
                  class="btn btn-primary btn-icon" title="Ver actividad">
                 Detalles <i class="fi fi-rr-eye"></i>
               </a>
               <a th:href="@{/Activity/unsubscription/{id}(id=${activity.idActivity})}"
-                 class="btn btn-secondary btn-icon" title="Darse de baja">
-                Baja <i class="fi fi-rr-cross-small"></i>
+                 class="btn btn-primary btn-icon" title="Darse de baja">
+                Baja <i class="fi fi-rr-cross"></i>
               </a>
             </div>
           </td>
@@ -67,8 +61,8 @@
       </table>
     </div>
 
-    <div th:if="${activities == null or activities.isEmpty()}" class="no-data-container">
-      <p class="description">No tienes inscripciones activas en este momento.</p>
+    <div th:if="${activities == null or activities.isEmpty()}" class="empty-list-container">
+      <p class="empty-list-text">No tienes inscripciones activas en este momento.</p>
     </div>
 
     <div class="content-footer">
@@ -76,15 +70,15 @@
         <a th:if="${session.rol == 'OVI_USER'}" th:href="@{/Ovi_User/menuOviUser}"
            class="btn btn-secondary btn-icon"
            title="Volver al menú">
-          Menú<i class="fi fi-rr-home"></i>
+          Volver al Menú<i class="fi fi-rr-home"></i>
         </a>
         <a th:if="${session.rol == 'PAP_PATI'}" th:href="@{/Pap_Pati/menuPapPati}"
            class="btn btn-secondary btn-icon"
            title="Volver al menú">
-          Menú<i class="fi fi-rr-home"></i>
+          Volver al Menú<i class="fi fi-rr-home"></i>
         </a>
       </div>
-      <a th:href="@{/Activity/listAll}" class="btn btn-primary">Explorar más actividades</a>
+      <a th:href="@{/Activity/listAll}" class="btn btn-secondary btn-icon" title="Ver todas las actividades"> Explorar más actividades <i class="fi fi-rr-binoculars"></i></a>
     </div>
 
   </section>

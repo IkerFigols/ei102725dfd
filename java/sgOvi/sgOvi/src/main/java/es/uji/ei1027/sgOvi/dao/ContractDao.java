@@ -99,7 +99,7 @@ public class ContractDao {
     }
 
     public List<ContractDTO> getContractsByPerson(String dni) {
-        String sql = "SELECT c.*, pUser.name AS nameUser, pPap.name AS namePap, NULL AS dni " +
+        String sql = "SELECT c.*, pUser.name AS nameUser, pPap.name AS namePap, ar.idOviUser AS dni " +
                 "FROM Contract c " +
                 "JOIN Selection s ON c.idSelection = s.idSelection " +
                 "LEFT JOIN Assistance_Request ar ON s.idAsReq = ar.idAsReq " +

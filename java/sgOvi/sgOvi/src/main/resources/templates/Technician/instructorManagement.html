@@ -9,8 +9,8 @@
 </head>
 <body class="main-content">
 
-<div class="page-container" layout:fragment="content">
-    <div class="form-container">
+<div layout:fragment="content">
+    <div class="page-container">
         <h1 class="title">Editar Instructor/a</h1>
         <p class="description">Actualice la información profesional del instructor seleccionado.</p>
 
@@ -27,20 +27,19 @@
                 <div th:if="${#fields.hasErrors('expertise')}" th:errors="*{expertise}" class="error-text"></div>
             </div>
 
-            <div class="activities-actions">
+            <div class="content-footer">
+                <a th:href="@{/Technician/instructorList}" class="btn btn-secondary btn-icon" title="Volver al listado de instructores"><i class="fi fi-rr-arrow-left"></i> Volver al listado</a>
                 <button type="submit"
-                        class="btn btn-primary"
+                        class="btn btn-secondary btn-icon" title="Actualizar instructor"
                         th:data-dni="${instructor.dni}"
                         onclick="return confirm('¿Seguro que deseas guardar los cambios para el instructor con dni ' + this.getAttribute('data-dni') + '?');">
-                    Guardar cambios
+                    Actualizar Instructor <i class="fi fi-rr-edit"></i>
                 </button>
             </div>
 
         </form>
 
-        <div class="content-footer">
-            <a th:href="@{/Technician/instructorList}" class="btn btn-secondary">Volver a la lista</a>
-        </div>
+
     </div>
 </div>
 

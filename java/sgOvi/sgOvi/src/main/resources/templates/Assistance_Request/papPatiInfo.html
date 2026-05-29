@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div class="form-container" layout:fragment="content">
+<div class="page-container" layout:fragment="content">
     <h1 class="title" style="font-size: 24px;">Perfil detallado del Asistente</h1>
     <p class="description">Revisa la información completa antes de iniciar una comunicación.</p>
 
@@ -95,7 +95,7 @@
     </div>
 
     <div class="button-group">
-        <a th:href="@{/Assistance_Request/papPatiSelection/{idAsReq} (idAsReq= ${idAsReq})}" class="btn btn-secondary">← Volver al listado</a>
+        <a th:href="@{/Assistance_Request/papPatiSelection/{idAsReq} (idAsReq= ${idAsReq})}" class="btn btn-secondary btn-icon" title="Volver al listado de selecciones"> <i class="fi fi-rr-arrow-left"></i> Volver al listado</a>
 
     </div>
 </div>

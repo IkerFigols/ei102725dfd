@@ -8,10 +8,8 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
-<main class="main-content" layout:fragment="content">
-    <div class="page-container">
-
+<div layout:fragment="content">
+    <div class="page-container"  style="max-width: 1100px">
         <h1 class="title">Lista de Actividades</h1>
         <p class="description">Gestione las actividades del sistema desde este panel centralizado.</p>
         <form th:action="@{/Technician/activityList}" th:object="${filter}" method="post" class="filter-bar">
@@ -35,8 +33,8 @@
                 </select>
             </div>
         </form>
-        <div class="table-responsive">
-            <table class="table-custom">
+        <div class="table-responsive" th:if="${!activities.isEmpty()}">
+            <table class="table-custom" >
                 <thead>
                 <tr>
                     <th>Id Actividad</th>
@@ -59,21 +57,21 @@
                     <td th:text="${activity.date}"></td>
                     <td th:text="${activity.address}"></td>
                     <td>
-                        <div class="actions-group" style="justify-content: left;">
-                            <a class="btn btn-primary"
+                        <div class="actions-group">
+                            <a class="btn btn-primary btn-icon" title="Editar la actividad"
                                th:href="@{/Technician/activityManagement/{idActivity}(idActivity=${activity.getIdActivity})}">
-                                Editar
+                                Editar <i class="fi fi-rr-edit"></i>
                             </a>
 
-                            <a class="btn btn-primary"
+                            <a class="btn btn-primary btn-icon" title="Borrar la actividad"
                                th:href="@{/Technician/activityList/delete/{idActivity}(idActivity=${activity.getIdActivity})}"
                                th:data-tittle="${activity.tittle}"
                                onclick="return confirm('¿Seguro que deseas eliminar la actividad: ' + this.getAttribute('data-tittle') + '?');">
-                                Borrar
+                                Borrar <i class="fi fi-rr-cross"></i>
                             </a>
-                            <a class="btn btn-primary"
+                            <a class="btn btn-primary btn-icon" title="Ver los participantes de la actividad"
                                th:if="${activity.getType.name().equals('TRAINING')}"
-                               th:href="@{/Technician/activityList/participants/{idActivity}(idActivity=${activity.getIdActivity})} ">Participantes
+                               th:href="@{/Technician/activityList/participants/{idActivity}(idActivity=${activity.getIdActivity})} ">Participantes <i class="fi fi-rr-eye"></i>
                             </a>
                         </div>
                     </td>
@@ -81,15 +79,15 @@
                 </tbody>
             </table>
         </div>
-        <div th:if="${#lists.isEmpty(activities)}" style="text-align: center; padding: 40px;">
-            <p class="description">No se han encontrado actividades con los filtros de búsqueda.</p>
+        <div th:if="${#lists.isEmpty(activities)}" class="empty-list-container">
+            <p class="empty-list-text">No se han encontrado actividades con los filtros de búsqueda.</p>
         </div>
         <div class="content-footer">
-            <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
-            <a href="/Technician/addActivity" class="btn btn-primary">Añadir Nueva Actividad</a>
+            <a href="/Technician/menuTechnician" class="btn btn-secondary" title="Volver al menu">Volver al Menú <i class="fi fi-rr-home"></i></a>
+            <a href="/Technician/addActivity" class="btn btn-secondary" title="Añadir una nueva actividad">Añadir Nueva Actividad <i class="fi fi-rr-plus"></i></a>
         </div>
 
     </div>
-</main>
+</div>
 </body>
 </html>

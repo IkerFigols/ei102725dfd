@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-    <section class="form-container">
+    <section class="page-container">
         <header class="app-header">
             <h1 class="title">Modificar Contrato</h1>
             <p class="description">Actualice las condiciones del contrato seleccionado.</p>
@@ -52,10 +52,10 @@
 
             <div class="content-footer">
                 <div class="nav-back">
-                    <a th:href="@{/Contracts/list}" class="btn btn-secondary">Cancelar</a>
+                    <a th:href="@{/Contracts/list}" class="btn btn-secondary btn-icon" title="Volver a la lista de contratos"> <i class="fi fi-rr-arrow-left"></i> Cancelar y Volver</a>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                    Actualizar contrato
+                <button type="submit" class="btn btn-secondary btn-icon" title="Actualizar el contrato">
+                    Actualizar contrato <i class="fi fi-rr-edit"></i>
                 </button>
             </div>
         </form>

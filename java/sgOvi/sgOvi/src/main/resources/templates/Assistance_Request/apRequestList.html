@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-    <section class="form-container" style="max-width: 1000px;">
+    <section class="page-container" style="max-width: 1000px;">
 
         <header class="app-header">
             <h1 class="title">Mis solicitudes de asistencia personal</h1>
@@ -44,7 +44,7 @@
                 <tr>
                     <th>Título</th> <th>Fecha</th>
                     <th>Estado</th>
-                    <th>Acciones</th>
+                    <th style="text-align: center;">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -64,11 +64,16 @@
                     <td>
                         <div class="actions-group">
                             <a th:href="@{/Assistance_Request/details/{idAsReq} (idAsReq= ${assistanceRequest.idAsReq})}"
-                               class="btn btn-secondary" style="padding: 5px 10px;">Detalles</a>
+                               class="btn btn-primary btn-icon" style="padding: 5px 10px;" title="Ver detalles de la solicitud">Detalles <i class="fi fi-rr-eye"></i></a>
 
+                            <a th:if="${assistanceRequest.state.name() == 'PENDING'}" th:href="@{/Assistance_Request/delete/{idAsReq} (idAsReq= ${assistanceRequest.idAsReq})}"
+                               class="btn btn-primary btn-icon" style="padding: 5px 10px;" title="Eliminar solicitud"
+                               onclick="return confirm('¿Seguro que deseas solicitar la asistencia ?');">
+                                Eliminar <i class="fi fi-rr-cross"></i>
+                            </a>
                             <a th:if="${assistanceRequest.state.name() == 'APPROVED'}"
                                th:href="@{/Assistance_Request/papPatiSelection/{idAsReq} (idAsReq= ${assistanceRequest.idAsReq})}"
-                               class="btn btn-primary" style="padding: 5px 10px;">Elegir Asistente</a>
+                               class="btn btn-primary btn-icon" style="padding: 5px 10px;" title="Elegir asistente personal">Elegir Asistente  <i class="fi fi-rr-pencil"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -83,8 +88,8 @@
         </div>
 
         <div class="content-footer" style="margin-top: 30px;">
-            <a th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary">← Volver al Menú</a>
-            <a th:href="@{/Assistance_Request/requestAssistance}" class="btn btn-primary">Nueva Solicitud</a>
+            <a th:href="@{/Ovi_User/menuOviUser}" class="btn btn-secondary btn-icon" title="Volver al menu de usuario">Volver al Menú <i class="fi fi-rr-home"></i></a>
+            <a th:href="@{/Assistance_Request/requestAssistance}" class="btn btn-secondary btn-icon" title="Crear una nueva solicitud">Nueva Solicitud <i class="fi fi-rr-plus"></i></a>
         </div>
 
     </section>

@@ -10,7 +10,7 @@ public interface PapPatiService {
     void addPapPati(PapPati papPati);
     void addPerson(Person person);
     void updatePapPati(PapPati papPati);
-    Person getPerson(PapPati papPati);
+    Person getPerson(String dni);
     PapPati getPapPati(String dni);
 
     List<PersonPapPatiDTO> listByName(String stateSel, String sortSel);

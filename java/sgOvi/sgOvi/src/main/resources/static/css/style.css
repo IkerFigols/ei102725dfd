@@ -29,12 +29,26 @@
     --closed-bg: #DCF6FC;
     --closed-done-text: #175178;
     --closed-done-bg: #aaebfa;
-    --danger-red: #ef4444;
+    --danger-red: #D93B3B;
 }
 
 /* ==========================================================================
    2. BASE Y TIPOGRAFÍA
    ========================================================================== */
+h1 {
+    font-size: 2.2rem; /* Aprox 35px */
+    color: var(--primary-blue);
+}
+
+h2 {
+    font-size: 1.8rem; /* Aprox 28px */
+    color: var(--primary-blue);
+}
+
+h3 {
+    font-size: 1.4rem; /* Aprox 22px */
+    color: var(--text-main);
+}
 
 html, body { /* Ajuste para que el contenido ocupe el 100% de la altura de la ventana */
     height: 100%;
@@ -90,14 +104,14 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
     flex: 1 0 auto;
     width: 100%;
     display: block;
-    padding: 40px 20px;
+    padding:  30px 40px 20px 40px;
     box-sizing: border-box;
 }
 
-.form-container { /* Caja blanca con sombra para agrupar formularios y centrarlos */
+.page-container { /* Caja blanca con sombra para agrupar formularios y centrarlos */
     background: var(--bg-white);
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 30px;
@@ -149,19 +163,20 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
 .navbar { /* Barra de navegación superior pegajosa */
     background-color: var(--bg-white);
     border-bottom: 1px solid var(--border-gray);
-    padding: 10px 20px;
+    padding: 0 30px; /* ◄ CAMBIADO: 0 arriba/abajo para permitir que el botón toque los bordes */
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-.nav-container { /* Contenedor interno de la navbar para alinear logo y botones */
-    max-width: 1200px;
+.nav-container { /* Contenedor interno de la navbar */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; /* ◄ AÑADIDO: Fuerza a los hijos directos a estirarse verticalmente */
+    gap: 15px; /* ◄ AÑADE ESTA LÍNEA (Elige los píxeles de separación que más te gusten) */
 }
+
 
 .app-footer { /* Pie de página con fondo gris y borde superior */
     background-color: var(--bg-white);
@@ -253,11 +268,7 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
     display: flex;
     justify-content: center;
 }
-.page-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
+
 
 .menu-grid-centered {
     display: flex;
@@ -328,20 +339,27 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
     justify-content: center;
     gap: 8px;
 }
-.bton-icon i {
-    /*Para que el icono sea mas grande que el texto*/
+
+/* Corregido el typo y ajustado el line-height */
+.btn-icon i {
     font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    line-height: 1; /* Elimina el interlineado invisible que descoloca el icono */
+    transform: translateY(1px); /* Opcional: Si lo sigues viendo un píxel más arriba, esto lo baja sutilmente */
 }
 
 
 
-.nav-btn { /* Botón de navegación destacado para la barra superior */
-    display: inline-block;
-    padding: 8px 16px;
+.nav-btn { /* Botón de navegación destacado */
+    display: inline-flex;  /* ◄ CAMBIADO: De inline-block a inline-flex */
+    align-items: center;   /* ◄ AÑADIDO: Centra el texto verticalmente */
+    justify-content: center; /* ◄ AÑADIDO: Centra el texto horizontalmente */
+    padding: 8px 16px;       /* ◄ CAMBIADO: 0 arriba/abajo (el alto lo dará la barra) y más aire a los lados */
     background-color: var(--primary-blue);
     color: var(--bg-white) !important;
     text-decoration: none;
-    border-radius: 6px;
+    border-radius:6px;
     font-size: 14px;
     font-weight: 600;
     transition: all 0.3s ease;
@@ -401,15 +419,25 @@ body { /* Estilos base: fuente Segoe UI, fondo gris claro y estructura flex vert
 .btn-login-nav:hover { /* Hover para botón de login navbar */
     background-color: var(--primary-hover);
 }
-.assistanceRequest-btn-danger {
+.btn-danger {
     background-color: var(--danger-red);
     color: var(--bg-white);
     border: 1px solid var(--danger-red);
 }
 
-.assistanceRequest-btn-danger:hover {
+.btn-danger:hover {
     opacity: 0.9;
 }
+
+.btn-approved {
+    background-color: var(--success-text);
+    color: var(--bg-white);
+    border: 1px solid var(--success-text);
+}
+.btn-approved:hover {
+    opacity: 0.9;
+}
+
 
 /* ==========================================================================
    5. FORMULARIOS E INPUTS
@@ -474,10 +502,13 @@ select.textarea-field-small { /* Ajuste específico para que el elemento select 
    6. TABLAS Y DATOS
    ========================================================================== */
 
-.table-responsive { /* Contenedor con scroll horizontal para tablas en móviles */
+.table-responsive { /* Contenedor con scroll horizontal y vertical con altura fija */
     width: 100%;
+    max-height: 800px;
     overflow-x: auto;
+    overflow-y: auto;
     margin-top: 20px;
+    border-bottom: 1px solid var(--border-gray);
 }
 
 .table-custom { /* Estilo de tabla personalizada con fondo blanco */
@@ -507,6 +538,12 @@ select.textarea-field-small { /* Ajuste específico para que el elemento select 
 .actions-group { /* Agrupación horizontal de botones de acción dentro de una celda */
     display: flex;
     gap: 8px;
+    justify-content: left;
+}
+.actions-group-centered { /* Agrupación horizontal de botones de acción dentro de una celda */
+    display: flex;
+    gap: 8px;
+    justify-content: center;
 }
 
 /* ==========================================================================
@@ -667,16 +704,16 @@ select.textarea-field-small { /* Ajuste específico para que el elemento select 
    10. ICONOS Y LOGOS
    ========================================================================== */
 
-.nav-brand { /* Enlace y contenedor del logo en la barra de navegación */
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--primary-blue);
-    font-weight: bold;
-    font-size: 1.5rem;
-    gap: 12px;
-}
-
+.nav-brand {
+     display: flex;
+     align-items: center;
+     padding: 10px 0; /* ◄ AÑADIDO: Le devuelve el espacio vertical solo al logo */
+     text-decoration: none;
+     color: var(--primary-blue);
+     font-weight: bold;
+     font-size: 1.5rem;
+     gap: 12px;
+ }
 .nav-logo-small { /* Dimensionado para el logo en la navbar */
     height: 40px;
     width: auto;

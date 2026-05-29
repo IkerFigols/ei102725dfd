@@ -7,12 +7,11 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="main-content">
+<body>
 
-<div class="page-container" layout:fragment="content">
+<div class="page-container"layout:fragment="content">
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 class="title">Lista de Asistentes</h1>
-        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
     </div>
     <p class="description">Panel de control para la gestión de usuarios PAP/PATI y supervisión de sus estados de disponibilidad.</p>
 
@@ -39,7 +38,7 @@
 
     </form>
 
-    <div class="table-responsive">
+    <div class="table-responsive"th:if="${!papPatis.isEmpty()}">
         <table class="table-custom">
             <thead>
             <tr>
@@ -66,14 +65,14 @@
                     </span>
                 </td>
                 <td>
-                    <div class="actions-group" style="justify-content: center;">
-                        <a class="btn btn-primary"
+                    <div class="actions-group-centered" >
+                        <a class="btn btn-primary btn-icon" title="Gestionar Asistente Personal"
                            th:href="@{/Technician/papPatiManagement/{dni}(dni=${papPati.person.dni})}">
-                            Editar
+                            Gestionar <i class="fi fi-rr-edit"></i>
                         </a>
-                        <a class="btn btn-primary"
+                        <a class="btn btn-primary btn-icon" title="Ver contratos asociados"
                            th:href="@{/Technician/contractPersonList/{dni}(dni=${papPati.person.dni}, urlPast='papPatiList')}">
-                            Contratos
+                            Contratos <i class="fi fi-rr-document"></i>
                         </a>
                     </div>
                 </td>
@@ -82,11 +81,14 @@
         </table>
     </div>
 
-    <div th:if="${#lists.isEmpty(papPatis)}" style="text-align: center; padding: 40px;">
-        <p class="description">No hay asistentes que coincidan con los criterios de búsqueda.</p>
+    <div th:if="${#lists.isEmpty(papPatis)}" class="empty-list-container">
+        <p class="empty-list-text">No hay asistentes que coincidan con los criterios de búsqueda.</p>
     </div>
 
-    <div class="bottom-spacer"></div>
+    <div class="content-footer ">
+        <a href="/Technician/menuTechnician" class="btn btn-secondary btn-icon" title="Volver al menú del técnico"><i class="fi fi-rr-arrow-left"></i> Volver al Menú</a>
+    </div>
+
 </div>
 </body>
 </html>

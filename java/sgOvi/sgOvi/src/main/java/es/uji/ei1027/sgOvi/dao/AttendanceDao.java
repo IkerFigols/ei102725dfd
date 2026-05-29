@@ -88,6 +88,19 @@ public class AttendanceDao {
             return null;
         }
     }
+
+    public Attendance getAttendanceByUserAndActivity(String idActivity, String dni){
+        try{
+            String sql="SELECT idAtt, idOviUser, idPapPati, idActivity, attend\n" +
+                    "FROM Attendance\n" +
+                    "WHERE idActivity = ? \n" +
+                    "  AND (idOviUser = ? OR idPapPati = ?)";
+            return jdbcTemplate.queryForObject(sql,new AttendanceRowMapper(),idActivity,dni,dni);
+        }
+        catch(EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
     public void deleteAttendanceByUserAndActivity(String idActivity, String dni, RolUser role) {
         if ("OVI_USER".equals(role.name())) {
             jdbcTemplate.update(

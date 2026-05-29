@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-    <section class="form-container" style="max-width: 600px;">
+    <section class="menu-container">
         <header class="app-header" style="margin-bottom: 30px;">
             <h1 class="title">Panel de Administración</h1>
             <p class="description">Seleccione una categoría para gestionar los registros del sistema.</p>
@@ -25,8 +25,8 @@
 
         <footer style="margin-top: 40px;">
             <div style="display: flex; justify-content: space-between; width: 100%;">
-                <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
-                <a th:href="@{/logout}" class="btn btn-secondary">Cerrar sesión</a>
+                <a th:href="@{/}" class="btn btn-secondary btn-icon" title="Volver al inicio"><i class="fi fi-rr-arrow-left"></i> Inicio</a>
+                <a th:href="@{/logout}" class="btn btn-secondary btn-icon" title="Cerrar sesión">Cerrar sesión <i class="fi fi-rr-exit"></i> </a>
             </div>
         </footer>
     </section>

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 @Service
 public class ContractServiceImp implements ContractService{
@@ -56,7 +57,25 @@ public class ContractServiceImp implements ContractService{
     }
 
     @Override
-    public ContractDTO listContractByAp(String idAsReq) {
+    public ContractDTO getContractByAp(String idAsReq) {
         return contractDao.getContractByAP(idAsReq);
     }
+
+    public List<ContractDTO> sortContracts(List<ContractDTO> contracts, String sort) {
+        if (sort == null) return contracts;
+        switch (sort) {
+            case "dateAsc":
+                // Ordena por fecha más antigua primero
+                contracts.sort(Comparator.comparing(dto -> dto.getContract().getStartDate(),
+                        Comparator.nullsLast(Comparator.naturalOrder())));
+                break;
+            case "dateDesc":
+                // Ordena por fecha más reciente primero
+                contracts.sort(Comparator.comparing((ContractDTO dto) -> dto.getContract().getStartDate(),
+                        Comparator.nullsLast(Comparator.reverseOrder())));
+                break;
+        }
+        return contracts;
+    }
 }
+

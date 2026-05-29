@@ -20,18 +20,10 @@ public class ContractDTORowMapper implements RowMapper<ContractDTO> {
         contract.setSchedule(rs.getString("schedule"));
         contract.setIdSelection(rs.getString("idSelection"));
 
-
         String nameUser = rs.getString("nameUser");
         String namePap = rs.getString("namePap");
         String dni = rs.getString("dni");
 
-
-        String name = (nameUser != null) ? nameUser : ((namePap != null) ? namePap : "");
-
-
-        if (dni != null) {
-            return new ContractDTO(contract, name, dni);
-        }
-        return new ContractDTO(contract, name);
+        return new ContractDTO(contract, nameUser, namePap, dni);
     }
 }

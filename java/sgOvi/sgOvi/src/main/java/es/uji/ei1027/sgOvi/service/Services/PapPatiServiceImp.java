@@ -31,8 +31,8 @@ public class PapPatiServiceImp implements PapPatiService{
     }
 
     @Override
-    public Person getPerson(PapPati papPati) {
-        return personDao.getPerson(papPati.getDni());
+    public Person getPerson(String dni) {
+        return personDao.getPerson(dni);
     }
 
     @Override
@@ -54,21 +54,7 @@ public class PapPatiServiceImp implements PapPatiService{
         if (stateSel != null && !stateSel.equals("ALL")) {
             listaDTOs.removeIf(dto -> !dto.getPapPati().getState().name().equals(stateSel));
         }
-
-        if (sortSel != null) {
-            switch (sortSel) {
-                case "nameAsc":
-                    listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
-                    break;
-                case "nameDesc":
-                    listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
-                    listaDTOs.reversed();
-                    break;
-                case "dni":
-                    listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getDni();},String.CASE_INSENSITIVE_ORDER));
-                    break;
-            }
-        }
+        listaDTOs= orderList(listaDTOs,sortSel);
         return listaDTOs;
     }
 
@@ -81,7 +67,7 @@ public class PapPatiServiceImp implements PapPatiService{
                     break;
                 case "nameDesc":
                     listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getName();},String.CASE_INSENSITIVE_ORDER));
-                    listaDTOs.reversed();
+                    listaDTOs= listaDTOs.reversed();
                     break;
                 case "dni":
                     listaDTOs.sort(Comparator.comparing(personPapPatiDTO -> { return personPapPatiDTO.getPerson().getDni();},String.CASE_INSENSITIVE_ORDER));

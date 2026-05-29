@@ -4,8 +4,10 @@ import es.uji.ei1027.sgOvi.model.*;
 import es.uji.ei1027.sgOvi.model.enums.State;
 import es.uji.ei1027.sgOvi.service.DTOs.AssistanceRequestSelectionDTO;
 import es.uji.ei1027.sgOvi.service.DTOs.PapPatiSelectionDTO;
+import es.uji.ei1027.sgOvi.service.DTOs.PersonPapPatiDTO;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface AssistanceRequestService {
@@ -31,4 +33,8 @@ public interface AssistanceRequestService {
     public void updateAssistanceRequest(Assistance_Request assistanceRequest);
     public void addAssistanceRequest(Assistance_Request assistanceRequest);
     public List<Assistance_Request> getAssistanceRequestsByOviUser(String dni, State state);
+    public List<Assistance_Request> getAssistanceRequests();
+    public ArrayList<PersonPapPatiDTO> listCompatiblePapPati(String idAsReq);
+    List<Assistance_Request> sortAssistance(List<Assistance_Request> assistanceRequests, String sort);
+    List<PapPatiSelectionDTO> sortSelection(List<PapPatiSelectionDTO> papPatiSelectionDTOS, String sort);
 }

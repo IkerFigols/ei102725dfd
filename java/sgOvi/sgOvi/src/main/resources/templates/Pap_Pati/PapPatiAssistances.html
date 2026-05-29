@@ -10,7 +10,7 @@
 <body>
 
 <div layout:fragment="content">
-    <section class="form-container">
+    <section class="page-container">
         <header class="app-header">
             <h1 class="title">Detalles de la Asistencia</h1>
             <p class="description">Información detallada sobre la asignación seleccionada.</p>
@@ -46,11 +46,10 @@
         </div>
 
         <div class="button-group">
-            <a th:if="${selection.state.name() == 'APPROVED'}"
-               th:href="@{/Assistance_Request/communication/{idSelection}(idSelection=${selection.idSelection})}"
-               class="btn btn-primary">Chat</a>
+            <a th:href="@{/Pap_Pati/APList}" class="btn btn-secondary btn-icon" title="Volver al listado de las asistencias asociadas"> <i class="fi fi-rr-arrow-left"></i> Volver al listado</a>
+            <a th:href="@{/Assistance_Request/communication/{idSelection}(idSelection=${selection.idSelection}, idAsReq=${selection.idAsReq})}"
+               class="btn btn-secondary btn-icon">Chat <i class="fi fi-rr-comment-alt-dots"></i> </a>
 
-            <a th:href="@{/Pap_Pati/APList}" class="btn btn-secondary">Volver al listado</a>
         </div>
     </section>
 

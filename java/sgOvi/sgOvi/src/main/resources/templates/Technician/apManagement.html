@@ -7,9 +7,9 @@ layout:decorate="~{Fragments/base}">
   <meta charset="UTF-8" />
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="main-content">
+<body>
 
-<div class="form-container" layout:fragment="content">
+<div class="page-container" layout:fragment="content">
   <h1 class="title">Gestionar Petición de Asistencia</h1>
   <p class="description">Revise los detalles de la solicitud y tome una decisión administrativa.</p>
 
@@ -104,19 +104,20 @@ layout:decorate="~{Fragments/base}">
       </div>
 
       <div class="actions-group">
-        <button type="submit" th:formaction="@{/Technician/apManagement/accept}" class="btn btn-primary">
-          Aceptar Solicitud
+        <button type="submit" th:formaction="@{/Technician/apManagement/accept}" class="btn btn-approved btn-icon" title="Aceptar solicitud">
+          Aceptar Solicitud <i class="fi fi-rr-check"></i>
+
         </button>
-        <button type="submit"
+        <button type="submit" title="Rechazar solicitud"
                 th:formaction="@{/Technician/apManagement/reject}"
-                class="btn assistanceRequest-btn-danger"
+                class="btn btn-danger btn-icon"
                 onclick="return confirm('¿Seguro que deseas denegar esta solicitud de asistencia?')">
-          Denegar Solicitud
+          Denegar Solicitud <i class="fi fi-rr-cross"></i>
         </button>
       </div>
     </div>
 
-    <div class="detail-row" th:if="${assistanceRequest.getState().name() == 'CLOSED_WITH_CONTRACT'}">
+    <div class="detail-row" th:if="${assistanceRequest.getState().name() == 'CLOSED_WITH_CONTRACT' or assistanceRequest.getState().name() == 'CLOSED_WITH_CONTRACT_DONE' }">
       <div class="table-responsive" th:if="${dto != null}">
         <table class="table-custom">
           <thead>
@@ -131,7 +132,7 @@ layout:decorate="~{Fragments/base}">
           </thead>
           <tbody>
           <tr>
-            <td th:text="${dto.otherPersonName}"></td>
+            <td th:text="${dto.namePapPati}"></td>
             <td th:text="${dto.dni}"></td>
 
             <td th:text="${dto.contract.startDate != null ? #temporals.format(dto.contract.startDate, 'dd/MM/yyyy') : '--/--/----'}"></td>
@@ -152,7 +153,7 @@ layout:decorate="~{Fragments/base}">
   </form>
 
   <div class="content-footer">
-    <a th:href="@{/Technician/assistanceRequestList}" class="btn btn-secondary">Volver a la lista</a>
+    <a th:href="@{/Technician/assistanceRequestList}" class="btn btn-secondary btn-icon" title="Volver al listado de solicitudes"> <i class="fi fi-rr-arrow-left"></i> Volver al listado</a>
   </div>
 </div>
 

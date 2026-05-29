@@ -21,4 +21,9 @@ public interface ActivityAttendanceService {
     List<Activity> getInstructorActivities(String idInstructor);
     void unregisterUserFromActivity(String idActivity, String dni, RolUser role);
     List<Activity> getActivities();
+    List<Activity> getUserActivities(String dni);
+    List<Activity> getRecentActivities();
+    List<Attendance> getAttendancesFromActivity(String idActivity);
+    boolean isSuscribed(String idActivity, String dni);
+    List<Activity> sortActivities(List<Activity> activities, String sort);
 }

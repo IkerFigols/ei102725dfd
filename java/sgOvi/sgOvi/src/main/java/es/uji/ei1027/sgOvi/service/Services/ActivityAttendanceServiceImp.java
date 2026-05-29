@@ -7,9 +7,11 @@ import es.uji.ei1027.sgOvi.model.Activity;
 import es.uji.ei1027.sgOvi.model.Attendance;
 import es.uji.ei1027.sgOvi.model.enums.RolUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
-
+@Service
 public class ActivityAttendanceServiceImp implements ActivityAttendanceService{
 
     @Autowired
@@ -110,5 +112,42 @@ public class ActivityAttendanceServiceImp implements ActivityAttendanceService{
     @Override
     public List<Activity> getActivities() {
         return activityDao.getActivities();
+    }
+
+    @Override
+    public List<Activity> getUserActivities(String dni) {
+        return activityDao.getUserActivities(dni);
+    }
+
+    @Override
+    public List<Activity> getRecentActivities() {
+        return activityDao.getRecentActivities();
+    }
+
+    @Override
+    public List<Attendance> getAttendancesFromActivity(String idActivity) {
+        return attendanceDao.getAttendancesByActivity(idActivity);
+    }
+
+    @Override
+    public boolean isSuscribed(String idActivity, String dni) {
+        return attendanceDao.getAttendanceByUserAndActivity(idActivity,dni) != null;
+    }
+
+    @Override
+    public List<Activity> sortActivities(List<Activity> activities, String sort) {
+        if (sort == null) return activities;
+        switch (sort) {
+            case "dateAsc":
+                activities.sort(Comparator.comparing(Activity::getDate));
+                break;
+            case "dateDesc":
+                activities.sort(Comparator.comparing(Activity::getDate).reversed());
+                break;
+            case "titleAsc":
+                activities.sort(Comparator.comparing(Activity::getTittle, String.CASE_INSENSITIVE_ORDER));
+                break;
+        }
+        return activities;
     }
 }

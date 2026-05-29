@@ -7,12 +7,11 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="main-content">
+<body>
 <div class="page-container" layout:fragment="content">
-
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 class="title">Lista solicitudes de asistencia</h1>
-        <a href="/Technician/menuTechnician" class="btn btn-secondary">Volver al Menú</a>
+
     </div>
 
     <p class="description">Gestión y revisión de las peticiones de soporte técnico.</p>
@@ -39,7 +38,7 @@
         </div>
     </form>
 
-    <div class="table-responsive">
+    <div class="table-responsive" th:if="${!assistanceRequests.isEmpty()}">
         <table class="table-custom">
             <thead>
             <tr>
@@ -64,10 +63,10 @@
                     </span>
                 </td>
                 <td>
-                    <div class="actions-group" style="justify-content: center;">
-                        <a class="btn btn-primary"
+                    <div class="actions-group-centered">
+                        <a class="btn btn-primary btn-icon" title="Gestionar Solicitud"
                            th:href="@{/Technician/apManagement/{idAsReq}(idAsReq=${request.idAsReq})}">
-                            Editar
+                            Gestionar <i class="fi fi-rr-edit"></i>
                         </a>
                     </div>
                 </td>
@@ -76,11 +75,12 @@
         </table>
     </div>
 
-    <div th:if="${#lists.isEmpty(assistanceRequests)}" style="text-align: center; padding: 40px;">
-        <p class="description">No se han encontrado solicitudes con estos filtros.</p>
+    <div th:if="${#lists.isEmpty(assistanceRequests)}" class="empty-list-container">
+        <p class="empty-list-text">No se han encontrado solicitudes con estos filtros.</p>
     </div>
-
-    <div class="bottom-spacer"></div>
+    <div class="content-footer">
+        <a href="/Technician/menuTechnician" class="btn btn-secondary btn-icon" title="Volver al menú del técnico">Volver al Menú <i class="fi fi-rr-home"></i> </a>
+    </div>
 </div>
 </body>
 </html>

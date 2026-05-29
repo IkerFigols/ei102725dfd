@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-    <div class="form-container">
+    <div class="page-container">
         <h1 class="title">Nueva Solicitud de Asistencia</h1>
         <p class="description">Complete los campos para publicar su petición de asistencia personal.</p>
 
@@ -76,11 +76,12 @@
             </div>
 
             <div class="button-group">
-                <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary">Cancelar</a>
+                <a th:href="@{/Assistance_Request/apRequestList}" class="btn btn-secondary btn-icon" title="Volver al listado de asistencias personales"> <i class="fi fi-rr-arrow-left"></i> Cancelar y Volver</a>
                 <button type="submit"
-                        class="btn btn-primary"
+                        title="Solicitar la Asistencia Personal"
+                        class="btn btn-secondary btn-icon"
                         onclick="return confirm('¿Seguro que deseas solicitar la asistencia ?');">
-                    Solicitar Asistencia
+                    Solicitar Asistencia <i class="fi fi-rr-pencil"></i>
                 </button>
             </div>
         </form>

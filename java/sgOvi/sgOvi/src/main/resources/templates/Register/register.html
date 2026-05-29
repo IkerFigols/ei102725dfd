@@ -5,12 +5,14 @@
     <title>SgOvi - Registro</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="icon" type="image/png" th:href="@{/images/logo_ovi.png}">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+
 </head>
 <body>
 <div th:replace="~{Fragments/general_fragment :: navbar-simple}"></div>
 
 <main class="main-content">
-    <section class="form-container">
+    <section class="page-container">
         <header class="app-header" style="margin-bottom: 20px;">
             <h1 class="title">Registro de Usuario</h1>
             <p class="description">Introduce tus datos para formar parte de la comunidad OVI.</p>
@@ -106,13 +108,16 @@
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
-                <button type="submit" class="btn btn-primary" style="width: 200px;"
+                <button type="submit" class="btn btn-primary btn-icon" style="width: 200px;" title="Registrarse"
                         th:data-dni="${person.dni}"
                         onclick="return confirm('¿Seguro que deseas registrarte con el dni ' + this.getAttribute('data-dni') + '?');"
-                >Registrarse</button>
+                >Registrarse <i class="fi fi-rr-clipboard-list"></i>
+                </button>
                 <p style="margin-top: 15px; font-size: 13px;">¿Ya tienes cuenta? <a th:href="@{/login}" style="color: var(--primary-blue); font-weight: bold;">Inicia sesión</a></p>
             </div>
+
         </form>
+        <a th:href="@{/}" class="btn btn-secondary btn-icon"> <i class="fi fi-rr-arrow-left"></i> Volver al inicio</a>
     </section>
 </main>
 
