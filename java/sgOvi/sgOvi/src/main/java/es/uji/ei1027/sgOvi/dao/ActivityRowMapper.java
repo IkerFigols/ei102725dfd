@@ -21,7 +21,6 @@ public final class ActivityRowMapper implements RowMapper<Activity> {
         activity.setSponsor(rs.getString("sponsor"));
         activity.setIdInstructor(rs.getString("idInstructor"));
 
-        //arreglo para que sql no se enfade con Integer
         Object capacidad = rs.getObject("capacity");
         if (capacidad != null){
             activity.setCapacity((((Number) capacidad).intValue()));
