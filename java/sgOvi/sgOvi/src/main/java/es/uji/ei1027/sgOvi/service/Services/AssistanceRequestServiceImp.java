@@ -110,8 +110,7 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
     @Override
     public ArrayList<PersonPapPatiDTO> listCompatiblePapPati(String idAsReq) {
         Assistance_Request asReq = assistanceReqDao.getAssistanceRequest(idAsReq);
-        //DESCOMENTAR LA LINEA DE ABAJO CUANDO SEPAMOS SEGURO SI UN PATI PUEDE ASISTIR A UN ADULTO --> Recoedar volver a añadir el type a la consulta a la bbdd
-        //String type = ChronoUnit.YEARS.between(personDao.getPerson(asReq.getIdOviUser()).getBirthdayDate(), LocalDate.now()) >= 18 ? "PAP" : "PATI";
+        
         Boolean drivingLicense = asReq.getDrivingLicense();
         String province = asReq.getProvince();
         ShiftType shiftType = asReq.getShiftPreference();
