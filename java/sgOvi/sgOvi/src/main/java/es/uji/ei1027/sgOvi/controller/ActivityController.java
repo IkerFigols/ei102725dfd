@@ -119,7 +119,7 @@ public class ActivityController {
         RolUser role = RolUser.fromString((String) session.getAttribute("rol"));
 
         activityAttendanceService.unregisterUserFromActivity(idActivity, user.getDni(), role);
-        flash.addFlashAttribute("lista","/Activity/listAll");
+        flash.addFlashAttribute("lista","/Activity/list");
         flash.addFlashAttribute("mensaje","Te has dado de baja de la actividad correctamente");
         return "redirect:/actionConfirmation";
 
