@@ -11,7 +11,7 @@ CREATE TABLE Contract (
 	CONSTRAINT calt_contract UNIQUE (idSelection),
 	CONSTRAINT ca_contract FOREIGN KEY (idSelection) 
 		REFERENCES Selection(idSelection)
-		ON DELETE SET NULL
+		ON DELETE RESTRICT
 		ON UPDATE RESTRICT,
 	CONSTRAINT id_longitud_10 CHECK (length(idContract) = 9),
 	CONSTRAINT salario_positivo CHECK (salary > 0),
