@@ -59,8 +59,8 @@ layout:decorate="~{Fragments/base}">
 
     <div class="detail-row">
       <div class="detail-label">Preferencia de turno:</div>
-      <div class="detail-value" th:text="*{shiftPreference}"></div>
-      <input type="hidden" name="shiftPreference" th:value="*{shiftPreference != null ? shiftPreference.name() : ''}" />
+      <div class="detail-value" th:text="*{shiftPreference.getDescription()}"></div>
+      <input type="hidden" name="shiftPreference" th:value="*{shiftPreference != null ? shiftPreference.getDescription() : ''}" />
     </div>
 
     <div class="detail-row">
