@@ -1,7 +1,7 @@
 CREATE TABLE Assistance_Request(
 
 	idAsReq			VARCHAR(9),
-	data			DATE 			NOT NULL,
+	date			DATE 			NOT NULL,
     tittle          VARCHAR(50)     NOT NULL,
 	description 	VARCHAR(250)	NOT NULL,
 	idOviUser		VARCHAR(9) 		NOT NULL,
