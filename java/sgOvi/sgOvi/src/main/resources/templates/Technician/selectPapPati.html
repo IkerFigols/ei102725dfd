@@ -32,7 +32,7 @@
                     </div>
                     <div class="info-item">
                         <span class="label">Turno</span>
-                        <span class="value" th:text="*{assistanceRequest?.shiftPreference}"></span>
+                        <span class="value" th:text="*{assistanceRequest?.shiftPreference.getDescription()}"></span>
                     </div>
                     <div class="info-item">
                         <span class="label">Experiencia (Años)</span>
@@ -66,6 +66,8 @@
                             <th>Tipo</th>
                             <th>Edad</th>
                             <th>Experiencia</th>
+                            <th>Turno</th>
+                            <th>Carnet Conducir</th>
                             <th>Acción</th>
                         </tr>
                         </thead>
@@ -74,9 +76,11 @@
                             <td th:text="${sel.person?.dni}"></td>
                             <td th:text="${sel.person?.province}"></td>
                             <td th:text="${sel.person?.name} + ' ' + ${sel.person?.surname}"></td>
-                            <td><span class="status-badge badge-info" th:text="${sel.papPati?.type}"></span></td>
+                            <td th:text="${sel.papPati?.type}"></td>
                             <td th:text="${sel.person?.getAge()}"></td>
                             <td th:text="${sel.papPati?.experience}"></td>
+                            <td th:text="${sel.papPati?.shift.getDescription()}"></td>
+                            <td th:text="${sel.papPati?.drivingLicense ? 'Si' : 'No'}"></td>
                             <td>
                                 <a class="btn btn-danger btn-icon" title="Eliminar asistente de la lista"
                                    th:href="@{/Technician/selectPapPati/remove/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${sel.person.dni})}">
@@ -92,7 +96,9 @@
                     <p class="academic-text">Al confirmar, se enviará una notificación a los voluntarios seleccionados.</p>
                     <form th:action="@{/Technician/processSelection}" method="post">
                         <input type="hidden" name="idAsReq" th:value="${request.assistanceRequest.idAsReq}" />
-                        <button type="submit" class="btn btn-primary btn-icon">Confirmar y Guardar Selección <i class="fi fi-rr-check"></i> </button>
+                        <button type="submit" class="btn btn-primary btn-icon"
+                                onclick="return confirm('¿Seguro que deseas guardar la selección? Esta acción no se puede deshacer');">
+                            Confirmar y Guardar Selección <i class="fi fi-rr-check"></i> </button>
                     </form>
                 </div>
             </div>
@@ -109,6 +115,8 @@
                             <th>Tipo</th>
                             <th>Edad</th>
                             <th>Experiencia</th>
+                            <th>Turno</th>
+                            <th>Carnet Conducir</th>
                             <th>Acción</th>
                         </tr>
                         </thead>
@@ -117,9 +125,11 @@
                             <td th:text="${rec.person?.dni}"></td>
                             <td th:text="${rec.person?.name} + ' ' + ${rec.person?.surname}"></td>
                             <td th:text="${rec.person?.province}"></td>
-                            <td><span class="status-badge badge-info" th:text="${rec.papPati?.type}"></span></td>
+                            <td th:text="${rec.papPati?.type}"></td>
                             <td th:text="${rec.person?.getAge()}"></td>
                             <td th:text="${rec.papPati?.experience}"></td>
+                            <td th:text="${rec.papPati?.shift.getDescription()}"></td>
+                            <td th:text="${rec.papPati?.drivingLicense ? 'Si' : 'No'}"></td>
                             <td>
                                 <a class="btn btn-primary btn-icon" style="padding: 5px 15px; font-size: 12px;" title="Añadir asistente de las recomendaciones"
                                    th:href="@{/Technician/selectPapPati/add/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${rec.person.dni})}">
@@ -147,6 +157,8 @@
                             <th>Tipo</th>
                             <th>Edad</th>
                             <th>Experiencia</th>
+                            <th>Turno</th>
+                            <th>Carnet Conducir</th>
                             <th>Acción</th>
                         </tr>
                         </thead>
@@ -155,9 +167,11 @@
                             <td th:text="${pappati.person?.dni}"></td>
                             <td th:text="${pappati.person?.name} + ' ' + ${pappati.person?.surname}"></td>
                             <td th:text="${pappati.person?.province}"></td>
-                            <td><span class="status-badge badge-info" th:text="${pappati.papPati?.type}"></span></td>
+                            <td th:text="${pappati.papPati?.type}"></td>
                             <td th:text="${pappati.person?.getAge()}"></td>
                             <td th:text="${pappati.papPati?.experience}"></td>
+                            <td th:text="${pappati.papPati?.shift.getDescription()}"></td>
+                            <td th:text="${pappati.papPati?.drivingLicense ? 'Si' : 'No'}"></td>
                             <td>
                                 <a class="btn btn-primary btn-icon" style="padding: 5px 15px; font-size: 12px;" title="Añadir asistente de la lista total de asistentes"
                                    th:href="@{/Technician/selectPapPati/add/{idAsReq}/{dni}(idAsReq=${request.assistanceRequest.idAsReq}, dni=${pappati.person.dni})}">

@@ -14,32 +14,73 @@
         <h1 class="title">Editar Instructor/a</h1>
         <p class="description">Actualice la información profesional del instructor seleccionado.</p>
 
-        <form th:action="@{/Technician/instructorManagement/update}" th:object="${instructor}" method="post">
+        <form th:action="@{/Technician/instructorManagement/update}" th:object="${dto}" method="post">
 
             <div class="textarea-container">
                 <label class="detail-label" for="dni">DNI (No editable):</label>
-                <input type="text" id="dni" name="dni" th:value="*{dni}" class="textarea-read-only" readonly />
+                <input type="text" id="dni" name="person.dni" th:value="*{person.dni}" class="textarea-read-only" readonly />
+            </div>
+
+            <input type="hidden" th:field="*{person.password}">
+            <input type="hidden" th:field="*{person.city}">
+            <input type="hidden" th:field="*{person.province}">
+            <input type="hidden" th:field="*{person.dataProtection}">
+            <input type="hidden" th:field="*{person.preference}">
+
+            <div class="textarea-container">
+                <label class="detail-label" for="name">Nombre completo:</label>
+                <input id="name" type="text" th:field="*{person.name}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.name')}" th:errors="*{person.name}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
             </div>
 
             <div class="textarea-container">
+                <label class="detail-label" for="surname">Apellidos:</label>
+                <input id="surname" type="text" th:field="*{person.surname}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.surname')}" th:errors="*{person.surname}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="phoneNumber">Número de Telefono:</label>
+                <input id="phoneNumber" type="text" th:field="*{person.phoneNumber}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.phoneNumber')}" th:errors="*{person.phoneNumber}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="email">Email: </label>
+                <input id="email" type="text" th:field="*{person.email}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.email')}" th:errors="*{person.email}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+            <div class="textarea-container">
+                <label for="birthdaydate" class="detail-label" style="font-size: 14px;">Fecha de nacimiento:</label>
+                <input id="birthdaydate" type="date" th:field="*{person.birthdayDate}" class="textarea-field-small">
+                <div th:if="${#fields.hasErrors('person.birthdayDate')}" th:errors="*{person.birthdayDate}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+            </div>
+
+            <div class="textarea-container">
+                <label class="detail-label" for="gender">Tipo:</label>
+                <select id="gender" name="person.gender" class="textarea-field-small">
+                    <option value="MALE" th:selected="*{person.gender.name() == 'MALE'}">Mascúlino</option>
+                    <option value="FEMALE" th:selected="*{person.gender.name() == 'FEMALE'}">Femenino</option>
+                    <option value="UNDEFINED" th:selected="*{person.gender.name() == 'UNDEFINED'}">Otro</option>
+                </select>
+            </div>
+            <div class="textarea-container">
                 <label class="detail-label" for="expertise">Especialidad:</label>
-                <input type="text" id="expertise" name="expertise" th:value="*{expertise}" class="textarea-field-small" placeholder="Ej: Fisioterapia, Geriatría..." />
-                <div th:if="${#fields.hasErrors('expertise')}" th:errors="*{expertise}" class="error-text"></div>
+                <input type="text" id="expertise" name="instructor.expertise" th:value="*{instructor.expertise}" class="textarea-field-small" placeholder="Ej: Fisioterapia, Geriatría..." />
+                <div th:if="${#fields.hasErrors('instructor.expertise')}" th:errors="*{instructor.expertise}" class="error-text"></div>
             </div>
 
             <div class="content-footer">
                 <a th:href="@{/Technician/instructorList}" class="btn btn-secondary btn-icon" title="Volver al listado de instructores"><i class="fi fi-rr-arrow-left"></i> Volver al listado</a>
                 <button type="submit"
                         class="btn btn-secondary btn-icon" title="Actualizar instructor"
-                        th:data-dni="${instructor.dni}"
+                        th:data-dni="${dto.instructor.dni}"
                         onclick="return confirm('¿Seguro que deseas guardar los cambios para el instructor con dni ' + this.getAttribute('data-dni') + '?');">
                     Actualizar Instructor <i class="fi fi-rr-edit"></i>
                 </button>
             </div>
 
         </form>
-
-
     </div>
 </div>
 

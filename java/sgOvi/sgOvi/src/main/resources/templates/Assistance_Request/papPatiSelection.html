@@ -82,7 +82,7 @@
                             <form th:action="@{/Assistance_Request/approveSelection/{idSelection}(idSelection=${dto.selection.idSelection}, idAsReq=${dto.selection.idAsReq}, idPapPati= ${dto.selection.idPapPati})}" method="post" style="display:inline;">
                                 <button type="submit" class="btn btn-approved btn-icon"
                                         title="Aprobar Candidato"
-                                        th:disabled="${dto.selection.state.name() == 'APPROVED'}"
+                                        th:disabled="${!selectionsApprobed.isEmpty()}"
                                         th:data-name="${dto.person.name}"
                                         onclick="return confirm('¿Seguro que elegirás al Asistente Person con nombre: ' + this.getAttribute('data-name')">
                                     Aprobar <i class="fi fi-rr-check"></i>

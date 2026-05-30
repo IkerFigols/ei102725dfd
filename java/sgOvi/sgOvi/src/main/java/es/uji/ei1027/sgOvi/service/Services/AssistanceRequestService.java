@@ -37,4 +37,5 @@ public interface AssistanceRequestService {
     public ArrayList<PersonPapPatiDTO> listCompatiblePapPati(String idAsReq);
     List<Assistance_Request> sortAssistance(List<Assistance_Request> assistanceRequests, String sort);
     List<PapPatiSelectionDTO> sortSelection(List<PapPatiSelectionDTO> papPatiSelectionDTOS, String sort);
+    List<Selection> getSelectionApprovedByAp(String idAsReq);
 }

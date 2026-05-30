@@ -14,12 +14,17 @@
 
         <form th:action="@{/profile}" th:object="${dto}" method="post">
 
-            <input type="hidden" th:field="*{person.dni}">
+
             <input type="hidden" th:field="*{person.password}">
             <input type="hidden" th:field="*{person.city}">
             <input type="hidden" th:field="*{person.province}">
             <input type="hidden" th:field="*{person.dataProtection}">
             <input type="hidden" th:field="*{person.preference}">
+
+            <div class="textarea-container">
+                <label class="detail-label" for="dni">DNI (No editable):</label>
+                <input type="text" id="dni" name="person.dni" th:value="*{person.dni}" class="textarea-read-only" readonly />
+            </div>
 
             <div class="textarea-container">
                 <label class="detail-label" for="name">Nombre completo:</label>

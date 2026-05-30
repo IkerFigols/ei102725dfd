@@ -48,10 +48,11 @@ public class AssistanceRequestController {
         filterState.setStateSel(state);
         filterState.setSortSel(sort);
         List<PapPatiSelectionDTO> papPatiSelectionDTO = assistanceRequestService.getPapPatisSelectionDTO(idAsReq, state);
-
+        List<Selection> selectionsApproved = assistanceRequestService.getSelectionApprovedByAp(idAsReq);
         model.addAttribute("idAsReq",idAsReq);
         model.addAttribute("dtos", assistanceRequestService.sortSelection(papPatiSelectionDTO,sort));
         model.addAttribute("filter",filterState);
+        model.addAttribute("selectionsApprobed",selectionsApproved);
         return "Assistance_Request/papPatiSelection";
     }
 
@@ -222,7 +223,7 @@ public class AssistanceRequestController {
 
         String rol = (String) session.getAttribute("rol");
         if(rol.equals(RolUser.OVI_USER.name()))
-            model.addAttribute("nameP",assistanceRequestService.getPerson(selection.getIdPapPati()).getName());
+            model.addAttribute("nameP",assistanceRequestService.getPerson(selection.getIdPapPati())     .getName());
         else
             model.addAttribute("nameP",assistanceRequestService.getPerson(ap.getIdOviUser()).getName());
         model.addAttribute("communications",assistanceRequestService.getComunicationsSelection(idSelection));
@@ -235,9 +236,8 @@ public class AssistanceRequestController {
     }
     @RequestMapping(value = "/communication/add", method = RequestMethod.POST)
     public String proccessAndSubmitCommunication(@ModelAttribute("comunication") Communication communication ,BindingResult bindingResult,
-                                                 @RequestParam("idAsReq") String idAsReq, HttpSession session){
-        if(bindingResult.hasErrors())
-            return "Assistance_Request/communication";
+                                                 @RequestParam("idAsReq") String idAsReq, HttpSession session, Model model){
+
         String idSelection = communication.getIdSelection();
         String information="";
         String role = (String) session.getAttribute("rol");
@@ -245,6 +245,27 @@ public class AssistanceRequestController {
             information = "OviUser: " + communication.getInformation();
         else
             information = "PapPati: "+ communication.getInformation();
+        if (bindingResult.hasErrors() || information.length() >= 200) {
+
+            if (information.length() >= 200) {
+                bindingResult.rejectValue("information", "required",
+                        "El mensaje es muy largo, debe ser menor a 189 caracteres.");
+            }
+            Assistance_Request ap = assistanceRequestService.getAssistanceRequest(idAsReq);
+            Selection selection = assistanceRequestService.getSelection(idSelection);
+
+            if (role.equals(RolUser.OVI_USER.name()))
+                model.addAttribute("nameP", assistanceRequestService.getPerson(selection.getIdPapPati()).getName());
+            else
+                model.addAttribute("nameP", assistanceRequestService.getPerson(ap.getIdOviUser()).getName());
+
+            model.addAttribute("communications", assistanceRequestService.getComunicationsSelection(idSelection));
+            model.addAttribute("idSelection", idSelection);
+            model.addAttribute("idAsReq", idAsReq);
+            model.addAttribute("comunication", communication);
+
+            return "Assistance_Request/communication";
+        }
 
         communication.setInformation(information);
         communication.setDate(LocalDate.now());

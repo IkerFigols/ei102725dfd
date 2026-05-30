@@ -157,4 +157,11 @@ public class SelectionDao {
             return dto;
         }, params.toArray());
     }
+    public List<Selection> getSelectionApprovedFromAp(String idAsReq) {
+        try {
+            return jdbcTemplate.query("SELECT * FROM Selection WHERE idAsReq =? AND state= 'APPROVED'", new SelectionRowMapper(), idAsReq);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
 }

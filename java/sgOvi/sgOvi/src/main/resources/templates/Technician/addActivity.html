@@ -68,7 +68,8 @@
 
       <div class="content-footer">
         <a th:href="@{/Technician/activityList}" class="btn btn-secondary btn-icon" title="Volver al listado de actividades"><i class="fi fi-rr-arrow-left"></i> Volver a la lista</a>
-        <button type="submit" class="btn btn-secondary btn-icon" title="Crear actividad">Crear Actividad <i class="fi fi-rr-plus"></i> </button>
+        <button type="submit" class="btn btn-secondary btn-icon" title="Crear actividad"
+                onclick="return confirm('Seguro que quieres crear la actividad?');">Crear Actividad <i class="fi fi-rr-plus"></i> </button>
       </div>
     </form>
 

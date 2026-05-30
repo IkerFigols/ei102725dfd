@@ -130,23 +130,6 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
         return listaDtos;
     }
 
-    /*@Override
-    public void generateContract(String idSelection, Assistance_Request ap) {
-        // simulación de contrato con dos meses de duración
-        Contract contract = new Contract();
-        contract.setIdContract(codeGenerator.generateCode("CON"));
-        contract.setIdSelection(idSelection);
-        contract.setSchedule(ap.getShiftPreference().name());
-        contract.setStartDate(ap.getDate());
-
-        LocalDate date = ap.getDate().plusMonths(2);
-        contract.setEndDate(date);
-        contract.setDocument("/document/"+idSelection.toLowerCase()+".pdf");
-        contract.setSalary(1000);
-        contractDao.addContract(contract);
-    }
-    */
-
     @Override
     public void rejectOtherCandidates(String idAsReq, String idPapPati) {
         selectionDao.rejectSelections(idAsReq,idPapPati);
@@ -249,5 +232,10 @@ public class AssistanceRequestServiceImp implements  AssistanceRequestService{
                 break;
         }
         return papPatiSelectionDTOS;
+    }
+
+    @Override
+    public List<Selection> getSelectionApprovedByAp(String idAsReq) {
+        return selectionDao.getSelectionApprovedFromAp(idAsReq);
     }
 }

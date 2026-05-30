@@ -24,19 +24,19 @@
             <div class="textarea-container">
                 <label for="startDate" class="detail-label">Fecha de Inicio:</label>
                 <input id="startDate" type="date" th:field="*{startDate}" class="filter-select" />
-                <span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error-msg"></span>
+                <span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></span>
             </div>
 
             <div class="textarea-container">
                 <label for="endDate" class="detail-label">Fecha de Fin:</label>
                 <input id="endDate" type="date" th:field="*{endDate}" class="filter-select" />
-                <span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="error-msg"></span>
+                <span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"  style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></span>
             </div>
 
             <div class="textarea-container">
                 <label for="salary" class="detail-label">Salario (€):</label>
                 <input id="salary" type="number" step="0.01" th:field="*{salary}" class="filter-select" />
-                <span th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}" class="error-msg"></span>
+                <span th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></span>
             </div>
 
             <div class="textarea-container">
@@ -47,14 +47,15 @@
                             th:text="${shift.getDescription()}">
                     </option>
                 </select>
-                <span th:if="${#fields.hasErrors('schedule')}" th:errors="*{schedule}" class="error-msg"></span>
+                <span th:if="${#fields.hasErrors('schedule')}" th:errors="*{schedule}"  style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></span>
             </div>
 
             <div class="content-footer">
                 <div class="nav-back">
                     <a th:href="@{/Contracts/list}" class="btn btn-secondary btn-icon" title="Volver a la lista de contratos"> <i class="fi fi-rr-arrow-left"></i> Cancelar y Volver</a>
                 </div>
-                <button type="submit" class="btn btn-secondary btn-icon" title="Actualizar el contrato">
+                <button type="submit" class="btn btn-secondary btn-icon" title="Actualizar el contrato"
+                        onclick="return confirm('¿Seguro que quieres actualizar el contrato?');">
                     Actualizar contrato <i class="fi fi-rr-edit"></i>
                 </button>
             </div>

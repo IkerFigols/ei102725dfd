@@ -118,21 +118,9 @@ public class ContractController {
         if (bindingResult.hasErrors()) {
             return "Contracts/update";
         }
-        Contract contractOriginal = contractService.getContract(contract.getIdContract());
-
-        if (contractOriginal.getStartDate().equals(contract.getStartDate()) &&
-                contractOriginal.getEndDate().equals(contract.getEndDate()) &&
-                contractOriginal.getSalary() == contract.getSalary() &&
-                contractOriginal.getSchedule().equals(contract.getSchedule())) {
-
-            bindingResult.rejectValue("schedule", "sinCambios", "Debes modificar algún campo para poder actualizar el contrato.");
-        }
-        if (bindingResult.hasErrors()) {
-            return "Contracts/update";
-        }
         contract.setDocument(generateDocumentName(contract.getIdSelection()));
         contractService.updateContract(contract);
-        flash.addFlashAttribute("lista","/Assistance_Request/apRequestList");
+        flash.addFlashAttribute("lista","/Contracts/list");
         flash.addFlashAttribute("mensaje","Se ha actualizado el contrato correctamente");
         return "redirect:/actionConfirmation";
     }

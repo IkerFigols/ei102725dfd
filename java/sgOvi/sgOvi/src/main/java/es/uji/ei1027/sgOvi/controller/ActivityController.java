@@ -96,7 +96,7 @@ public class ActivityController {
 
         activityAttendanceService.registerUserToActivity(idActivity, user.getDni(), rol);
 
-        flash.addFlashAttribute("lista","/Activity/listAll");
+        flash.addFlashAttribute("lista","/Activity/list");
         flash.addFlashAttribute("mensaje","Te has inscrito a la actividad correctamente");
         return "redirect:/actionConfirmation";
 

@@ -28,7 +28,7 @@ public class ContractValidator implements Validator {
             }
         }
 
-        if (contract.getSalary() <= 0) {
+        if (contract.getSalary() <= 0 ) {
             errors.rejectValue("salary", "invalido", "El salario debe ser mayor que 0.");
         }
 

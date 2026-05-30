@@ -46,7 +46,7 @@ public class TechnicianController {
     private OviUserValidator ouv = new OviUserValidator();
     private PapPatiValidator papPatiValidator = new PapPatiValidator();
     private InstructorValidator instructorValidator = new InstructorValidator();
-    private PersonDtoValidator personDtoValidator = new PersonDtoValidator();
+    private PersonInstructorDtoValidator personInstructorDtoValidator = new PersonInstructorDtoValidator();
     private AssistanceRequestValidator assistanceRequestValidator = new AssistanceRequestValidator();
     private ActivityValidator activityValidator = new ActivityValidator();
 
@@ -332,7 +332,13 @@ public class TechnicianController {
         Instructor instructor = instructorService.getInstructor(dni);
         if(instructor == null)
             throw new OviException("El instructor con dni: " +dni+" no existe","Instructor no encontrado");
-        model.addAttribute("instructor", instructor);
+        Person person = personDao.getPerson(dni);
+        person.setPreference("INSTRUCTOR");
+        person.setDataProtection(true);
+        PersonInstructorDTO dto = new PersonInstructorDTO();
+        dto.setInstructor(instructor);
+        dto.setPerson(person);
+        model.addAttribute("dto", dto);
         return "Technician/instructorManagement";
     }
 
@@ -352,14 +358,14 @@ public class TechnicianController {
     }
 
     @RequestMapping(value="/instructorManagement/update", method = RequestMethod.POST)
-    public String processUpdateSubmitInstructor(@ModelAttribute ("instructor") Instructor instructor,
-                                                BindingResult bindingResult, RedirectAttributes flash
-    ) {
-        instructorValidator.validate(instructor, bindingResult);
+    public String processUpdateSubmitInstructor(@ModelAttribute ("dto") PersonInstructorDTO dto,
+                                                BindingResult bindingResult, RedirectAttributes flash) {
+        personInstructorDtoValidator.validate(dto,bindingResult);
         if(bindingResult.hasErrors()){
             return "Technician/instructorManagement";
         }
-        instructorService.updateInstructor(instructor);
+        personDao.updatePerson(dto.getPerson());
+        instructorService.updateInstructor(dto.getInstructor());
 
         flash.addFlashAttribute("lista","/Technician/instructorList");
         flash.addFlashAttribute("mensaje","El instructor ha sido actualizado correctamente");
@@ -374,7 +380,7 @@ public class TechnicianController {
     public String processAddInstructor(@ModelAttribute("personInstructor") PersonInstructorDTO pidto,
                                        BindingResult bindingResult, RedirectAttributes flash) {
 
-        personDtoValidator.validate(pidto, bindingResult);
+        personInstructorDtoValidator.validate(pidto, bindingResult);
         if(personDao.getPerson(pidto.getPerson().getDni()) != null){
             bindingResult.rejectValue("person.dni", "duplicated", "Ya hay una persona con ese dni en la base de datos");
         }

@@ -126,4 +126,5 @@ public class AssistanceReqDao {
 
         return jdbcTemplate.query(sql, new AssistanceReqRowMapper(), params.toArray());
     }
+
 }

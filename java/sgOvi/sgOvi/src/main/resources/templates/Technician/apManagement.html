@@ -104,14 +104,15 @@ layout:decorate="~{Fragments/base}">
       </div>
 
       <div class="actions-group">
-        <button type="submit" th:formaction="@{/Technician/apManagement/accept}" class="btn btn-approved btn-icon" title="Aceptar solicitud">
+        <button type="submit" th:formaction="@{/Technician/apManagement/accept}" class="btn btn-approved btn-icon" title="Aceptar solicitud"
+                onclick="return confirm('¿Seguro que deseas aceptar la solicitud? Una vez aceptada debes elegir los candidatos y no puedes volver hacia atras');">
           Aceptar Solicitud <i class="fi fi-rr-check"></i>
 
         </button>
         <button type="submit" title="Rechazar solicitud"
                 th:formaction="@{/Technician/apManagement/reject}"
                 class="btn btn-danger btn-icon"
-                onclick="return confirm('¿Seguro que deseas denegar esta solicitud de asistencia?')">
+                onclick="return confirm('¿Seguro que deseas denegar esta solicitud de asistencia? Esta acción no se puede deshacer')">
           Denegar Solicitud <i class="fi fi-rr-cross"></i>
         </button>
       </div>
