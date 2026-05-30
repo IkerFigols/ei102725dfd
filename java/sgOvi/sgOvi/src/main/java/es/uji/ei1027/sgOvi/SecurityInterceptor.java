@@ -11,7 +11,9 @@ public class SecurityInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         String uri = request.getRequestURI();
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("user") == null ){
+            if(uri.contains("/Register"))
+                return true;
             if (uri.contains("/index")|| uri.isEmpty() || uri.equals("/") || uri.contains("/login") ||uri.contains("/css/") || uri.contains("/js/")) {
                 return true;
             }

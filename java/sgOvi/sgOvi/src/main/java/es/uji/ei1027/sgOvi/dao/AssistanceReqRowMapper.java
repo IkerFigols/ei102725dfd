@@ -12,7 +12,7 @@ public final class AssistanceReqRowMapper implements RowMapper<Assistance_Reques
        assistanceRequest.setIdAsReq(rs.getString("idAsReq"));
        assistanceRequest.setTittle(rs.getString("tittle"));
        assistanceRequest.setDescription(rs.getString("description"));
-       assistanceRequest.setDate(rs.getObject("data", LocalDate.class));
+       assistanceRequest.setDate(rs.getObject("date", LocalDate.class));
        assistanceRequest.setReason(rs.getString("reason"));
        assistanceRequest.setState(rs.getString("state"));
        assistanceRequest.setIdOviUser(rs.getString("idOviUser"));

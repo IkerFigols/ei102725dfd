@@ -103,7 +103,7 @@ public class ContractController {
         if(contractService.getContract(id) == null)
             throw new OviException("El contrato no existe","Contrato no encontrado");
         Person user = (Person) session.getAttribute("user");
-        if(!user.equals(assistanceRequestService.getAssistanceRequest(assistanceRequestService.getSelection(contractService.getContract(id).getIdSelection()).getIdAsReq()).getIdOviUser()))
+        if(!user.getDni().equals(assistanceRequestService.getAssistanceRequest(assistanceRequestService.getSelection(contractService.getContract(id).getIdSelection()).getIdAsReq()).getIdOviUser()))
             throw new OviException("No puedes actualizar un contrato que no te pertenece","Acceso no autorizado");
         model.addAttribute("contract", contractService.getContract(id));
         return "Contracts/update";

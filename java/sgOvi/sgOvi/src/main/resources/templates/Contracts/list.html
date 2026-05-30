@@ -54,7 +54,7 @@
                         <div class="actions-group-centered">
                             <a th:if="${session.rol == 'OVI_USER' and dto.contract != null}"
                                th:href="@{/Contracts/update/{id}(id=${dto.contract.idContract})}"
-                               class="btn btn-secondary btn-icon" title="Modificar contrato">
+                               class="btn btn-primary btn-icon" title="Modificar contrato">
                                 Modificar<i class="fi fi-rr-edit"></i>
                             </a>
                             <a th:if="${dto.contract?.document != null}"

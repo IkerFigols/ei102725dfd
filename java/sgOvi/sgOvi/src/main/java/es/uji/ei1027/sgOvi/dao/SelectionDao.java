@@ -127,7 +127,7 @@ public class SelectionDao {
         }
     }
     public List<AssistanceRequestSelectionDTO> getRequestsByPapPatiFiltered(String idPapPati, String state) {
-        String sql = "SELECT s.*, ar.tittle, ar.data as request_date, p.name as ovi_name " +
+        String sql = "SELECT s.*, ar.tittle, ar.date as request_date, p.name as ovi_name " +
                 "FROM Selection s " +
                 "JOIN Assistance_Request ar ON s.idAsReq = ar.idAsReq " +
                 "JOIN Person p ON ar.idOviUser = p.dni " +

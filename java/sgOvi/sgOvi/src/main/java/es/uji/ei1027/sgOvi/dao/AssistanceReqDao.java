@@ -49,7 +49,7 @@ public class AssistanceReqDao {
 
     public void updateAssistanceRequest(Assistance_Request request) {
         // 1. Usa "?" para que Spring se encargue de las comillas y formatos
-        String sql = "UPDATE Assistance_Request SET data=?, tittle=?, description=?, idOviUser=?, state=?, reason=?, experience=?, drivingLicense=?, province=?, shiftPreference=?, age=? WHERE idAsReq=?";
+        String sql = "UPDATE Assistance_Request SET date=?, tittle=?, description=?, idOviUser=?, state=?, reason=?, experience=?, drivingLicense=?, province=?, shiftPreference=?, age=? WHERE idAsReq=?";
 
         // 2. Pasa los valores en un array de objetos
         jdbcTemplate.update(sql,
