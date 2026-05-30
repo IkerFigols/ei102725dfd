@@ -14,7 +14,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
         if (session.getAttribute("user") == null ){
             if(uri.contains("/Register"))
                 return true;
-            if (uri.contains("/index")|| uri.isEmpty() || uri.equals("/") || uri.contains("/login") ||uri.contains("/css/") || uri.contains("/js/")) {
+            if (uri.contains("/index")|| uri.isEmpty() || uri.equals("/") || uri.contains("/login")) {
                 return true;
             }
             if (!uri.contains("/profile") && !uri.contains("/css/") && !uri.contains("/js/") && !uri.contains("/images/")

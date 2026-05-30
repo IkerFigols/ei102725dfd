@@ -53,8 +53,7 @@
 
                 <div class="textarea-container">
                     <label for="password" class="title" style="font-size: 14px;">Contraseña:</label>
-                    <input id="password" type="password" th:field="*{password}" class="textarea-field-small" placeholder="••••••••">
-                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
+                    <input id="password" type="password" th:field="*{password}" th:value="*{password}" class="textarea-field-small" placeholder="••••••••">                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: #ef4444; font-size: 0.85em; margin-top: 5px;"></div>
                 </div>
 
                 <div class="textarea-container">
@@ -108,14 +107,10 @@
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
-                <button type="submit" class="btn btn-primary btn-icon" style="width: 200px;" title="Registrarse"
-                        th:data-dni="${person.dni}"
-                        onclick="return confirm('¿Seguro que deseas registrarte?);"
-                >Registrarse <i class="fi fi-rr-clipboard-list"></i>
+                <button type="submit" class="btn btn-primary btn-icon" style="width: 200px;" title="Continuar con la siguiente pestaña">Continuar <i class="fi fi-rr-arrow-right"></i>
                 </button>
                 <p style="margin-top: 15px; font-size: 13px;">¿Ya tienes cuenta? <a th:href="@{/login}" style="color: var(--primary-blue); font-weight: bold;">Inicia sesión</a></p>
             </div>
-
         </form>
         <a th:href="@{/}" class="btn btn-secondary btn-icon"> <i class="fi fi-rr-arrow-left"></i> Volver al inicio</a>
     </section>

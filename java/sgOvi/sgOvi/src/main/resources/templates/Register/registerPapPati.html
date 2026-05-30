@@ -5,6 +5,8 @@
     <title>SgOvi - Registro Asistente Personal</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="icon" type="image/png" th:href="@{/images/logo_ovi.png}">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+
 </head>
 <body>
 <div th:replace="~{Fragments/general_fragment :: navbar-simple}"></div>
@@ -85,6 +87,11 @@
                         onclick="return confirm('¿Seguro que deseas completar el registro de Asistente Personal con el dni: ' + this.getAttribute('data-dni') + '?');" >Finalizar Registro <i class="fi fi-rr-clipboard-list"></i></button>
             </div>
         </form>
+        <div class="content-footer">
+            <a th:href="@{/Register/register}" class="btn btn-secondary btn-icon"  title="Modificar datos personales">
+                <i class="fi fi-rr-arrow-left"></i> Volver atrás
+            </a>
+        </div>
     </section>
 </main>
 
